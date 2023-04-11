@@ -1,2 +1,3 @@
-# quacker
+# quack
+
 Simplified Twitter clone.
