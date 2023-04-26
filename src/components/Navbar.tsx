@@ -6,6 +6,9 @@ const Navbar = () => {
     return(
         <div className="nav-main-container">
             Navbar
+            <div className="search-container">
+                <input placeholder="Search"></input>
+            </div>
         </div>
     )
 }

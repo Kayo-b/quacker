@@ -12,7 +12,7 @@ const[text, setText] = useState("");
     return(
         <div className="post-main-container">     
             <input 
-            type="text" placeholder="Say something"
+            type="text" placeholder="Say something..."
             value={text} 
             onChange={e => setText(e.target.value)}>
             </input>

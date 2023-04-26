@@ -12,8 +12,6 @@ const Sidebar = () => {
                 <Link to="/bookmarks"> 
                     <li>Bookmarks</li>
                 </Link>  
-
-
             </ul>
             
         </div>
