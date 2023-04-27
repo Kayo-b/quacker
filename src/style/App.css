@@ -4,14 +4,20 @@
 
 }
 
-.sb-main-container, .center-container {
+.sb-main-container {
   border: 2px solid red;
+  align-items: center;
+  text-align:  start;
+  width: 15vh;
+  height: 100vh;
+}
+.center-container {
+  border-right: 1px solid purple;
   align-items: center;
   text-align:  start;
   width: 35vh;
   height: 100vh;
 }
-
 .home-main-container {
   display: flex;
   flex-direction: column;
