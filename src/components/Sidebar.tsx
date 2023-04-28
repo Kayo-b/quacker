@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Dashboard from "./Dashboard";
 
 const Sidebar = () => {
 
@@ -13,6 +14,12 @@ const Sidebar = () => {
                     <li>Bookmarks</li>
                 </Link>  
             </ul>
+            <div className="sidebar-dashboard">
+                <div className="sidebar-dashboard-container">
+                <Dashboard/>
+                </div>
+            </div>
+            
             
         </div>
     )

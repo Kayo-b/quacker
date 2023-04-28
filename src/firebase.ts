@@ -83,7 +83,7 @@ const registerEmail = async(name: string, email: string, password: string) => {
         if(docs.docs.length === 0) {
             await addDoc(collection(db, "users"), {
                 uid: user.uid,
-                name: user.displayName,
+                name: name,
                 authProvider: "local",
                 email: user.email,
             });

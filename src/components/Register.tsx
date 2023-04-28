@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom'; 
 import { auth, registerEmail, signInWithGoogle } from '../firebase'; 
-import "..Register.css"
+import "../style/Register.css"
 
 function Register() {
     const [name, setName] = React.useState("");
@@ -18,7 +18,7 @@ function Register() {
 
     useEffect(() => {
         if(loading) return;
-        if(user) return history("/homepage");
+        if(user) return history("/dashboard");
     },[user, loading])    
 
   return (

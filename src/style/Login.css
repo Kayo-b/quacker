@@ -1,6 +1,9 @@
 .login {
-    height: 100vh;
-    width: 100vw;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,20 +14,36 @@
     text-align: center;
     background-color: #dcdcdc;
     padding: 30px;
+    border-radius: 2px;
   }
   .login-txt-input {
     padding: 10px;
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 10px;
+    border: 1px solid rgb(117, 117, 117);
+    border-radius: 2px;
+    height: 10px;
+    
   }
+  .login-txt-input:focus {
+      outline-color:rgb(26, 98, 94);
+      outline-style:solid
+  } 
   .login-btn-email {
-    padding: 10px;
-    font-size: 18px;
+    padding: 6px;
+    font-size: 16px;
     margin-bottom: 10px;
     border: none;
     color: white;
-    background-color: black;
+    background-color: rgb(39, 42, 42);
+    cursor: pointer;
+    
   }
+  .login-btn-email:hover {
+    background-color: rgba(11, 57, 53, 0.885);
+  }
+
+
   .login-btn-google {
     background-color: #4285f4;
   }

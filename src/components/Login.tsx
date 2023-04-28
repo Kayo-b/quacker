@@ -50,7 +50,7 @@ return (
                 <Link to="/reset">Forgot Password</Link>
             </div>
             <div>
-                Don't have and account? <Link to="/register"></Link> now.
+                Don't have and account? <Link to="/register">Register</Link> now.
             </div>
         </div>
     </div>
