@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import {  addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase";
 
-const handleClick = (text: String | Number) => {
-    console.log(text);
-    // handle form submission here
+type PostProps = {
+    setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+    update: undefined | boolean;
   };
 
-
-
-const Post = () => {
+const Post: React.FC<PostProps> = ({setUpdate, update}) => {
 const[text, setText] = useState("");
+const handleClick = async (text: String | Number) => {
+    update ? setUpdate(false) : setUpdate(true);
+    // handle form submission here
+    try {
+        const docRef = await addDoc(collection(db, "posts"), {
+            textContent: text
+        })
+    } catch(e) {
+        console.error(e);
+    }
+  };
+
 
     return(
         <div className="post-main-container">     

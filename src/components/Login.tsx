@@ -15,11 +15,6 @@ function Login() {
         if(user) navigate("/homepage"); 
     }, [user, loading])
 
-    // const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault(); 
-    //     await auth.signInWithEmailAndPassword(email, password); 
-    // }
-
 return (
     <div className="login">
         <div className="login-container">
