@@ -2,7 +2,23 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Dashboard from "./Dashboard";
 
-const Sidebar = () => {
+
+type UserProps = {
+    authProvider?: string;
+    email: string;
+    name?: string;
+    uid: string;
+}  
+
+type SidebarProps = { 
+    user: UserProps;
+    loading: boolean;
+    error: string;
+    name: string;
+    setName: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({name, user, loading, error, setName}) => {
 
     return(
         <div className="sb-main-container">
@@ -16,7 +32,7 @@ const Sidebar = () => {
             </ul>
             <div className="sidebar-dashboard">
                 <div className="sidebar-dashboard-container">
-                <Dashboard/>
+                <Dashboard name={name} user={user} loading={loading} error={error} setName={setName}/>
                 </div>
             </div>
             

@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, db, logout } from "../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 
 
-function Dashboard() {
-    const [user, loading, error] = useAuthState(auth);
-    const [name, setName] = useState("");
+type UserProps = {
+    authProvider?: string;
+    email: string;
+    name?: string;
+    uid: string;
+}  
+
+type DashboardProps = { 
+    user: UserProps ;
+    loading: boolean;
+    error: string;
+    name: string;
+    setName: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setName})  => {
+
     const navigate = useNavigate();
     const fetchUserName = async () => {
         try {
@@ -17,11 +30,11 @@ function Dashboard() {
             setName(data.name)
         } catch(err: unknown) {
             if(err instanceof Error) {
-                console.error(err)
-                alert(err.message)
+                console.error(err);
+                alert(err.message);
             } else {
-                console.error(err)
-                alert("an error has occurred")
+                console.error(err);
+                alert("an error has occurred");
             }
     }
 }

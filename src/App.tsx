@@ -10,14 +10,35 @@ import Dashboard from './components/Dashboard';
 import logo from './logo.svg';
 import './style/App.css';
 import Bookmarks from './components/Bookmarks';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase";
 
-function App() {
+type UserPropsOrigin = {
+  authProvider?: string;
+  email: string;
+  name?: string;
+  uid: string;
+}  
+
+// type AppProps = { 
+//   user: UserPropsOrigin ;
+//   loading: boolean;
+//   error: string;
+//   name: string;
+//   setName: React.Dispatch<React.SetStateAction<string>>;
+// }
+
+
+const App = () => {
+  const [user, loading, error] = useAuthState(auth);
+  const [name, setName] = useState("");
+  console.log(name)
   return (
    
     <BrowserRouter>
      <div className="App">
       <div className="sidebar">
-      <Sidebar />
+      <Sidebar name={name} user={user as UserPropsOrigin} loading={loading} error={error ? error.toString() : ""} setName={setName}/>
       </div>
       
       <div className="center-container">
@@ -37,7 +58,7 @@ function App() {
         />        
         <Route
         path="/homepage/"
-        element={<Homepage/>}
+        element={<Homepage name={name} user={user as UserPropsOrigin}/>}
         />
         <Route
         path="/bookmarks/"
