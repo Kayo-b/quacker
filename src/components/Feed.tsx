@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Post from "./Post";
 import {  getDocs, collection, serverTimestamp, SnapshotOptions, DocumentData, orderBy } from "firebase/firestore";
 import { db } from "../firebase";
 import { query } from "firebase/firestore"
 type PostProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     update: undefined | boolean;
+    setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    newPost: DocumentData[];
   };
 
-const Feed: React.FC<PostProps> = ({update}) => {
+const Feed: React.FC<PostProps> = ({update, newPost, setNewPost}) => {
 
     const [posts, setPosts] = useState<DocumentData[]>([]);
     const [feedUpdate, setFeedUpdate] = useState<boolean>(false);
@@ -16,10 +19,8 @@ const Feed: React.FC<PostProps> = ({update}) => {
 
     const fetchPosts = async () => {
         setPosts([])
-        const q = await getDocs(query(collection(db, "posts"), orderBy("serverTimestamp")))
-        console.log(q.query)
-        const querySnapshot = await getDocs(collection(db, "posts"));
-   
+        //const q = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")))
+        const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")))
         querySnapshot.forEach((doc) => {
             console.log(doc.data().textContent)
             setPosts(prevValue => [...prevValue, doc.data()])
@@ -28,8 +29,9 @@ const Feed: React.FC<PostProps> = ({update}) => {
 
     useEffect(() => {
         update ? setFeedUpdate(true) : setFeedUpdate(false);
-        fetchPosts()
-    },[update])
+        fetchPosts();
+        
+    },[])
 
     const postsList = posts.map(item =>
         <li 
@@ -44,11 +46,18 @@ const Feed: React.FC<PostProps> = ({update}) => {
         </li>
     )
 
+    const postTest = <div>post test</div>
+
     return(
         <div className="feed-main-container">
-           <ul>{postsList}</ul>
+            
+           <ul>
+            <Post newPost={newPost} setNewPost={setNewPost}/>
+            {postsList}
+            </ul>
             
         </div>
+        
     )
 }
 
