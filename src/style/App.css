@@ -9,6 +9,10 @@
   
 }
 
+li {
+  list-style-type: none
+}
+
 .sb-main-container {
   border: 2px solid red;
   align-items: center;

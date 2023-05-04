@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {  addDoc, collection, serverTimestamp, DocumentData } from "firebase/firestore";
+import {  addDoc, collection, serverTimestamp, DocumentData, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 
 
@@ -23,20 +23,25 @@ type PostProps = {
 const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost}) => {
 const[text, setText] = useState("");
 const handleClick = async (text: String) => {
-    update ? setUpdate(false) : setUpdate(true);
+    setUpdate(true);
     // handle form submission here
     try {
+
         const docRef = await addDoc(collection(db, "posts"), {
             username: name,
             userID: user.uid,
             textContent: text,
             timestamp: serverTimestamp()
         })
+        
         // console.log("Document written with ID: ", docRef);
-        setNewPost(prev => [...prev, {
+        setNewPost(prev => [{
             textContent: text,
-            userName: name
-        }]);
+            userName: name,
+            postID: docRef.id,
+            timestamp: serverTimestamp()
+        }, ...prev]);
+        setDoc(docRef, {postID: docRef.id}, {merge: true})
     } catch(e) {
         console.error(e);
     }
