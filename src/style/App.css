@@ -65,3 +65,23 @@ li {
   align-items: start;
   text-align:  start;
 }
+
+.user-container {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.profile-picture {
+  height: 35px;
+  margin-right: 10px;
+
+}
+
+.post-container {
+  border: 1px solid red;
+}
+
+.user-name {
+  font-weight:bold;
+}
