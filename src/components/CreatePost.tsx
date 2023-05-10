@@ -30,15 +30,19 @@ const handleClick = async (text: String) => {
         const docRef = await addDoc(collection(db, "posts"), {
             username: name,
             userID: user.uid,
+            parentID: null,
             textContent: text,
+            likedByUsers: [],
             timestamp: serverTimestamp()
         })
         
         // console.log("Document written with ID: ", docRef);
         setNewPost(prev => [{
-            textContent: text,
-            userName: name,
+            username: name,
             postID: docRef.id,
+            parentID: null,
+            textContent: text,
+            likedByUsers: [],
             timestamp: serverTimestamp()
         }, ...prev]);
         setDoc(docRef, {postID: docRef.id}, {merge: true})

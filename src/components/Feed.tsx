@@ -4,14 +4,22 @@ import Post from "./Post";
 import {  getDocs, collection, serverTimestamp, SnapshotOptions, DocumentData, orderBy, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import { query } from "firebase/firestore"
+
+type UserProps = {
+    authProvider?: string;
+    email: string;
+    name?: string;
+    uid: string;
+}  
 type PostProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     update: undefined | boolean;
     setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     newPost: DocumentData[];
+    user: UserProps
   };
 
-const Feed: React.FC<PostProps> = ({ setUpdate, update, newPost, setNewPost }) => {
+const Feed: React.FC<PostProps> = ({ setUpdate, update, newPost, setNewPost, user }) => {
 
     const [posts, setPosts] = useState<DocumentData[]>([]);
     const [feedUpdate, setFeedUpdate] = useState<boolean>(false);
@@ -56,8 +64,14 @@ const Feed: React.FC<PostProps> = ({ setUpdate, update, newPost, setNewPost }) =
         <div className="feed-main-container">
             
            <ul>
-            <Post newPost={newPost} setNewPost={setNewPost} update={update} setUpdate={setUpdate} posts={posts}/>
-            
+            <Post 
+            newPost={newPost}
+            setNewPost={setNewPost}
+            update={update}
+            setUpdate={setUpdate}
+            posts={posts}
+            user={user}
+            />
             </ul>
             
         </div>

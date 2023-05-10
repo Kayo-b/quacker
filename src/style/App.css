@@ -68,13 +68,14 @@ li {
 
 .user-container {
   display: flex;
-  align-items: center;
   padding: 5px;
+
 }
 
 .profile-picture {
   height: 35px;
   margin-right: 10px;
+  border-radius: 25px;
 
 }
 
@@ -84,4 +85,8 @@ li {
 
 .user-name {
   font-weight:bold;
+}
+
+.content {
+  margin-top: 2px;
 }

@@ -11,6 +11,7 @@ type UserProps = {
     email: string;
     name?: string;
     uid: string;
+    
 }  
 
 type HomepageProps = {
@@ -25,7 +26,7 @@ const Homepage: React.FC<HomepageProps> = ({name, user}) => {
     return(
         <div className="home-main-container">
             < CreatePost setUpdate={setUpdate} update={update} name={name} user={user} newPost={newPost} setNewPost={setNewPost}/>
-            < Feed setUpdate={setUpdate} update={update} newPost={newPost} setNewPost={setNewPost}/>
+            < Feed setUpdate={setUpdate} update={update} newPost={newPost} setNewPost={setNewPost} user={user}/>
         </div>
     )
 }
