@@ -1,5 +1,7 @@
-import React from 'react'
-import { DocumentData, setDoc } from 'firebase/firestore';
+import React, { useEffect } from 'react'
+import { DocumentData, setDoc, collection, doc, arrayUnion, arrayRemove, query, where, getDoc } from 'firebase/firestore';
+import { db } from "../firebase";
+import Like from './Like'
 import myImg from '../img/user-icon.png';
 
 
@@ -15,7 +17,6 @@ type PostProps = {
     newPost: DocumentData[] ;
     posts: DocumentData[] ;
     update: undefined | boolean;
-    postId: number;
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     user: UserProps;
 }
@@ -23,11 +24,13 @@ type PostProps = {
 
 const Post: React.FC<PostProps> = ({ update , newPost, posts, setUpdate, user }) => {
   
-  const addLike = (postId) => {
-    setDoc(postId, {likedByUsers: [user.uid]})
-  }
-          
-    let neuPost = newPost.map(post => 
+
+
+    // useEffect(() => {
+      
+    //   hasUserLikedPost(post);
+    // })
+    let neuPost = newPost.map(post =>    
       <div className="post-container">
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
@@ -42,8 +45,9 @@ const Post: React.FC<PostProps> = ({ update , newPost, posts, setUpdate, user })
           </div>
           </span>   
         </div>
-        <button className="like-btn" onClick={e => addLike(post.id)}>Like</button>
+        <Like user={user} post={post}/> 
       </div>
+      
     )
     let loadPosts = posts.map(post => 
       <div className="post-container">
@@ -60,7 +64,7 @@ const Post: React.FC<PostProps> = ({ update , newPost, posts, setUpdate, user })
           </div>
           </span>
         </div>
-        <button className="like-btn">Like</button>
+        <Like user={user} post={post}/> 
       </div>
     )
     
