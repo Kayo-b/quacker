@@ -10,6 +10,7 @@ type UserProps = {
     email: string;
     name?: string;
     uid: string;
+    bookmarks?: Array<string>;
 }  
 type PostProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;

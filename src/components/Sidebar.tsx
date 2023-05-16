@@ -8,6 +8,7 @@ type UserProps = {
     email: string;
     name?: string;
     uid: string;
+    bookmarks?: Array<string>;
 }  
 
 type SidebarProps = { 

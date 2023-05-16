@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { DocumentData, setDoc, collection, doc, arrayUnion, arrayRemove, query, where, getDoc } from 'firebase/firestore';
 import { db } from "../firebase";
 import Like from './Like'
+import BookmarkBtn from './BookmarkBtn';
 import myImg from '../img/user-icon.png';
 
 
@@ -10,6 +11,7 @@ type UserProps = {
   email: string;
   name?: string;
   uid: string;
+  bookmarks?: Array<string>;
 }  
 
 type PostProps = {
@@ -20,7 +22,6 @@ type PostProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     user: UserProps;
 }
-
 
 const Post: React.FC<PostProps> = ({ update , newPost, posts, setUpdate, user }) => {
   
@@ -46,6 +47,7 @@ const Post: React.FC<PostProps> = ({ update , newPost, posts, setUpdate, user })
           </span>   
         </div>
         <Like user={user} post={post}/> 
+        <BookmarkBtn user={user} post={post}/>
       </div>
       
     )
@@ -65,6 +67,7 @@ const Post: React.FC<PostProps> = ({ update , newPost, posts, setUpdate, user })
           </span>
         </div>
         <Like user={user} post={post}/> 
+        <BookmarkBtn user={user} post={post}/>
       </div>
     )
     

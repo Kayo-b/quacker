@@ -44,6 +44,7 @@ const signInWithGoogle = async() => {
                 name: user.displayName,
                 authProvider: "google",
                 email: user.email,
+                bookmarks: []
             });
         }
     } catch (err: unknown) {
@@ -86,6 +87,7 @@ const registerEmail = async(name: string, email: string, password: string) => {
                 name: name,
                 authProvider: "local",
                 email: user.email,
+                bookmarks: []
             });
         }
     } catch (err: unknown) {

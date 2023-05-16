@@ -8,6 +8,7 @@ type UserProps = {
   email: string;
   name?: string;
   uid: string;
+  bookmarks?: Array<string>;
 }  
 
 type PostProps = {
@@ -41,8 +42,13 @@ const Like: React.FC<PostProps> = ({user, post}) => {
 
   const addLike = (postId: string) => {
     const postRef = doc(db, 'posts', postId)
-    setLiked(true)
-    setDoc(postRef, {likedByUsers: arrayUnion(user.uid)}, {merge: true})
+    if(!liked) {
+      setLiked(true);
+      setDoc(postRef, {likedByUsers: arrayUnion(user.uid)}, {merge: true})
+    } else {
+      setLiked(false);
+      setDoc(postRef, {likedByUsers: arrayRemove(user.uid)}, {merge: true})
+    }
   }
 
   useEffect(() => {
