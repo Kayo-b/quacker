@@ -13,7 +13,9 @@ import {
      getDocs,
      collection,
      where,
-     addDoc } from 'firebase/firestore';
+     addDoc,
+     setDoc,
+     doc } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyB7ZtQsJrhm4whoqz_Vbg4MULY0JkK_IyM",
@@ -39,10 +41,10 @@ const signInWithGoogle = async() => {
         const q = query(collection(db, "users"), where("uid", "==", user.uid));
         const docs = await getDocs(q);
         if(docs.docs.length === 0) {
-            await addDoc(collection(db, "users"), {
+            await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid,
                 name: user.displayName,
-                authProvider: "google",
+                authProvider: "local",
                 email: user.email,
                 bookmarks: []
             });
@@ -55,7 +57,6 @@ const signInWithGoogle = async() => {
             console.error(err);
             alert("an error occurred")
         }
-
     }
 };
 
@@ -82,7 +83,7 @@ const registerEmail = async(name: string, email: string, password: string) => {
         const q = query(collection(db, "users"), where("uid", "==", user.uid));
         const docs = await getDocs(q);
         if(docs.docs.length === 0) {
-            await addDoc(collection(db, "users"), {
+            await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid,
                 name: name,
                 authProvider: "local",

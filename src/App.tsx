@@ -63,7 +63,7 @@ const App = () => {
         />
         <Route
         path="/bookmarks/"
-        element={<Bookmarks/>}
+        element={<Bookmarks user={user as UserPropsOrigin}/>}
         />
         
       </Routes>
