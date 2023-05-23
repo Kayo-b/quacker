@@ -1,5 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  getDocs, 
+  collection, 
+  serverTimestamp, 
+  SnapshotOptions, 
+  DocumentData, 
+  orderBy, 
+  setDoc, 
+  doc } 
+  from "firebase/firestore";
 import Sidebar from './components/Sidebar';
 import Homepage from './components/Homepage';
 import Navbar from './components/Navbar';
@@ -29,9 +39,10 @@ type UserPropsOrigin = {
 //   setName: React.Dispatch<React.SetStateAction<string>>;
 // }
 
-
 const App = () => {
   const [user, loading, error] = useAuthState(auth);
+  const [posts, setPosts] = useState<DocumentData[]>([]);
+  const [bookmarkPosts, setBookmarkPosts] = useState<DocumentData[]>([])
   const [name, setName] = useState("");
   console.log(name)
   return (
@@ -39,7 +50,12 @@ const App = () => {
     <BrowserRouter>
      <div className="App">
       <div className="sidebar">
-      <Sidebar name={name} user={user as UserPropsOrigin} loading={loading} error={error ? error.toString() : ""} setName={setName}/>
+      <Sidebar 
+      name={name} 
+      user={user as UserPropsOrigin} 
+      loading={loading} 
+      error={error ? error.toString() : ""} 
+      setName={setName}/>
       </div>
       
       <div className="center-container">
@@ -59,11 +75,23 @@ const App = () => {
         />        
         <Route
         path="/homepage/"
-        element={<Homepage name={name} user={user as UserPropsOrigin}/>}
+        element={
+        <Homepage 
+        name={name} 
+        user={user as UserPropsOrigin} 
+        posts={posts} 
+        setPosts={setPosts}
+        />}
         />
         <Route
         path="/bookmarks/"
-        element={<Bookmarks user={user as UserPropsOrigin}/>}
+        element={
+        <Bookmarks 
+          user={user as UserPropsOrigin} 
+          posts={posts} 
+          bookmarkPosts={bookmarkPosts} 
+          setBookmarkPosts={setBookmarkPosts}
+          />}
         />
         
       </Routes>

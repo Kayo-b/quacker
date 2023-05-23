@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Post from "./Post";
-import {  getDocs, collection, serverTimestamp, SnapshotOptions, DocumentData, orderBy, setDoc, doc } from "firebase/firestore";
+import {
+    getDocs, 
+    collection, 
+    serverTimestamp, 
+    SnapshotOptions, 
+    DocumentData, 
+    orderBy, 
+    setDoc, 
+    doc } 
+    from "firebase/firestore";
 import { db } from "../firebase";
 import { query } from "firebase/firestore"
 
@@ -17,12 +26,23 @@ type PostProps = {
     update: undefined | boolean;
     setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     newPost: DocumentData[];
-    user: UserProps
+    user: UserProps;
+    posts: DocumentData[];
+    setPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
   };
 
-const Feed: React.FC<PostProps> = ({ setUpdate, update, newPost, setNewPost, user }) => {
+const Feed: React.FC<PostProps> = ({
+    setUpdate,
+    update, 
+    newPost, 
+    setNewPost, 
+    user, 
+    posts, 
+    setPosts,
+    
+}) => {
 
-    const [posts, setPosts] = useState<DocumentData[]>([]);
+    //const [posts, setPosts] = useState<DocumentData[]>([]);
     const [feedUpdate, setFeedUpdate] = useState<boolean>(false);
     
 
