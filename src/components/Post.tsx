@@ -47,7 +47,7 @@ const Post: React.FC<PostProps> = ({ update , newPost, posts, setUpdate, user })
           </span>   
         </div>
         <Like user={user} post={post}/> 
-        <BookmarkBtn user={user} post={post}/>
+        <BookmarkBtn user={user} post={post} update={update} setUpdate={setUpdate}/>
       </div>
       
     )
@@ -67,7 +67,7 @@ const Post: React.FC<PostProps> = ({ update , newPost, posts, setUpdate, user })
           </span>
         </div>
         <Like user={user} post={post}/> 
-        <BookmarkBtn user={user} post={post}/>
+        <BookmarkBtn user={user} post={post} update={update} setUpdate={setUpdate}/>
       </div>
     )
     

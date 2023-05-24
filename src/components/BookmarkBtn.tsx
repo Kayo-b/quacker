@@ -15,11 +15,13 @@ type UserProps = {
 type PostProps = {
     user: UserProps;
     post: DocumentData;
+    update: undefined | boolean;
+    setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
 }
 
 
 
-const BookmarkBtn: React.FC<PostProps> = ({user, post}) => {
+const BookmarkBtn: React.FC<PostProps> = ({user, post, setUpdate, update}) => {
 
     const[favorited, setFavorited] = useState(false);
 
@@ -49,10 +51,12 @@ const BookmarkBtn: React.FC<PostProps> = ({user, post}) => {
         //const userData = userDoc.data();
         if(!favorited) {
                 setFavorited(true);
+                update === false ? setUpdate(true) : setUpdate(false);
                 setDoc(userRef, {bookmarks: arrayUnion(postId)}, {merge: true})
                 
             } else {
                 setFavorited(false);
+                update === true ? setUpdate(false) : setUpdate(true);
                 setDoc(userRef, {bookmarks: arrayRemove(postId)}, {merge: true});
                 
             }

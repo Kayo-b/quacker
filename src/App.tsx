@@ -22,6 +22,7 @@ import './style/App.css';
 import Bookmarks from './components/Bookmarks';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
+import BookmarkBtn from './components/BookmarkBtn';
 
 type UserPropsOrigin = {
   authProvider?: string;
@@ -43,6 +44,7 @@ const App = () => {
   const [user, loading, error] = useAuthState(auth);
   const [posts, setPosts] = useState<DocumentData[]>([]);
   const [bookmarkPosts, setBookmarkPosts] = useState<DocumentData[]>([])
+  const [update, setUpdate] = useState<boolean | undefined>(false)
   const [name, setName] = useState("");
   console.log(name)
   return (
@@ -81,6 +83,8 @@ const App = () => {
         user={user as UserPropsOrigin} 
         posts={posts} 
         setPosts={setPosts}
+        update={update}
+        setUpdate={setUpdate}
         />}
         />
         <Route
@@ -91,6 +95,9 @@ const App = () => {
           posts={posts} 
           bookmarkPosts={bookmarkPosts} 
           setBookmarkPosts={setBookmarkPosts}
+          update={update} 
+          setUpdate={setUpdate}
+          
           />}
         />
         

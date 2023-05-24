@@ -39,8 +39,7 @@ const Feed: React.FC<PostProps> = ({
     user, 
     posts, 
     setPosts,
-    
-}) => {
+    }) => {
 
     //const [posts, setPosts] = useState<DocumentData[]>([]);
     const [feedUpdate, setFeedUpdate] = useState<boolean>(false);

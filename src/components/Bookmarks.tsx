@@ -34,11 +34,14 @@ type BookmarksProps = {
     user: UserProps;
     bookmarkPosts?: DocumentData[];
     setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    update: undefined | boolean;
+    setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
 }
 
 
-const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBookmarkPosts}) => {
-
+const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBookmarkPosts, update, setUpdate}) => {
+    const [bookmarkUpdate, setBookmarkUpdate] = useState<boolean | undefined>()
+    
     const fetchBookmarks = async () => {
         const q = query(collection(db, "users"), where("uid", "==", user.uid));
         const docs = await getDocs(q);
@@ -54,20 +57,23 @@ const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBoo
             const q = query(collection(db, "posts"), where("postID", "==", bm));
             const docs = await getDocs(q);
             docs.forEach(doc => {
-                tempPosts.push(doc.data())
+                tempPosts.push(doc.data());
             });
             
         }
         setBookmarkPosts(tempPosts);
         
     }
-
+    const checkUpdate = () => {
+        setBookmarkUpdate(update);
+    }
     
     useEffect(() => {
         fetchBookmarks();
+        console.log("useEffect")
+        //checkUpdate();
         
-        
-    },[])
+    },[update])
     
     let bookmarkPost = bookmarkPosts?.map(post =>    
         <div className="post-container">
@@ -84,10 +90,9 @@ const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBoo
             </div>
             </span>   
           </div>
-          <Like user={user} post={post}/> 
-          <BookmarkBtn user={user} post={post}/>
+          <Like user={user} post={post} /> 
+          <BookmarkBtn user={user} post={post} update={update} setUpdate={setUpdate}/>
         </div>
-        
       )
 
 

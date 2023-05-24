@@ -20,19 +20,36 @@ type HomepageProps = {
     user: UserProps;
     posts: DocumentData[];
     setPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    update: undefined | boolean;
+    setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     
 }
 
 
 
-const Homepage: React.FC<HomepageProps> = ({name, user, posts, setPosts}) => {
-    const [update, setUpdate] = useState<boolean | undefined>(false)
+const Homepage: React.FC<HomepageProps> = ({name, user, posts, setPosts, update, setUpdate}) => {
+    //const [update, setUpdate] = useState<boolean | undefined>(false)
     const [newPost, setNewPost] = useState<DocumentData[]>([])
     console.log(update)
     return(
         <div className="home-main-container">
-            < CreatePost setUpdate={setUpdate} update={update} name={name} user={user} newPost={newPost} setNewPost={setNewPost}/>
-            < Feed setUpdate={setUpdate} update={update} newPost={newPost} setNewPost={setNewPost} user={user} posts={posts} setPosts={setPosts}/>
+            < CreatePost 
+            setUpdate={setUpdate} 
+            update={update} 
+            name={name} 
+            user={user} 
+            newPost={newPost} 
+            setNewPost={setNewPost}
+            />
+            < Feed 
+            setUpdate={setUpdate} 
+            update={update} 
+            newPost={newPost} 
+            setNewPost={setNewPost} 
+            user={user} 
+            posts={posts} 
+            setPosts={setPosts}
+            />
         </div>
     )
 }
