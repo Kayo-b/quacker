@@ -8,8 +8,12 @@ import {
   DocumentData, 
   orderBy, 
   setDoc, 
-  doc } 
+  doc,
+  where,
+  query
+ } 
   from "firebase/firestore";
+import { db } from "./firebase";
 import Sidebar from './components/Sidebar';
 import Homepage from './components/Homepage';
 import Navbar from './components/Navbar';
@@ -44,9 +48,11 @@ const App = () => {
   const [user, loading, error] = useAuthState(auth);
   const [posts, setPosts] = useState<DocumentData[]>([]);
   const [bookmarkPosts, setBookmarkPosts] = useState<DocumentData[]>([])
-  const [update, setUpdate] = useState<boolean | undefined>(false)
+  const [update, setUpdate] = useState<boolean | undefined>()
   const [name, setName] = useState("");
-  console.log(name)
+  
+
+
   return (
    
     <BrowserRouter>

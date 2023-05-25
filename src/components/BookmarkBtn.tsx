@@ -16,14 +16,17 @@ type PostProps = {
     user: UserProps;
     post: DocumentData;
     update: undefined | boolean;
+    bookmarkPosts?: DocumentData[];
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+    setBookmarkPosts?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    
 }
 
 
 
-const BookmarkBtn: React.FC<PostProps> = ({user, post, setUpdate, update}) => {
+const BookmarkBtn: React.FC<PostProps> = ({user, post, setUpdate, update, bookmarkPosts, setBookmarkPosts}) => {
 
-    const[favorited, setFavorited] = useState(false);
+    const [favorited, setFavorited] = useState(false);
 
     const hasUserBookmarkedPost = async(postId: string) => {
         const userRef = doc(db, 'users', user.uid);
@@ -39,6 +42,21 @@ const BookmarkBtn: React.FC<PostProps> = ({user, post, setUpdate, update}) => {
         }
 
     }
+
+    const removeBookmarkPost = (postId: string) => {
+        if(setBookmarkPosts) setBookmarkPosts(
+            prevBookmarkPosts => 
+                prevBookmarkPosts
+            .filter(
+                post =>
+                    post.postID !== postId)) 
+    }
+    
+    const addBookmarkPost = (newPost: DocumentData) => {
+        
+        if(setBookmarkPosts) setBookmarkPosts(
+            prevBookmarkPosts => [...prevBookmarkPosts, newPost]) 
+    }
     //See if there is a faster way to get the user's bookmarked posts, the query makes it take some time
     async function addBookmark(postId: string){
         // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
@@ -51,15 +69,22 @@ const BookmarkBtn: React.FC<PostProps> = ({user, post, setUpdate, update}) => {
         //const userData = userDoc.data();
         if(!favorited) {
                 setFavorited(true);
-                update === false ? setUpdate(true) : setUpdate(false);
                 setDoc(userRef, {bookmarks: arrayUnion(postId)}, {merge: true})
-                
-            } else {
+                setUpdate(true);
+                console.log("add")
+                console.log(bookmarkPosts)
+                addBookmarkPost(post); 
+                console.log(bookmarkPosts)
+        } else {
                 setFavorited(false);
-                update === true ? setUpdate(false) : setUpdate(true);
                 setDoc(userRef, {bookmarks: arrayRemove(postId)}, {merge: true});
-                
+                setUpdate(false);
+                console.log("remove")
+                console.log(bookmarkPosts)
+                removeBookmarkPost(post.postID);
+                console.log(bookmarkPosts)
             }
+            //update === false ? setUpdate(true) : setUpdate(false);
         }
          
     
