@@ -29,6 +29,8 @@ type PostProps = {
     user: UserProps;
     posts: DocumentData[];
     setPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    bookmarkPosts?: DocumentData[];
+    setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
   };
 
 const Feed: React.FC<PostProps> = ({
@@ -39,6 +41,8 @@ const Feed: React.FC<PostProps> = ({
     user, 
     posts, 
     setPosts,
+    bookmarkPosts, 
+    setBookmarkPosts
     }) => {
 
     //const [posts, setPosts] = useState<DocumentData[]>([]);
@@ -85,12 +89,15 @@ const Feed: React.FC<PostProps> = ({
             
            <ul>
             <Post 
+            
             newPost={newPost}
             setNewPost={setNewPost}
             update={update}
             setUpdate={setUpdate}
             posts={posts}
             user={user}
+            bookmarkPosts={bookmarkPosts} 
+            setBookmarkPosts={setBookmarkPosts}
             />
             </ul>
             

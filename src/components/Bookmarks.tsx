@@ -80,7 +80,7 @@ const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBoo
 
     console.log("bookmarks ", bookmarkPosts)
     let bookmarkPost = bookmarkPosts?.map(post =>    
-        <div className="post-container">
+        <div key={post.postID} className="post-container">
           <div className="user-container">
             <img className="profile-picture" alt="user icon" src={myImg}></img>
             <span>
@@ -95,7 +95,15 @@ const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBoo
             </span>   
           </div>
           <Like user={user} post={post} /> 
-          <BookmarkBtn user={user} post={post} update={update} setUpdate={setUpdate} bookmarkPosts={bookmarkPosts} setBookmarkPosts={setBookmarkPosts}/>
+          <BookmarkBtn 
+          // key={post.postID}
+          user={user} 
+          post={post} 
+          update={update} 
+          setUpdate={setUpdate} 
+          bookmarkPosts={bookmarkPosts} 
+          setBookmarkPosts={setBookmarkPosts}
+          />
         </div>
       )
 

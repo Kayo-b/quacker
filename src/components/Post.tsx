@@ -21,9 +21,18 @@ type PostProps = {
     update: undefined | boolean;
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     user: UserProps;
+    bookmarkPosts?: DocumentData[];
+    setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
 }
 
-const Post: React.FC<PostProps> = ({ update , newPost, posts, setUpdate, user }) => {
+const Post: React.FC<PostProps> = ({ 
+  update, 
+  newPost, 
+  posts, 
+  setUpdate, 
+  user, 
+  bookmarkPosts, 
+  setBookmarkPosts }) => {
   
 
 
@@ -66,8 +75,19 @@ const Post: React.FC<PostProps> = ({ update , newPost, posts, setUpdate, user })
           </div>
           </span>
         </div>
-        <Like user={user} post={post}/> 
-        <BookmarkBtn user={user} post={post} update={update} setUpdate={setUpdate}/>
+        <Like 
+        user={user} 
+        post={post}
+        /> 
+        <BookmarkBtn 
+        // key={post.postID}
+        user={user} 
+        post={post} 
+        update={update} 
+        setUpdate={setUpdate}
+        bookmarkPosts={bookmarkPosts} 
+        setBookmarkPosts={setBookmarkPosts}
+        />
       </div>
     )
     

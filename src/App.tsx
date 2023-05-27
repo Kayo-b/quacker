@@ -91,6 +91,8 @@ const App = () => {
         setPosts={setPosts}
         update={update}
         setUpdate={setUpdate}
+        bookmarkPosts={bookmarkPosts} 
+        setBookmarkPosts={setBookmarkPosts}
         />}
         />
         <Route

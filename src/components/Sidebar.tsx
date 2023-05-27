@@ -33,7 +33,13 @@ const Sidebar: React.FC<SidebarProps> = ({name, user, loading, error, setName}) 
             </ul>
             <div className="sidebar-dashboard">
                 <div className="sidebar-dashboard-container">
-                <Dashboard name={name} user={user} loading={loading} error={error} setName={setName}/>
+                <Dashboard 
+                name={name} 
+                user={user} 
+                loading={loading} 
+                error={error} 
+                setName={setName}
+                />
                 </div>
             </div>
             
