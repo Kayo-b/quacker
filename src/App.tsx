@@ -20,6 +20,7 @@ import Navbar from './components/Navbar';
 import Login from './components/Login'
 import Register from './components/Register';
 import Reset from './components/Reset';
+import PostPage from './components/PostPage';
 import Dashboard from './components/Dashboard';
 import logo from './logo.svg';
 import './style/App.css';
@@ -49,6 +50,7 @@ const App = () => {
   const [posts, setPosts] = useState<DocumentData[]>([]);
   const [bookmarkPosts, setBookmarkPosts] = useState<DocumentData[]>([])
   const [update, setUpdate] = useState<boolean | undefined>()
+  const [newPost, setNewPost] = useState<DocumentData[]>([])
   const [name, setName] = useState("");
   
 
@@ -93,6 +95,8 @@ const App = () => {
         setUpdate={setUpdate}
         bookmarkPosts={bookmarkPosts} 
         setBookmarkPosts={setBookmarkPosts}
+        setNewPost={setNewPost}
+        newPost={newPost}
         />}
         />
         <Route
@@ -105,6 +109,21 @@ const App = () => {
           setBookmarkPosts={setBookmarkPosts}
           update={update} 
           setUpdate={setUpdate}
+          />}
+        />
+        <Route
+        path="/post/:postId"
+        element={
+        <PostPage
+          name={name}
+          user={user as UserPropsOrigin}
+          update={update} 
+          setUpdate={setUpdate}
+          posts={posts} 
+          bookmarkPosts={bookmarkPosts} 
+          setBookmarkPosts={setBookmarkPosts}
+          setNewPost={setNewPost}
+          newPost={newPost}
           
           />}
         />

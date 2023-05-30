@@ -26,7 +26,6 @@ const Like: React.FC<PostProps> = ({user, post}) => {
     const postDoc = await getDoc(postRef);
     if(postDoc.exists()) {
       const postData = postDoc.data();
-      console.log(postData)
       if(postData.likedByUsers && postData.likedByUsers.includes(user.uid)) {
         return true
       } 
@@ -36,7 +35,6 @@ const Like: React.FC<PostProps> = ({user, post}) => {
  
   async function likedPostCheck(postID: string) {
     const postIsLiked = await hasUserLikedPost(postID)
-    console.log(postIsLiked)
     setLiked(postIsLiked);
   }
 

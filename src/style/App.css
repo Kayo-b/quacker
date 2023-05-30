@@ -52,6 +52,14 @@ li {
   width: 100vh;
 } */
 
+.modal {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 1px solid red;
+  top: 30vh;
+}
+
 .nav-main-container {
   display: flex;
   align-items: start;

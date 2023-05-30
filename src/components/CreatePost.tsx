@@ -14,25 +14,29 @@ type UserProps = {
 type PostProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    post?: DocumentData;
     newPost: DocumentData[];
     update: undefined | boolean;
-    name: string;
+    name?: string;
     user: UserProps;
   };
 
-const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost}) => {
+const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost, post}) => {
 const[text, setText] = useState("");
 const handleClick = async (text: String) => {
     setUpdate(true);
     // handle form submission here
+    console.log(post?.postID)
     try {
 
         const docRef = await addDoc(collection(db, "posts"), {
             username: name,
             userID: user.uid,
-            parentID: null,
+            parentID: post ? post.postID : null,
             textContent: text,
             likedByUsers: [],
+            repostByUsers: [],
+            childComments: [],
             timestamp: serverTimestamp()
         })
         
@@ -40,9 +44,11 @@ const handleClick = async (text: String) => {
         setNewPost(prev => [{
             username: name,
             postID: docRef.id,
-            parentID: null,
+            parentID: post ? post.postID : null,
             textContent: text,
             likedByUsers: [],
+            repostByUsers: [],
+            childComments: [],
             timestamp: serverTimestamp()
         }, ...prev]);
         setDoc(docRef, {postID: docRef.id}, {merge: true})

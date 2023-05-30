@@ -20,13 +20,11 @@ type DashboardProps = {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setName})  => {
-    console.log(user)
     const navigate = useNavigate();
     const fetchUserName = async () => {
         try {
             const q = query(collection(db, "users"), where("uid", "==", user?.uid));
             const doc = await getDocs(q);
-            console.log(doc.docs[0]);
             const data = doc.docs[0].data();
             setName(data.name)
         } catch(err: unknown) {

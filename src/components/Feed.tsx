@@ -22,6 +22,7 @@ type UserProps = {
     bookmarks?: Array<string>;
 }  
 type PostProps = {
+    name:string;
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     update: undefined | boolean;
     setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
@@ -34,6 +35,7 @@ type PostProps = {
   };
 
 const Feed: React.FC<PostProps> = ({
+    name,
     setUpdate,
     update, 
     newPost, 
@@ -56,7 +58,7 @@ const Feed: React.FC<PostProps> = ({
         console.log("fetch!")
         setPosts([])
         querySnapshot.forEach((doc) => {
-            console.log(doc.data().textContent)
+
             setPosts(prevValue => [...prevValue, doc.data()])
         })
         
@@ -69,27 +71,13 @@ const Feed: React.FC<PostProps> = ({
         
     },[])
 
-    // const postsList = posts.map(item =>
-    //     // <li 
-    //     // key={item.postID}>
-    //     // {item.textContent} 
-    //     // <br></br>
-    //     // <i 
-    //     // style={{fontSize: "12px"}}
-    //     // >
-    //     // by {item.username}
-    //     // </i>
-    //     // </li>
-        
-       
-    // )
 
     return(
-        <div className="feed-main-container">
+        <div className="feed-main-container" key={Math.floor(Math.random() * (1000 - 1) + 1)}>
             
-           <ul>
+          
             <Post 
-            
+            name={name}
             newPost={newPost}
             setNewPost={setNewPost}
             update={update}
@@ -99,7 +87,7 @@ const Feed: React.FC<PostProps> = ({
             bookmarkPosts={bookmarkPosts} 
             setBookmarkPosts={setBookmarkPosts}
             />
-            </ul>
+           
             
         </div>
         

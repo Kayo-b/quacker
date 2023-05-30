@@ -44,7 +44,6 @@ const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBoo
   
   useEffect(() => {
     fetchBookmarks();
-    console.log("useEffect")
 
   },[])
     
@@ -52,21 +51,15 @@ const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBoo
     const fetchBookmarks = async () => {
       
         const q = query(collection(db, "users"), where("uid", "==", user.uid));
-        console.log(q)
         const docs = await getDocs(q);
         let tempBookmarks: DocumentData[] = [];
-        console.log("fetch!book1")
-        console.log(docs.docs)
         docs.forEach(doc => {
             const bookmarks = doc.data().bookmarks;
-            console.log("fetch!book2")
-            console.log(bookmarks)
             tempBookmarks.push(...bookmarks)
         })
 
         let tempPosts: DocumentData[] = [];
         for (const bm of tempBookmarks) {
-          console.log("fetch!book3")
             const q = query(collection(db, "posts"), where("postID", "==", bm));
             const docs = await getDocs(q);
             docs.forEach(doc => {
@@ -78,7 +71,6 @@ const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBoo
         
     }
 
-    console.log("bookmarks ", bookmarkPosts)
     let bookmarkPost = bookmarkPosts?.map(post =>    
         <div key={post.postID} className="post-container">
           <div className="user-container">
