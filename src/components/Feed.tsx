@@ -29,6 +29,7 @@ type PostProps = {
     newPost: DocumentData[];
     user: UserProps;
     posts: DocumentData[];
+    post?: DocumentData;
     setPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     bookmarkPosts?: DocumentData[];
     setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
@@ -44,7 +45,8 @@ const Feed: React.FC<PostProps> = ({
     posts, 
     setPosts,
     bookmarkPosts, 
-    setBookmarkPosts
+    setBookmarkPosts,
+    post
     }) => {
 
     //const [posts, setPosts] = useState<DocumentData[]>([]);
@@ -73,9 +75,9 @@ const Feed: React.FC<PostProps> = ({
 
 
     return(
-        <div className="feed-main-container" key={Math.floor(Math.random() * (1000 - 1) + 1)}>
+        <div className="feed-main-container">
             
-          
+           <ul>
             <Post 
             name={name}
             newPost={newPost}
@@ -83,11 +85,12 @@ const Feed: React.FC<PostProps> = ({
             update={update}
             setUpdate={setUpdate}
             posts={posts}
+            post={post}
             user={user}
             bookmarkPosts={bookmarkPosts} 
             setBookmarkPosts={setBookmarkPosts}
             />
-           
+            </ul>
             
         </div>
         

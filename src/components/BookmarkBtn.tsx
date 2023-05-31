@@ -14,7 +14,7 @@ type UserProps = {
   
 type PostProps = {
     user: UserProps;
-    post: DocumentData;
+    post?: DocumentData;
     update: undefined | boolean;
     bookmarkPosts?: DocumentData[];
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
@@ -73,12 +73,12 @@ const BookmarkBtn: React.FC<PostProps> = ({user, post, setUpdate, update, bookma
                 setFavorited(true);
                 setDoc(userRef, {bookmarks: arrayUnion(postId)}, {merge: true})
                 setUpdate(true);
-                addBookmarkPost(post); 
+                if(post) addBookmarkPost(post); 
         } else {
                 setFavorited(false);
                 setDoc(userRef, {bookmarks: arrayRemove(postId)}, {merge: true});
                 setUpdate(false);
-                removeBookmarkPost(post.postID);
+                removeBookmarkPost(post?.postID);
             }
             //update === false ? setUpdate(true) : setUpdate(false);
         }
@@ -89,13 +89,13 @@ const BookmarkBtn: React.FC<PostProps> = ({user, post, setUpdate, update, bookma
     // }
 
     useEffect(() => {
-        hasUserBookmarkedPost(post.postID);
+        hasUserBookmarkedPost(post?.postID);
         
     },[bookmarkPosts])
 
     return(
         <div className="bm-main-container">
-            <button onClick={() => addBookmark(post.postID)}>
+            <button onClick={() => addBookmark(post?.postID)}>
                 {favorited ? "Unfavorite" : "Favorite"}</button>
         </div>
     )

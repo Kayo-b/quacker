@@ -19,7 +19,7 @@ type UserProps = {
   
   type PostProps = {
     user: UserProps;
-    post: DocumentData;
+    post?: DocumentData;
     newPost: DocumentData[];
     setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     update: undefined | boolean;

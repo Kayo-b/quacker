@@ -29,6 +29,7 @@ type PostProps = {
     setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     isComment?: boolean | undefined;
     parentPost?: DocumentData;
+    post?: DocumentData;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -42,15 +43,18 @@ const Post: React.FC<PostProps> = ({
   bookmarkPosts, 
   setBookmarkPosts,
   isComment,
-  parentPost }) => {
+  parentPost,
+  post}) => {
 
   const navigate = useNavigate();
+  const style = {"fontSize": "larger"}
   
+  //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
     navigate(`/post/${post.postID}`, {state: {post}})
     
   }
-
+  //neuPosts sets the new post directly into the feed, without any server commmunication
     let neuPost = newPost.map(post =>  post.parentID === null ?  
       <div className="post-container" key={post.postID}>
         <div className="user-container">
@@ -88,6 +92,9 @@ const Post: React.FC<PostProps> = ({
       </div>
       : <></>
     )
+    //LoadPosts also sets the posts into the feed, but it does it by getting the information from a sql query done in the previous componenet.
+    //The separation between both types of setting posts into the feed is because the loadPosts takes long to render because of the query, 
+    //so the neuPost was created to inprove the user experience.
     let loadPosts = posts.map(post => post.parentID === null ?
       <div className="post-container" key={post.postID}>
         <div className="user-container">
@@ -128,6 +135,7 @@ const Post: React.FC<PostProps> = ({
       </div>
       : <></>
     )
+    //Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
     
     let comment = posts.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-container" key={post.postID}>
@@ -166,13 +174,94 @@ const Post: React.FC<PostProps> = ({
       </div>
       : <></>
     )
+    
+    let clickedPost =  
+      <div className="post-container" key={post?.postID} style={style}>
+        <div className="user-container">
+          <img className="profile-picture" alt="user icon" src={myImg}></img>
+          <span>
+            <div className="user-name">
+              {post?.username}
+            </div>
+          <div className="content" >
+            <li key={post?.id}>
+              {post?.textContent}
+            </li>
+          </div>
+          </span>   
+        </div>
+        <Like 
+        user={user} 
+        post={post}
+        /> 
+        <BookmarkBtn 
+        user={user} 
+        post={post} 
+        update={update} 
+        setUpdate={setUpdate}
+        />
+        <Comment 
+         user={user}
+         post={post}
+         setUpdate={setUpdate}
+         setNewPost={setNewPost}
+         newPost={newPost}
+         update={update}
+         name={name}
+        />
+      </div>
+let newPostValue = post
+let clickedPostParentPost =   posts.map(post =>  post.postID === newPostValue?.parentID ?  
+  <div className="post-container" key={post.postID}>
+    <div className="user-container">
+      <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <span>
+        <div className="user-name">
+          {post.username}
+        </div>
+      <div className="content" onClick={() => RedirectToPostPage(post)}>
+        <li key={post.id}>
+          {post.textContent}
+        </li>
+      </div>
+      </span>   
+    </div>
+    <Like 
+    user={user} 
+    post={post}
+    /> 
+    <BookmarkBtn 
+    user={user} 
+    post={post} 
+    update={update} 
+    setUpdate={setUpdate}
+    />
+    <Comment 
+     user={user}
+     post={post}
+     setUpdate={setUpdate}
+     setNewPost={setNewPost}
+     newPost={newPost}
+     update={update}
+     name={name}
+    />
+  </div>
+  : <></>
+)
 
     return (
+      
       <div>
         {isComment ? (
-          <div>{comment}</div>
-        ) : (
+          
           <div>
+          <div>{clickedPostParentPost}</div>{/*FINISH THIS COMMENT PAGE POSTS RENDERING*/}
+          <div>{clickedPost}</div>
+          <div>{comment}</div>
+          </div>
+
+        ) : (
+          <div >
             <div>{neuPost}</div>
             <div>{loadPosts}</div>
           </div>

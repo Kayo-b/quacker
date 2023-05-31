@@ -13,7 +13,7 @@ type UserProps = {
 
 type PostProps = {
     user: UserProps;
-    post: DocumentData;
+    post?: DocumentData;
 }
 
 
@@ -50,12 +50,12 @@ const Like: React.FC<PostProps> = ({user, post}) => {
   }
 
   useEffect(() => {
-    likedPostCheck(post.postID)
+    likedPostCheck(post?.postID)
   },[])
 
   return (
    
-      <button className="like-btn" onClick={e => addLike(post.postID)}>
+      <button className="like-btn" onClick={e => addLike(post?.postID)}>
         {liked ? "Liked": "Like"}</button> 
     
   )
