@@ -21,6 +21,7 @@ import Login from './components/Login'
 import Register from './components/Register';
 import Reset from './components/Reset';
 import PostPage from './components/PostPage';
+import ProfilePage from './components/ProfilePage';
 import Dashboard from './components/Dashboard';
 import logo from './logo.svg';
 import './style/App.css';
@@ -127,7 +128,14 @@ const App = () => {
           
           />}
         />
-        
+        <Route
+        path="/profile/:userId"
+        element={
+        <ProfilePage 
+        user={user as UserPropsOrigin}
+        name={name}
+        />}
+        />
       </Routes>
       </div>
       </div>

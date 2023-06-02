@@ -25,14 +25,14 @@ const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost
 const[text, setText] = useState("");
 const handleClick = async (text: String) => {
     setUpdate(true);
-    // handle form submission here
-    console.log(post?.postID)
-    try {
+    // handle form submission here.
 
+    try {
         const docRef = await addDoc(collection(db, "posts"), {
             username: name,
             userID: user.uid,
             parentID: post ? post.postID : null,
+            rootPostID: post ? post.postID : null,
             textContent: text,
             likedByUsers: [],
             repostByUsers: [],
@@ -40,18 +40,21 @@ const handleClick = async (text: String) => {
             timestamp: serverTimestamp()
         })
         
-        // console.log("Document written with ID: ", docRef);
+        //setNewPost will add the new post into the newPost array so it 
+        //can render the posts into the screen without needing to fetch them.
         setNewPost(prev => [{
             username: name,
             postID: docRef.id,
             parentID: post ? post.postID : null,
+            rootPostID: post ? post.postID : docRef.id,
             textContent: text,
             likedByUsers: [],
             repostByUsers: [],
             childComments: [],
             timestamp: serverTimestamp()
         }, ...prev]);
-        setDoc(docRef, {postID: docRef.id}, {merge: true})
+        //setDoc will add values into doRef after the docRef has been created.
+        setDoc(docRef, {postID: docRef.id,  rootPostID: post ? post.rootPostID : docRef.id}, {merge: true})
     } catch(e) {
         console.error(e);
     }

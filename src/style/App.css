@@ -86,7 +86,11 @@ li {
   border-radius: 25px;
 
 }
-
+.profile-picture-profile-page {
+  height: 65px;
+  margin-right: 10px;
+  border-radius: 50px;
+}
 .post-container {
   border: 1px solid red;
 }

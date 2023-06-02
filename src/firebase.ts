@@ -76,13 +76,17 @@ const signUpWithEmail = async(email: string, password: string) => {
 
     }
 }
+//Register with email
 const registerEmail = async(name: string, email: string, password: string) => {
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const user = res.user;
         const q = query(collection(db, "users"), where("uid", "==", user.uid));
+        const q2 = query(collection(db, "users"), where("name", "==", name));
         const docs = await getDocs(q);
-        if(docs.docs.length === 0) {
+        const docs2 = await getDocs(q2);
+        console.log("docs length", docs2.docs.length)
+        if(docs.docs.length === 0 && docs2.docs.length === 0) {
             await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid,
                 name: name,
@@ -90,6 +94,10 @@ const registerEmail = async(name: string, email: string, password: string) => {
                 email: user.email,
                 bookmarks: []
             });
+        } else {
+            await user.delete();
+            alert("Username or email already exists")
+            
         }
     } catch (err: unknown) {
         if(err instanceof Error) {
