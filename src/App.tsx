@@ -132,8 +132,16 @@ const App = () => {
         path="/profile/:userId"
         element={
         <ProfilePage 
-        user={user as UserPropsOrigin}
         name={name}
+        user={user as UserPropsOrigin}
+        update={update} 
+        setUpdate={setUpdate}
+        posts={posts} 
+        bookmarkPosts={bookmarkPosts} 
+        setBookmarkPosts={setBookmarkPosts}
+        setNewPost={setNewPost}
+        newPost={newPost}
+
         />}
         />
       </Routes>

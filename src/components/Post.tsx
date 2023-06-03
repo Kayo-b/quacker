@@ -31,6 +31,8 @@ type PostProps = {
     isComment?: boolean | undefined;
     parentPost?: DocumentData;
     post?: DocumentData;
+    profPost?: boolean;
+    profResp?: boolean;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -45,7 +47,9 @@ const Post: React.FC<PostProps> = ({
   setBookmarkPosts,
   isComment,
   parentPost,
-  post}) => {
+  post,
+  profPost,
+  profResp}) => {
 
   const navigate = useNavigate();
   const style = {"fontSize": "large"}
@@ -56,13 +60,18 @@ const Post: React.FC<PostProps> = ({
     
   }
 
+  const RedirectToProfilePage = (post: DocumentData | undefined) => {
+    navigate(`/profile/${post?.username}`, {state: {post}})
+    
+  }
+
   //Create eventlistener for user-name element and attach the ProfilePage component rendering to it;
-  const userNames = document.querySelectorAll('.user-name')
-  userNames.forEach(name => {
-    name.addEventListener('click', () => {
-      navigate(`/profile/${name.textContent}`)
-    })
-  })
+  // const userNames = document.querySelectorAll('.user-name')
+  // userNames.forEach(name => {
+  //   name.addEventListener('click', (post: DocumentData) => {
+  //     navigate(`/profile/${name.textContent}`, {state: {post}})
+  //   })
+  // })
 
   //neuPosts sets the new post directly into the feed, without any server commmunication
     let neuPost = newPost.map(post =>  post.parentID === null ?  
@@ -70,7 +79,7 @@ const Post: React.FC<PostProps> = ({
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
-            <div className="user-name">
+            <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
               {post.username}
             </div>
           <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -119,7 +128,7 @@ const Post: React.FC<PostProps> = ({
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
-            <div className="user-name">
+            <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
               {post.username}
             </div>
           <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -170,7 +179,7 @@ const Post: React.FC<PostProps> = ({
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
-            <div className="user-name">
+            <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
               {post.username}
             </div>
           <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -217,7 +226,7 @@ const Post: React.FC<PostProps> = ({
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
-            <div className="user-name">
+            <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
               {post?.username}
             </div>
           <div className="content" >
@@ -258,12 +267,13 @@ const Post: React.FC<PostProps> = ({
       </div>
 //clickedPostParentPost renders the parent post of the clicked post (if it has a parentID)
 let newPostValue = post
-let clickedPostParentPost =   posts.map(post =>  post.postID === newPostValue?.parentID ?  
+let clickedPostParentPost =   posts.map(post =>  
+  post.postID === newPostValue?.parentID ?  
   <div className="post-container" key={post.postID} style={style}>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
-        <div className="user-name">
+        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -304,12 +314,113 @@ let clickedPostParentPost =   posts.map(post =>  post.postID === newPostValue?.p
   </div>
   : <></>
 )
-let rootPost =  posts.map(post =>  post.postID === newPostValue?.rootPostID && newPostValue?.parentID !== post.postID && newPostValue?.parentID !== null ?  
+let rootPost =  posts.map(post =>  
+  post.postID === newPostValue?.rootPostID &&
+  newPostValue?.parentID !== post.postID && 
+  newPostValue?.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
-        <div className="user-name">
+        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+          {post.username}
+        </div>
+      <div className="content" onClick={() => RedirectToPostPage(post)}>
+        <li key={post.id}>
+          {post.textContent}
+        </li>
+      </div>
+      </span>   
+    </div>
+    <Like 
+    user={user} 
+    post={post}
+    /> 
+    <BookmarkBtn 
+    user={user} 
+    post={post} 
+    update={update} 
+    setUpdate={setUpdate}
+    />
+    <Comment 
+     user={user}
+     post={post}
+     setUpdate={setUpdate}
+     setNewPost={setNewPost}
+     newPost={newPost}
+     update={update}
+     name={name}
+    />
+    {/* <Repost 
+      user={user}
+      post={post}
+      setUpdate={setUpdate}
+      setNewPost={setNewPost}
+      newPost={newPost}
+      update={update}
+      name={name}
+    /> */}
+  </div>
+  : <></>
+)
+
+let profilePostsFeed =  posts.map(post =>  
+  post.userID === newPostValue?.userID ?  
+  <div className="post-container" key={post.postID} style={style}>
+    <div className="user-container">
+      <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <span>
+        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+          {post.username}
+        </div>
+      <div className="content" onClick={() => RedirectToPostPage(post)}>
+        <li key={post.id}>
+          {post.textContent}
+        </li>
+      </div>
+      </span>   
+    </div>
+    <Like 
+    user={user} 
+    post={post}
+    /> 
+    <BookmarkBtn 
+    user={user} 
+    post={post} 
+    update={update} 
+    setUpdate={setUpdate}
+    />
+    <Comment 
+     user={user}
+     post={post}
+     setUpdate={setUpdate}
+     setNewPost={setNewPost}
+     newPost={newPost}
+     update={update}
+     name={name}
+    />
+    {/* <Repost 
+      user={user}
+      post={post}
+      setUpdate={setUpdate}
+      setNewPost={setNewPost}
+      newPost={newPost}
+      update={update}
+      name={name}
+    /> */}
+  </div>
+  : <></>
+)
+
+let profileResponsesFeed =  posts.map(post =>  
+  post.postID === newPostValue?.rootPostID &&
+  newPostValue?.parentID !== post.postID && 
+  newPostValue?.parentID !== null ?  
+  <div className="post-container" key={post.postID} style={style}>
+    <div className="user-container">
+      <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <span>
+        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -362,6 +473,16 @@ let rootPost =  posts.map(post =>  post.postID === newPostValue?.rootPostID && n
           <div>{comment}</div>
           </div>
 
+        ) : profPost === true ? (
+          <div>
+            <div>PROF POST</div>
+            <div>{profilePostsFeed}</div>
+          </div>
+        ) : profPost === false ? (
+          <div>
+            <div>PROF RESP</div>
+            <div>{profileResponsesFeed}</div>
+          </div>  
         ) : (
           <div >
             <div>{neuPost}</div>
