@@ -55,6 +55,7 @@ const handleClick = async (text: String) => {
         }, ...prev]);
         //setDoc will add values into doRef after the docRef has been created.
         setDoc(docRef, {postID: docRef.id,  rootPostID: post ? post.rootPostID : docRef.id}, {merge: true})
+       
     } catch(e) {
         console.error(e);
     }

@@ -52,6 +52,7 @@ const Homepage: React.FC<HomepageProps> = ({
             < CreatePost 
             setUpdate={setUpdate} 
             update={update} 
+            
             name={name} 
             user={user} 
             newPost={newPost} 

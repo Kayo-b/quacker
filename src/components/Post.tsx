@@ -120,6 +120,7 @@ const Post: React.FC<PostProps> = ({
       </div>
       : <></>
     )
+    
     //LoadPosts also sets the posts into the feed, but it does it by getting the information from a sql query done in the previous componenet.
     //The separation between both types of setting posts into the feed is because the loadPosts takes long to render because of the query, 
     //so the neuPost was created to inprove the user experience.
@@ -365,7 +366,8 @@ let rootPost =  posts.map(post =>
 )
 
 let profilePostsFeed =  posts.map(post =>  
-  post.userID === newPostValue?.userID ?  
+  post.userID === newPostValue?.userID &&
+  post.parentID === null ?  
   <div className="post-container" key={post.postID} style={style}>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
@@ -409,13 +411,12 @@ let profilePostsFeed =  posts.map(post =>
       name={name}
     /> */}
   </div>
-  : <></>
+  : <>PAYPAYA</>
 )
 
 let profileResponsesFeed =  posts.map(post =>  
-  post.postID === newPostValue?.rootPostID &&
-  newPostValue?.parentID !== post.postID && 
-  newPostValue?.parentID !== null ?  
+  post.userID === newPostValue?.userID &&
+  post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
@@ -490,6 +491,7 @@ let profileResponsesFeed =  posts.map(post =>
           </div>
         )}
       </div>
+      
     );
   
 }

@@ -30,11 +30,11 @@ type UserProps = {
       parentPost?: DocumentData;
   }
 const ProfilePage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPosts, newPost, setNewPost, setBookmarkPosts, setUpdate}) => {
-
+    const [profPost, setProfPost] = React.useState<boolean>(true);
     const location = useLocation() as { state: { post: DocumentData } };
     const post = location.state?.post;
-    const profPost: boolean = true;
-    const profResp: boolean = false;
+    // const profPost: boolean = true;
+    // const profResp: boolean = false;
     var renderPosts = 
     <Post 
     name={name}
@@ -65,41 +65,14 @@ const ProfilePage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPo
     // />
     
     const loadPostsList = (postOrComment: string) => {
-        console.log("HHHEEEEAY")
+        
         //const postList = posts.filter((postVal: DocumentData) => postVal.uid === post.uid);
         if(postOrComment === "posts") {
-            renderPosts = 
-                <Post 
-                name={name}
-                newPost={newPost}
-                setNewPost={setNewPost}
-                update={update}
-                setUpdate={setUpdate}
-                posts={posts}
-                post={post}
-                user={user}
-                bookmarkPosts={bookmarkPosts} 
-                setBookmarkPosts={setBookmarkPosts}
-                profPost={profPost}
-                />
+            setProfPost(true);
             }
         
         else if(postOrComment === "responses") {
-            return (
-                <Post 
-                name={name}
-                newPost={newPost}
-                setNewPost={setNewPost}
-                update={update}
-                setUpdate={setUpdate}
-                posts={posts}
-                post={post}
-                user={user}
-                bookmarkPosts={bookmarkPosts} 
-                setBookmarkPosts={setBookmarkPosts}
-                profResp={profResp}
-                />
-            )
+            setProfPost(false)
         }
         console.log(renderPosts)
     }
