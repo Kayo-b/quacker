@@ -27,9 +27,11 @@ type PostProps = {
     bookmarkPosts?: DocumentData[];
     setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+    repost?: DocumentData[];
+    setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
 }
 
-const PostPage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPosts, newPost, setNewPost, setBookmarkPosts, setUpdate}) => {
+const PostPage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPosts, newPost, repost, setRepost, setNewPost, setBookmarkPosts, setUpdate}) => {
 
 //   const postID = useParams<{postID: string}>()
   const location = useLocation() as { state: { post: DocumentData } };
@@ -84,6 +86,9 @@ const PostPage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPosts
           post={post}
           isComment={isComment}
           parentPost={post}
+          repost={repost}
+          setRepost={setRepost}
+          
           />
       </div>
       {/* {posts.map(comment => comment.parentID === post.postID ? 

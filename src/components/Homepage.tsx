@@ -25,6 +25,8 @@ type HomepageProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     bookmarkPosts?: DocumentData[];
     setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    repost?: DocumentData[];
+    setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     newPost: DocumentData[] ;
     
@@ -43,7 +45,9 @@ const Homepage: React.FC<HomepageProps> = ({
     setBookmarkPosts,
     newPost,
     setNewPost,
-    post}) => {
+    post,
+    repost,
+    setRepost}) => {
         
     //const [update, setUpdate] = useState<boolean | undefined>(false)
     
@@ -70,6 +74,8 @@ const Homepage: React.FC<HomepageProps> = ({
             bookmarkPosts={bookmarkPosts} 
             setBookmarkPosts={setBookmarkPosts}
             name={name}
+            repost={repost}
+            setRepost={setRepost}
             
             />
         </div>

@@ -44,9 +44,10 @@ const signInWithGoogle = async() => {
             await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid,
                 name: user.displayName,
-                authProvider: "local",
+                authProvider: "google",
                 email: user.email,
-                bookmarks: []
+                bookmarks: [],
+                reposts: []
             });
         }
     } catch (err: unknown) {
@@ -92,7 +93,8 @@ const registerEmail = async(name: string, email: string, password: string) => {
                 name: name,
                 authProvider: "local",
                 email: user.email,
-                bookmarks: []
+                bookmarks: [],
+                reposts: []
             });
         } else {
             await user.delete();

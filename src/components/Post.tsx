@@ -6,7 +6,7 @@ import Like from './Like'
 import BookmarkBtn from './BookmarkBtn';
 import PostPage from './PostPage';
 import Comment from './Comment';
-// import Repost from './Repost';
+import Repost from './Repost';
 import myImg from '../img/user-icon.png';
 
 
@@ -16,6 +16,7 @@ type UserProps = {
   name?: string;
   uid: string;
   bookmarks?: Array<string>;
+  reposts?: Array<string>;
 }  
 
 type PostProps = {
@@ -33,6 +34,8 @@ type PostProps = {
     post?: DocumentData;
     profPost?: boolean;
     profResp?: boolean;
+    repost?: DocumentData[];
+    setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -49,7 +52,9 @@ const Post: React.FC<PostProps> = ({
   parentPost,
   post,
   profPost,
-  profResp}) => {
+  profResp,
+  repost,
+  setRepost}) => {
 
   const navigate = useNavigate();
   const style = {"fontSize": "large"}
@@ -65,15 +70,9 @@ const Post: React.FC<PostProps> = ({
     
   }
 
-  //Create eventlistener for user-name element and attach the ProfilePage component rendering to it;
-  // const userNames = document.querySelectorAll('.user-name')
-  // userNames.forEach(name => {
-  //   name.addEventListener('click', (post: DocumentData) => {
-  //     navigate(`/profile/${name.textContent}`, {state: {post}})
-  //   })
-  // })
 
   //neuPosts sets the new post directly into the feed, without any server commmunication
+  console.log(post?.postID)
     let neuPost = newPost.map(post =>  post.parentID === null ?  
       <div className="post-container" key={post.postID}>
         <div className="user-container">
@@ -108,7 +107,7 @@ const Post: React.FC<PostProps> = ({
          update={update}
          name={name}
         />
-        {/* <Repost 
+        <Repost 
          user={user}
          post={post}
          setUpdate={setUpdate}
@@ -116,7 +115,9 @@ const Post: React.FC<PostProps> = ({
          newPost={newPost}
          update={update}
          name={name}
-        /> */}
+         repost={repost}
+         setRepost={setRepost}
+        />
       </div>
       : <></>
     )
@@ -161,7 +162,7 @@ const Post: React.FC<PostProps> = ({
         update={update}
         name={name}
         />
-        {/* <Repost 
+        <Repost 
          user={user}
          post={post}
          setUpdate={setUpdate}
@@ -169,7 +170,9 @@ const Post: React.FC<PostProps> = ({
          newPost={newPost}
          update={update}
          name={name}
-        /> */}
+         repost={repost}
+         setRepost={setRepost}
+        />
       </div>
       : <></>
     )
@@ -209,7 +212,7 @@ const Post: React.FC<PostProps> = ({
          update={update}
          name={name}
         />
-        {/* <Repost 
+        <Repost 
          user={user}
          post={post}
          setUpdate={setUpdate}
@@ -217,7 +220,58 @@ const Post: React.FC<PostProps> = ({
          newPost={newPost}
          update={update}
          name={name}
-        /> */}
+         repost={repost}
+         setRepost={setRepost}
+        />
+      </div>
+      : <></>
+    )
+
+    let newComment = newPost.map(post =>  post.parentID === parentPost?.postID ?  
+      <div className="post-container" key={post.postID}>
+        <div className="user-container">
+          <img className="profile-picture" alt="user icon" src={myImg}></img>
+          <span>
+            <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+              {post.username}
+            </div>
+          <div className="content" onClick={() => RedirectToPostPage(post)}>
+            <li key={post.id}>
+              {post.textContent}
+            </li>
+          </div>
+          </span>   
+        </div>
+        <Like 
+        user={user} 
+        post={post}
+        /> 
+        <BookmarkBtn 
+        user={user} 
+        post={post} 
+        update={update} 
+        setUpdate={setUpdate}
+        />
+        <Comment 
+         user={user}
+         post={post}
+         setUpdate={setUpdate}
+         setNewPost={setNewPost}
+         newPost={newPost}
+         update={update}
+         name={name}
+        />
+        <Repost 
+         user={user}
+         post={post}
+         setUpdate={setUpdate}
+         setNewPost={setNewPost}
+         newPost={newPost}
+         update={update}
+         name={name}
+         repost={repost}
+         setRepost={setRepost}
+        />
       </div>
       : <></>
     )
@@ -256,7 +310,7 @@ const Post: React.FC<PostProps> = ({
          update={update}
          name={name}
         />
-        {/* <Repost 
+        <Repost 
          user={user}
          post={post}
          setUpdate={setUpdate}
@@ -264,7 +318,9 @@ const Post: React.FC<PostProps> = ({
          newPost={newPost}
          update={update}
          name={name}
-        /> */}
+         repost={repost}
+         setRepost={setRepost}
+        />
       </div>
 //clickedPostParentPost renders the parent post of the clicked post (if it has a parentID)
 let newPostValue = post
@@ -303,7 +359,7 @@ let clickedPostParentPost =   posts.map(post =>
      update={update}
      name={name}
     />
-    {/* <Repost 
+    <Repost 
       user={user}
       post={post}
       setUpdate={setUpdate}
@@ -311,7 +367,9 @@ let clickedPostParentPost =   posts.map(post =>
       newPost={newPost}
       update={update}
       name={name}
-    /> */}
+      repost={repost}
+      setRepost={setRepost}
+    />
   </div>
   : <></>
 )
@@ -352,7 +410,7 @@ let rootPost =  posts.map(post =>
      update={update}
      name={name}
     />
-    {/* <Repost 
+    <Repost 
       user={user}
       post={post}
       setUpdate={setUpdate}
@@ -360,11 +418,14 @@ let rootPost =  posts.map(post =>
       newPost={newPost}
       update={update}
       name={name}
-    /> */}
+      repost={repost}
+      setRepost={setRepost}
+    />
   </div>
   : <></>
 )
-
+console.log(newPostValue?.userID)
+console.log(post?.userID)
 let profilePostsFeed =  posts.map(post =>  
   post.userID === newPostValue?.userID &&
   post.parentID === null ?  
@@ -401,7 +462,7 @@ let profilePostsFeed =  posts.map(post =>
      update={update}
      name={name}
     />
-    {/* <Repost 
+    <Repost 
       user={user}
       post={post}
       setUpdate={setUpdate}
@@ -409,9 +470,62 @@ let profilePostsFeed =  posts.map(post =>
       newPost={newPost}
       update={update}
       name={name}
-    /> */}
+      repost={repost}
+      setRepost={setRepost}
+    />
   </div>
-  : <>PAYPAYA</>
+  : <></>
+)
+
+let profileNewPostsFeed =  newPost.map(post =>  
+  post.userID === newPostValue?.userID &&
+  post.parentID === null ?  
+  <div className="post-container" key={post.postID} style={style}>
+    <div className="user-container">
+      <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <span>
+        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+          {post.username}
+        </div>
+      <div className="content" onClick={() => RedirectToPostPage(post)}>
+        <li key={post.id}>
+          {post.textContent}
+        </li>
+      </div>
+      </span>   
+    </div>
+    <Like 
+    user={user} 
+    post={post}
+    /> 
+    <BookmarkBtn 
+    user={user} 
+    post={post} 
+    update={update} 
+    setUpdate={setUpdate}
+    />
+    <Comment 
+     user={user}
+     post={post}
+     setUpdate={setUpdate}
+     setNewPost={setNewPost}
+     newPost={newPost}
+     update={update}
+     name={name}
+    />
+    <Repost 
+      user={user}
+      post={post}
+      setUpdate={setUpdate}
+      setNewPost={setNewPost}
+      newPost={newPost}
+      update={update}
+      name={name}
+      repost={repost}
+      setRepost={setRepost}
+    />
+  </div>
+  : <></>
 )
 
 let profileResponsesFeed =  posts.map(post =>  
@@ -450,7 +564,7 @@ let profileResponsesFeed =  posts.map(post =>
      update={update}
      name={name}
     />
-    {/* <Repost 
+    <Repost 
       user={user}
       post={post}
       setUpdate={setUpdate}
@@ -458,10 +572,168 @@ let profileResponsesFeed =  posts.map(post =>
       newPost={newPost}
       update={update}
       name={name}
-    /> */}
+      repost={repost}
+      setRepost={setRepost}
+    />
   </div>
   : <></>
 )
+let profileNewResponsesFeed =  newPost.map(post =>  
+  post.userID === newPostValue?.userID &&
+  post.parentID !== null ?  
+  <div className="post-container" key={post.postID} style={style}>
+    <div className="user-container">
+      <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <span>
+        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+          {post.username}
+        </div>
+      <div className="content" onClick={() => RedirectToPostPage(post)}>
+        <li key={post.id}>
+          {post.textContent}
+        </li>
+      </div>
+      </span>   
+    </div>
+    <Like 
+    user={user} 
+    post={post}
+    /> 
+    <BookmarkBtn 
+    user={user} 
+    post={post} 
+    update={update} 
+    setUpdate={setUpdate}
+    />
+    <Comment 
+     user={user}
+     post={post}
+     setUpdate={setUpdate}
+     setNewPost={setNewPost}
+     newPost={newPost}
+     update={update}
+     name={name}
+    />
+    <Repost 
+      user={user}
+      post={post}
+      setUpdate={setUpdate}
+      setNewPost={setNewPost}
+      newPost={newPost}
+      update={update}
+      name={name}
+      repost={repost}
+      setRepost={setRepost}
+    />
+  </div>
+  : <></>
+)
+
+console.log(repost)
+let repostsFromUser = posts.map(post =>  
+  
+    //user.reposts?.find(repost => repost === post.postID) 
+    post.repostByUsers.includes(newPostValue?.userID) ?
+    <div className="post-container" key={post.postID} style={style}>
+      <div className="user-container">
+        <img className="profile-picture" alt="user icon" src={myImg}></img>
+        <span>
+          <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+            {post.username}
+          </div>
+        <div className="content" onClick={() => RedirectToPostPage(post)}>
+          <li key={post.id}>
+            {post.textContent}
+          </li>
+        </div>
+        </span>   
+      </div>
+      <Like 
+      user={user} 
+      post={post}
+      /> 
+      <BookmarkBtn 
+      user={user} 
+      post={post} 
+      update={update} 
+      setUpdate={setUpdate}
+      />
+      <Comment 
+       user={user}
+       post={post}
+       setUpdate={setUpdate}
+       setNewPost={setNewPost}
+       newPost={newPost}
+       update={update}
+       name={name}
+      />
+      <Repost 
+        user={user}
+        post={post}
+        setUpdate={setUpdate}
+        setNewPost={setNewPost}
+        newPost={newPost}
+        update={update}
+        name={name}
+        repost={repost}
+        setRepost={setRepost}
+      />
+    </div>
+    : <></>
+  )
+
+  let newRepostsFromUser = posts.map(post => 
+    //repost?.find(repost => repost.postID === post.postID) ?
+    repost?.includes(post) ?
+    <div className="post-container" key={post.postID} style={style}>
+      <div className="user-container">
+        <img className="profile-picture" alt="user icon" src={myImg}></img>
+        <span>
+          <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+            {post.username}
+          </div>
+        <div className="content" onClick={() => RedirectToPostPage(post)}>
+          <li key={post.id}>
+            {post.textContent}
+          </li>
+        </div>
+        </span>   
+      </div>
+      <Like 
+      user={user} 
+      post={post}
+      /> 
+      <BookmarkBtn 
+      user={user} 
+      post={post} 
+      update={update} 
+      setUpdate={setUpdate}
+      />
+      <Comment 
+       user={user}
+       post={post}
+       setUpdate={setUpdate}
+       setNewPost={setNewPost}
+       newPost={newPost}
+       update={update}
+       name={name}
+      />
+      <Repost 
+        user={user}
+        post={post}
+        setUpdate={setUpdate}
+        setNewPost={setNewPost}
+        newPost={newPost}
+        update={update}
+        name={name}
+        repost={repost}
+        setRepost={setRepost}
+      />
+    </div>
+    : <><div>BULLSHIT</div></>
+  )
+
+console.log(newPostValue)
     return (
       
       <div>
@@ -471,17 +743,23 @@ let profileResponsesFeed =  posts.map(post =>
           <div>{rootPost}</div>
           <div>{clickedPostParentPost}</div>
           <div>{clickedPost}</div>
+          <div>{newComment}</div>
           <div>{comment}</div>
           </div>
 
         ) : profPost === true ? (
           <div>
             <div>PROF POST</div>
+            <div>{newRepostsFromUser}</div>
+            <div>{profileNewPostsFeed}</div>
+            
+            <div>{repostsFromUser}</div>
             <div>{profilePostsFeed}</div>
           </div>
         ) : profPost === false ? (
           <div>
             <div>PROF RESP</div>
+            <div>{profileNewResponsesFeed}</div>
             <div>{profileResponsesFeed}</div>
           </div>  
         ) : (

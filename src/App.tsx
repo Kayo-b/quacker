@@ -50,11 +50,10 @@ const App = () => {
   const [user, loading, error] = useAuthState(auth);
   const [posts, setPosts] = useState<DocumentData[]>([]);
   const [bookmarkPosts, setBookmarkPosts] = useState<DocumentData[]>([])
+  const [repost, setRepost] = useState<DocumentData[]>([])
   const [update, setUpdate] = useState<boolean | undefined>()
   const [newPost, setNewPost] = useState<DocumentData[]>([])
   const [name, setName] = useState("");
-  
-
 
   return (
    
@@ -98,6 +97,8 @@ const App = () => {
         setBookmarkPosts={setBookmarkPosts}
         setNewPost={setNewPost}
         newPost={newPost}
+        repost={repost}
+        setRepost={setRepost}
         />}
         />
         <Route
@@ -125,6 +126,8 @@ const App = () => {
           setBookmarkPosts={setBookmarkPosts}
           setNewPost={setNewPost}
           newPost={newPost}
+          repost={repost}
+          setRepost={setRepost}
           
           />}
         />
@@ -141,6 +144,8 @@ const App = () => {
         setBookmarkPosts={setBookmarkPosts}
         setNewPost={setNewPost}
         newPost={newPost}
+        repost={repost}
+        setRepost={setRepost}
 
         />}
         />

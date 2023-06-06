@@ -44,6 +44,7 @@ const handleClick = async (text: String) => {
         //can render the posts into the screen without needing to fetch them.
         setNewPost(prev => [{
             username: name,
+            userID: user.uid,
             postID: docRef.id,
             parentID: post ? post.postID : null,
             rootPostID: post ? post.postID : docRef.id,

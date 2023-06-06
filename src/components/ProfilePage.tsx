@@ -28,13 +28,16 @@ type UserProps = {
       setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
       isComment?: boolean | undefined;
       parentPost?: DocumentData;
+      repost?: DocumentData[];
+      setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
   }
-const ProfilePage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPosts, newPost, setNewPost, setBookmarkPosts, setUpdate}) => {
+const ProfilePage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPosts, newPost, repost, setRepost, setNewPost, setBookmarkPosts, setUpdate}) => {
     const [profPost, setProfPost] = React.useState<boolean>(true);
     const location = useLocation() as { state: { post: DocumentData } };
     const post = location.state?.post;
     // const profPost: boolean = true;
     // const profResp: boolean = false;
+    console.log(post)
     var renderPosts = 
     <Post 
     name={name}
@@ -48,6 +51,8 @@ const ProfilePage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPo
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
     profPost={profPost}
+    repost={repost}
+    setRepost={setRepost}
     />
     // var renderResponses = 
     // <Post 
@@ -74,7 +79,7 @@ const ProfilePage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPo
         else if(postOrComment === "responses") {
             setProfPost(false)
         }
-        console.log(renderPosts)
+    
     }
     
     
@@ -96,9 +101,9 @@ const ProfilePage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPo
                     <div className="quacks-select" onClick={() => loadPostsList("posts")}>Quacks</div>
                     <div className="responses-select" onClick={() => loadPostsList("responses")}>Responses</div>
                 </div>
-                <div className="feed-display">                                       {/* FINISH THIS, NEED TO ADD FUNCTION THAT WILL RENDER ONLY USER'S OWN POSTS */}
+                <div className="feed-display">                                
                 {renderPosts}
-                    {/* {renderComments} */}
+            
                 </div>
 
             </div>

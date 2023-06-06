@@ -26,35 +26,35 @@ type PostProps = {
 
 const BookmarkBtn: React.FC<PostProps> = ({user, post, setUpdate, update, bookmarkPosts, setBookmarkPosts}) => {
 
-    const [favorited, setFavorited] = useState<boolean>(false);
+const [favorited, setFavorited] = useState<boolean>(false);
 
-    const hasUserBookmarkedPost = async(postId: string) => {
-        const userRef = doc(db, 'users', user.uid);
-        const userDoc = await getDoc(userRef);
-        
-        // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
-        // const docs = await getDocs(q);
-        // const userData = docs.docs[0].data();
-        if(userDoc.exists()) {
-            if(userDoc.data().bookmarks.includes(postId)) {
-                setFavorited(true);
-            }
+const hasUserBookmarkedPost = async(postId: string) => {
+    const userRef = doc(db, 'users', user.uid);
+    const userDoc = await getDoc(userRef);
+    
+    // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
+    // const docs = await getDocs(q);
+    // const userData = docs.docs[0].data();
+    if(userDoc.exists()) {
+        if(userDoc.data().bookmarks.includes(postId)) {
+            setFavorited(true);
         }
-
     }
 
-    const removeBookmarkPost = (postId: string) => {
-        if(setBookmarkPosts) setBookmarkPosts(
-            prevBookmarkPosts => 
-                prevBookmarkPosts
+}
+
+const removeBookmarkPost = (postId: string) => {
+    if(setBookmarkPosts) setBookmarkPosts(
+        prevBookmarkPosts => 
+            prevBookmarkPosts
             .filter(
                 post =>
                     post.postID !== postId)) 
-    
-      };
+
+    };
 
     
-    const addBookmarkPost = (newPost: DocumentData) => {
+const addBookmarkPost = (newPost: DocumentData) => {
         
         if(setBookmarkPosts) setBookmarkPosts(
             prevBookmarkPosts => [...prevBookmarkPosts, newPost]) 
