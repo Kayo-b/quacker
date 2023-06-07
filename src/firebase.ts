@@ -47,7 +47,8 @@ const signInWithGoogle = async() => {
                 authProvider: "google",
                 email: user.email,
                 bookmarks: [],
-                reposts: []
+                reposts: [],
+                mainFeed:[]
             });
         }
     } catch (err: unknown) {
@@ -94,7 +95,8 @@ const registerEmail = async(name: string, email: string, password: string) => {
                 authProvider: "local",
                 email: user.email,
                 bookmarks: [],
-                reposts: []
+                reposts: [],
+                mainFeed:[]
             });
         } else {
             await user.delete();
