@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {  addDoc, collection, serverTimestamp, DocumentData, setDoc, doc } from "firebase/firestore";
+import {  addDoc, collection, serverTimestamp, DocumentData, setDoc, doc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebase";
 
 
@@ -39,6 +39,10 @@ const handleClick = async (text: String) => {
             childComments: [],
             timestamp: serverTimestamp()
         })
+        const userDocRef = doc(db, "users", user.uid);
+        await setDoc(userDocRef, {
+            mainFeed: arrayUnion(docRef.id)
+        }, {merge: true})
         
         //setNewPost will add the new post into the newPost array so it 
         //can render the posts into the screen without needing to fetch them.
@@ -55,7 +59,12 @@ const handleClick = async (text: String) => {
             timestamp: serverTimestamp()
         }, ...prev]);
         //setDoc will add values into doRef after the docRef has been created.
-        setDoc(docRef, {postID: docRef.id,  rootPostID: post ? post.rootPostID : docRef.id}, {merge: true})
+        setDoc(docRef, {
+            postID: docRef.id,  
+            rootPostID: post ?
+            post.rootPostID : 
+            docRef.id}, {
+                merge: true})
        
     } catch(e) {
         console.error(e);

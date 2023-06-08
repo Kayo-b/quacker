@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {
-  getDocs, 
+  getDoc, 
   collection, 
   serverTimestamp, 
   SnapshotOptions, 
@@ -36,6 +36,7 @@ type UserPropsOrigin = {
   name?: string;
   uid: string;
   bookmarks?: Array<string>;
+
 }  
 
 // type AppProps = { 
@@ -48,12 +49,36 @@ type UserPropsOrigin = {
 
 const App = () => {
   const [user, loading, error] = useAuthState(auth);
+  const [userMainFeed, setUserMainFeed] = useState<DocumentData[]>([]);
   const [posts, setPosts] = useState<DocumentData[]>([]);
   const [bookmarkPosts, setBookmarkPosts] = useState<DocumentData[]>([])
   const [repost, setRepost] = useState<DocumentData[]>([])
   const [update, setUpdate] = useState<boolean | undefined>()
   const [newPost, setNewPost] = useState<DocumentData[]>([])
   const [name, setName] = useState("");
+
+
+//  useEffect(() => {
+//   getUserMainFeed();
+//   console.log(userMainFeed)
+//  }, [update])
+
+
+//   let getUserMainFeed = async () => {
+//     if(user && user.uid) {
+//       const userDocRef = doc(db, "users", user?.uid);
+//       const userDocSnap = await getDoc(userDocRef);
+//       if(userDocSnap.exists()){
+//         const userDocSnapData = userDocSnap.data();
+//         setUserMainFeed(userDocSnapData.mainFeed);
+//       } 
+//     } else {
+//       console.log("no user")
+//     }
+
+  
+ 
+//  }
 
   return (
    
@@ -99,6 +124,8 @@ const App = () => {
         newPost={newPost}
         repost={repost}
         setRepost={setRepost}
+        userMainFeed={userMainFeed}
+        setUserMainFeed={setUserMainFeed}
         />}
         />
         <Route
@@ -128,6 +155,8 @@ const App = () => {
           newPost={newPost}
           repost={repost}
           setRepost={setRepost}
+          userMainFeed={userMainFeed}
+          setUserMainFeed={setUserMainFeed}
           
           />}
         />
@@ -146,6 +175,8 @@ const App = () => {
         newPost={newPost}
         repost={repost}
         setRepost={setRepost}
+        userMainFeed={userMainFeed}
+        setUserMainFeed={setUserMainFeed}
 
         />}
         />

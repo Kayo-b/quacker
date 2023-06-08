@@ -30,8 +30,24 @@ type UserProps = {
       parentPost?: DocumentData;
       repost?: DocumentData[];
       setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+      userMainFeed?: DocumentData[];
+      setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
   }
-const ProfilePage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPosts, newPost, repost, setRepost, setNewPost, setBookmarkPosts, setUpdate}) => {
+const ProfilePage: React.FC<PostProps> = ({
+    user, 
+    update, 
+    posts, 
+    name, 
+    bookmarkPosts, 
+    newPost, 
+    repost, 
+    setRepost, 
+    setNewPost, 
+    setBookmarkPosts, 
+    setUpdate,
+    userMainFeed,
+    setUserMainFeed
+    }) => {
     const [profPost, setProfPost] = React.useState<boolean>(true);
     const location = useLocation() as { state: { post: DocumentData } };
     const post = location.state?.post;
@@ -53,6 +69,8 @@ const ProfilePage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPo
     profPost={profPost}
     repost={repost}
     setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
     />
     // var renderResponses = 
     // <Post 

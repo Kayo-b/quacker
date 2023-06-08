@@ -29,9 +29,26 @@ type PostProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     repost?: DocumentData[];
     setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    userMainFeed?: DocumentData[];
+    setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
 }
 
-const PostPage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPosts, newPost, repost, setRepost, setNewPost, setBookmarkPosts, setUpdate}) => {
+const PostPage: React.FC<PostProps> = ({
+  user, 
+  update, 
+  posts, 
+  name, 
+  bookmarkPosts, 
+  newPost, 
+  repost, 
+  setRepost, 
+  setNewPost, 
+  setBookmarkPosts, 
+  setUpdate,
+  userMainFeed,
+  setUserMainFeed
+  }) => {
+
 
 //   const postID = useParams<{postID: string}>()
   const location = useLocation() as { state: { post: DocumentData } };
@@ -88,6 +105,8 @@ const PostPage: React.FC<PostProps> = ({user, update, posts, name, bookmarkPosts
           parentPost={post}
           repost={repost}
           setRepost={setRepost}
+          userMainFeed={userMainFeed}
+          setUserMainFeed={setUserMainFeed}
           
           />
       </div>

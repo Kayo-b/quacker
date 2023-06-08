@@ -29,6 +29,9 @@ type HomepageProps = {
     setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     newPost: DocumentData[] ;
+    userMainFeed?: DocumentData[];
+    setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+
     
 }
 
@@ -47,7 +50,10 @@ const Homepage: React.FC<HomepageProps> = ({
     setNewPost,
     post,
     repost,
-    setRepost}) => {
+    setRepost,
+    userMainFeed,
+    setUserMainFeed
+    }) => {
         
     //const [update, setUpdate] = useState<boolean | undefined>(false)
     
@@ -76,7 +82,8 @@ const Homepage: React.FC<HomepageProps> = ({
             name={name}
             repost={repost}
             setRepost={setRepost}
-            
+            userMainFeed={userMainFeed}
+            setUserMainFeed={setUserMainFeed}
             />
         </div>
     )

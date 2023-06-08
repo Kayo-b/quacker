@@ -1,6 +1,13 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { DocumentData } from 'firebase/firestore';
+import { DocumentData,   getDoc, 
+  collection, 
+  serverTimestamp,
+  orderBy, 
+  setDoc, 
+  doc,
+  where,
+  query} from 'firebase/firestore';
 import { db } from "../firebase";
 import Like from './Like'
 import BookmarkBtn from './BookmarkBtn';
@@ -36,6 +43,8 @@ type PostProps = {
     profResp?: boolean;
     repost?: DocumentData[];
     setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    userMainFeed?: DocumentData[];
+    setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -54,7 +63,10 @@ const Post: React.FC<PostProps> = ({
   profPost,
   profResp,
   repost,
-  setRepost}) => {
+  setRepost,
+  userMainFeed,
+  setUserMainFeed
+  }) => {
 
   const navigate = useNavigate();
   const style = {"fontSize": "large"}
@@ -70,9 +82,29 @@ const Post: React.FC<PostProps> = ({
     
   }
 
+  useEffect(() => {
+    getUserMainFeed();
+    console.log(userMainFeed)
+   }, [update])
+  
+  
+    let getUserMainFeed = async () => {
+      if(user && user.uid) {
+        const userDocRef = doc(db, "users", user?.uid);
+        const userDocSnap = await getDoc(userDocRef);
+        if(userDocSnap.exists()){
+          const userDocSnapData = userDocSnap.data();
+          setUserMainFeed(userDocSnapData.mainFeed);
+        } 
+      } else {
+        console.log("no user")
+      }
+    }
+    
+
 
   //neuPosts sets the new post directly into the feed, without any server commmunication
-  console.log(post?.postID)
+
     let neuPost = newPost.map(post =>  post.parentID === null ?  
       <div className="post-container" key={post.postID}>
         <div className="user-container">
@@ -117,6 +149,8 @@ const Post: React.FC<PostProps> = ({
          name={name}
          repost={repost}
          setRepost={setRepost}
+         userMainFeed={userMainFeed}
+         setUserMainFeed={setUserMainFeed}
         />
       </div>
       : <></>
@@ -172,6 +206,8 @@ const Post: React.FC<PostProps> = ({
          name={name}
          repost={repost}
          setRepost={setRepost}
+         userMainFeed={userMainFeed}
+         setUserMainFeed={setUserMainFeed}
         />
       </div>
       : <></>
@@ -222,6 +258,8 @@ const Post: React.FC<PostProps> = ({
          name={name}
          repost={repost}
          setRepost={setRepost}
+         userMainFeed={userMainFeed}
+         setUserMainFeed={setUserMainFeed}
         />
       </div>
       : <></>
@@ -271,6 +309,8 @@ const Post: React.FC<PostProps> = ({
          name={name}
          repost={repost}
          setRepost={setRepost}
+         userMainFeed={userMainFeed}
+         setUserMainFeed={setUserMainFeed}
         />
       </div>
       : <></>
@@ -320,6 +360,8 @@ const Post: React.FC<PostProps> = ({
          name={name}
          repost={repost}
          setRepost={setRepost}
+         userMainFeed={userMainFeed}
+         setUserMainFeed={setUserMainFeed}
         />
       </div>
 //clickedPostParentPost renders the parent post of the clicked post (if it has a parentID)
@@ -369,6 +411,8 @@ let clickedPostParentPost =   posts.map(post =>
       name={name}
       repost={repost}
       setRepost={setRepost}
+      userMainFeed={userMainFeed}
+      setUserMainFeed={setUserMainFeed}
     />
   </div>
   : <></>
@@ -420,15 +464,18 @@ let rootPost =  posts.map(post =>
       name={name}
       repost={repost}
       setRepost={setRepost}
+      userMainFeed={userMainFeed}
+      setUserMainFeed={setUserMainFeed}
     />
   </div>
   : <></>
 )
-console.log(newPostValue?.userID)
-console.log(post?.userID)
+console.log(userMainFeed)
 let profilePostsFeed =  posts.map(post =>  
-  post.userID === newPostValue?.userID &&
-  post.parentID === null ?  
+ 
+  // post.userID === newPostValue?.userID &&
+  // post.parentID === null ?  
+  userMainFeed?.includes(post.postID) && !post.repostByUsers.includes(user.uid) ?
   <div className="post-container" key={post.postID} style={style}>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
@@ -472,9 +519,11 @@ let profilePostsFeed =  posts.map(post =>
       name={name}
       repost={repost}
       setRepost={setRepost}
+      userMainFeed={userMainFeed}
+      setUserMainFeed={setUserMainFeed}
     />
   </div>
-  : <></>
+  : <>NO FEED{ (console.log(userMainFeed))}</>
 )
 
 let profileNewPostsFeed =  newPost.map(post =>  
@@ -523,6 +572,8 @@ let profileNewPostsFeed =  newPost.map(post =>
       name={name}
       repost={repost}
       setRepost={setRepost}
+      userMainFeed={userMainFeed}
+      setUserMainFeed={setUserMainFeed}
     />
   </div>
   : <></>
@@ -574,6 +625,8 @@ let profileResponsesFeed =  posts.map(post =>
       name={name}
       repost={repost}
       setRepost={setRepost}
+      userMainFeed={userMainFeed}
+      setUserMainFeed={setUserMainFeed}
     />
   </div>
   : <></>
@@ -624,12 +677,13 @@ let profileNewResponsesFeed =  newPost.map(post =>
       name={name}
       repost={repost}
       setRepost={setRepost}
+      userMainFeed={userMainFeed}
+      setUserMainFeed={setUserMainFeed}
     />
   </div>
   : <></>
 )
 
-console.log(repost)
 let repostsFromUser = posts.map(post =>  
   
     //user.reposts?.find(repost => repost === post.postID) 
@@ -677,6 +731,8 @@ let repostsFromUser = posts.map(post =>
         name={name}
         repost={repost}
         setRepost={setRepost}
+        userMainFeed={userMainFeed}
+        setUserMainFeed={setUserMainFeed}
       />
     </div>
     : <></>
@@ -728,12 +784,14 @@ let repostsFromUser = posts.map(post =>
         name={name}
         repost={repost}
         setRepost={setRepost}
+        userMainFeed={userMainFeed}
+        setUserMainFeed={setUserMainFeed}
       />
     </div>
-    : <><div>BULLSHIT</div></>
+    : <></>
   )
 
-console.log(newPostValue)
+
     return (
       
       <div>
@@ -752,8 +810,7 @@ console.log(newPostValue)
             <div>PROF POST</div>
             <div>{newRepostsFromUser}</div>
             <div>{profileNewPostsFeed}</div>
-            
-            <div>{repostsFromUser}</div>
+            {/* <div>{repostsFromUser}</div> */}
             <div>{profilePostsFeed}</div>
           </div>
         ) : profPost === false ? (

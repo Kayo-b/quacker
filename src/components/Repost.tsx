@@ -22,11 +22,13 @@ type UserProps = {
     name?: string;
     repost?: DocumentData[];
     setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    userMainFeed?: DocumentData[];
+    setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
 }
 
 
 
-const Repost: React.FC<PostProps> = ({post, user, repost, setRepost, update, setUpdate}) => {
+const Repost: React.FC<PostProps> = ({post, user, repost, setRepost, update, setUpdate, userMainFeed, setUserMainFeed}) => {
 
   const [reposted, setReposted] = useState<boolean>(false);
 
@@ -51,7 +53,8 @@ const Repost: React.FC<PostProps> = ({post, user, repost, setRepost, update, set
               prevRepost
               .filter(
                   post =>
-                      post.postID !== postId)) 
+                      post.postID !== postId))
+        if(userMainFeed) setUserMainFeed(prevVal => prevVal.filter(post => post.postID !== postId))
   
       };
   
@@ -69,22 +72,29 @@ const Repost: React.FC<PostProps> = ({post, user, repost, setRepost, update, set
           // const userRef = docs.docs[0].ref;
           // const userData = docs.docs[0].data();
           const userRef = doc(db, 'users', user.uid);
-          const userRefPosts = doc(db, 'posts', post?.postID);
+          const postRef = doc(db, 'posts', post?.postID);
+          
+        //   await setDoc(userRef, {
+        //       mainFeed: arrayUnion(post?.postID)
+        //   }, {merge: true})
           
           //const userDoc = await getDoc(userRef);
           //const userData = userDoc.data();
           if(!reposted) {
-                  setReposted(true);
-                  setDoc(userRef, {reposts: arrayUnion(postId)}, {merge: true});
-                  setDoc(userRefPosts, {repostByUsers: arrayUnion(user.uid)}, {merge: true});
-                  setUpdate(true);
-                  if(post) addRepostPost(post); 
+                setReposted(true);
+                setDoc(userRef, {reposts: arrayUnion(postId)}, {merge: true});
+                setDoc(userRef, {mainFeed: arrayUnion(postId)}, {merge: true});
+                setDoc(postRef, {repostByUsers: arrayUnion(user.uid)}, {merge: true});
+                setUpdate(true);
+                if(post) addRepostPost(post);
+
           } else {
-                  setReposted(false);
-                  setDoc(userRef, {reposts: arrayRemove(postId)}, {merge: true});
-                  setDoc(userRefPosts, {repostByUsers: arrayRemove(user.uid)}, {merge: true});
-                  setUpdate(false);
-                  removeRepost(post?.postID);
+                setReposted(false);
+                setDoc(userRef, {reposts: arrayRemove(postId)}, {merge: true});
+                setDoc(userRef, {mainFeed: arrayRemove(postId)}, {merge: true});
+                setDoc(postRef, {repostByUsers: arrayRemove(user.uid)}, {merge: true});
+                setUpdate(false);
+                removeRepost(post?.postID);
               }
               //update === false ? setUpdate(true) : setUpdate(false);
           }
