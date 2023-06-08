@@ -94,11 +94,15 @@ const Post: React.FC<PostProps> = ({
         const userDocSnap = await getDoc(userDocRef);
         if(userDocSnap.exists()){
           const userDocSnapData = userDocSnap.data();
-          setUserMainFeed(userDocSnapData.mainFeed);
+          setUserMainFeed(userDocSnapData.mainFeed.reverse());
         } 
       } else {
         console.log("no user")
       }
+      // if(userMainFeed) {
+      //   let newFeed = userMainFeed.slice().reverse();
+      //   setUserMainFeed(newFeed);
+      // }
     }
     
 
@@ -471,11 +475,12 @@ let rootPost =  posts.map(post =>
   : <></>
 )
 console.log(userMainFeed)
-let profilePostsFeed =  posts.map(post =>  
- 
-  // post.userID === newPostValue?.userID &&
-  // post.parentID === null ?  
-  userMainFeed?.includes(post.postID) && !post.repostByUsers.includes(user.uid) ?
+// let filteredPosts = posts.filter()
+
+//Loads the profile main feed(posts and reposts), the order of the userMainFeed array has inverted
+//and the posts.map was nested inside it so that it obeys the sequence of the userMainFeed array.
+let profilePostsFeed =  userMainFeed?.map(val => posts.map(post => 
+  val === post.postID ?
   <div className="post-container" key={post.postID} style={style}>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
@@ -523,8 +528,8 @@ let profilePostsFeed =  posts.map(post =>
       setUserMainFeed={setUserMainFeed}
     />
   </div>
-  : <>NO FEED{ (console.log(userMainFeed))}</>
-)
+  : <></>
+))
 
 let profileNewPostsFeed =  newPost.map(post =>  
   post.userID === newPostValue?.userID &&
