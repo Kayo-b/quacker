@@ -40,9 +40,12 @@ const handleClick = async (text: String) => {
             timestamp: serverTimestamp()
         })
         const userDocRef = doc(db, "users", user.uid);
-        await setDoc(userDocRef, {
-            mainFeed: arrayUnion(docRef.id)
-        }, {merge: true})
+        if(!post) {
+            await setDoc(userDocRef, {
+                mainFeed: arrayUnion(docRef.id)
+            }, {merge: true})
+        }
+       
         
         //setNewPost will add the new post into the newPost array so it 
         //can render the posts into the screen without needing to fetch them.

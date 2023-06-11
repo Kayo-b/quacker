@@ -56,7 +56,7 @@ const Homepage: React.FC<HomepageProps> = ({
     }) => {
         
     //const [update, setUpdate] = useState<boolean | undefined>(false)
-    
+
     return(
         <div className="home-main-container">
             < CreatePost 

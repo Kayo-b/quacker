@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams, useLocation } from 'react-router-dom';
 import { DocumentData } from 'firebase/firestore';
 import Post from '../components/Post';
 import myImg from '../img/user-icon.png';
 import '../style/ProfilePage.css';
+import { setgroups } from 'process';
 
 
 
@@ -48,12 +49,13 @@ const ProfilePage: React.FC<PostProps> = ({
     userMainFeed,
     setUserMainFeed
     }) => {
+      
     const [profPost, setProfPost] = React.useState<boolean>(true);
     const location = useLocation() as { state: { post: DocumentData } };
     const post = location.state?.post;
     // const profPost: boolean = true;
     // const profResp: boolean = false;
-    console.log(post)
+    console.log(post, "<<<<, POST")
     var renderPosts = 
     <Post 
     name={name}
@@ -92,16 +94,15 @@ const ProfilePage: React.FC<PostProps> = ({
         //const postList = posts.filter((postVal: DocumentData) => postVal.uid === post.uid);
         if(postOrComment === "posts") {
             setProfPost(true);
-            }
+        }
         
         else if(postOrComment === "responses") {
             setProfPost(false)
         }
     
     }
-    
-    
-    
+
+
   return (
     <div>
         {post.username}
@@ -121,12 +122,12 @@ const ProfilePage: React.FC<PostProps> = ({
                 </div>
                 <div className="feed-display">                                
                 {renderPosts}
-            
+                       
                 </div>
 
             </div>
-
     </div>
+    
   )
 }
 

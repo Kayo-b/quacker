@@ -28,7 +28,16 @@ type UserProps = {
 
 
 
-const Repost: React.FC<PostProps> = ({post, user, repost, setRepost, update, setUpdate, userMainFeed, setUserMainFeed}) => {
+const Repost: React.FC<PostProps> = ({
+    post, 
+    user, 
+    repost, 
+    setRepost, 
+    update, 
+    setUpdate, 
+    userMainFeed, 
+    setUserMainFeed, 
+    }) => {
 
   const [reposted, setReposted] = useState<boolean>(false);
 
@@ -41,32 +50,47 @@ const Repost: React.FC<PostProps> = ({post, user, repost, setRepost, update, set
       // const userData = docs.docs[0].data();
       if(userDoc.exists()) {
           if(userDoc.data().reposts.includes(postId)) {
-              setReposted(true);
+            setReposted(true);
           }
       }
   
   }
   
   const removeRepost = (postId: string) => {
-      if(setRepost) setRepost(
+      if(setRepost) { 
+        setRepost(
           prevRepost => 
               prevRepost
               .filter(
                   post =>
                       post.postID !== postId))
-        if(userMainFeed) setUserMainFeed(prevVal => prevVal.filter(post => post.postID !== postId))
-  
+                    }
+                    console.log(repost, "Repost Remove Post From Repost")
       };
-  
+
+  const removeFromMainFeed = (postId: string) => {
+    if(setUserMainFeed) { 
+        setUserMainFeed(prevVal => prevVal.filter(value => value !== post?.postID))
+        console.log(userMainFeed, "Repost Remove Post From userMainFeed")
+    }
+  }
       
   const addRepostPost = (newPost: DocumentData) => {
           
-          if(setRepost) setRepost(
+        if(setRepost) setRepost(
             prevRepost => [...prevRepost, newPost]) 
+            console.log(repost, "added to repost")
+
+        if(setUserMainFeed) {
+            setUserMainFeed(
+            prevVal => [...prevVal, post?.postID]) 
+        }
+        console.log(userMainFeed, "added to main feed")
       }
-      console.log(repost)
+
+      
       //See if there is a faster way to get the user's bookmarked posts, the query makes it take some time
-      async function addRepost(postId: string){
+    async function addRepost(postId: string) {
           // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
           // const docs = await getDocs(q);
           // const userRef = docs.docs[0].ref;
@@ -85,18 +109,21 @@ const Repost: React.FC<PostProps> = ({post, user, repost, setRepost, update, set
                 setDoc(userRef, {reposts: arrayUnion(postId)}, {merge: true});
                 setDoc(userRef, {mainFeed: arrayUnion(postId)}, {merge: true});
                 setDoc(postRef, {repostByUsers: arrayUnion(user.uid)}, {merge: true});
-                setUpdate(true);
+                setUpdate(true)
                 if(post) addRepostPost(post);
+                
 
           } else {
                 setReposted(false);
                 setDoc(userRef, {reposts: arrayRemove(postId)}, {merge: true});
                 setDoc(userRef, {mainFeed: arrayRemove(postId)}, {merge: true});
                 setDoc(postRef, {repostByUsers: arrayRemove(user.uid)}, {merge: true});
-                setUpdate(false);
+                setUpdate(false)
                 removeRepost(post?.postID);
+                removeFromMainFeed(post?.postID)
+                console.log("Repost Remove Post From Object")
               }
-              //update === false ? setUpdate(true) : setUpdate(false);
+              
           }
            
       
@@ -106,7 +133,7 @@ const Repost: React.FC<PostProps> = ({post, user, repost, setRepost, update, set
   
       useEffect(() => {
         hasUserReposted(post?.postID);
-          
+        
       },[repost])
       
       return(

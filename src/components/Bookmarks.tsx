@@ -49,7 +49,7 @@ const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBoo
     
     
     const fetchBookmarks = async () => {
-      
+      console.log(bookmarkPosts, "bookmar mainpage1")
         const q = query(collection(db, "users"), where("uid", "==", user.uid));
         const docs = await getDocs(q);
         let tempBookmarks: DocumentData[] = [];
@@ -68,9 +68,9 @@ const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBoo
             
         }
         setBookmarkPosts(tempPosts);
-        
+        console.log(bookmarkPosts, "bookmar mainpage2")
     }
-
+    console.log(bookmarkPosts, "bookmar mainpage3")
     let bookmarkPost = bookmarkPosts?.map(post =>    
         <div key={post.postID} className="post-container">
           <div className="user-container">

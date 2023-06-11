@@ -50,6 +50,7 @@ const removeBookmarkPost = (postId: string) => {
             .filter(
                 post =>
                     post.postID !== postId)) 
+    console.log(bookmarkPosts, "Remove bookmark")
 
     };
 
@@ -58,6 +59,8 @@ const addBookmarkPost = (newPost: DocumentData) => {
         
         if(setBookmarkPosts) setBookmarkPosts(
             prevBookmarkPosts => [...prevBookmarkPosts, newPost]) 
+            console.log(bookmarkPosts, "add bookmark")
+            
     }
     //See if there is a faster way to get the user's bookmarked posts, the query makes it take some time
     async function addBookmark(postId: string){
@@ -74,6 +77,7 @@ const addBookmarkPost = (newPost: DocumentData) => {
                 setDoc(userRef, {bookmarks: arrayUnion(postId)}, {merge: true})
                 setUpdate(true);
                 if(post) addBookmarkPost(post); 
+                
         } else {
                 setFavorited(false);
                 setDoc(userRef, {bookmarks: arrayRemove(postId)}, {merge: true});

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { DocumentData,   getDoc, 
   collection, 
@@ -7,7 +7,8 @@ import { DocumentData,   getDoc,
   setDoc, 
   doc,
   where,
-  query} from 'firebase/firestore';
+  query,
+  getDocs} from 'firebase/firestore';
 import { db } from "../firebase";
 import Like from './Like'
 import BookmarkBtn from './BookmarkBtn';
@@ -45,6 +46,7 @@ type PostProps = {
     setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     userMainFeed?: DocumentData[];
     setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    refresh?: undefined | boolean;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -67,10 +69,9 @@ const Post: React.FC<PostProps> = ({
   userMainFeed,
   setUserMainFeed
   }) => {
-
+  
   const navigate = useNavigate();
   const style = {"fontSize": "large"}
-  
   //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
     navigate(`/post/${post.postID}`, {state: {post}})
@@ -83,34 +84,65 @@ const Post: React.FC<PostProps> = ({
   }
 
   useEffect(() => {
-    getUserMainFeed();
-    console.log(userMainFeed)
-   }, [update])
-  
-  
-    let getUserMainFeed = async () => {
-      if(user && user.uid) {
-        const userDocRef = doc(db, "users", user?.uid);
-        const userDocSnap = await getDoc(userDocRef);
-        if(userDocSnap.exists()){
-          const userDocSnapData = userDocSnap.data();
-          setUserMainFeed(userDocSnapData.mainFeed.reverse());
-        } 
-      } else {
-        console.log("no user")
-      }
-      // if(userMainFeed) {
-      //   let newFeed = userMainFeed.slice().reverse();
-      //   setUserMainFeed(newFeed);
-      // }
-    }
-    
+      
+    setUserMainFeed([])
+    setTimeout(() => getUserMainFeed(), 250)
+    // fetchUserMainFeed()
+   }, [post])
 
+   let getUserMainFeed = async () => {
+
+    if(user && post?.userID) {
+      const userDocRef = doc(db, "users", post?.userID);
+      const userDocSnap = await getDoc(userDocRef);
+      if(userDocSnap.exists()){
+        const userDocSnapData = userDocSnap.data();
+        setUserMainFeed(userDocSnapData.mainFeed.reverse());
+        console.log(userMainFeed, "Post GetUserMainFeed function");
+        
+      } 
+    } else {
+      console.log("no user")
+    }
+  }
+//   const fetchUserMainFeed = async () => {
+//     if(user && post?.userID)
+//     {const q = query(collection(db, "users"), where("uid", "==", post?.userID));
+//     const docs = await getDocs(q);
+//     console.log(docs)
+//     let tempUserMainFeed: DocumentData[] = [];
+//     // docs.mainFeed.forEach(doc => {
+//     //     const bookmarks = doc.data().bookmarks;
+//     //     tempBookmarks.push(...bookmarks)
+//     // })
+//     docs.forEach(doc => {
+//       const mainFeed = doc.data().mainFeed;
+//       tempUserMainFeed.push(...mainFeed)
+//     })
+
+//     console.log(tempUserMainFeed, "fetchUserMainFeed function")}
+//     // let tempPosts: DocumentData[] = [];
+//     // for (const bm of tempUserMainFeed) {
+//     //     const q = query(collection(db, "posts"), where("postID", "==", bm));
+//     //     const docs = await getDocs(q);
+//     //     docs.forEach(doc => {
+//     //         tempPosts.push(doc.data());
+//     //     });
+        
+//     // }
+//     // setBookmarkPosts(tempPosts);
+    
+// }
+    
+ 
+  //renaming post prop to be used inside posts.map
+  let newPostValue = post
 
   //neuPosts sets the new post directly into the feed, without any server commmunication
 
     let neuPost = newPost.map(post =>  post.parentID === null ?  
       <div className="post-container" key={post.postID}>
+        {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -155,6 +187,7 @@ const Post: React.FC<PostProps> = ({
          setRepost={setRepost}
          userMainFeed={userMainFeed}
          setUserMainFeed={setUserMainFeed}
+
         />
       </div>
       : <></>
@@ -165,6 +198,7 @@ const Post: React.FC<PostProps> = ({
     //so the neuPost was created to inprove the user experience.
     let loadPosts = posts.map(post => post.parentID === null ?
       <div className="post-container" key={post.postID}>
+        {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -212,6 +246,7 @@ const Post: React.FC<PostProps> = ({
          setRepost={setRepost}
          userMainFeed={userMainFeed}
          setUserMainFeed={setUserMainFeed}
+
         />
       </div>
       : <></>
@@ -220,6 +255,7 @@ const Post: React.FC<PostProps> = ({
     
     let comment = posts.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-container" key={post.postID}>
+        {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -264,6 +300,7 @@ const Post: React.FC<PostProps> = ({
          setRepost={setRepost}
          userMainFeed={userMainFeed}
          setUserMainFeed={setUserMainFeed}
+
         />
       </div>
       : <></>
@@ -271,6 +308,7 @@ const Post: React.FC<PostProps> = ({
 
     let newComment = newPost.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-container" key={post.postID}>
+        {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -315,6 +353,7 @@ const Post: React.FC<PostProps> = ({
          setRepost={setRepost}
          userMainFeed={userMainFeed}
          setUserMainFeed={setUserMainFeed}
+
         />
       </div>
       : <></>
@@ -322,6 +361,7 @@ const Post: React.FC<PostProps> = ({
     
     let clickedPost =  
       <div className="post-container" key={post?.postID} style={style} >
+        {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -366,13 +406,15 @@ const Post: React.FC<PostProps> = ({
          setRepost={setRepost}
          userMainFeed={userMainFeed}
          setUserMainFeed={setUserMainFeed}
+
         />
       </div>
 //clickedPostParentPost renders the parent post of the clicked post (if it has a parentID)
-let newPostValue = post
+
 let clickedPostParentPost =   posts.map(post =>  
   post.postID === newPostValue?.parentID ?  
   <div className="post-container" key={post.postID} style={style}>
+    {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -426,6 +468,7 @@ let rootPost =  posts.map(post =>
   newPostValue?.parentID !== post.postID && 
   newPostValue?.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
+    {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -470,6 +513,7 @@ let rootPost =  posts.map(post =>
       setRepost={setRepost}
       userMainFeed={userMainFeed}
       setUserMainFeed={setUserMainFeed}
+
     />
   </div>
   : <></>
@@ -482,6 +526,7 @@ console.log(userMainFeed)
 let profilePostsFeed =  userMainFeed?.map(val => posts.map(post => 
   val === post.postID ?
   <div className="post-container" key={post.postID} style={style}>
+    {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -527,6 +572,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
       userMainFeed={userMainFeed}
       setUserMainFeed={setUserMainFeed}
     />
+    <>{console.log(post.userID)}</>     
   </div>
   : <></>
 ))
@@ -535,6 +581,7 @@ let profileNewPostsFeed =  newPost.map(post =>
   post.userID === newPostValue?.userID &&
   post.parentID === null ?  
   <div className="post-container" key={post.postID} style={style}>
+    {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -588,6 +635,7 @@ let profileResponsesFeed =  posts.map(post =>
   post.userID === newPostValue?.userID &&
   post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
+    {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -640,6 +688,7 @@ let profileNewResponsesFeed =  newPost.map(post =>
   post.userID === newPostValue?.userID &&
   post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
+    {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -694,6 +743,7 @@ let repostsFromUser = posts.map(post =>
     //user.reposts?.find(repost => repost === post.postID) 
     post.repostByUsers.includes(newPostValue?.userID) ?
     <div className="post-container" key={post.postID} style={style}>
+      {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={myImg}></img>
         <span>
@@ -738,6 +788,7 @@ let repostsFromUser = posts.map(post =>
         setRepost={setRepost}
         userMainFeed={userMainFeed}
         setUserMainFeed={setUserMainFeed}
+      
       />
     </div>
     : <></>
@@ -747,6 +798,7 @@ let repostsFromUser = posts.map(post =>
     //repost?.find(repost => repost.postID === post.postID) ?
     repost?.includes(post) ?
     <div className="post-container" key={post.postID} style={style}>
+      {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={myImg}></img>
         <span>
@@ -812,20 +864,18 @@ let repostsFromUser = posts.map(post =>
 
         ) : profPost === true ? (
           <div>
-            <div>PROF POST</div>
-            <div>{newRepostsFromUser}</div>
+            {/* <div>{newRepostsFromUser}</div> */}
             <div>{profileNewPostsFeed}</div>
             {/* <div>{repostsFromUser}</div> */}
             <div>{profilePostsFeed}</div>
           </div>
         ) : profPost === false ? (
           <div>
-            <div>PROF RESP</div>
             <div>{profileNewResponsesFeed}</div>
             <div>{profileResponsesFeed}</div>
           </div>  
         ) : (
-          <div >
+          <div>
             <div>{neuPost}</div>
             <div>{loadPosts}</div>
           </div>
