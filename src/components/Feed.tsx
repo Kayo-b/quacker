@@ -95,6 +95,7 @@ const Feed: React.FC<PostProps> = ({
             update={update}
             setUpdate={setUpdate}
             posts={posts}
+            setPosts={setPosts}
             post={post}
             user={user}
             bookmarkPosts={bookmarkPosts} 

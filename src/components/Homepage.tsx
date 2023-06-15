@@ -62,7 +62,6 @@ const Homepage: React.FC<HomepageProps> = ({
             < CreatePost 
             setUpdate={setUpdate} 
             update={update} 
-            
             name={name} 
             user={user} 
             newPost={newPost} 
@@ -74,9 +73,9 @@ const Homepage: React.FC<HomepageProps> = ({
             newPost={newPost} 
             setNewPost={setNewPost} 
             user={user} 
-            posts={posts} 
-            post={post}
+            posts={posts}
             setPosts={setPosts}
+            post={post}
             bookmarkPosts={bookmarkPosts} 
             setBookmarkPosts={setBookmarkPosts}
             name={name}

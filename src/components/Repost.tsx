@@ -65,13 +65,11 @@ const Repost: React.FC<PostProps> = ({
                   post =>
                       post.postID !== postId))
                     }
-                    console.log(repost, "Repost Remove Post From Repost")
       };
 
   const removeFromMainFeed = (postId: string) => {
     if(setUserMainFeed) { 
         setUserMainFeed(prevVal => prevVal.filter(value => value !== post?.postID))
-        console.log(userMainFeed, "Repost Remove Post From userMainFeed")
     }
   }
       
@@ -79,13 +77,11 @@ const Repost: React.FC<PostProps> = ({
           
         if(setRepost) setRepost(
             prevRepost => [...prevRepost, newPost]) 
-            console.log(repost, "added to repost")
 
         if(setUserMainFeed) {
             setUserMainFeed(
             prevVal => [...prevVal, post?.postID]) 
         }
-        console.log(userMainFeed, "added to main feed")
       }
 
       

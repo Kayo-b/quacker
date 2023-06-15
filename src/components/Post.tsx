@@ -8,7 +8,8 @@ import { DocumentData,   getDoc,
   doc,
   where,
   query,
-  getDocs} from 'firebase/firestore';
+  getDocs,
+  deleteDoc} from 'firebase/firestore';
 import { db } from "../firebase";
 import Like from './Like'
 import BookmarkBtn from './BookmarkBtn';
@@ -32,6 +33,7 @@ type PostProps = {
     setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     newPost: DocumentData[] ;
     posts: DocumentData[] ;
+    setPosts?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     update: undefined | boolean;
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     user: UserProps;
@@ -55,6 +57,7 @@ const Post: React.FC<PostProps> = ({
   newPost, 
   setNewPost,
   posts, 
+  setPosts,
   setUpdate, 
   user, 
   bookmarkPosts, 
@@ -83,6 +86,20 @@ const Post: React.FC<PostProps> = ({
     
   }
 
+  const RemovePost = (post: DocumentData | undefined) => {
+    if(setPosts) 
+      setPosts(prevVal => 
+        prevVal.filter(value => value !== post?.postID));
+
+    setUserMainFeed(prevVal => 
+      prevVal.filter(value => value !== post?.postID));
+
+    var removePostFromDB = async () =>  {
+      await deleteDoc(doc(db, "posts", post?.postID));
+    }
+    removePostFromDB();
+  }
+
   useEffect(() => {
       
     setUserMainFeed([])
@@ -98,43 +115,13 @@ const Post: React.FC<PostProps> = ({
       if(userDocSnap.exists()){
         const userDocSnapData = userDocSnap.data();
         setUserMainFeed(userDocSnapData.mainFeed.reverse());
-        console.log(userMainFeed, "Post GetUserMainFeed function");
         
       } 
     } else {
       console.log("no user")
     }
   }
-//   const fetchUserMainFeed = async () => {
-//     if(user && post?.userID)
-//     {const q = query(collection(db, "users"), where("uid", "==", post?.userID));
-//     const docs = await getDocs(q);
-//     console.log(docs)
-//     let tempUserMainFeed: DocumentData[] = [];
-//     // docs.mainFeed.forEach(doc => {
-//     //     const bookmarks = doc.data().bookmarks;
-//     //     tempBookmarks.push(...bookmarks)
-//     // })
-//     docs.forEach(doc => {
-//       const mainFeed = doc.data().mainFeed;
-//       tempUserMainFeed.push(...mainFeed)
-//     })
 
-//     console.log(tempUserMainFeed, "fetchUserMainFeed function")}
-//     // let tempPosts: DocumentData[] = [];
-//     // for (const bm of tempUserMainFeed) {
-//     //     const q = query(collection(db, "posts"), where("postID", "==", bm));
-//     //     const docs = await getDocs(q);
-//     //     docs.forEach(doc => {
-//     //         tempPosts.push(doc.data());
-//     //     });
-        
-//     // }
-//     // setBookmarkPosts(tempPosts);
-    
-// }
-    
- 
   //renaming post prop to be used inside posts.map
   let newPostValue = post
 
@@ -142,7 +129,7 @@ const Post: React.FC<PostProps> = ({
 
     let neuPost = newPost.map(post =>  post.parentID === null ?  
       <div className="post-container" key={post.postID}>
-        {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -198,7 +185,7 @@ const Post: React.FC<PostProps> = ({
     //so the neuPost was created to inprove the user experience.
     let loadPosts = posts.map(post => post.parentID === null ?
       <div className="post-container" key={post.postID}>
-        {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -255,7 +242,7 @@ const Post: React.FC<PostProps> = ({
     
     let comment = posts.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-container" key={post.postID}>
-        {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -308,7 +295,7 @@ const Post: React.FC<PostProps> = ({
 
     let newComment = newPost.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-container" key={post.postID}>
-        {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -361,7 +348,7 @@ const Post: React.FC<PostProps> = ({
     
     let clickedPost =  
       <div className="post-container" key={post?.postID} style={style} >
-        {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -414,7 +401,7 @@ const Post: React.FC<PostProps> = ({
 let clickedPostParentPost =   posts.map(post =>  
   post.postID === newPostValue?.parentID ?  
   <div className="post-container" key={post.postID} style={style}>
-    {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -468,7 +455,7 @@ let rootPost =  posts.map(post =>
   newPostValue?.parentID !== post.postID && 
   newPostValue?.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
-    {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -526,7 +513,7 @@ console.log(userMainFeed)
 let profilePostsFeed =  userMainFeed?.map(val => posts.map(post => 
   val === post.postID ?
   <div className="post-container" key={post.postID} style={style}>
-    {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -581,7 +568,7 @@ let profileNewPostsFeed =  newPost.map(post =>
   post.userID === newPostValue?.userID &&
   post.parentID === null ?  
   <div className="post-container" key={post.postID} style={style}>
-    {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -635,7 +622,7 @@ let profileResponsesFeed =  posts.map(post =>
   post.userID === newPostValue?.userID &&
   post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
-    {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -688,7 +675,7 @@ let profileNewResponsesFeed =  newPost.map(post =>
   post.userID === newPostValue?.userID &&
   post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
-    {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -743,7 +730,7 @@ let repostsFromUser = posts.map(post =>
     //user.reposts?.find(repost => repost === post.postID) 
     post.repostByUsers.includes(newPostValue?.userID) ?
     <div className="post-container" key={post.postID} style={style}>
-      {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+      {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={myImg}></img>
         <span>
@@ -798,7 +785,7 @@ let repostsFromUser = posts.map(post =>
     //repost?.find(repost => repost.postID === post.postID) ?
     repost?.includes(post) ?
     <div className="post-container" key={post.postID} style={style}>
-      {user.uid === newPostValue?.userID ? <button>x</button> : <></>}
+      {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={myImg}></img>
         <span>

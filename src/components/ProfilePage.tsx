@@ -55,7 +55,6 @@ const ProfilePage: React.FC<PostProps> = ({
     const post = location.state?.post;
     // const profPost: boolean = true;
     // const profResp: boolean = false;
-    console.log(post, "<<<<, POST")
     var renderPosts = 
     <Post 
     name={name}
@@ -74,20 +73,6 @@ const ProfilePage: React.FC<PostProps> = ({
     userMainFeed={userMainFeed}
     setUserMainFeed={setUserMainFeed}
     />
-    // var renderResponses = 
-    // <Post 
-    // name={name}
-    // newPost={newPost}
-    // setNewPost={setNewPost}
-    // update={update}
-    // setUpdate={setUpdate}
-    // posts={posts}
-    // post={post}
-    // user={user}
-    // bookmarkPosts={bookmarkPosts} 
-    // setBookmarkPosts={setBookmarkPosts}
-    // profResp={profResp}
-    // />
     
     const loadPostsList = (postOrComment: string) => {
         
@@ -102,6 +87,9 @@ const ProfilePage: React.FC<PostProps> = ({
     
     }
 
+    // useEffect(() => {
+
+    // },[userMainFeed])
 
   return (
     <div>
