@@ -23,6 +23,7 @@ type PostProps = {
 
 const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost, post}) => {
 const[text, setText] = useState("");
+
 const handleClick = async (text: String) => {
     setUpdate(true);
     // handle form submission here.
@@ -46,7 +47,7 @@ const handleClick = async (text: String) => {
             }, {merge: true})
         }
        
-        
+        //update === true ? setUpdate(false) : setUpdate(true)
         //setNewPost will add the new post into the newPost array so it 
         //can render the posts into the screen without needing to fetch them.
         setNewPost(prev => [{

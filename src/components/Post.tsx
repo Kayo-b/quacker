@@ -9,7 +9,8 @@ import { DocumentData,   getDoc,
   where,
   query,
   getDocs,
-  deleteDoc} from 'firebase/firestore';
+  deleteDoc,
+  arrayRemove} from 'firebase/firestore';
 import { db } from "../firebase";
 import Like from './Like'
 import BookmarkBtn from './BookmarkBtn';
@@ -87,17 +88,28 @@ const Post: React.FC<PostProps> = ({
   }
 
   const RemovePost = (post: DocumentData | undefined) => {
-    if(setPosts) 
-      setPosts(prevVal => 
-        prevVal.filter(value => value !== post?.postID));
 
     setUserMainFeed(prevVal => 
       prevVal.filter(value => value !== post?.postID));
 
+    setNewPost(prevVal => 
+      prevVal.filter(value => value.postID !== post?.postID));
+
+    if(setPosts) {
+      setPosts(prevVal => 
+        prevVal.filter(value => value.postID !== post?.postID));
+      }
+      console.log(newPost)
+      console.log(posts)
+
     var removePostFromDB = async () =>  {
+      const userRef = doc(db, 'users', user.uid);
       await deleteDoc(doc(db, "posts", post?.postID));
+      await setDoc(userRef, {mainFeed: arrayRemove(post?.postID)}, {merge: true});
+      console.log(posts)
     }
     removePostFromDB();
+    //update === true ? setUpdate(false) : setUpdate(true)
   }
 
   useEffect(() => {
@@ -105,7 +117,7 @@ const Post: React.FC<PostProps> = ({
     setUserMainFeed([])
     setTimeout(() => getUserMainFeed(), 250)
     // fetchUserMainFeed()
-   }, [post])
+   }, [])
 
    let getUserMainFeed = async () => {
 

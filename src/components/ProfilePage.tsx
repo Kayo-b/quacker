@@ -87,9 +87,9 @@ const ProfilePage: React.FC<PostProps> = ({
     
     }
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    // },[userMainFeed])
+    },[update])
 
   return (
     <div>

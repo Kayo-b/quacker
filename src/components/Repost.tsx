@@ -66,22 +66,26 @@ const Repost: React.FC<PostProps> = ({
                       post.postID !== postId))
                     }
       };
+      console.log(repost)
 
   const removeFromMainFeed = (postId: string) => {
     if(setUserMainFeed) { 
         setUserMainFeed(prevVal => prevVal.filter(value => value !== post?.postID))
     }
+    console.log(userMainFeed)
   }
       
   const addRepostPost = (newPost: DocumentData) => {
           
         if(setRepost) setRepost(
             prevRepost => [...prevRepost, newPost]) 
+           
 
         if(setUserMainFeed) {
             setUserMainFeed(
             prevVal => [...prevVal, post?.postID]) 
         }
+        
       }
 
       
