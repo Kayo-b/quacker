@@ -83,7 +83,8 @@ const Post: React.FC<PostProps> = ({
   }
 
   const RedirectToProfilePage = (post: DocumentData | undefined) => {
-    navigate(`/profile/${post?.username}`, {state: {post}})
+    navigate(`/profile/${post?.username}`, {state: {post}});
+    update === true ? setUpdate(false) : setUpdate(true);
     
   }
 
@@ -117,7 +118,7 @@ const Post: React.FC<PostProps> = ({
     setUserMainFeed([])
     setTimeout(() => getUserMainFeed(), 250)
     // fetchUserMainFeed()
-   }, [])
+   }, [update])
 
    let getUserMainFeed = async () => {
 
@@ -194,9 +195,10 @@ const Post: React.FC<PostProps> = ({
     
     //LoadPosts also sets the posts into the feed, but it does it by getting the information from a sql query done in the previous componenet.
     //The separation between both types of setting posts into the feed is because the loadPosts takes long to render because of the query, 
-    //so the neuPost was created to inprove the user experience.
+    //so the neuPost was created to improve the user experience.
     let loadPosts = posts.map(post => post.parentID === null ?
       <div className="post-container" key={post.postID}>
+        <>{console.log(posts)}</>
         {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
@@ -251,7 +253,6 @@ const Post: React.FC<PostProps> = ({
       : <></>
     )
     //Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
-    
     let comment = posts.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-container" key={post.postID}>
         {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}

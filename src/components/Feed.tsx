@@ -81,7 +81,7 @@ const Feed: React.FC<PostProps> = ({
         
         fetchPosts();
         
-    },[userMainFeed])
+    },[])
 
 
     return(

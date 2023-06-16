@@ -109,7 +109,7 @@ const Repost: React.FC<PostProps> = ({
                 setDoc(userRef, {reposts: arrayUnion(postId)}, {merge: true});
                 setDoc(userRef, {mainFeed: arrayUnion(postId)}, {merge: true});
                 setDoc(postRef, {repostByUsers: arrayUnion(user.uid)}, {merge: true});
-                setUpdate(true)
+                setUpdate(true);
                 if(post) addRepostPost(post);
                 
 
@@ -118,7 +118,7 @@ const Repost: React.FC<PostProps> = ({
                 setDoc(userRef, {reposts: arrayRemove(postId)}, {merge: true});
                 setDoc(userRef, {mainFeed: arrayRemove(postId)}, {merge: true});
                 setDoc(postRef, {repostByUsers: arrayRemove(user.uid)}, {merge: true});
-                setUpdate(false)
+                setUpdate(false);
                 removeRepost(post?.postID);
                 removeFromMainFeed(post?.postID)
                 console.log("Repost Remove Post From Object")

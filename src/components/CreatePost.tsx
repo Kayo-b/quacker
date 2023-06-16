@@ -25,7 +25,7 @@ const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost
 const[text, setText] = useState("");
 
 const handleClick = async (text: String) => {
-    setUpdate(true);
+    //setUpdate(true);
     // handle form submission here.
 
     try {
@@ -40,13 +40,14 @@ const handleClick = async (text: String) => {
             childComments: [],
             timestamp: serverTimestamp()
         })
+
         const userDocRef = doc(db, "users", user.uid);
         if(!post) {
             await setDoc(userDocRef, {
                 mainFeed: arrayUnion(docRef.id)
             }, {merge: true})
         }
-       
+        
         //update === true ? setUpdate(false) : setUpdate(true)
         //setNewPost will add the new post into the newPost array so it 
         //can render the posts into the screen without needing to fetch them.
