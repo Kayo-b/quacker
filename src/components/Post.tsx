@@ -115,8 +115,9 @@ const Post: React.FC<PostProps> = ({
 
   useEffect(() => {
       
-    setUserMainFeed([])
-    setTimeout(() => getUserMainFeed(), 250)
+    //setUserMainFeed([])
+    //setTimeout(() => getUserMainFeed(), 250)
+    getUserMainFeed()
     // fetchUserMainFeed()
    }, [update])
 

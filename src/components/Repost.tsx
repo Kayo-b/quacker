@@ -71,7 +71,16 @@ const Repost: React.FC<PostProps> = ({
 
   const removeFromMainFeed = (postId: string) => {
     if(setUserMainFeed) { 
+
         setUserMainFeed(prevVal => prevVal.filter(value => value !== post?.postID))
+    }
+    console.log(userMainFeed)
+  }
+
+  const substituteMainFeed = (newArray: DocumentData[]) => {
+    if(setUserMainFeed) { 
+        
+        setUserMainFeed(newArray.reverse())
     }
     console.log(userMainFeed)
   }
@@ -114,8 +123,8 @@ const Repost: React.FC<PostProps> = ({
                 //   setDoc(userRef, {reposts: arrayUnion(postId)}, {merge: true});
                 // }
                 setDoc(userRef, {reposts: arrayUnion(postId)}, {merge: true});
+                //Handling when the user reposts its own post
                 if(post?.userID === user.uid) {
-                  console.log(userDoc.exists())
                   if(userDoc.exists()) {
                     const userData = userDoc.data();
                     const mainFeed = userData.mainFeed;
@@ -134,7 +143,7 @@ const Repost: React.FC<PostProps> = ({
 
           } else {
                 setReposted(false);
-                //handling when the user reposts its own post
+                //Handling when the user unreposts its own reposted post
                 if(userDoc.exists()) {
                   const userData = userDoc.data();
                   const mainFeed = userData.mainFeed;
@@ -145,23 +154,25 @@ const Repost: React.FC<PostProps> = ({
                     }
                     return acc;
                   },[])
-                  //If length of resulting array is > than 1, that means that we are dealing with a "self reposted" post
+                  //If length of the resulting array is > 1, that means that we are dealing with a "self reposted" post
                   //that means that there are two posts in the main feed with the same ID, the second post(with higher index value)
-                  //will be the reposted post, this is the one to be removed so that the order of posts can been correctly maintained
+                  //will be the reposted post, this is the one removed so that the order of posts can been maintained
                   if(indexArray.length > 1) {
-                    mainFeed.splice(indexArray[1], 1)
-                    setDoc(userRef, {mainFeed: mainFeed}, {merge: true})
+                    mainFeed.splice(indexArray[1], 1);
+                    setDoc(userRef, {mainFeed: mainFeed}, {merge: true});
+                    console.log(mainFeed);
+                    substituteMainFeed(mainFeed);
                     
                   } else {
                     setDoc(userRef, {mainFeed: arrayRemove(postId)}, {merge: true});
+                    removeFromMainFeed(post?.postID);
                   }
                 }
                 setDoc(userRef, {reposts: arrayRemove(postId)}, {merge: true});
                 setDoc(postRef, {repostByUsers: arrayRemove(user.uid)}, {merge: true});
                 setUpdate(false);
                 removeRepost(post?.postID);
-                removeFromMainFeed(post?.postID)
-                console.log("Repost Remove Post From Object")
+                console.log("Repost Remove Post From Object");
               }
               
           }
