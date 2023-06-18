@@ -80,11 +80,9 @@ const ProfilePage: React.FC<PostProps> = ({
         if(postOrComment === "posts") {
             setProfPost(true);
         }
-        
         else if(postOrComment === "responses") {
             setProfPost(false)
         }
-    
     }
 
     // useEffect(() => {

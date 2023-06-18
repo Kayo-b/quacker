@@ -52,7 +52,7 @@ const Repost: React.FC<PostProps> = ({
       if(userDoc.exists()) {
           if(userDoc.data().reposts.includes(postId)) {
             setReposted(true);
-          }
+          } 
       }
   
   }
@@ -67,7 +67,8 @@ const Repost: React.FC<PostProps> = ({
                       post.postID !== postId))
                     }
       };
-      console.log(repost)
+  
+  console.log(repost)
 
   const removeFromMainFeed = (postId: string) => {
     if(setUserMainFeed) { 
@@ -80,7 +81,7 @@ const Repost: React.FC<PostProps> = ({
   const substituteMainFeed = (newArray: DocumentData[]) => {
     if(setUserMainFeed) { 
         
-        setUserMainFeed(newArray.reverse())
+        setUserMainFeed(newArray)
     }
     console.log(userMainFeed)
   }
@@ -89,19 +90,22 @@ const Repost: React.FC<PostProps> = ({
           
         if(setRepost) setRepost(
             prevRepost => [...prevRepost, newPost]) 
-           
-
-        if(setUserMainFeed) {
+        if(user.uid === post?.userID) {
+          if(setUserMainFeed) {
             setUserMainFeed(
-              prevVal => [...prevVal, post?.postID]) 
+              prevVal => [post?.postID, ...prevVal]) 
         }
-        
+        } else if(setUserMainFeed) {
+            setUserMainFeed(
+              prevVal => [ ...prevVal, post?.postID]) 
+        }
+        console.log(userMainFeed,"addRepostPost")
       }
 
       
       //See if there is a faster way to get the user's bookmarked posts, the query makes it take some time
     async function addRepost(postId: string) {
-
+     
           console.log(post)
           
           // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
@@ -119,6 +123,7 @@ const Repost: React.FC<PostProps> = ({
           //const userData = userDoc.data();
           if(!reposted) {
                 setReposted(true);
+                console.log("REPOSTED ?", reposted)
                 // if(post?.userID !== user.uid){
                 //   setDoc(userRef, {reposts: arrayUnion(postId)}, {merge: true});
                 // }
@@ -143,6 +148,7 @@ const Repost: React.FC<PostProps> = ({
 
           } else {
                 setReposted(false);
+                console.log("REPOSTED ?", reposted)
                 //Handling when the user unreposts its own reposted post
                 if(userDoc.exists()) {
                   const userData = userDoc.data();
@@ -155,14 +161,15 @@ const Repost: React.FC<PostProps> = ({
                     return acc;
                   },[])
                   //If length of the resulting array is > 1, that means that we are dealing with a "self reposted" post
-                  //that means that there are two posts in the main feed with the same ID, the second post(with higher index value)
+                  //and that there are two posts in the main feed with the same ID, the second post(with higher index value)
                   //will be the reposted post, this is the one removed so that the order of posts can been maintained
                   if(indexArray.length > 1) {
                     mainFeed.splice(indexArray[1], 1);
                     setDoc(userRef, {mainFeed: mainFeed}, {merge: true});
                     console.log(mainFeed);
-                    substituteMainFeed(mainFeed);
+                    substituteMainFeed(mainFeed.reverse());
                     
+
                   } else {
                     setDoc(userRef, {mainFeed: arrayRemove(postId)}, {merge: true});
                     removeFromMainFeed(post?.postID);
@@ -183,8 +190,8 @@ const Repost: React.FC<PostProps> = ({
       // }
   
       useEffect(() => {
-        hasUserReposted(post?.postID);
-        
+        hasUserReposted(post?.postID) 
+
       },[repost])
       
       return(
