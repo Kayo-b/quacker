@@ -73,13 +73,12 @@ const Feed: React.FC<PostProps> = ({
 
             setPosts(prevValue => [...prevValue, doc.data()])
         })
-        
     }
 
     useEffect(() => {
         //update ? setFeedUpdate(true) : setFeedUpdate(false);
         
-        fetchPosts();
+        fetchPosts()
         
     },[])
 

@@ -33,6 +33,7 @@ type UserProps = {
       setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
       userMainFeed?: DocumentData[];
       setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+      
   }
 const ProfilePage: React.FC<PostProps> = ({
     user, 
@@ -72,10 +73,10 @@ const ProfilePage: React.FC<PostProps> = ({
     setRepost={setRepost}
     userMainFeed={userMainFeed}
     setUserMainFeed={setUserMainFeed}
+    setProfPost={setProfPost}
     />
     
     const loadPostsList = (postOrComment: string) => {
-        
         //const postList = posts.filter((postVal: DocumentData) => postVal.uid === post.uid);
         if(postOrComment === "posts") {
             setProfPost(true);
@@ -86,6 +87,7 @@ const ProfilePage: React.FC<PostProps> = ({
     }
 
     // useEffect(() => {
+
 
     // },[update])
 

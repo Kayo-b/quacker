@@ -32,8 +32,8 @@ type UserProps = {
 type PostProps = {
     name: string;
     setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
-    newPost: DocumentData[] ;
-    posts: DocumentData[] ;
+    newPost: DocumentData[];
+    posts: DocumentData[];
     setPosts?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     update: undefined | boolean;
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
@@ -50,6 +50,7 @@ type PostProps = {
     userMainFeed?: DocumentData[];
     setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     refresh?: undefined | boolean;
+    setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -71,7 +72,8 @@ const Post: React.FC<PostProps> = ({
   repost,
   setRepost,
   userMainFeed,
-  setUserMainFeed
+  setUserMainFeed,
+  setProfPost
   }) => {
   
   const navigate = useNavigate();
@@ -109,17 +111,23 @@ const Post: React.FC<PostProps> = ({
       await setDoc(userRef, {mainFeed: arrayRemove(post?.postID)}, {merge: true});
       console.log(posts)
     }
+    //update === true ? setUpdate(false) : setUpdate(true);
     removePostFromDB();
     //update === true ? setUpdate(false) : setUpdate(true)
   }
 
+  //Add setUSerMainFeed in the useEffect to reset the userMainFeed
   useEffect(() => {
-      
-    //setUserMainFeed([])
-    //setTimeout(() => getUserMainFeed(), 250)
+    
+    //if(setProfPost)setProfPost(true)
     getUserMainFeed()
+    //setUserMainFeed(prevVal => prevVal.filter(value => value !== post?.postID))
+   
+    //setTimeout(() => getUserMainFeed(), 250)
+    
     // fetchUserMainFeed()
-   }, [update])
+   }, [update, repost])//all posts rerender when these change
+   //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
 
    let getUserMainFeed = async () => {
 
@@ -196,10 +204,9 @@ const Post: React.FC<PostProps> = ({
     
     //LoadPosts also sets the posts into the feed, but it does it by getting the information from a sql query done in the previous componenet.
     //The separation between both types of setting posts into the feed is because the loadPosts takes long to render because of the query, 
-    //so the neuPost was created to improve the user experience.
+    //so the neuPost was created to improve the user experience by adding the new post right away.
     let loadPosts = posts.map(post => post.parentID === null ?
       <div className="post-container" key={post.postID}>
-        <>{console.log(posts)}</>
         {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
@@ -538,6 +545,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
         <li key={post.id}>
           {post.textContent}
         </li>
+        {/* <>{post?.repostByUsers.includes(user.uid) ? "reposted" : null}</> */}
       </div>
       </span>   
     </div>
@@ -572,6 +580,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
       setRepost={setRepost}
       userMainFeed={userMainFeed}
       setUserMainFeed={setUserMainFeed}
+      setProfPost={setProfPost}
     />
     <>{console.log(post.userID)}</>     
   </div>
