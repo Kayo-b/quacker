@@ -67,12 +67,12 @@ const Post: React.FC<PostProps> = ({
   isComment,
   parentPost,
   post,
-  profPost,
   profResp,
   repost,
   setRepost,
   userMainFeed,
   setUserMainFeed,
+  profPost,
   setProfPost
   }) => {
   
@@ -120,7 +120,7 @@ const Post: React.FC<PostProps> = ({
   useEffect(() => {
     
     //if(setProfPost)setProfPost(true)
-    getUserMainFeed()
+    setTimeout(() => getUserMainFeed(), 1000)
     //setUserMainFeed(prevVal => prevVal.filter(value => value !== post?.postID))
    
     //setTimeout(() => getUserMainFeed(), 250)
@@ -136,9 +136,12 @@ const Post: React.FC<PostProps> = ({
       const userDocSnap = await getDoc(userDocRef);
       if(userDocSnap.exists()){
         const userDocSnapData = userDocSnap.data();
+        console.log(userDocSnapData,"!!!!!!!!!!!")
         setUserMainFeed(userDocSnapData.mainFeed.reverse());
         
-      } 
+      } else {
+        console.log("userDocSnap doesnt exist")
+      }
     } else {
       console.log("no user")
     }
@@ -196,6 +199,9 @@ const Post: React.FC<PostProps> = ({
          setRepost={setRepost}
          userMainFeed={userMainFeed}
          setUserMainFeed={setUserMainFeed}
+         profPost={profPost}
+         setProfPost={setProfPost}
+         
 
         />
       </div>
@@ -255,6 +261,8 @@ const Post: React.FC<PostProps> = ({
          setRepost={setRepost}
          userMainFeed={userMainFeed}
          setUserMainFeed={setUserMainFeed}
+         profPost={profPost}
+         setProfPost={setProfPost}
 
         />
       </div>
@@ -308,6 +316,8 @@ const Post: React.FC<PostProps> = ({
          setRepost={setRepost}
          userMainFeed={userMainFeed}
          setUserMainFeed={setUserMainFeed}
+         profPost={profPost}
+         setProfPost={setProfPost}
 
         />
       </div>
@@ -361,6 +371,8 @@ const Post: React.FC<PostProps> = ({
          setRepost={setRepost}
          userMainFeed={userMainFeed}
          setUserMainFeed={setUserMainFeed}
+         profPost={profPost}
+         setProfPost={setProfPost}
 
         />
       </div>
@@ -414,6 +426,8 @@ const Post: React.FC<PostProps> = ({
          setRepost={setRepost}
          userMainFeed={userMainFeed}
          setUserMainFeed={setUserMainFeed}
+         profPost={profPost}
+         setProfPost={setProfPost}
 
         />
       </div>
@@ -467,6 +481,8 @@ let clickedPostParentPost =   posts.map(post =>
       setRepost={setRepost}
       userMainFeed={userMainFeed}
       setUserMainFeed={setUserMainFeed}
+      profPost={profPost}
+      setProfPost={setProfPost}
     />
   </div>
   : <></>
@@ -521,6 +537,8 @@ let rootPost =  posts.map(post =>
       setRepost={setRepost}
       userMainFeed={userMainFeed}
       setUserMainFeed={setUserMainFeed}
+      profPost={profPost}
+      setProfPost={setProfPost}
 
     />
   </div>
@@ -580,6 +598,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
       setRepost={setRepost}
       userMainFeed={userMainFeed}
       setUserMainFeed={setUserMainFeed}
+      profPost={profPost}
       setProfPost={setProfPost}
     />
     <>{console.log(post.userID)}</>     
@@ -636,6 +655,9 @@ let profileNewPostsFeed =  newPost.map(post =>
       setRepost={setRepost}
       userMainFeed={userMainFeed}
       setUserMainFeed={setUserMainFeed}
+      profPost={profPost}
+      setProfPost={setProfPost}
+      
     />
   </div>
   : <></>
@@ -690,6 +712,8 @@ let profileResponsesFeed =  posts.map(post =>
       setRepost={setRepost}
       userMainFeed={userMainFeed}
       setUserMainFeed={setUserMainFeed}
+      profPost={profPost}
+      setProfPost={setProfPost}
     />
   </div>
   : <></>
@@ -743,6 +767,8 @@ let profileNewResponsesFeed =  newPost.map(post =>
       setRepost={setRepost}
       userMainFeed={userMainFeed}
       setUserMainFeed={setUserMainFeed}
+      profPost={profPost}
+      setProfPost={setProfPost}
     />
   </div>
   : <></>
@@ -798,6 +824,8 @@ let repostsFromUser = posts.map(post =>
         setRepost={setRepost}
         userMainFeed={userMainFeed}
         setUserMainFeed={setUserMainFeed}
+        profPost={profPost}
+        setProfPost={setProfPost}
       
       />
     </div>
@@ -853,6 +881,8 @@ let repostsFromUser = posts.map(post =>
         setRepost={setRepost}
         userMainFeed={userMainFeed}
         setUserMainFeed={setUserMainFeed}
+        profPost={profPost}
+        setProfPost={setProfPost}
       />
     </div>
     : <></>

@@ -25,6 +25,7 @@ type UserProps = {
     setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     userMainFeed?: DocumentData[];
     setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    profPost?: boolean;
     setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -39,7 +40,8 @@ const Repost: React.FC<PostProps> = ({
     setUpdate, 
     userMainFeed, 
     setUserMainFeed,
-    setProfPost
+    setProfPost,
+    profPost
     }) => {
 
   const [reposted, setReposted] = useState<boolean>(false);
@@ -47,7 +49,6 @@ const Repost: React.FC<PostProps> = ({
   const hasUserReposted = async(postId: string) => {
       const userRef = doc(db, 'users', user.uid);
       const userDoc = await getDoc(userRef);
-      
       // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
       // const docs = await getDocs(q);
       // const userData = docs.docs[0].data();
@@ -136,7 +137,7 @@ const Repost: React.FC<PostProps> = ({
                   setDoc(userRef, {mainFeed: arrayUnion(postId)}, {merge: true});
                   
                 }
-                setDoc(postRef, {repostByUsers: arrayUnion(user.uid)}, {merge: true});
+                setDoc(postRef, {repostByUsers: arrayUnion(user.uid)}, {merge: true})
                 !update ? setUpdate(true) : setUpdate(false);
                 if(post) addRepostPost(post);
                 
@@ -160,13 +161,12 @@ const Repost: React.FC<PostProps> = ({
                   if(indexArray.length > 1) {
                     mainFeed.splice(indexArray[1], 1);
                     setDoc(userRef, {mainFeed: mainFeed}, {merge: true});
-                    console.log(mainFeed);
+                    console.log("1");
                     substituteMainFeed(mainFeed.reverse());
-                    
-
                   } else {
-                    setDoc(userRef, {mainFeed: arrayRemove(postId)}, {merge: true});
                     removeFromMainFeed();
+                    setDoc(userRef, {mainFeed: arrayRemove(postId)}, {merge: true});
+                    console.log("2");
                   }
                 }
                 setDoc(userRef, {reposts: arrayRemove(postId)}, {merge: true});
@@ -195,7 +195,7 @@ const Repost: React.FC<PostProps> = ({
       useEffect(() => {
         hasUserReposted(post?.postID);
         //Logic to only show reposts that have been reposted by the current logged user when accessing the user profile
-        checkReposted()
+        if(profPost) checkReposted()
        
       },[repost])
      
