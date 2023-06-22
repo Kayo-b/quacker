@@ -120,13 +120,13 @@ const Post: React.FC<PostProps> = ({
   useEffect(() => {
     
     //if(setProfPost)setProfPost(true)
-    setTimeout(() => getUserMainFeed(), 1000)
+    getUserMainFeed()
     //setUserMainFeed(prevVal => prevVal.filter(value => value !== post?.postID))
    
     //setTimeout(() => getUserMainFeed(), 250)
     
     // fetchUserMainFeed()
-   }, [update, repost])//all posts rerender when these change
+   }, [])//all posts rerender when these change
    //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
 
    let getUserMainFeed = async () => {

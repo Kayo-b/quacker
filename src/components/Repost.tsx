@@ -134,6 +134,12 @@ const Repost: React.FC<PostProps> = ({
                   }
 
                 } else {
+                  // if(userDoc.exists()) {
+                  //   const userData = userDoc.data();
+                  //   const mainFeed = userData.mainFeed;
+                  //   mainFeed.unshift(postId);
+                  //   setDoc(userRef, {mainFeed: mainFeed}, {merge: true});
+                  // }
                   setDoc(userRef, {mainFeed: arrayUnion(postId)}, {merge: true});
                   
                 }
@@ -165,7 +171,9 @@ const Repost: React.FC<PostProps> = ({
                     substituteMainFeed(mainFeed.reverse());
                   } else {
                     removeFromMainFeed();
-                    setDoc(userRef, {mainFeed: arrayRemove(postId)}, {merge: true});
+                    let newFeed = mainFeed.filter((post: string) => post !== postId);
+                    //substituteMainFeed(newFeed)
+                    setDoc(userRef, {mainFeed: newFeed}, {merge: true});
                     console.log("2");
                   }
                 }
