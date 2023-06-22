@@ -82,11 +82,14 @@ const Post: React.FC<PostProps> = ({
   const RedirectToPostPage = (post: DocumentData) => {
     navigate(`/post/${post.postID}`, {state: {post}})
     
+    
   }
 
   const RedirectToProfilePage = (post: DocumentData | undefined) => {
     navigate(`/profile/${post?.username}`, {state: {post}});
     update === true ? setUpdate(false) : setUpdate(true);
+    
+    
     
   }
 
@@ -119,14 +122,14 @@ const Post: React.FC<PostProps> = ({
   //Add setUSerMainFeed in the useEffect to reset the userMainFeed
   useEffect(() => {
     
-    //if(setProfPost)setProfPost(true)
+    // if(setProfPost)setProfPost(true)
     getUserMainFeed()
     //setUserMainFeed(prevVal => prevVal.filter(value => value !== post?.postID))
    
     //setTimeout(() => getUserMainFeed(), 250)
     
     // fetchUserMainFeed()
-   }, [])//all posts rerender when these change
+   }, [repost, update])//all posts rerender when these change
    //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
 
    let getUserMainFeed = async () => {
@@ -547,7 +550,7 @@ let rootPost =  posts.map(post =>
 console.log(userMainFeed)
 // let filteredPosts = posts.filter()
 
-//Loads the profile main feed(posts and reposts), the order of the userMainFeed array has inverted
+//Loads the profile main feed(posts and reposts), the order of the userMainFeed array was inverted
 //and the posts.map was nested inside it so that it obeys the sequence of the userMainFeed array.
 let profilePostsFeed =  userMainFeed?.map(val => posts.map(post => 
   val === post.postID ?
@@ -600,8 +603,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
       setUserMainFeed={setUserMainFeed}
       profPost={profPost}
       setProfPost={setProfPost}
-    />
-    <>{console.log(post.userID)}</>     
+    /> 
   </div>
   : <></>
 ))
@@ -888,7 +890,7 @@ let repostsFromUser = posts.map(post =>
     : <></>
   )
 
-
+console.log(profPost,"PROF POST <<<<<<<<<<<<!")
     return (
       
       <div>

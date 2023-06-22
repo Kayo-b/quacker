@@ -55,6 +55,7 @@ const Repost: React.FC<PostProps> = ({
       if(userDoc.exists()) {
           if(userDoc.data().reposts.includes(postId)) {
             setReposted(true);
+            console.log("hasUserREposted = true" )
           } 
       }
   
@@ -190,16 +191,13 @@ const Repost: React.FC<PostProps> = ({
       //     addBookmark(postId)
       // }
       function checkReposted() {
-        if(post?.repostByUsers.includes(user.uid)) {
-          
-          setReposted(true)
-          console.log("reposted ", post?.postID,"////",post?.repostByUsers)
-        } else {
-          setReposted(false)
-          console.log("NOT reposted ", post?.postID,"////",post?.repostByUsers)
-        } 
-      }
-  
+        repost?.forEach(item => {
+          if(item.postID === post?.postID) {
+            setReposted(true)
+          } 
+        })
+      } 
+
       useEffect(() => {
         hasUserReposted(post?.postID);
         //Logic to only show reposts that have been reposted by the current logged user when accessing the user profile

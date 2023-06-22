@@ -54,6 +54,7 @@ const ProfilePage: React.FC<PostProps> = ({
     const [profPost, setProfPost] = React.useState<boolean>(true);
     const location = useLocation() as { state: { post: DocumentData } };
     const post = location.state?.post;
+    console.log(post,"POST**********************")
     // const profPost: boolean = true;
     // const profResp: boolean = false;
     var renderPosts = 
@@ -87,7 +88,7 @@ const ProfilePage: React.FC<PostProps> = ({
     }
 
     // useEffect(() => {
-
+    //     setProfPost(true)
 
     // },[update])
 
