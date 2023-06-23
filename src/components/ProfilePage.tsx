@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams, useLocation } from 'react-router-dom';
-import { DocumentData } from 'firebase/firestore';
+import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
+import { db } from "../firebase";
 import Post from '../components/Post';
 import myImg from '../img/user-icon.png';
 import '../style/ProfilePage.css';
@@ -54,6 +55,10 @@ const ProfilePage: React.FC<PostProps> = ({
     const [profPost, setProfPost] = React.useState<boolean>(true);
     const location = useLocation() as { state: { post: DocumentData } };
     const post = location.state?.post;
+    const [followBtn, setFollowBtn] = React.useState<boolean>(false)
+    const [followingCount, setFollowingCount] = React.useState<string>("")
+    const [followersCount, setFollowersCount] = React.useState<string>("")
+
     console.log(post,"POST**********************")
     // const profPost: boolean = true;
     // const profResp: boolean = false;
@@ -87,10 +92,59 @@ const ProfilePage: React.FC<PostProps> = ({
         }
     }
 
-    // useEffect(() => {
-    //     setProfPost(true)
 
-    // },[update])
+
+    const checkFollow = async() => {
+        const userRef1 = doc(db, 'users', user.uid);
+        const userRef2 = doc(db, 'users', post.userID);
+        const userDoc1 = await getDoc(userRef1);
+        const userDoc2 = await getDoc(userRef2);
+        console.log("check follow1")
+        if(userDoc1.exists()) {
+            console.log("check follow2");
+            const userData1 = userDoc1.data();
+            const following = userData1.following;
+            if(following.includes(post.userID)) {
+                setFollowBtn(true);
+            } else {
+                setFollowBtn(false);
+            }
+        }
+        if(userDoc2.exists()) {
+            const userData2 = userDoc2.data();
+            const following = userData2.following;
+            const followers = userData2.followers;
+            setFollowingCount(following.length);
+            setFollowersCount(followers.length);
+        }
+    }
+
+    const followUser = async() => {
+        console.log("follow!", post)
+        const userRef1 = doc(db, 'users', user.uid);
+        const userRef2 = doc(db, 'users', post.userID);
+        if(followBtn === false) {
+            setDoc(userRef1, {following: arrayUnion(post.userID)}, {merge: true})
+            setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true})
+            setFollowBtn(true);
+        } else {
+            setDoc(userRef1, {following: arrayRemove(post.userID)}, {merge: true})
+            setDoc(userRef2, {followers: arrayRemove(user.uid)}, {merge: true})
+            setFollowBtn(false);
+        }
+
+        //const userDoc1 = await getDoc(userRef1);
+        // const userDoc2 = await getDoc(userRef2);
+        // if(userDoc1.exists() && userDoc2.exists()) {
+        //     setDoc(userRef1, {following: arrayUnion(post.userID)}, {merge: true})
+        //     setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true})
+        // }
+
+    }
+    useEffect(() => {
+        checkFollow();
+
+    },[])
 
   return (
     <div>
@@ -98,11 +152,11 @@ const ProfilePage: React.FC<PostProps> = ({
         <div className="user-container-profile-page">
             <img className="profile-picture-profile-page" alt="user icon" src={myImg}></img>
                 <div className="user-name">
-                    @{post.username}
+                    @{post.username}{post.userID !== user.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
                 </div>
             </div>
             <div className="follow-stats">
-            n Following / n Followers
+            {followingCount} Following / {followersCount}  Followers
             </div>
             <div className="feed-container">
                 <div className="feed-types-select">

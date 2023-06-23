@@ -48,7 +48,9 @@ const signInWithGoogle = async() => {
                 email: user.email,
                 bookmarks: [],
                 reposts: [],
-                mainFeed:[]
+                mainFeed:[],
+                followers:[],
+                following:[]
             });
         }
     } catch (err: unknown) {
@@ -96,7 +98,9 @@ const registerEmail = async(name: string, email: string, password: string) => {
                 email: user.email,
                 bookmarks: [],
                 reposts: [],
-                mainFeed:[]
+                mainFeed:[],
+                followers:[],
+                following:[]
             });
         } else {
             await user.delete();

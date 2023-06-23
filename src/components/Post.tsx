@@ -566,7 +566,6 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
         <li key={post.id}>
           {post.textContent}
         </li>
-        {/* <>{post?.repostByUsers.includes(user.uid) ? "reposted" : null}</> */}
       </div>
       </span>   
     </div>
