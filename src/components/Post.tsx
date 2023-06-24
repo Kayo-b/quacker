@@ -51,6 +51,7 @@ type PostProps = {
     setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     refresh?: undefined | boolean;
     setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
+    addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -73,11 +74,13 @@ const Post: React.FC<PostProps> = ({
   userMainFeed,
   setUserMainFeed,
   profPost,
-  setProfPost
+  setProfPost,
+  addToStatesCount
   }) => {
   
   const navigate = useNavigate();
   const style = {"fontSize": "large"}
+
   //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
     navigate(`/post/${post.postID}`, {state: {post}})
@@ -602,6 +605,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
       setUserMainFeed={setUserMainFeed}
       profPost={profPost}
       setProfPost={setProfPost}
+      addToStatesCount={addToStatesCount}
     /> 
   </div>
   : <></>

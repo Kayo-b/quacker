@@ -27,6 +27,7 @@ type UserProps = {
     setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     profPost?: boolean;
     setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
+    addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 
@@ -41,7 +42,8 @@ const Repost: React.FC<PostProps> = ({
     userMainFeed, 
     setUserMainFeed,
     setProfPost,
-    profPost
+    profPost,
+    addToStatesCount
     }) => {
 
   const [reposted, setReposted] = useState<boolean>(false);
@@ -56,8 +58,12 @@ const Repost: React.FC<PostProps> = ({
           if(userDoc.data().reposts.includes(postId)) {
             setReposted(true);
             console.log("hasUserREposted = true" )
-          } 
+          } else {
+            setReposted(false);
+          }
+          if(addToStatesCount) addToStatesCount(1);
       }
+
   
   }
   

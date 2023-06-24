@@ -9,15 +9,17 @@ type UserProps = {
   name?: string;
   uid: string;
   bookmarks?: Array<string>;
+  
 }  
 
 type PostProps = {
     user: UserProps;
     post?: DocumentData;
+    setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
-const Like: React.FC<PostProps> = ({user, post}) => {
+const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
 
   const [liked, setLiked] = useState<boolean>(false)
  
@@ -36,6 +38,7 @@ const Like: React.FC<PostProps> = ({user, post}) => {
   async function likedPostCheck(postID: string) {
     const postIsLiked = await hasUserLikedPost(postID)
     setLiked(postIsLiked);
+    //if(setLoading) setLoading(false);
   }
 
   const addLike = (postId: string) => {

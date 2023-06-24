@@ -56,8 +56,10 @@ const ProfilePage: React.FC<PostProps> = ({
     const location = useLocation() as { state: { post: DocumentData } };
     const post = location.state?.post;
     const [followBtn, setFollowBtn] = React.useState<boolean>(false)
-    const [followingCount, setFollowingCount] = React.useState<string>("")
-    const [followersCount, setFollowersCount] = React.useState<string>("")
+    const [followingCount, setFollowingCount] = React.useState<number>(0)
+    const [followersCount, setFollowersCount] = React.useState<number>(0)
+    const [loading, setLoading] = React.useState(true);
+    const [rdyStatesCount, setRdyStatesCount] = React.useState<number>(0)
 
     console.log(post,"POST**********************")
     // const profPost: boolean = true;
@@ -80,8 +82,16 @@ const ProfilePage: React.FC<PostProps> = ({
     userMainFeed={userMainFeed}
     setUserMainFeed={setUserMainFeed}
     setProfPost={setProfPost}
+    addToStatesCount={setRdyStatesCount}
     />
-    
+    const waitForStateCounts = () => {
+        if(rdyStatesCount === 1) {
+            setLoading(false)
+            const profileContainer = 
+                document.querySelector(".user-container-profile-page-container") as HTMLElement;
+            if(profileContainer) profileContainer.style.visibility = "visible"
+        }
+    }
     const loadPostsList = (postOrComment: string) => {
         //const postList = posts.filter((postVal: DocumentData) => postVal.uid === post.uid);
         if(postOrComment === "posts") {
@@ -124,13 +134,15 @@ const ProfilePage: React.FC<PostProps> = ({
         const userRef1 = doc(db, 'users', user.uid);
         const userRef2 = doc(db, 'users', post.userID);
         if(followBtn === false) {
-            setDoc(userRef1, {following: arrayUnion(post.userID)}, {merge: true})
-            setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true})
+            setDoc(userRef1, {following: arrayUnion(post.userID)}, {merge: true});
+            setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true});
             setFollowBtn(true);
+            setFollowersCount(followersCount + 1)
         } else {
-            setDoc(userRef1, {following: arrayRemove(post.userID)}, {merge: true})
-            setDoc(userRef2, {followers: arrayRemove(user.uid)}, {merge: true})
+            setDoc(userRef1, {following: arrayRemove(post.userID)}, {merge: true});
+            setDoc(userRef2, {followers: arrayRemove(user.uid)}, {merge: true});
             setFollowBtn(false);
+            setFollowersCount(followersCount - 1)
         }
 
         //const userDoc1 = await getDoc(userRef1);
@@ -143,11 +155,13 @@ const ProfilePage: React.FC<PostProps> = ({
     }
     useEffect(() => {
         checkFollow();
+        waitForStateCounts();
 
-    },[])
+    },[rdyStatesCount])
 
   return (
-    <div>
+    <div>{loading ? "Loading..." : null}
+    <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
         {post.username}
         <div className="user-container-profile-page">
             <img className="profile-picture-profile-page" alt="user icon" src={myImg}></img>
@@ -170,7 +184,7 @@ const ProfilePage: React.FC<PostProps> = ({
 
             </div>
     </div>
-    
+    </div>
   )
 }
 
