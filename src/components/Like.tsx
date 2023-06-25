@@ -38,6 +38,7 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
   async function likedPostCheck(postID: string) {
     const postIsLiked = await hasUserLikedPost(postID)
     setLiked(postIsLiked);
+    console.log("liked!!!")
     //if(setLoading) setLoading(false);
   }
 

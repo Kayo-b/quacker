@@ -86,10 +86,12 @@ const ProfilePage: React.FC<PostProps> = ({
     />
     const waitForStateCounts = () => {
         if(rdyStatesCount === 1) {
-            setLoading(false)
             const profileContainer = 
                 document.querySelector(".user-container-profile-page-container") as HTMLElement;
-            if(profileContainer) profileContainer.style.visibility = "visible"
+            if(profileContainer) setTimeout(() => {
+                profileContainer.style.visibility = "visible";
+                setLoading(false)
+            }, 400)
         }
     }
     const loadPostsList = (postOrComment: string) => {
