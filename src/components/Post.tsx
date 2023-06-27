@@ -52,6 +52,7 @@ type PostProps = {
     refresh?: undefined | boolean;
     setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
+    setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -75,7 +76,8 @@ const Post: React.FC<PostProps> = ({
   setUserMainFeed,
   profPost,
   setProfPost,
-  addToStatesCount
+  addToStatesCount,
+  setLoading
   }) => {
   
   const navigate = useNavigate();
@@ -83,16 +85,19 @@ const Post: React.FC<PostProps> = ({
 
   //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
+    if(addToStatesCount) addToStatesCount(0);
+    if(setLoading) setLoading(true);
     navigate(`/post/${post.postID}`, {state: {post}})
-    
+    const postPageContainers = document.querySelectorAll(".post-page-container");
+    postPageContainers.forEach((container: Element) => {
+    (container.parentElement?.parentElement as HTMLElement).style.visibility = "hidden";
+});
     
   }
 
   const RedirectToProfilePage = (post: DocumentData | undefined) => {
     navigate(`/profile/${post?.username}`, {state: {post}});
     update === true ? setUpdate(false) : setUpdate(true);
-    
-    
     
   }
 
@@ -130,7 +135,7 @@ const Post: React.FC<PostProps> = ({
     //setUserMainFeed(prevVal => prevVal.filter(value => value !== post?.postID))
    
     //setTimeout(() => getUserMainFeed(), 250)
-    
+
     // fetchUserMainFeed()
    }, [repost, update])//all posts rerender when these change
    //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
@@ -207,6 +212,7 @@ const Post: React.FC<PostProps> = ({
          setUserMainFeed={setUserMainFeed}
          profPost={profPost}
          setProfPost={setProfPost}
+         addToStatesCount={addToStatesCount}
          
 
         />
@@ -269,6 +275,7 @@ const Post: React.FC<PostProps> = ({
          setUserMainFeed={setUserMainFeed}
          profPost={profPost}
          setProfPost={setProfPost}
+         addToStatesCount={addToStatesCount}
 
         />
       </div>
@@ -276,7 +283,7 @@ const Post: React.FC<PostProps> = ({
     )
     //Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
     let comment = posts.map(post =>  post.parentID === parentPost?.postID ?  
-      <div className="post-container" key={post.postID}>
+      <div className="post-page-container" key={post.postID}>
         {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
@@ -324,6 +331,7 @@ const Post: React.FC<PostProps> = ({
          setUserMainFeed={setUserMainFeed}
          profPost={profPost}
          setProfPost={setProfPost}
+         addToStatesCount={addToStatesCount}
 
         />
       </div>
@@ -331,7 +339,7 @@ const Post: React.FC<PostProps> = ({
     )
 
     let newComment = newPost.map(post =>  post.parentID === parentPost?.postID ?  
-      <div className="post-container" key={post.postID}>
+      <div className="post-page-container" key={post.postID}>
         {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
@@ -379,6 +387,7 @@ const Post: React.FC<PostProps> = ({
          setUserMainFeed={setUserMainFeed}
          profPost={profPost}
          setProfPost={setProfPost}
+         addToStatesCount={addToStatesCount}
 
         />
       </div>
@@ -386,7 +395,7 @@ const Post: React.FC<PostProps> = ({
     )
     
     let clickedPost =  
-      <div className="post-container" key={post?.postID} style={style} >
+      <div className="post-page-container" key={post?.postID} style={style} >
         {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
@@ -434,6 +443,7 @@ const Post: React.FC<PostProps> = ({
          setUserMainFeed={setUserMainFeed}
          profPost={profPost}
          setProfPost={setProfPost}
+         addToStatesCount={addToStatesCount}
 
         />
       </div>
@@ -441,7 +451,7 @@ const Post: React.FC<PostProps> = ({
 
 let clickedPostParentPost =   posts.map(post =>  
   post.postID === newPostValue?.parentID ?  
-  <div className="post-container" key={post.postID} style={style}>
+  <div className="post-page-container" key={post.postID} style={style}>
     {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
@@ -489,6 +499,7 @@ let clickedPostParentPost =   posts.map(post =>
       setUserMainFeed={setUserMainFeed}
       profPost={profPost}
       setProfPost={setProfPost}
+      addToStatesCount={addToStatesCount}
     />
   </div>
   : <></>
@@ -497,7 +508,7 @@ let rootPost =  posts.map(post =>
   post.postID === newPostValue?.rootPostID &&
   newPostValue?.parentID !== post.postID && 
   newPostValue?.parentID !== null ?  
-  <div className="post-container" key={post.postID} style={style}>
+  <div className="post-page-container" key={post.postID} style={style}>
     {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
@@ -545,6 +556,7 @@ let rootPost =  posts.map(post =>
       setUserMainFeed={setUserMainFeed}
       profPost={profPost}
       setProfPost={setProfPost}
+      addToStatesCount={addToStatesCount}
 
     />
   </div>
@@ -606,6 +618,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
       profPost={profPost}
       setProfPost={setProfPost}
       addToStatesCount={addToStatesCount}
+      
     /> 
   </div>
   : <></>
@@ -662,6 +675,7 @@ let profileNewPostsFeed =  newPost.map(post =>
       setUserMainFeed={setUserMainFeed}
       profPost={profPost}
       setProfPost={setProfPost}
+      addToStatesCount={addToStatesCount}
       
     />
   </div>
@@ -719,6 +733,7 @@ let profileResponsesFeed =  posts.map(post =>
       setUserMainFeed={setUserMainFeed}
       profPost={profPost}
       setProfPost={setProfPost}
+      addToStatesCount={addToStatesCount}
     />
   </div>
   : <></>
@@ -774,6 +789,7 @@ let profileNewResponsesFeed =  newPost.map(post =>
       setUserMainFeed={setUserMainFeed}
       profPost={profPost}
       setProfPost={setProfPost}
+      addToStatesCount={addToStatesCount}
     />
   </div>
   : <></>
@@ -831,6 +847,7 @@ let repostsFromUser = posts.map(post =>
         setUserMainFeed={setUserMainFeed}
         profPost={profPost}
         setProfPost={setProfPost}
+        addToStatesCount={addToStatesCount}
       
       />
     </div>
@@ -888,12 +905,11 @@ let repostsFromUser = posts.map(post =>
         setUserMainFeed={setUserMainFeed}
         profPost={profPost}
         setProfPost={setProfPost}
+        addToStatesCount={addToStatesCount}
       />
     </div>
     : <></>
   )
-
-console.log(profPost,"PROF POST <<<<<<<<<<<<!")
     return (
       
       <div>

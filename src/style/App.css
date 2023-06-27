@@ -91,7 +91,7 @@ li {
   margin-right: 10px;
   border-radius: 50px;
 }
-.post-container {
+.post-container, .post-page-container {
   border: 1px solid red;
 }
 

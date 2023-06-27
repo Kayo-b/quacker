@@ -28,6 +28,7 @@ type UserProps = {
     profPost?: boolean;
     setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
+    
 }
 
 
@@ -57,7 +58,7 @@ const Repost: React.FC<PostProps> = ({
       if(userDoc.exists()) {
           if(userDoc.data().reposts.includes(postId)) {
             setReposted(true);
-            console.log("hasUserREposted = true" )
+            console.log("hasUserREposted = true")
           } else {
             setReposted(false);
           }

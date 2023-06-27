@@ -59,7 +59,7 @@ const ProfilePage: React.FC<PostProps> = ({
     const [followingCount, setFollowingCount] = React.useState<number>(0)
     const [followersCount, setFollowersCount] = React.useState<number>(0)
     const [loading, setLoading] = React.useState(true);
-    const [rdyStatesCount, setRdyStatesCount] = React.useState<number>(0)
+    const [profileStatesCount, setProfileStatesCount] = React.useState<number>(0)
 
     console.log(post,"POST**********************")
     // const profPost: boolean = true;
@@ -82,29 +82,47 @@ const ProfilePage: React.FC<PostProps> = ({
     userMainFeed={userMainFeed}
     setUserMainFeed={setUserMainFeed}
     setProfPost={setProfPost}
-    addToStatesCount={setRdyStatesCount}
+    addToStatesCount={setProfileStatesCount}
     />
-    const waitForStateCounts = () => {
-        if(rdyStatesCount === 1) {
+    const waitForStates = () => {
+        if(profileStatesCount === 1) {
             const profileContainer = 
                 document.querySelector(".user-container-profile-page-container") as HTMLElement;
             if(profileContainer) setTimeout(() => {
                 profileContainer.style.visibility = "visible";
-                setLoading(false)
+                setLoading(false);
             }, 400)
         }
     }
     const loadPostsList = (postOrComment: string) => {
+        const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
+        
+        //console.log(document.getElementById("post-subcontainer"))
         //const postList = posts.filter((postVal: DocumentData) => postVal.uid === post.uid);
         if(postOrComment === "posts") {
+           
             setProfPost(true);
+            
+            if(postSubContainer !== null) postSubContainer.style.visibility = "hidden"
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+                postSubContainer.style.visibility = "visible"
+            }, 400)
         }
         else if(postOrComment === "responses") {
-            setProfPost(false)
+            setProfPost(false);
+
+            if(postSubContainer !== null) postSubContainer.style.visibility = "hidden"
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+                postSubContainer.style.visibility = "visible"
+            }, 400)
+
         }
+        
     }
-
-
 
     const checkFollow = async() => {
         const userRef1 = doc(db, 'users', user.uid);
@@ -147,19 +165,13 @@ const ProfilePage: React.FC<PostProps> = ({
             setFollowersCount(followersCount - 1)
         }
 
-        //const userDoc1 = await getDoc(userRef1);
-        // const userDoc2 = await getDoc(userRef2);
-        // if(userDoc1.exists() && userDoc2.exists()) {
-        //     setDoc(userRef1, {following: arrayUnion(post.userID)}, {merge: true})
-        //     setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true})
-        // }
-
     }
     useEffect(() => {
         checkFollow();
-        waitForStateCounts();
+        waitForStates();
+        
 
-    },[rdyStatesCount])
+    },[profileStatesCount])
 
   return (
     <div>{loading ? "Loading..." : null}
@@ -180,7 +192,8 @@ const ProfilePage: React.FC<PostProps> = ({
                     <div className="responses-select" onClick={() => loadPostsList("responses")}>Responses</div>
                 </div>
                 <div className="feed-display">                                
-                {renderPosts}
+                {loading ? "Loading..." : null}
+                <div id="post-subcontainer">{renderPosts}</div>
                        
                 </div>
 

@@ -59,7 +59,8 @@ const Feed: React.FC<PostProps> = ({
     }) => {
 
     //const [posts, setPosts] = useState<DocumentData[]>([]);
-    const [feedUpdate, setFeedUpdate] = useState<boolean>(false);
+    const [loading, setLoading] = React.useState(true);
+    const [mainFeedStatesCount, setMainFeedStatesCount] = React.useState<number>(0)
     
 
     const fetchPosts = async () => {
@@ -75,18 +76,32 @@ const Feed: React.FC<PostProps> = ({
         })
     }
 
+    const waitForStates = () => {
+        if(mainFeedStatesCount === 1) {
+            const mainFeedContainer = 
+                document.querySelector(".feed-main-container") as HTMLElement;
+            if(mainFeedContainer) setTimeout(() => {
+                mainFeedContainer.style.visibility = "visible";
+                setLoading(false)
+            }, 200)
+        }
+    }
+
     useEffect(() => {
         //update ? setFeedUpdate(true) : setFeedUpdate(false);
         
-        fetchPosts()
+        fetchPosts();
+        waitForStates();
         
-    },[])
+    },[mainFeedStatesCount])
 
 
     return(
-        <div className="feed-main-container">
+        <div>{loading ? "Loading..." : null}
+        <div className="feed-main-container" style={{visibility:"hidden"}}>
             
            <ul>
+            
             <Post 
             name={name}
             newPost={newPost}
@@ -103,9 +118,11 @@ const Feed: React.FC<PostProps> = ({
             setRepost={setRepost}
             userMainFeed={userMainFeed}
             setUserMainFeed={setUserMainFeed}
+            addToStatesCount={setMainFeedStatesCount}
             />
             </ul>
             
+        </div>
         </div>
         
     )
