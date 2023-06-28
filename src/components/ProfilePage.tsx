@@ -90,24 +90,28 @@ const ProfilePage: React.FC<PostProps> = ({
         if(profileStatesCount === 1) {
             const profileContainer = 
                 document.querySelector(".user-container-profile-page-container") as HTMLElement;
+                const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
             if(profileContainer) setTimeout(() => {
                 profileContainer.style.visibility = "visible";
+                postSubContainer.style.visibility = "visible";
                 setLoading(false);
             }, 200)
         }
-        
+        setProfileStatesCount(0)
     }
 
     const waitForStates2 = () => {
+        console.log(profPostCheck, ";;;;;;;;;;;;;;;;;")
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
         if(profPostCheck === 1) {
-            console.log("AOKEOEKAEOKAEOKOAE----2")
-                setTimeout(() => {
+            console.log("AOKEOEKAEOKAEOKOAE----1")
+            setTimeout(() => {
                 setLoading(false);
-                postSubContainer.style.visibility = "visible"
+                postSubContainer.style.visibility = "visible";
             }, 100)
         }
         setProfPostCheck(0)
+        
     }
     
     const loadPostsList = (postOrComment: string) => {
@@ -119,13 +123,13 @@ const ProfilePage: React.FC<PostProps> = ({
             console.log(profPostCheck,"runs of false")
             setProfPost(true);
             
-            if(postSubContainer !== null) postSubContainer.style.visibility = "hidden"
+            if(postSubContainer !== null) postSubContainer.style.visibility = "hidden";
             setLoading(true);
 
-            setTimeout(() => {
-                setLoading(false);
-                postSubContainer.style.visibility = "visible"
-            }, 100)
+            // setTimeout(() => {
+            //     setLoading(false);
+            //     postSubContainer.style.visibility = "visible";
+            // }, 100)
         }
         else if(postOrComment === "responses") {
             setProfPost(false);
