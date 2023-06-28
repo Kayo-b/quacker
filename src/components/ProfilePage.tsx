@@ -53,6 +53,7 @@ const ProfilePage: React.FC<PostProps> = ({
     }) => {
       
     const [profPost, setProfPost] = React.useState<boolean>(true);
+    const [profPostCheck, setProfPostCheck] = React.useState<number>(0)
     const location = useLocation() as { state: { post: DocumentData } };
     const post = location.state?.post;
     const [followBtn, setFollowBtn] = React.useState<boolean>(false)
@@ -83,6 +84,7 @@ const ProfilePage: React.FC<PostProps> = ({
     setUserMainFeed={setUserMainFeed}
     setProfPost={setProfPost}
     addToStatesCount={setProfileStatesCount}
+    setProfPostCheck={setProfPostCheck}
     />
     const waitForStates = () => {
         if(profileStatesCount === 1) {
@@ -91,35 +93,54 @@ const ProfilePage: React.FC<PostProps> = ({
             if(profileContainer) setTimeout(() => {
                 profileContainer.style.visibility = "visible";
                 setLoading(false);
-            }, 400)
+            }, 200)
         }
+        
     }
+
+    const waitForStates2 = () => {
+        const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
+        if(profPostCheck === 1) {
+            console.log("AOKEOEKAEOKAEOKOAE----2")
+                setTimeout(() => {
+                setLoading(false);
+                postSubContainer.style.visibility = "visible"
+            }, 100)
+        }
+        setProfPostCheck(0)
+    }
+    
     const loadPostsList = (postOrComment: string) => {
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
         
         //console.log(document.getElementById("post-subcontainer"))
         //const postList = posts.filter((postVal: DocumentData) => postVal.uid === post.uid);
         if(postOrComment === "posts") {
-           
+            console.log(profPostCheck,"runs of false")
             setProfPost(true);
             
             if(postSubContainer !== null) postSubContainer.style.visibility = "hidden"
             setLoading(true);
+
             setTimeout(() => {
                 setLoading(false);
                 postSubContainer.style.visibility = "visible"
-            }, 400)
+            }, 100)
         }
         else if(postOrComment === "responses") {
             setProfPost(false);
-
             if(postSubContainer !== null) postSubContainer.style.visibility = "hidden"
             setLoading(true);
-            setTimeout(() => {
-                setLoading(false);
-                postSubContainer.style.visibility = "visible"
-            }, 400)
 
+        //     if(profPostCheck){
+        //         console.log("AOKEOEKAEOKAEOKOAE----2")
+        //         setTimeout(() => {
+        //         setLoading(false);
+        //         postSubContainer.style.visibility = "visible"
+        //     }, 100)
+            
+        // }
+        
         }
         
     }
@@ -167,11 +188,18 @@ const ProfilePage: React.FC<PostProps> = ({
 
     }
     useEffect(() => {
+        waitForStates2();
+        console.log("HIII")
+    },[profPostCheck])
+    
+    useEffect(() => {
         checkFollow();
         waitForStates();
         
 
     },[profileStatesCount])
+
+
 
   return (
     <div>{loading ? "Loading..." : null}

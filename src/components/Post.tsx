@@ -53,6 +53,7 @@ type PostProps = {
     setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+    setProfPostCheck?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -77,7 +78,8 @@ const Post: React.FC<PostProps> = ({
   profPost,
   setProfPost,
   addToStatesCount,
-  setLoading
+  setLoading,
+  setProfPostCheck
   }) => {
   
   const navigate = useNavigate();
@@ -734,6 +736,7 @@ let profileResponsesFeed =  posts.map(post =>
       profPost={profPost}
       setProfPost={setProfPost}
       addToStatesCount={addToStatesCount}
+      setProfPostCheck={setProfPostCheck}
     />
   </div>
   : <></>

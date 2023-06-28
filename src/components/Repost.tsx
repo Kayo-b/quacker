@@ -28,6 +28,7 @@ type UserProps = {
     profPost?: boolean;
     setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
+    setProfPostCheck?: React.Dispatch<React.SetStateAction<number>>;
     
 }
 
@@ -44,7 +45,8 @@ const Repost: React.FC<PostProps> = ({
     setUserMainFeed,
     setProfPost,
     profPost,
-    addToStatesCount
+    addToStatesCount,
+    setProfPostCheck
     }) => {
 
   const [reposted, setReposted] = useState<boolean>(false);
@@ -65,6 +67,10 @@ const Repost: React.FC<PostProps> = ({
           if(addToStatesCount) {
             addToStatesCount(1);
             console.log("reposted!!!")};
+            if(!profPost) {
+              if(setProfPostCheck) setProfPostCheck(1)
+            }
+            
       }
 
   
@@ -200,9 +206,11 @@ const Repost: React.FC<PostProps> = ({
       //     addBookmark(postId)
       // }
       function checkReposted() {
+        
         repost?.forEach(item => {
           if(item.postID === post?.postID) {
             setReposted(true)
+            
           } 
         })
       } 
@@ -210,7 +218,10 @@ const Repost: React.FC<PostProps> = ({
       useEffect(() => {
         hasUserReposted(post?.postID);
         //Logic to only show reposts that have been reposted by the current logged user when accessing the user profile
-        if(profPost) checkReposted()
+        if(profPost) {
+          console.log(")!!)!))!)!)!)!>>> TRUE")
+          checkReposted()
+        }
        
       },[repost])
      
