@@ -51,31 +51,43 @@ const Repost: React.FC<PostProps> = ({
 
   const [reposted, setReposted] = useState<boolean>(false);
 
-  const hasUserReposted = async(postId: string) => {
-      const userRef = doc(db, 'users', user.uid);
-      const userDoc = await getDoc(userRef);
-      // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
-      // const docs = await getDocs(q);
-      // const userData = docs.docs[0].data();
-      if(userDoc.exists()) {
-          if(userDoc.data().reposts.includes(postId)) {
-            setReposted(true);
-            console.log("hasUserREposted = true")
+  // const hasUserReposted = async(postId: string) => {
+  //     const userRef = doc(db, 'users', user.uid);
+  //     const userDoc = await getDoc(userRef);
+  //     // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
+  //     // const docs = await getDocs(q);
+  //     // const userData = docs.docs[0].data();
+  //     if(userDoc.exists()) {
+  //         if(userDoc.data().reposts.includes(postId)) {
+  //           setReposted(true);
+  //         } else {
+  //           setReposted(false);
+  //         }
+  //         if(addToStatesCount) {
+  //           addToStatesCount(1);
+  //           console.log("reposted!!!")};
+  //           if(!profPost) {
+  //             console.log("profPost!")
+  //             if(setProfPostCheck) setProfPostCheck(1)
+  //           } 
+  //           console.log("post", post)
+  //     }
+  // }
+
+  const hasUserReposted = () => {
+    if(post?.repostByUsers.includes(user.uid)) {
+      setReposted(true);
           } else {
             setReposted(false);
           }
           if(addToStatesCount) {
-            addToStatesCount(1);
-            console.log("reposted!!!")};
-            if(!profPost) {
-              console.log("profPost!")
-              if(setProfPostCheck) setProfPostCheck(1)
-            }
-
-            
-      }
-
-  
+              addToStatesCount(1);
+              console.log("reposted!!!")};
+              if(!profPost) {
+                console.log("profPost!")
+                if(setProfPostCheck) setProfPostCheck(1)
+              } 
+    
   }
   
   const removeRepost = (postId: string) => {
@@ -207,26 +219,37 @@ const Repost: React.FC<PostProps> = ({
       // const addBookmarkBtn = (postId: string) => {
       //     addBookmark(postId)
       // }
-      function checkReposted() {
+      // function checkReposted() {
         
-        repost?.forEach(item => {
-          if(item.postID === post?.postID) {
-            setReposted(true)
+      //   repost?.forEach(item => {
+      //     if(item.postID === post?.postID) {
+      //       setReposted(true)
             
-          } 
-        })
-      } 
+      //     } 
+      //   })
+      // } 
 
       useEffect(() => {
-        hasUserReposted(post?.postID);
+        
         //Logic to only show reposts that have been reposted by the current logged user when accessing the user profile
-        if(profPost) {
-          console.log(")!!)!))!)!)!)!>>> TRUE")
-          checkReposted()
-        }
+        // if(profPost) {
+        //   // console.log(")!!)!))!)!)!)!>>> TRUE")
+        //   // checkReposted()
+
+        //   repost?.forEach(item => {
+        //     if(item.postID === post?.postID) {
+        //       setReposted(true)
+              
+        //     } 
+        //   })
+        //   hasUserReposted(post?.postID);
+        // } else {
+        //   hasUserReposted(post?.postID);
+        // }
+        hasUserReposted();
        
       },[repost])
-     
+
       return(
           <div className="bm-main-container">
               <button onClick={() => addRepost(post?.postID)}>

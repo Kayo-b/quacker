@@ -6,6 +6,7 @@ import Post from '../components/Post';
 import myImg from '../img/user-icon.png';
 import '../style/ProfilePage.css';
 import { setgroups } from 'process';
+import { profile } from 'console';
 
 
 
@@ -53,18 +54,18 @@ const ProfilePage: React.FC<PostProps> = ({
     }) => {
       
     const [profPost, setProfPost] = React.useState<boolean>(true);
-    const [profPostCheck, setProfPostCheck] = React.useState<number>(0)
-    const location = useLocation() as { state: { post: DocumentData } };
-    const post = location.state?.post;
-    const [followBtn, setFollowBtn] = React.useState<boolean>(false)
-    const [followingCount, setFollowingCount] = React.useState<number>(0)
-    const [followersCount, setFollowersCount] = React.useState<number>(0)
+    const [profPostCheck, setProfPostCheck] = React.useState<number>(0);
+    const [followBtn, setFollowBtn] = React.useState<boolean>(false);
+    const [followingCount, setFollowingCount] = React.useState<number>(0);
+    const [followersCount, setFollowersCount] = React.useState<number>(0);
     const [loading, setLoading] = React.useState(true);
-    const [profileStatesCount, setProfileStatesCount] = React.useState<number>(0)
+    const [loading2, setLoading2] = React.useState(true);
+    const [profileStatesCount, setProfileStatesCount] = React.useState<number>(0);
+    const [profilePageStateCount, setProfilePageStateCount] = React.useState<boolean>(false);
 
-    console.log(post,"POST**********************")
-    // const profPost: boolean = true;
-    // const profResp: boolean = false;
+    const location = useLocation() as {state: { post: DocumentData}};
+    const post = location.state?.post;
+    console.log(post, "post!!!!!!!!!!]][][][")
     var renderPosts = 
     <Post 
     name={name}
@@ -87,64 +88,44 @@ const ProfilePage: React.FC<PostProps> = ({
     setProfPostCheck={setProfPostCheck}
     />
     const waitForStates = () => {
+        console.log(profileStatesCount, "< Profile States Count")
         if(profileStatesCount === 1) {
             const profileContainer = 
                 document.querySelector(".user-container-profile-page-container") as HTMLElement;
-                const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
+            const postSubContainer = 
+                document.getElementById("post-subcontainer") as HTMLElement;
             if(profileContainer) setTimeout(() => {
                 profileContainer.style.visibility = "visible";
                 postSubContainer.style.visibility = "visible";
                 setLoading(false);
+                setLoading2(false);
             }, 200)
-        }
-        setProfileStatesCount(0)
-    }
+        };
+        setProfileStatesCount(0);
+    };
 
     const waitForStates2 = () => {
-        console.log(profPostCheck, ";;;;;;;;;;;;;;;;;")
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
         if(profPostCheck === 1) {
-            console.log("AOKEOEKAEOKAEOKOAE----1")
             setTimeout(() => {
-                setLoading(false);
+                setLoading2(false);
                 postSubContainer.style.visibility = "visible";
             }, 100)
-        }
-        setProfPostCheck(0)
-        
+        };
+        setProfPostCheck(0);
     }
-    
+  
     const loadPostsList = (postOrComment: string) => {
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
-        
-        //console.log(document.getElementById("post-subcontainer"))
-        //const postList = posts.filter((postVal: DocumentData) => postVal.uid === post.uid);
         if(postOrComment === "posts") {
-            console.log(profPostCheck,"runs of false")
             setProfPost(true);
-            
             if(postSubContainer !== null) postSubContainer.style.visibility = "hidden";
-            setLoading(true);
-
-            // setTimeout(() => {
-            //     setLoading(false);
-            //     postSubContainer.style.visibility = "visible";
-            // }, 100)
+            setLoading2(true);
         }
         else if(postOrComment === "responses") {
             setProfPost(false);
             if(postSubContainer !== null) postSubContainer.style.visibility = "hidden"
-            setLoading(true);
-
-        //     if(profPostCheck){
-        //         console.log("AOKEOEKAEOKAEOKOAE----2")
-        //         setTimeout(() => {
-        //         setLoading(false);
-        //         postSubContainer.style.visibility = "visible"
-        //     }, 100)
-            
-        // }
-        
+            setLoading2(true);
         }
         
     }
@@ -154,7 +135,6 @@ const ProfilePage: React.FC<PostProps> = ({
         const userRef2 = doc(db, 'users', post.userID);
         const userDoc1 = await getDoc(userRef1);
         const userDoc2 = await getDoc(userRef2);
-        console.log("check follow1")
         if(userDoc1.exists()) {
             console.log("check follow2");
             const userData1 = userDoc1.data();
@@ -172,36 +152,45 @@ const ProfilePage: React.FC<PostProps> = ({
             setFollowingCount(following.length);
             setFollowersCount(followers.length);
         }
+        setProfilePageStateCount(true)
     }
 
     const followUser = async() => {
-        console.log("follow!", post)
         const userRef1 = doc(db, 'users', user.uid);
         const userRef2 = doc(db, 'users', post.userID);
         if(followBtn === false) {
             setDoc(userRef1, {following: arrayUnion(post.userID)}, {merge: true});
             setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true});
             setFollowBtn(true);
-            setFollowersCount(followersCount + 1)
+            setFollowersCount(followersCount + 1);
         } else {
             setDoc(userRef1, {following: arrayRemove(post.userID)}, {merge: true});
             setDoc(userRef2, {followers: arrayRemove(user.uid)}, {merge: true});
             setFollowBtn(false);
-            setFollowersCount(followersCount - 1)
+            setFollowersCount(followersCount - 1);
         }
 
     }
+
+    useEffect(() => {
+        const profileContainer = 
+        document.querySelector(".user-container-profile-page-container") as HTMLElement;
+        profileContainer.style.visibility = "hidden";
+        const postSubContainer = 
+                document.getElementById("post-subcontainer") as HTMLElement;
+                postSubContainer.style.visibility = "hidden";
+    },[post])
+    
     useEffect(() => {
         waitForStates2();
-        console.log("HIII")
+        
     },[profPostCheck])
     
     useEffect(() => {
         checkFollow();
         waitForStates();
-        
-
-    },[profileStatesCount])
+        console.log("useEffect1@@@@@")
+    },[profileStatesCount, post])
 
 
 
@@ -224,7 +213,7 @@ const ProfilePage: React.FC<PostProps> = ({
                     <div className="responses-select" onClick={() => loadPostsList("responses")}>Responses</div>
                 </div>
                 <div className="feed-display">                                
-                {loading ? "Loading..." : null}
+                {loading2 ? "Loading..." : null}
                 <div id="post-subcontainer">{renderPosts}</div>
                        
                 </div>
