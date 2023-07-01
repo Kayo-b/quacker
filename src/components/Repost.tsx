@@ -75,18 +75,20 @@ const Repost: React.FC<PostProps> = ({
   // }
 
   const hasUserReposted = () => {
+    console.log("has user reposted ??")
     if(post?.repostByUsers.includes(user.uid)) {
-      setReposted(true);
-          } else {
+            setReposted(true);
+          } else { 
             setReposted(false);
           }
           if(addToStatesCount) {
-              addToStatesCount(1);
-              console.log("reposted!!!")};
-              if(!profPost) {
-                console.log("profPost!")
-                if(setProfPostCheck) setProfPostCheck(1)
-              } 
+          
+            console.log("add to states count 2????", user.uid)
+              setTimeout(() => addToStatesCount(1), 400);
+            }
+          if(!profPost) {
+            if(setProfPostCheck) setProfPostCheck(1);
+          } 
     
   }
   

@@ -22,21 +22,27 @@ type PostProps = {
 const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
 
   const [liked, setLiked] = useState<boolean>(false)
- 
-  async function hasUserLikedPost(postId: string) {
-    const postRef = doc(db, 'posts', postId);
-    const postDoc = await getDoc(postRef);
-    if(postDoc.exists()) {
-      const postData = postDoc.data();
-      if(postData.likedByUsers && postData.likedByUsers.includes(user.uid)) {
-        return true
-      } 
-    }
-    return false
+ console.log(post,"post from liked>?>?>?>?>?>")
+  // async function hasUserLikedPost(postId: string) {
+  //   const postRef = doc(db, 'posts', postId);
+  //   const postDoc = await getDoc(postRef);
+  //   if(postDoc.exists()) {
+  //     const postData = postDoc.data();
+  //     if(postData.likedByUsers && postData.likedByUsers.includes(user.uid)) {
+  //       return true
+  //     } 
+  //   }
+  //   return false
+  // }
+ const hasUserLikedPost = () => {
+  if(post?.likedByUsers.includes(user.uid)) {
+    return true;
+  } else {
+    return false;
   }
- 
-  async function likedPostCheck(postID: string) {
-    const postIsLiked = await hasUserLikedPost(postID)
+ }
+  function likedPostCheck(postID: string) {
+    const postIsLiked = hasUserLikedPost()
     setLiked(postIsLiked);
     console.log("liked!!!")
     //if(setLoading) setLoading(false);

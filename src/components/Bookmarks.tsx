@@ -47,7 +47,6 @@ const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBoo
 
   },[])
     
-    
     const fetchBookmarks = async () => {
       console.log(bookmarkPosts, "bookmar mainpage1")
         const q = query(collection(db, "users"), where("uid", "==", user.uid));

@@ -65,7 +65,6 @@ const ProfilePage: React.FC<PostProps> = ({
 
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
-    console.log(post, "post!!!!!!!!!!]][][][")
     var renderPosts = 
     <Post 
     name={name}
@@ -100,8 +99,12 @@ const ProfilePage: React.FC<PostProps> = ({
                 setLoading(false);
                 setLoading2(false);
             }, 200)
+    
         };
-        setProfileStatesCount(0);
+         setProfileStatesCount(0);
+        // console.log(post.userID)
+        // console.log(user.uid, "==================")
+        
     };
 
     const waitForStates2 = () => {
@@ -110,9 +113,12 @@ const ProfilePage: React.FC<PostProps> = ({
             setTimeout(() => {
                 setLoading2(false);
                 postSubContainer.style.visibility = "visible";
-            }, 100)
+            }, 300)
+            
         };
-        setProfPostCheck(0);
+        setProfPostCheck(0)
+        
+        
     }
   
     const loadPostsList = (postOrComment: string) => {
@@ -171,7 +177,7 @@ const ProfilePage: React.FC<PostProps> = ({
         }
 
     }
-
+    
     useEffect(() => {
         const profileContainer = 
         document.querySelector(".user-container-profile-page-container") as HTMLElement;
@@ -179,18 +185,18 @@ const ProfilePage: React.FC<PostProps> = ({
         const postSubContainer = 
                 document.getElementById("post-subcontainer") as HTMLElement;
                 postSubContainer.style.visibility = "hidden";
+        setLoading(true)
     },[post])
     
     useEffect(() => {
         waitForStates2();
-        
     },[profPostCheck])
     
     useEffect(() => {
         checkFollow();
         waitForStates();
-        console.log("useEffect1@@@@@")
-    },[profileStatesCount, post])
+        console.log("useEffect1@@@@@1");
+    },[profileStatesCount,post])
 
 
 
