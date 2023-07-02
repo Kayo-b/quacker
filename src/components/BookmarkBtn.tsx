@@ -28,6 +28,15 @@ const BookmarkBtn: React.FC<PostProps> = ({user, post, setUpdate, update, bookma
 
 const [favorited, setFavorited] = useState<boolean>(false);
 
+// const hasUserBookmarkedPost2 = (postId: string) => {
+//     if(post !== undefined ) {
+//         if(bookmarkPosts?.includes(post)) {
+//         setFavorited(true);
+//     };
+//     }
+
+//     hasUserBookmarkedPost(postId)
+// }
 const hasUserBookmarkedPost = async(postId: string) => {
     const userRef = doc(db, 'users', user.uid);
     const userDoc = await getDoc(userRef);
@@ -43,6 +52,8 @@ const hasUserBookmarkedPost = async(postId: string) => {
 
 }
 
+
+
 const removeBookmarkPost = (postId: string) => {
     if(setBookmarkPosts) setBookmarkPosts(
         prevBookmarkPosts => 
@@ -50,8 +61,6 @@ const removeBookmarkPost = (postId: string) => {
             .filter(
                 post =>
                     post.postID !== postId)) 
-    console.log(bookmarkPosts, "Remove bookmark")
-
     };
 
     
@@ -59,40 +68,40 @@ const addBookmarkPost = (newPost: DocumentData) => {
         
         if(setBookmarkPosts) setBookmarkPosts(
             prevBookmarkPosts => [...prevBookmarkPosts, newPost]) 
-            console.log(bookmarkPosts, "add bookmark")
             
     }
-    //See if there is a faster way to get the user's bookmarked posts, the query makes it take some time
-    async function addBookmark(postId: string){
-        // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
-        // const docs = await getDocs(q);
-        // const userRef = docs.docs[0].ref;
-        // const userData = docs.docs[0].data();
-        const userRef = doc(db, 'users', user.uid);
-        
-        //const userDoc = await getDoc(userRef);
-        //const userData = userDoc.data();
-        if(!favorited) {
-                setFavorited(true);
-                setDoc(userRef, {bookmarks: arrayUnion(postId)}, {merge: true})
-                setUpdate(true);
-                if(post) addBookmarkPost(post); 
-                
-        } else {
-                setFavorited(false);
-                setDoc(userRef, {bookmarks: arrayRemove(postId)}, {merge: true});
-                setUpdate(false);
-                removeBookmarkPost(post?.postID);
-            }
-            //update === false ? setUpdate(true) : setUpdate(false);
-        }
-         
+//See if there is a faster way to get the user's bookmarked posts, the query makes it take some time
+const addBookmark = async (postId: string) => {
+    // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
+    // const docs = await getDocs(q);
+    // const userRef = docs.docs[0].ref;
+    // const userData = docs.docs[0].data();
+    const userRef = doc(db, 'users', user.uid);
     
-    // const addBookmarkBtn = (postId: string) => {
-    //     addBookmark(postId)
-    // }
+    //const userDoc = await getDoc(userRef);
+    //const userData = userDoc.data();
+    if(!favorited) {
+            setFavorited(true);
+            setDoc(userRef, {bookmarks: arrayUnion(postId)}, {merge: true})
+            setUpdate(true);
+            if(post) addBookmarkPost(post); 
+            
+    } else {
+            setFavorited(false);
+            setDoc(userRef, {bookmarks: arrayRemove(postId)}, {merge: true});
+            setUpdate(false);
+            removeBookmarkPost(post?.postID);
+        }
+        //update === false ? setUpdate(true) : setUpdate(false);
+    }
+        
+
+// const addBookmarkBtn = (postId: string) => {
+//     addBookmark(postId)
+// }
 
     useEffect(() => {
+        // hasUserBookmarkedPost2(post?.postID);
         hasUserBookmarkedPost(post?.postID);
         
     },[bookmarkPosts])

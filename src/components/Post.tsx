@@ -102,7 +102,7 @@ const Post: React.FC<PostProps> = ({
     //   const profileContainer = 
     //             document.querySelector(".user-container-profile-page-container") as HTMLElement;
     //             profileContainer.style.visibility = "hidden" }     
-    navigate(`/profile/${post?.username}`, {state: {post}});
+    navigate(`/profile/${post?.username}`, {state: {post, }});
   
     update === true ? setUpdate(false) : setUpdate(true);
     

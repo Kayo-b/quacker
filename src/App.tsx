@@ -56,8 +56,6 @@ const App = () => {
   const [update, setUpdate] = useState<boolean | undefined>()
   const [newPost, setNewPost] = useState<DocumentData[]>([])
   const [name, setName] = useState("");
-console.log(userMainFeed)
-console.log(bookmarkPosts)
 
 //  useEffect(() => {
 //   getUserMainFeed();
@@ -158,7 +156,6 @@ console.log(bookmarkPosts)
           setRepost={setRepost}
           userMainFeed={userMainFeed}
           setUserMainFeed={setUserMainFeed}
-          
           />}
         />
         <Route
@@ -178,7 +175,6 @@ console.log(bookmarkPosts)
         setRepost={setRepost}
         userMainFeed={userMainFeed}
         setUserMainFeed={setUserMainFeed}
-
         />}
         />
       </Routes>

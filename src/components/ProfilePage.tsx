@@ -62,9 +62,11 @@ const ProfilePage: React.FC<PostProps> = ({
     const [loading2, setLoading2] = React.useState(true);
     const [profileStatesCount, setProfileStatesCount] = React.useState<number>(0);
     const [profilePageStateCount, setProfilePageStateCount] = React.useState<boolean>(false);
+    const [savePostUser, setSavePostUser] = React.useState<string>('')
 
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
+
     var renderPosts = 
     <Post 
     name={name}
@@ -98,7 +100,7 @@ const ProfilePage: React.FC<PostProps> = ({
                 postSubContainer.style.visibility = "visible";
                 setLoading(false);
                 setLoading2(false);
-            }, 200)
+            }, 400)
     
         };
          setProfileStatesCount(0);
@@ -179,6 +181,9 @@ const ProfilePage: React.FC<PostProps> = ({
     }
     
     useEffect(() => {
+        if(savePostUser !== post.username) {
+        
+        setSavePostUser(post.username);
         const profileContainer = 
         document.querySelector(".user-container-profile-page-container") as HTMLElement;
         profileContainer.style.visibility = "hidden";
@@ -186,6 +191,9 @@ const ProfilePage: React.FC<PostProps> = ({
                 document.getElementById("post-subcontainer") as HTMLElement;
                 postSubContainer.style.visibility = "hidden";
         setLoading(true)
+        
+        }
+
     },[post])
     
     useEffect(() => {
@@ -198,8 +206,7 @@ const ProfilePage: React.FC<PostProps> = ({
         console.log("useEffect1@@@@@1");
     },[profileStatesCount,post])
 
-
-
+    
   return (
     <div>{loading ? "Loading..." : null}
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
