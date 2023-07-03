@@ -58,7 +58,7 @@ const Repost: React.FC<PostProps> = ({
       // const docs = await getDocs(q);
       // const userData = docs.docs[0].data();
       if(userDoc.exists()) {
-          if(userDoc.data().reposts.includes(postId)) {
+          if(userDoc.data().reposts.includes(postId) || post?.repostByUsers.includes(user.uid)) {
             setReposted(true);
           } else {
             setReposted(false);
@@ -71,26 +71,29 @@ const Repost: React.FC<PostProps> = ({
               if(setProfPostCheck) setProfPostCheck(1)
             } 
             console.log("post", post)
+            
       }
   }
 
-  // const hasUserReposted2 = () => {
-  //   console.log("has user reposted ??")
-  //   if(post?.repostByUsers.includes(user.uid)) {
-  //           setReposted(true);
-  //         } else { 
-  //           setReposted(false);
-  //         }
-  //         if(addToStatesCount) {
+  const hasUserReposted2 = () => {
+    console.log("has user reposted ??")
+    console.log(post)
+    console.log(post?.repostByUsers.includes(user.uid))
+    if(post?.repostByUsers.includes(user.uid)) {
+            setReposted(true);
+          } else { 
+            setReposted(false);
+          }
+          if(addToStatesCount) {
           
-  //           console.log("add to states count 2????", user.uid)
-  //             setTimeout(() => addToStatesCount(1), 400);
-  //           }
-  //         if(!profPost) {
-  //           if(setProfPostCheck) setProfPostCheck(1);
-  //         } 
+            console.log("add to states count 2????", user.uid)
+              setTimeout(() => addToStatesCount(1), 400);
+            }
+          if(!profPost) {
+            if(setProfPostCheck) setProfPostCheck(1);
+          } 
     
-  // }
+  }
   
   const removeRepost = (postId: string) => {
       if(setRepost) { 
@@ -100,8 +103,7 @@ const Repost: React.FC<PostProps> = ({
               .filter(
                   post =>
                       post.postID !== postId))
-                    }
-                    
+                    }       
       };
   
   console.log(repost)
@@ -199,7 +201,7 @@ async function addRepostData(postId: string) {
               //Getting the indexes of the unreposted posts that have the same ID
               const indexArray = mainFeed.reduce((acc: Array<number>, item: string, index: number) => {
                 if(item === postId) {
-                  acc.push(index)
+                  acc.push(index);
                 }
                 return acc;
               },[])
@@ -209,22 +211,19 @@ async function addRepostData(postId: string) {
               if(indexArray.length > 1) {
                 mainFeed.splice(indexArray[1], 1);
                 setDoc(userRef, {mainFeed: mainFeed}, {merge: true});
-                console.log("1");
                 substituteMainFeed(mainFeed.reverse());
               } else {
                 removeFromMainFeed();
                 let newFeed = mainFeed.filter((post: string) => post !== postId);
                 //substituteMainFeed(newFeed)
                 setDoc(userRef, {mainFeed: newFeed}, {merge: true});
-                console.log("2");
               }
             }
             setDoc(userRef, {reposts: arrayRemove(postId)}, {merge: true});
             setDoc(postRef, {repostByUsers: arrayRemove(user.uid)}, {merge: true});
-            !update ? setUpdate(true) : setUpdate(false)
+            !update ? setUpdate(true) : setUpdate(false);
             removeRepost(post?.postID);
           }
-          
       }
            
       
@@ -232,15 +231,19 @@ async function addRepostData(postId: string) {
       //     addBookmark(postId)
       // }
       // function checkReposted() {
-        
-      //   repost?.forEach(item => {
-      //     if(item.postID === post?.postID) {
+      //   setReposted(true)
+      //   console.log(post, "111111111111111111111111111111111")
+      //   post?.repostByUsers.forEach((item: string) => {
+      //     console.log("??????TRUE?????")
+      //     if(item === user.uid) {
+      //       console.log("TRUEEEE")
       //       setReposted(true)
             
       //     } 
       //   })
+      //   hasUserReposted(post?.postID);
       // } 
-
+      
       useEffect(() => {
         
         //Logic to only show reposts that have been reposted by the current logged user when accessing the user profile
@@ -257,11 +260,13 @@ async function addRepostData(postId: string) {
         //   hasUserReposted(post?.postID);
         // } else {
         //   hasUserReposted(post?.postID);
-        // }
+        // }3
         //hasUserReposted2();
+        
         hasUserReposted(post?.postID);
-       
+        
       },[repost])
+
 
       return(
           <div className="bm-main-container">

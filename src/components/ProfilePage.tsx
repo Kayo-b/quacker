@@ -62,7 +62,7 @@ const ProfilePage: React.FC<PostProps> = ({
     const [loading2, setLoading2] = React.useState(true);
     const [profileStatesCount, setProfileStatesCount] = React.useState<number>(0);
     const [profilePageStateCount, setProfilePageStateCount] = React.useState<boolean>(false);
-    const [savePostUser, setSavePostUser] = React.useState<string>('')
+    const [savePostUser, setSavePostUser] = React.useState<string>('');
 
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
@@ -100,13 +100,10 @@ const ProfilePage: React.FC<PostProps> = ({
                 postSubContainer.style.visibility = "visible";
                 setLoading(false);
                 setLoading2(false);
-            }, 400)
+            }, 300)
     
         };
          setProfileStatesCount(0);
-        // console.log(post.userID)
-        // console.log(user.uid, "==================")
-        
     };
 
     const waitForStates2 = () => {
@@ -118,9 +115,7 @@ const ProfilePage: React.FC<PostProps> = ({
             }, 300)
             
         };
-        setProfPostCheck(0)
-        
-        
+        setProfPostCheck(0); 
     }
   
     const loadPostsList = (postOrComment: string) => {
@@ -204,7 +199,7 @@ const ProfilePage: React.FC<PostProps> = ({
         checkFollow();
         waitForStates();
         console.log("useEffect1@@@@@1");
-    },[profileStatesCount,post])
+    },[profileStatesCount, post])
 
     
   return (
@@ -228,9 +223,7 @@ const ProfilePage: React.FC<PostProps> = ({
                 <div className="feed-display">                                
                 {loading2 ? "Loading..." : null}
                 <div id="post-subcontainer">{renderPosts}</div>
-                       
                 </div>
-
             </div>
     </div>
     </div>
