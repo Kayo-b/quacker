@@ -61,6 +61,7 @@ const removeBookmarkPost = (postId: string) => {
             .filter(
                 post =>
                     post.postID !== postId)) 
+                    update === true ? setUpdate(false) : setUpdate(true);
     };
 
     

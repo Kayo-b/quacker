@@ -54,6 +54,9 @@ type PostProps = {
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
     setProfPostCheck?: React.Dispatch<React.SetStateAction<number>>;
+    bookmarkUpdate?: undefined | boolean;
+    favorited?: boolean;
+    setFavorited?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -79,11 +82,14 @@ const Post: React.FC<PostProps> = ({
   setProfPost,
   addToStatesCount,
   setLoading,
-  setProfPostCheck
+  setProfPostCheck,
+  bookmarkUpdate
   }) => {
   
   const navigate = useNavigate();
   const style = {"fontSize": "large"}
+
+  const [favorited, setFavorited] = useState<boolean>(false);
 
   //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
@@ -102,7 +108,7 @@ const Post: React.FC<PostProps> = ({
     //   const profileContainer = 
     //             document.querySelector(".user-container-profile-page-container") as HTMLElement;
     //             profileContainer.style.visibility = "hidden" }     
-    navigate(`/profile/${post?.username}`, {state: {post, }});
+    navigate(`/profile/${post?.username}`, {state: {post}});
   
     update === true ? setUpdate(false) : setUpdate(true);
     
@@ -190,12 +196,12 @@ const Post: React.FC<PostProps> = ({
         user={user} 
         post={post}
         /> 
-        <BookmarkBtn 
-        user={user} 
-        post={post} 
-        update={update} 
-        setUpdate={setUpdate}
-        />
+    <BookmarkBtn 
+    user={user} 
+    post={post} 
+    update={update} 
+    setUpdate={setUpdate}
+    />
         <Comment 
          user={user}
          post={post}
@@ -309,12 +315,12 @@ const Post: React.FC<PostProps> = ({
         user={user} 
         post={post}
         /> 
-        <BookmarkBtn 
-        user={user} 
-        post={post} 
-        update={update} 
-        setUpdate={setUpdate}
-        />
+    <BookmarkBtn 
+    user={user} 
+    post={post} 
+    update={update} 
+    setUpdate={setUpdate}
+    />
         <Comment 
          user={user}
          post={post}
@@ -365,12 +371,12 @@ const Post: React.FC<PostProps> = ({
         user={user} 
         post={post}
         /> 
-        <BookmarkBtn 
-        user={user} 
-        post={post} 
-        update={update} 
-        setUpdate={setUpdate}
-        />
+    <BookmarkBtn 
+    user={user} 
+    post={post} 
+    update={update} 
+    setUpdate={setUpdate}
+    />
         <Comment 
          user={user}
          post={post}
@@ -421,12 +427,12 @@ const Post: React.FC<PostProps> = ({
         user={user} 
         post={post}
         /> 
-        <BookmarkBtn 
-        user={user} 
-        post={post} 
-        update={update} 
-        setUpdate={setUpdate}
-        />
+    <BookmarkBtn 
+    user={user} 
+    post={post} 
+    update={update} 
+    setUpdate={setUpdate}
+    />
         <Comment 
          user={user}
          post={post}
@@ -918,6 +924,60 @@ let repostsFromUser = posts.map(post =>
     </div>
     : <></>
   )
+
+  let bookmarkedPosts = bookmarkPosts?.map(post => post !== undefined ?
+    <div className="post-container" key={post.postID} style={style}>
+    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+    <div className="user-container">
+      <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <span>
+        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+          {post.username}
+        </div>
+      <div className="content" onClick={() => RedirectToPostPage(post)}>
+        <li key={post.id}>
+          {post.textContent}
+        </li>
+      </div>
+      </span>   
+    </div>
+    <Like 
+    user={user} 
+    post={post}
+    /> 
+    <BookmarkBtn 
+    user={user} 
+    post={post} 
+    update={update} 
+    setUpdate={setUpdate}
+    />
+    <Comment 
+     user={user}
+     post={post}
+     setUpdate={setUpdate}
+     setNewPost={setNewPost}
+     newPost={newPost}
+     update={update}
+     name={name}
+    />
+    <Repost 
+      user={user}
+      post={post}
+      setUpdate={setUpdate}
+      setNewPost={setNewPost}
+      newPost={newPost}
+      update={update}
+      name={name}
+      repost={repost}
+      setRepost={setRepost}
+      userMainFeed={userMainFeed}
+      setUserMainFeed={setUserMainFeed}
+      profPost={profPost}
+      setProfPost={setProfPost}
+      addToStatesCount={addToStatesCount}
+    />
+  </div>
+  : <></>)
     return (
       
       <div>
@@ -943,6 +1003,10 @@ let repostsFromUser = posts.map(post =>
             <div>{profileNewResponsesFeed}</div>
             <div>{profileResponsesFeed}</div>
           </div>  
+        ) : bookmarkUpdate === true ? (    
+          <div>
+            <div>{bookmarkedPosts}</div>
+          </div>
         ) : (
           <div>
             <div>{neuPost}</div>

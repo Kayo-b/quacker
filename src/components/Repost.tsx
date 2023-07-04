@@ -75,25 +75,25 @@ const Repost: React.FC<PostProps> = ({
       }
   }
 
-  const hasUserReposted2 = () => {
-    console.log("has user reposted ??")
-    console.log(post)
-    console.log(post?.repostByUsers.includes(user.uid))
-    if(post?.repostByUsers.includes(user.uid)) {
-            setReposted(true);
-          } else { 
-            setReposted(false);
-          }
-          if(addToStatesCount) {
+  // const hasUserReposted2 = () => {
+  //   console.log("has user reposted ??")
+  //   console.log(post)
+  //   console.log(post?.repostByUsers.includes(user.uid))
+  //   if(post?.repostByUsers.includes(user.uid)) {
+  //           setReposted(true);
+  //         } else { 
+  //           setReposted(false);
+  //         }
+  //         if(addToStatesCount) {
           
-            console.log("add to states count 2????", user.uid)
-              setTimeout(() => addToStatesCount(1), 400);
-            }
-          if(!profPost) {
-            if(setProfPostCheck) setProfPostCheck(1);
-          } 
+  //           console.log("add to states count 2????", user.uid)
+  //             setTimeout(() => addToStatesCount(1), 400);
+  //           }
+  //         if(!profPost) {
+  //           if(setProfPostCheck) setProfPostCheck(1);
+  //         } 
     
-  }
+  // }
   
   const removeRepost = (postId: string) => {
       if(setRepost) { 

@@ -31,7 +31,6 @@ type HomepageProps = {
     newPost: DocumentData[] ;
     userMainFeed?: DocumentData[];
     setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
-
     
 }
 

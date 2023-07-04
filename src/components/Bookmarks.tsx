@@ -30,25 +30,43 @@ type UserProps = {
 }  
 
 type BookmarksProps = { 
+    name: string;
+    setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    newPost: DocumentData[] ;
     posts: DocumentData[] ;
-    user: UserProps;
-    bookmarkPosts?: DocumentData[];
-    setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     update: undefined | boolean;
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+    user: UserProps;
+    post?: DocumentData;
+    bookmarkPosts?: DocumentData[];
+    setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    isComment?: boolean | undefined;
+    parentPost?: DocumentData;
+    repost?: DocumentData[];
+    setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    userMainFeed?: DocumentData[];
+    setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
 }
 
 
-const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBookmarkPosts, update, setUpdate}) => {
-  //const [bookmarkUpdate, setBookmarkUpdate] = useState<boolean | undefined>() 
-  
-  useEffect(() => {
-    console.log(bookmarkPosts)
-    fetchBookmarks();
-    console.log(bookmarkPosts)
+const Bookmarks: React.FC<BookmarksProps> = ({
+  user, 
+  update, 
+  posts, 
+  name, 
+  bookmarkPosts, 
+  newPost, 
+  repost, 
+  setRepost, 
+  setNewPost, 
+  setBookmarkPosts, 
+  setUpdate,
+  userMainFeed,
+  setUserMainFeed
+}) => {
+  const [bookmarkUpdate, setBookmarkUpdate] = useState<boolean | undefined>(true) 
 
-  },[])
-    
+
     const fetchBookmarks = async () => {
         const q = query(collection(db, "users"), where("uid", "==", user.uid));
         const docs = await getDocs(q);
@@ -67,35 +85,63 @@ const Bookmarks: React.FC<BookmarksProps> = ({user, posts, bookmarkPosts, setBoo
             });
         }
         setBookmarkPosts(tempPosts);
+        setBookmarkUpdate(true);
     }
     
-    let bookmarkPost = bookmarkPosts?.map(post =>    
-        <div key={post.postID} className="post-container">
-          <div className="user-container">
-            <img className="profile-picture" alt="user icon" src={myImg}></img>
-            <span>
-              <div className="user-name">
-                {post.username}
-              </div>
-            <div className="content">
-              <li key={post.id}>
-                {post.textContent}
-              </li>
-            </div>
-            </span>   
-          </div>
-          <Like user={user} post={post} /> 
-          <BookmarkBtn 
-          // key={post.postID}
-          user={user} 
-          post={post} 
-          update={update} 
-          setUpdate={setUpdate} 
-          bookmarkPosts={bookmarkPosts} 
-          setBookmarkPosts={setBookmarkPosts}
-          />
-        </div>
-      )
+    let bookmarkPost = 
+        <Post 
+        name={name}
+        newPost={newPost}
+        setNewPost={setNewPost}
+        update={update}
+        setUpdate={setUpdate}
+        posts={posts}
+        user={user}
+        bookmarkPosts={bookmarkPosts} 
+        setBookmarkPosts={setBookmarkPosts}
+        repost={repost}
+        setRepost={setRepost}
+        userMainFeed={userMainFeed}
+        setUserMainFeed={setUserMainFeed}
+        bookmarkUpdate={bookmarkUpdate}
+        // setProfPost={setProfPost}
+        // addToStatesCount={setProfileStatesCount}
+        // setProfPostCheck={setProfPostCheck}
+        />
+    
+    // bookmarkPosts?.map(post =>    
+    //     <div key={post.postID} className="post-container">
+    //       <div className="user-container">
+    //         <img className="profile-picture" alt="user icon" src={myImg}></img>
+    //         <span>
+    //           <div className="user-name">
+    //             {post.username}
+    //           </div>
+    //         <div className="content">
+    //           <li key={post.id}>
+    //             {post.textContent}
+    //           </li>
+    //         </div>
+    //         </span>   
+    //       </div>
+    //       <Like user={user} post={post} /> 
+    //       <BookmarkBtn 
+    //       // key={post.postID}
+    //       user={user} 
+    //       post={post} 
+    //       update={update} 
+    //       setUpdate={setUpdate} 
+    //       bookmarkPosts={bookmarkPosts} 
+    //       setBookmarkPosts={setBookmarkPosts}
+    //       />
+    //     </div>
+    //   )
+
+    useEffect(() => {
+      fetchBookmarks();
+    },[])
+      
+      
     return(
         <div className="bm-main-container">
            <div> {bookmarkPost} </div>

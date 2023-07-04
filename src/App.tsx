@@ -56,6 +56,7 @@ const App = () => {
   const [update, setUpdate] = useState<boolean | undefined>()
   const [newPost, setNewPost] = useState<DocumentData[]>([])
   const [name, setName] = useState("");
+  // const [favorited, setFavorited] = useState<boolean>(false);
 
 //  useEffect(() => {
 //   getUserMainFeed();
@@ -131,12 +132,19 @@ const App = () => {
         path="/bookmarks/"
         element={
         <Bookmarks 
-          user={user as UserPropsOrigin} 
-          posts={posts} 
-          bookmarkPosts={bookmarkPosts} 
-          setBookmarkPosts={setBookmarkPosts}
-          update={update} 
-          setUpdate={setUpdate}
+        name={name} 
+        user={user as UserPropsOrigin} 
+        posts={posts} 
+        update={update}
+        setUpdate={setUpdate}
+        bookmarkPosts={bookmarkPosts} 
+        setBookmarkPosts={setBookmarkPosts}
+        setNewPost={setNewPost}
+        newPost={newPost}
+        repost={repost}
+        setRepost={setRepost}
+        userMainFeed={userMainFeed}
+        setUserMainFeed={setUserMainFeed}
           />}
         />
         <Route
