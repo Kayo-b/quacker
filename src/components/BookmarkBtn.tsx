@@ -19,12 +19,26 @@ type PostProps = {
     bookmarkPosts?: DocumentData[];
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     setBookmarkPosts?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    bookmarkUpdate?: undefined | boolean;
+    setBookmarkUpdate?: React.Dispatch<React.SetStateAction<boolean>>;
+    addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     
 }
 
 
 
-const BookmarkBtn: React.FC<PostProps> = ({user, post, setUpdate, update, bookmarkPosts, setBookmarkPosts}) => {
+const BookmarkBtn: React.FC<PostProps> = ({
+    user,
+    post, 
+    setUpdate, 
+    update, 
+    bookmarkPosts, 
+    setBookmarkPosts,
+    bookmarkUpdate,
+    setBookmarkUpdate,
+    addToStatesCount
+
+}) => {
 
 const [favorited, setFavorited] = useState<boolean>(false);
 
@@ -49,7 +63,7 @@ const hasUserBookmarkedPost = async(postId: string) => {
             setFavorited(true);
         }
     }
-
+    if(addToStatesCount) addToStatesCount(1)
 }
 
 
@@ -61,7 +75,6 @@ const removeBookmarkPost = (postId: string) => {
             .filter(
                 post =>
                     post.postID !== postId)) 
-                    update === true ? setUpdate(false) : setUpdate(true);
     };
 
     
@@ -94,6 +107,7 @@ const addBookmark = async (postId: string) => {
             removeBookmarkPost(post?.postID);
         }
         //update === false ? setUpdate(true) : setUpdate(false);
+        
     }
         
 

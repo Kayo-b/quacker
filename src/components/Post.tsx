@@ -126,8 +126,6 @@ const Post: React.FC<PostProps> = ({
       setPosts(prevVal => 
         prevVal.filter(value => value.postID !== post?.postID));
       }
-      console.log(newPost)
-      console.log(posts)
 
     var removePostFromDB = async () =>  {
       const userRef = doc(db, 'users', user.uid);
@@ -925,59 +923,59 @@ let repostsFromUser = posts.map(post =>
     : <></>
   )
 
-  let bookmarkedPosts = bookmarkPosts?.map(post => post !== undefined ?
-    <div className="post-container" key={post.postID} style={style}>
-    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
-    <div className="user-container">
-      <img className="profile-picture" alt="user icon" src={myImg}></img>
-      <span>
-        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
-          {post.username}
-        </div>
-      <div className="content" onClick={() => RedirectToPostPage(post)}>
-        <li key={post.id}>
-          {post.textContent}
-        </li>
-      </div>
-      </span>   
-    </div>
-    <Like 
-    user={user} 
-    post={post}
-    /> 
-    <BookmarkBtn 
-    user={user} 
-    post={post} 
-    update={update} 
-    setUpdate={setUpdate}
-    />
-    <Comment 
-     user={user}
-     post={post}
-     setUpdate={setUpdate}
-     setNewPost={setNewPost}
-     newPost={newPost}
-     update={update}
-     name={name}
-    />
-    <Repost 
-      user={user}
-      post={post}
-      setUpdate={setUpdate}
-      setNewPost={setNewPost}
-      newPost={newPost}
-      update={update}
-      name={name}
-      repost={repost}
-      setRepost={setRepost}
-      userMainFeed={userMainFeed}
-      setUserMainFeed={setUserMainFeed}
-      profPost={profPost}
-      setProfPost={setProfPost}
-      addToStatesCount={addToStatesCount}
-    />
-  </div>
-  : <></>)
+  // let bookmarkedPosts = bookmarkPosts?.map(post => post !== undefined ?
+  //   <div className="post-container" key={post.postID} style={style}>
+  //   {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+  //   <div className="user-container">
+  //     <img className="profile-picture" alt="user icon" src={myImg}></img>
+  //     <span>
+  //       <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+  //         {post.username}
+  //       </div>
+  //     <div className="content" onClick={() => RedirectToPostPage(post)}>
+  //       <li key={post.id}>
+  //         {post.textContent}
+  //       </li>
+  //     </div>
+  //     </span>   
+  //   </div>
+  //   <Like 
+  //   user={user} 
+  //   post={post}
+  //   /> 
+  //   <BookmarkBtn 
+  //   user={user} 
+  //   post={post} 
+  //   update={update} 
+  //   setUpdate={setUpdate}
+  //   />
+  //   <Comment 
+  //    user={user}
+  //    post={post}
+  //    setUpdate={setUpdate}
+  //    setNewPost={setNewPost}
+  //    newPost={newPost}
+  //    update={update}
+  //    name={name}
+  //   />
+  //   <Repost 
+  //     user={user}
+  //     post={post}
+  //     setUpdate={setUpdate}
+  //     setNewPost={setNewPost}
+  //     newPost={newPost}
+  //     update={update}
+  //     name={name}
+  //     repost={repost}
+  //     setRepost={setRepost}
+  //     userMainFeed={userMainFeed}
+  //     setUserMainFeed={setUserMainFeed}
+  //     profPost={profPost}
+  //     setProfPost={setProfPost}
+  //     addToStatesCount={addToStatesCount}
+  //   />
+  // </div>
+  // : <></>)
     return (
       
       <div>
@@ -1003,10 +1001,10 @@ let repostsFromUser = posts.map(post =>
             <div>{profileNewResponsesFeed}</div>
             <div>{profileResponsesFeed}</div>
           </div>  
-        ) : bookmarkUpdate === true ? (    
-          <div>
-            <div>{bookmarkedPosts}</div>
-          </div>
+        // ) : bookmarkUpdate === true ? (    
+        //   <div>
+        //     <div>{bookmarkedPosts}</div>
+        //   </div>
         ) : (
           <div>
             <div>{neuPost}</div>
