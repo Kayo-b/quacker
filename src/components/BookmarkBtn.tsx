@@ -51,6 +51,7 @@ const [favorited, setFavorited] = useState<boolean>(false);
 
 //     hasUserBookmarkedPost(postId)
 // }
+
 const hasUserBookmarkedPost = async(postId: string) => {
     const userRef = doc(db, 'users', user.uid);
     const userDoc = await getDoc(userRef);
@@ -65,8 +66,6 @@ const hasUserBookmarkedPost = async(postId: string) => {
     }
     if(addToStatesCount) addToStatesCount(1)
 }
-
-
 
 const removeBookmarkPost = (postId: string) => {
     if(setBookmarkPosts) setBookmarkPosts(
@@ -109,8 +108,6 @@ const addBookmark = async (postId: string) => {
         //update === false ? setUpdate(true) : setUpdate(false);
         
     }
-        
-
 // const addBookmarkBtn = (postId: string) => {
 //     addBookmark(postId)
 // }

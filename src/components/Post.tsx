@@ -194,12 +194,14 @@ const Post: React.FC<PostProps> = ({
         user={user} 
         post={post}
         /> 
-    <BookmarkBtn 
-    user={user} 
-    post={post} 
-    update={update} 
-    setUpdate={setUpdate}
-    />
+        <BookmarkBtn 
+          user={user} 
+          post={post} 
+          update={update} 
+          setUpdate={setUpdate}
+          bookmarkPosts={bookmarkPosts} 
+          setBookmarkPosts={setBookmarkPosts}
+        />
         <Comment 
          user={user}
          post={post}
@@ -255,13 +257,12 @@ const Post: React.FC<PostProps> = ({
         post={post}
         /> 
         <BookmarkBtn 
-        // key={post.postID}
-        user={user} 
-        post={post} 
-        update={update} 
-        setUpdate={setUpdate}
-        bookmarkPosts={bookmarkPosts} 
-        setBookmarkPosts={setBookmarkPosts}
+          user={user} 
+          post={post} 
+          update={update} 
+          setUpdate={setUpdate}
+          bookmarkPosts={bookmarkPosts} 
+          setBookmarkPosts={setBookmarkPosts}
         />
         <Comment
         user={user}
@@ -313,12 +314,14 @@ const Post: React.FC<PostProps> = ({
         user={user} 
         post={post}
         /> 
-    <BookmarkBtn 
-    user={user} 
-    post={post} 
-    update={update} 
-    setUpdate={setUpdate}
-    />
+        <BookmarkBtn 
+          user={user} 
+          post={post} 
+          update={update} 
+          setUpdate={setUpdate}
+          bookmarkPosts={bookmarkPosts} 
+          setBookmarkPosts={setBookmarkPosts}
+        />
         <Comment 
          user={user}
          post={post}
@@ -369,12 +372,14 @@ const Post: React.FC<PostProps> = ({
         user={user} 
         post={post}
         /> 
-    <BookmarkBtn 
-    user={user} 
-    post={post} 
-    update={update} 
-    setUpdate={setUpdate}
-    />
+        <BookmarkBtn 
+          user={user} 
+          post={post} 
+          update={update} 
+          setUpdate={setUpdate}
+          bookmarkPosts={bookmarkPosts} 
+          setBookmarkPosts={setBookmarkPosts}
+        />
         <Comment 
          user={user}
          post={post}
@@ -425,12 +430,14 @@ const Post: React.FC<PostProps> = ({
         user={user} 
         post={post}
         /> 
-    <BookmarkBtn 
-    user={user} 
-    post={post} 
-    update={update} 
-    setUpdate={setUpdate}
-    />
+        <BookmarkBtn 
+          user={user} 
+          post={post} 
+          update={update} 
+          setUpdate={setUpdate}
+          bookmarkPosts={bookmarkPosts} 
+          setBookmarkPosts={setBookmarkPosts}
+        />
         <Comment 
          user={user}
          post={post}
@@ -486,6 +493,8 @@ let clickedPostParentPost =   posts.map(post =>
     post={post} 
     update={update} 
     setUpdate={setUpdate}
+    bookmarkPosts={bookmarkPosts} 
+    setBookmarkPosts={setBookmarkPosts}
     />
     <Comment 
      user={user}
@@ -543,6 +552,8 @@ let rootPost =  posts.map(post =>
     post={post} 
     update={update} 
     setUpdate={setUpdate}
+    bookmarkPosts={bookmarkPosts} 
+    setBookmarkPosts={setBookmarkPosts}
     />
     <Comment 
      user={user}
@@ -604,6 +615,8 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
     post={post} 
     update={update} 
     setUpdate={setUpdate}
+    bookmarkPosts={bookmarkPosts} 
+    setBookmarkPosts={setBookmarkPosts}
     />
     <Comment 
      user={user}
@@ -662,6 +675,8 @@ let profileNewPostsFeed =  newPost.map(post =>
     post={post} 
     update={update} 
     setUpdate={setUpdate}
+    bookmarkPosts={bookmarkPosts} 
+    setBookmarkPosts={setBookmarkPosts}
     />
     <Comment 
      user={user}
@@ -720,6 +735,8 @@ let profileResponsesFeed =  posts.map(post =>
     post={post} 
     update={update} 
     setUpdate={setUpdate}
+    bookmarkPosts={bookmarkPosts} 
+    setBookmarkPosts={setBookmarkPosts}
     />
     <Comment 
      user={user}
@@ -777,6 +794,8 @@ let profileNewResponsesFeed =  newPost.map(post =>
     post={post} 
     update={update} 
     setUpdate={setUpdate}
+    bookmarkPosts={bookmarkPosts} 
+    setBookmarkPosts={setBookmarkPosts}
     />
     <Comment 
      user={user}
@@ -831,11 +850,13 @@ let repostsFromUser = posts.map(post =>
       post={post}
       /> 
       <BookmarkBtn 
-      user={user} 
-      post={post} 
-      update={update} 
-      setUpdate={setUpdate}
-      />
+        user={user} 
+        post={post} 
+        update={update} 
+        setUpdate={setUpdate}
+        bookmarkPosts={bookmarkPosts} 
+        setBookmarkPosts={setBookmarkPosts}
+        />
       <Comment 
        user={user}
        post={post}
@@ -889,11 +910,13 @@ let repostsFromUser = posts.map(post =>
       post={post}
       /> 
       <BookmarkBtn 
-      user={user} 
-      post={post} 
-      update={update} 
-      setUpdate={setUpdate}
-      />
+        user={user} 
+        post={post} 
+        update={update} 
+        setUpdate={setUpdate}
+        bookmarkPosts={bookmarkPosts} 
+        setBookmarkPosts={setBookmarkPosts}
+        />
       <Comment 
        user={user}
        post={post}

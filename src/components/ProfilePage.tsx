@@ -190,11 +190,12 @@ const ProfilePage: React.FC<PostProps> = ({
         }
 
     },[post])
-    
+        
     useEffect(() => {
         waitForStates2();
     },[profPostCheck])
     
+
     useEffect(() => {
         checkFollow();
         waitForStates();
