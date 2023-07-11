@@ -69,9 +69,9 @@ const Bookmarks: React.FC<BookmarksProps> = ({
   const [bookmarksStatesCount, setBookmarksProfileStatesCount] = React.useState<number>(0);
 
   const waitForStates = () => {
-    if(bookmarksStatesCount === 1) {
-        const bookmarksContainer = 
+    const bookmarksContainer = 
             document.querySelector(".bm-main-container") as HTMLElement;
+    if(bookmarksStatesCount === 1) {
         if(bookmarksContainer) setTimeout(() => {
             bookmarksContainer.style.visibility = "visible";
             setLoading(false);
@@ -155,9 +155,14 @@ const Bookmarks: React.FC<BookmarksProps> = ({
       )
 
     useEffect(() => {
-      fetchBookmarks();
       waitForStates();
     },[bookmarksStatesCount])
+
+    
+    // useEffect(() => {
+    //   fetchBookmarks();
+    //   console.log("FETCHG")
+    // },[])
 
 
       
