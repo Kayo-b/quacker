@@ -22,7 +22,7 @@ type PostProps = {
 const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
 
   const [liked, setLiked] = useState<boolean>(false)
- console.log(post,"post from liked>?>?>?>?>?>")
+  console.log(post,"post from liked>?>?>?>?>?>")
 
   async function hasUserLikedPost(postId: string) {
     const postRef = doc(db, 'posts', postId);
@@ -30,24 +30,32 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
     if(postDoc.exists()) {
       const postData = postDoc.data();
       if(postData.likedByUsers && postData.likedByUsers.includes(user.uid)) {
-        return true
+        setLiked(true)
       } 
+    } else {
+      setLiked(false)
     }
-    return false
+    
   }
- const hasUserLikedPost2 = () => {
-  console.log(post,"post!")
-  if(post?.likedByUsers.includes(user.uid)) {
-    return true;
-  } else {
-    return false;
-  }
- }
+//  const hasUserLikedPost2 = () => {
+//   console.log(post,"post!")
+//   if(post?.likedByUsers.includes(user.uid)) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+//  }
   function likedPostCheck(postID: string) {
     
-    const postIsLiked = hasUserLikedPost2()
-    setLiked(postIsLiked);
-    console.log("liked!!!")
+    if(post?.likedByUsers.includes(user.uid)) {
+          setLiked(true);
+          console.log(true, post ,"liked????!!!")
+        } else {
+          setLiked(false);
+          console.log(false,post,"liked????!!!")
+        }
+
+    
     //if(setLoading) setLoading(false);
   }
 
@@ -55,20 +63,22 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
     const postRef = doc(db, 'posts', postId)
     if(!liked) {
       setLiked(true);
-      post?.likedByUsers.push(user.uid)
+      //post?.likedByUsers.push(user.uid)
       setDoc(postRef, {likedByUsers: arrayUnion(user.uid)}, {merge: true})
     } else {
       setLiked(false);
       let indexValue = post?.likedByUsers.indexOf(user.uid);
-      post?.likedByUsers.splice(indexValue, 1)
+      //post?.likedByUsers.splice(indexValue, 1)
       setDoc(postRef, {likedByUsers: arrayRemove(user.uid)}, {merge: true})
     }
+    console.log(post?.likedByUsers, "liked by users +_+_+_+_+")
   }
 
   useEffect(() => {
-    likedPostCheck(post?.postID)
+    
     hasUserLikedPost(post?.postID)
-    hasUserLikedPost2()
+   // hasUserLikedPost2()
+   //likedPostCheck(post?.postID)
   },[])
 
   return (

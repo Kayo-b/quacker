@@ -66,6 +66,7 @@ const Bookmarks: React.FC<BookmarksProps> = ({
 }) => {
   const [bookmarkUpdate, setBookmarkUpdate] = useState<boolean | undefined>(true) 
   const [loading, setLoading] = React.useState(true);
+  const [empty, setEmpty] = React.useState(false);
   const [bookmarksStatesCount, setBookmarksProfileStatesCount] = React.useState<number>(0);
 
   const waitForStates = () => {
@@ -79,8 +80,15 @@ const Bookmarks: React.FC<BookmarksProps> = ({
 
     };
     //setBookmarksProfileStatesCount(0);
+    if(user !== undefined) {
+      if(user.bookmarks?.length === 0) {
+        setLoading(false);
+        setEmpty(true);
+      }
+    }
+    
 };
-
+console.log(user, "USERERERRRRRRRRRRRRRRRRRRRRRr")
     const fetchBookmarks = async () => {
         console.log(bookmarkPosts,"KKKKKKKKKKKKKKKKKKKKkkkkk")
         const q = query(collection(db, "users"), where("uid", "==", user.uid));
@@ -171,7 +179,7 @@ const Bookmarks: React.FC<BookmarksProps> = ({
         //    <div> {bookmarkPost} </div>
         // </div>
     
-        <div>{loading ? "Loading..." : null}
+        <div>{loading ? "Loading..." : null} {empty ? "No bookmarked posts" : null}  
         <div className="bm-main-container" style={{visibility:"hidden"}}>
            <div> {bookmarkPost} </div>
         </div>
