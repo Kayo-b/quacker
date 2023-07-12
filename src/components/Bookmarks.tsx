@@ -80,37 +80,39 @@ const Bookmarks: React.FC<BookmarksProps> = ({
 
     };
     //setBookmarksProfileStatesCount(0);
-    if(user !== undefined) {
-      if(user.bookmarks?.length === 0) {
+
+      if(bookmarkPosts?.length === 0) {
         setLoading(false);
         setEmpty(true);
       }
-    }
+      console.log(bookmarkPosts, "POOOSTSSS BOKOOKMARK")
+    
     
 };
-console.log(user, "USERERERRRRRRRRRRRRRRRRRRRRRr")
-    const fetchBookmarks = async () => {
-        console.log(bookmarkPosts,"KKKKKKKKKKKKKKKKKKKKkkkkk")
-        const q = query(collection(db, "users"), where("uid", "==", user.uid));
-        const docs = await getDocs(q);
-        let tempBookmarks: DocumentData[] = [];
-        docs.forEach(doc => {
-            const bookmarks = doc.data().bookmarks;
-            tempBookmarks.push(...bookmarks)
-        })
 
-        let tempPosts: DocumentData[] = [];
-        for (const bm of tempBookmarks) {
-            const q = query(collection(db, "posts"), where("postID", "==", bm));
-            const docs = await getDocs(q);
-            docs.forEach(doc => {
-                tempPosts.push(doc.data());
-            });
-        }
-        setBookmarkPosts(tempPosts);
-        console.log(tempPosts,"tempPostsSSS")
-        setBookmarkUpdate(true);
-    }
+
+    // const fetchBookmarks = async () => {
+    //     console.log(bookmarkPosts,"KKKKKKKKKKKKKKKKKKKKkkkkk")
+    //     const q = query(collection(db, "users"), where("uid", "==", user.uid));
+    //     const docs = await getDocs(q);
+    //     let tempBookmarks: DocumentData[] = [];
+    //     docs.forEach(doc => {
+    //         const bookmarks = doc.data().bookmarks;
+    //         tempBookmarks.push(...bookmarks)
+    //     })
+
+    //     let tempPosts: DocumentData[] = [];
+    //     for (const bm of tempBookmarks) {
+    //         const q = query(collection(db, "posts"), where("postID", "==", bm));
+    //         const docs = await getDocs(q);
+    //         docs.forEach(doc => {
+    //             tempPosts.push(doc.data());
+    //         });
+    //     }
+    //     setBookmarkPosts(tempPosts);
+    //     console.log(tempPosts,"tempPostsSSS")
+    //     setBookmarkUpdate(true);
+    // }
     
     let bookmarkPost = 
         // <Post 
