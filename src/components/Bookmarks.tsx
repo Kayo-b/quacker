@@ -295,6 +295,7 @@ const RemovePost = (post: DocumentData | undefined) => {
         </div>
         </div>
     )
+    console.log("test")
 }
 
 export default Bookmarks;
