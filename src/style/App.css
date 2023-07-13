@@ -13,6 +13,12 @@ li {
   list-style-type: none
 }
 
+.main-btn-container {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid pink;
+}
+
 .sb-main-container {
   border: 2px solid red;
   align-items: center;

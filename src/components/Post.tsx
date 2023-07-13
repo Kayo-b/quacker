@@ -188,6 +188,7 @@ const Post: React.FC<PostProps> = ({
           </div>
           </span>   
         </div>
+        <div className="main-btn-container">
         <Like 
         user={user} 
         post={post}
@@ -227,6 +228,7 @@ const Post: React.FC<PostProps> = ({
          
 
         />
+        </div>
       </div>
       : <></>
     )
@@ -250,6 +252,7 @@ const Post: React.FC<PostProps> = ({
           </div>
           </span>
         </div>
+        <div className="main-btn-container">
         <Like 
         user={user} 
         post={post}
@@ -289,6 +292,7 @@ const Post: React.FC<PostProps> = ({
 
         />
       </div>
+      </div>
       : <></>
     )
     //Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
@@ -308,6 +312,7 @@ const Post: React.FC<PostProps> = ({
           </div>
           </span>   
         </div>
+        <div className="main-btn-container">
         <Like 
         user={user} 
         post={post}
@@ -346,6 +351,7 @@ const Post: React.FC<PostProps> = ({
          addToStatesCount={addToStatesCount}
 
         />
+      </div>
       </div>
       : <></>
     )
@@ -366,6 +372,7 @@ const Post: React.FC<PostProps> = ({
           </div>
           </span>   
         </div>
+        <div className="main-btn-container">
         <Like 
         user={user} 
         post={post}
@@ -404,6 +411,7 @@ const Post: React.FC<PostProps> = ({
          addToStatesCount={addToStatesCount}
 
         />
+        </div>
       </div>
       : <></>
     )
@@ -424,6 +432,7 @@ const Post: React.FC<PostProps> = ({
           </div>
           </span>   
         </div>
+        <div className="main-btn-container">
         <Like 
         user={user} 
         post={post}
@@ -462,6 +471,7 @@ const Post: React.FC<PostProps> = ({
          addToStatesCount={addToStatesCount}
 
         />
+      </div> 
       </div>
 //clickedPostParentPost renders the parent post of the clicked post (if it has a parentID)
 
@@ -482,6 +492,7 @@ let clickedPostParentPost =   posts.map(post =>
       </div>
       </span>   
     </div>
+    <div className="main-btn-container">
     <Like 
     user={user} 
     post={post}
@@ -519,6 +530,7 @@ let clickedPostParentPost =   posts.map(post =>
       setProfPost={setProfPost}
       addToStatesCount={addToStatesCount}
     />
+  </div>  
   </div>
   : <></>
 )
@@ -541,6 +553,7 @@ let rootPost =  posts.map(post =>
       </div>
       </span>   
     </div>
+    <div className="main-btn-container">
     <Like 
     user={user} 
     post={post}
@@ -579,6 +592,7 @@ let rootPost =  posts.map(post =>
       addToStatesCount={addToStatesCount}
 
     />
+  </div>  
   </div>
   : <></>
 )
@@ -604,6 +618,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
       </div>
       </span>   
     </div>
+    <div className="main-btn-container">
     <Like 
     user={user} 
     post={post}
@@ -642,6 +657,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
       addToStatesCount={addToStatesCount}
       
     /> 
+  </div>  
   </div>
   : <></>
 ))
@@ -664,6 +680,7 @@ let profileNewPostsFeed =  newPost.map(post =>
       </div>
       </span>   
     </div>
+    <div className="main-btn-container">
     <Like 
     user={user} 
     post={post}
@@ -702,6 +719,7 @@ let profileNewPostsFeed =  newPost.map(post =>
       addToStatesCount={addToStatesCount}
       
     />
+  </div>  
   </div>
   : <></>
 )
@@ -724,6 +742,7 @@ let profileResponsesFeed =  posts.map(post =>
       </div>
       </span>   
     </div>
+    <div className="main-btn-container">
     <Like 
     user={user} 
     post={post}
@@ -763,6 +782,7 @@ let profileResponsesFeed =  posts.map(post =>
       setProfPostCheck={setProfPostCheck}
     />
   </div>
+  </div>
   : <></>
 )
 let profileNewResponsesFeed =  newPost.map(post =>  
@@ -783,6 +803,7 @@ let profileNewResponsesFeed =  newPost.map(post =>
       </div>
       </span>   
     </div>
+    <div className="main-btn-container">
     <Like 
     user={user} 
     post={post}
@@ -820,6 +841,7 @@ let profileNewResponsesFeed =  newPost.map(post =>
       setProfPost={setProfPost}
       addToStatesCount={addToStatesCount}
     />
+  </div>
   </div>
   : <></>
 )

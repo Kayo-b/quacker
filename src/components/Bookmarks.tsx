@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, MouseEvent } from "react";
 import { useNavigate } from 'react-router-dom';
 import Post from "./Post";
 import {
@@ -25,6 +25,7 @@ import Like from './Like'
 import BookmarkBtn from './BookmarkBtn';
 import Comment from './Comment';
 import Repost from './Repost';
+import '../style/App.css';
 
 type UserProps = {
     authProvider?: string;
@@ -118,6 +119,16 @@ const Bookmarks: React.FC<BookmarksProps> = ({
     update === true ? setUpdate(false) : setUpdate(true);
 }
 
+const removeBookmarkPost = (postId: string) => {
+  if(setBookmarkPosts) setBookmarkPosts(
+      prevBookmarkPosts => 
+          prevBookmarkPosts
+          .filter(
+              post =>
+                  post.postID !== postId)) 
+  };
+
+
 const RemovePost = (post: DocumentData | undefined) => {
 
   setUserMainFeed(prevVal => 
@@ -139,8 +150,17 @@ const RemovePost = (post: DocumentData | undefined) => {
   }
   //update === true ? setUpdate(false) : setUpdate(true);
   removePostFromDB();
+  removeBookmarkPost(post?.postID);
   //update === true ? setUpdate(false) : setUpdate(true)
 }
+
+const handleClick = (event: MouseEvent) => {
+  if(event.target) {
+    const targetElement = event.target as HTMLElement;
+    const nextElement = targetElement.nextElementSibling as HTMLElement;
+    nextElement.style.display = "block";
+  }
+};
 
     // const fetchBookmarks = async () => {
     //     console.log(bookmarkPosts,"KKKKKKKKKKKKKKKKKKKKkkkkk")
@@ -166,30 +186,14 @@ const RemovePost = (post: DocumentData | undefined) => {
     // }
     
     let bookmarkPost = 
-        // <Post 
-        // name={name}
-        // newPost={newPost}
-        // setNewPost={setNewPost}
-        // update={update}
-        // setUpdate={setUpdate}
-        // posts={posts}
-        // user={user}
-        // bookmarkPosts={bookmarkPosts} 
-        // setBookmarkPosts={setBookmarkPosts}
-        // repost={repost}
-        // setRepost={setRepost}
-        // userMainFeed={userMainFeed}
-        // setUserMainFeed={setUserMainFeed}
-        // bookmarkUpdate={bookmarkUpdate}
-        // // setProfPost={setProfPost}
-        // addToStatesCount={setBookmarksProfileStatesCount}
-        // // setProfPostCheck={setProfPostCheck}
-        // />
-    
     bookmarkPosts?.map(post =>   
       
       <div className="post-container" key={post.postID}>
-      {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <div id="options" style={{display: "none"}}>
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+        </div>
+     
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={myImg}></img>
         <span>
@@ -203,10 +207,11 @@ const RemovePost = (post: DocumentData | undefined) => {
         </div>
         </span>
       </div>
-      <Like 
-      user={user} 
-      post={post}
-      /> 
+    <div className="main-btn-container">
+    <Like 
+    user={user} 
+    post={post}
+    /> 
     <BookmarkBtn 
       key={post.postID}
       user={user} 
@@ -243,6 +248,8 @@ const RemovePost = (post: DocumentData | undefined) => {
        addToStatesCount={addToStatesCount}
 
       />
+    </div>
+   
     </div>
         // <div key={post.postID} className="post-container">
         //   <div className="user-container">
@@ -295,7 +302,6 @@ const RemovePost = (post: DocumentData | undefined) => {
         </div>
         </div>
     )
-    console.log("test")
 }
 
 export default Bookmarks;
