@@ -59,6 +59,9 @@ const App = () => {
   const [update, setUpdate] = useState<boolean | undefined>()
   const [newPost, setNewPost] = useState<DocumentData[]>([])
   const [name, setName] = useState("");
+  const [postPageStatesCount, setPostFeedStatesCount] = React.useState<number>(0)
+  const [profPost, setProfPost] = React.useState<boolean>(true);
+  const [profPostCheck, setProfPostCheck] = React.useState<number>(0);
   // const [favorited, setFavorited] = useState<boolean>(false);
 
 //  useEffect(() => {
@@ -104,6 +107,8 @@ const fetchBookmarks = async () => {
   console.log(tempPosts,"tempPostsSSS")
   //setBookmarkUpdate(true);
 }
+
+
 
 useEffect(() => {
   fetchBookmarks();
@@ -164,6 +169,7 @@ useEffect(() => {
         name={name} 
         user={user as UserPropsOrigin} 
         posts={posts} 
+        setPosts={setPosts}
         update={update}
         setUpdate={setUpdate}
         bookmarkPosts={bookmarkPosts} 
@@ -174,7 +180,9 @@ useEffect(() => {
         setRepost={setRepost}
         userMainFeed={userMainFeed}
         setUserMainFeed={setUserMainFeed}
-          />}
+        postPageStatesCount={postPageStatesCount}
+        addToStatesCount={setPostFeedStatesCount}
+        />}
         />
         <Route
         path="/post/:postId"
@@ -212,6 +220,10 @@ useEffect(() => {
         setRepost={setRepost}
         userMainFeed={userMainFeed}
         setUserMainFeed={setUserMainFeed}
+        profPost={profPost}
+        setProfPost={setProfPost}
+        profPostCheck={profPostCheck}
+        setProfPostCheck={setProfPostCheck}
         />}
         />
       </Routes>

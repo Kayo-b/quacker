@@ -35,6 +35,11 @@ type UserProps = {
       setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
       userMainFeed?: DocumentData[];
       setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+      profPost?: boolean;
+      setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
+      profPostCheck: number;
+      setProfPostCheck?: React.Dispatch<React.SetStateAction<number>>;
+
       
   }
 const ProfilePage: React.FC<PostProps> = ({
@@ -50,11 +55,15 @@ const ProfilePage: React.FC<PostProps> = ({
     setBookmarkPosts, 
     setUpdate,
     userMainFeed,
-    setUserMainFeed
+    setUserMainFeed,
+    profPost,
+    setProfPost,
+    profPostCheck,
+    setProfPostCheck
     }) => {
       
-    const [profPost, setProfPost] = React.useState<boolean>(true);
-    const [profPostCheck, setProfPostCheck] = React.useState<number>(0);
+    // const [profPost, setProfPost] = React.useState<boolean>(true);
+    // const [profPostCheck, setProfPostCheck] = React.useState<number>(0);
     const [followBtn, setFollowBtn] = React.useState<boolean>(false);
     const [followingCount, setFollowingCount] = React.useState<number>(0);
     const [followersCount, setFollowersCount] = React.useState<number>(0);
@@ -115,18 +124,18 @@ const ProfilePage: React.FC<PostProps> = ({
             }, 300)
             
         };
-        setProfPostCheck(0); 
+        if(setProfPostCheck !== undefined) setProfPostCheck(0); 
     }
   
     const loadPostsList = (postOrComment: string) => {
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
         if(postOrComment === "posts") {
-            setProfPost(true);
+            if(setProfPost !== undefined) setProfPost(true);
             if(postSubContainer !== null) postSubContainer.style.visibility = "hidden";
             setLoading2(true);
         }
         else if(postOrComment === "responses") {
-            setProfPost(false);
+            if(setProfPost !== undefined) setProfPost(false);
             if(postSubContainer !== null) postSubContainer.style.visibility = "hidden"
             setLoading2(true);
         }

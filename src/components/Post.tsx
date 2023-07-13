@@ -88,9 +88,7 @@ const Post: React.FC<PostProps> = ({
   
   const navigate = useNavigate();
   const style = {"fontSize": "large"}
-
-  const [favorited, setFavorited] = useState<boolean>(false);
-
+  
   //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
     if(addToStatesCount) addToStatesCount(0);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import Post from "./Post";
 import {
     getDocs, 
@@ -12,7 +13,9 @@ import {
     getFirestore,
     query,
     where,
-    addDoc
+    addDoc,
+    deleteDoc,
+    arrayRemove
 } 
 from "firebase/firestore";
 import { db } from "../firebase";
@@ -20,6 +23,8 @@ import { Link } from "react-router-dom";
 import myImg from '../img/user-icon.png';
 import Like from './Like'
 import BookmarkBtn from './BookmarkBtn';
+import Comment from './Comment';
+import Repost from './Repost';
 
 type UserProps = {
     authProvider?: string;
@@ -38,6 +43,7 @@ type BookmarksProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     user: UserProps;
     post?: DocumentData;
+    setPosts?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     bookmarkPosts?: DocumentData[];
     setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     isComment?: boolean | undefined;
@@ -46,6 +52,12 @@ type BookmarksProps = {
     setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     userMainFeed?: DocumentData[];
     setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    postPageStatesCount: number;
+    addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
+    profPost?: boolean;
+    setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
+    // profPostCheck: number;
+    // setProfPostCheck?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 
@@ -62,12 +74,18 @@ const Bookmarks: React.FC<BookmarksProps> = ({
   setBookmarkPosts, 
   setUpdate,
   userMainFeed,
-  setUserMainFeed
+  setUserMainFeed,
+  addToStatesCount,
+  setPosts,
+  profPost,
+  setProfPost
 }) => {
   const [bookmarkUpdate, setBookmarkUpdate] = useState<boolean | undefined>(true) 
   const [loading, setLoading] = React.useState(true);
   const [empty, setEmpty] = React.useState(false);
   const [bookmarksStatesCount, setBookmarksProfileStatesCount] = React.useState<number>(0);
+  const navigate = useNavigate();
+
 
   const waitForStates = () => {
     const bookmarksContainer = 
@@ -77,19 +95,52 @@ const Bookmarks: React.FC<BookmarksProps> = ({
             bookmarksContainer.style.visibility = "visible";
             setLoading(false);
         }, 300)
-
     };
     //setBookmarksProfileStatesCount(0);
-
       if(bookmarkPosts?.length === 0) {
         setLoading(false);
         setEmpty(true);
       }
-      console.log(bookmarkPosts, "POOOSTSSS BOKOOKMARK")
-    
-    
+};
+  //Getting single post object values and passing them to the postPage URL
+  const RedirectToPostPage = (post: DocumentData) => {
+    if(addToStatesCount) addToStatesCount(0);
+    if(setLoading) setLoading(true);
+    navigate(`/post/${post.postID}`, {state: {post}})
+    const postPageContainers = document.querySelectorAll(".post-page-container");
+    postPageContainers.forEach((container: Element) => {
+    (container.parentElement?.parentElement as HTMLElement).style.visibility = "hidden";
+  });
 };
 
+  const RedirectToProfilePage = (post: DocumentData | undefined) => {
+    navigate(`/profile/${post?.username}`, {state: {post}});
+    update === true ? setUpdate(false) : setUpdate(true);
+}
+
+const RemovePost = (post: DocumentData | undefined) => {
+
+  setUserMainFeed(prevVal => 
+    prevVal.filter(value => value !== post?.postID));
+
+  setNewPost(prevVal => 
+    prevVal.filter(value => value.postID !== post?.postID));
+
+  if(setPosts) {
+    setPosts(prevVal => 
+      prevVal.filter(value => value.postID !== post?.postID));
+    }
+
+  var removePostFromDB = async () =>  {
+    const userRef = doc(db, 'users', user.uid);
+    await deleteDoc(doc(db, "posts", post?.postID));
+    await setDoc(userRef, {mainFeed: arrayRemove(post?.postID)}, {merge: true});
+    console.log(posts)
+  }
+  //update === true ? setUpdate(false) : setUpdate(true);
+  removePostFromDB();
+  //update === true ? setUpdate(false) : setUpdate(true)
+}
 
     // const fetchBookmarks = async () => {
     //     console.log(bookmarkPosts,"KKKKKKKKKKKKKKKKKKKKkkkkk")
@@ -135,33 +186,90 @@ const Bookmarks: React.FC<BookmarksProps> = ({
         // // setProfPostCheck={setProfPostCheck}
         // />
     
-    bookmarkPosts?.map(post =>    
-        <div key={post.postID} className="post-container">
-          <div className="user-container">
-            <img className="profile-picture" alt="user icon" src={myImg}></img>
-            <span>
-              <div className="user-name">
-                {post.username}
-              </div>
-            <div className="content">
-              <li key={post.id}>
-                {post.textContent}
-              </li>
-            </div>
-            </span>   
+    bookmarkPosts?.map(post =>   
+      
+      <div className="post-container" key={post.postID}>
+      {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+      <div className="user-container">
+        <img className="profile-picture" alt="user icon" src={myImg}></img>
+        <span>
+          <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+            {post.username}
           </div>
-          <Like user={user} post={post} /> 
-          <BookmarkBtn 
-          // key={post.postID}
-          user={user} 
-          post={post} 
-          update={update} 
-          setUpdate={setUpdate} 
-          bookmarkPosts={bookmarkPosts} 
-          setBookmarkPosts={setBookmarkPosts}
-          addToStatesCount={setBookmarksProfileStatesCount}
-          />
+        <div className="content" onClick={() => RedirectToPostPage(post)}>
+          <li key={post.id}>
+            {post.textContent}
+          </li>
         </div>
+        </span>
+      </div>
+      <Like 
+      user={user} 
+      post={post}
+      /> 
+    <BookmarkBtn 
+      key={post.postID}
+      user={user} 
+      post={post} 
+      update={update} 
+      setUpdate={setUpdate} 
+      bookmarkPosts={bookmarkPosts} 
+      setBookmarkPosts={setBookmarkPosts}
+      addToStatesCount={setBookmarksProfileStatesCount}
+      />
+      <Comment
+      user={user}
+      post={post}
+      setUpdate={setUpdate}
+      setNewPost={setNewPost}
+      newPost={newPost}
+      update={update}
+      name={name}
+      />
+      <Repost 
+       user={user}
+       post={post}
+       setUpdate={setUpdate}
+       setNewPost={setNewPost}
+       newPost={newPost}
+       update={update}
+       name={name}
+       repost={repost}
+       setRepost={setRepost}
+       userMainFeed={userMainFeed}
+       setUserMainFeed={setUserMainFeed}
+       profPost={profPost}
+       setProfPost={setProfPost}
+       addToStatesCount={addToStatesCount}
+
+      />
+    </div>
+        // <div key={post.postID} className="post-container">
+        //   <div className="user-container">
+        //     <img className="profile-picture" alt="user icon" src={myImg}></img>
+        //     <span>
+        //       <div className="user-name">
+        //         {post.username}
+        //       </div>
+        //     <div className="content">
+        //       <li key={post.id}>
+        //         {post.textContent}
+        //       </li>
+        //     </div>
+        //     </span>   
+        //   </div>
+        //   <Like user={user} post={post} /> 
+        //   <BookmarkBtn 
+        //   // key={post.postID}
+        //   user={user} 
+        //   post={post} 
+        //   update={update} 
+        //   setUpdate={setUpdate} 
+        //   bookmarkPosts={bookmarkPosts} 
+        //   setBookmarkPosts={setBookmarkPosts}
+        //   addToStatesCount={setBookmarksProfileStatesCount}
+        //   />
+        // </div>
       )
 
     useEffect(() => {
