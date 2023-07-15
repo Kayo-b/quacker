@@ -97,8 +97,8 @@ const Bookmarks: React.FC<BookmarksProps> = ({
             setLoading(false);
         }, 300)
     };
-    //setBookmarksProfileStatesCount(0);
       if(bookmarkPosts?.length === 0) {
+        
         setLoading(false);
         setEmpty(true);
       }
@@ -155,35 +155,37 @@ const RemovePost = (post: DocumentData | undefined) => {
 }
 
 const handleClick = (event: MouseEvent) => {
-  if(event.target) {
-    const targetElement = event.target as HTMLElement;
-    const nextElement = targetElement.nextElementSibling as HTMLElement;
+  const targetElement = event.target as HTMLElement;
+  const nextElement = targetElement.nextElementSibling as HTMLElement;
+  if(event.target && nextElement.style.display === "none") {
     nextElement.style.display = "block";
+  } else {
+    nextElement.style.display = "none";
   }
 };
 
-    // const fetchBookmarks = async () => {
-    //     console.log(bookmarkPosts,"KKKKKKKKKKKKKKKKKKKKkkkkk")
-    //     const q = query(collection(db, "users"), where("uid", "==", user.uid));
-    //     const docs = await getDocs(q);
-    //     let tempBookmarks: DocumentData[] = [];
-    //     docs.forEach(doc => {
-    //         const bookmarks = doc.data().bookmarks;
-    //         tempBookmarks.push(...bookmarks)
-    //     })
+    const fetchBookmarks = async () => {
+        console.log(bookmarkPosts,"KKKKKKKKKKKKKKKKKKKKkkkkk")
+        const q = query(collection(db, "users"), where("uid", "==", user.uid));
+        const docs = await getDocs(q);
+        let tempBookmarks: DocumentData[] = [];
+        docs.forEach(doc => {
+            const bookmarks = doc.data().bookmarks;
+            tempBookmarks.push(...bookmarks)
+        })
 
-    //     let tempPosts: DocumentData[] = [];
-    //     for (const bm of tempBookmarks) {
-    //         const q = query(collection(db, "posts"), where("postID", "==", bm));
-    //         const docs = await getDocs(q);
-    //         docs.forEach(doc => {
-    //             tempPosts.push(doc.data());
-    //         });
-    //     }
-    //     setBookmarkPosts(tempPosts);
-    //     console.log(tempPosts,"tempPostsSSS")
-    //     setBookmarkUpdate(true);
-    // }
+        let tempPosts: DocumentData[] = [];
+        for (const bm of tempBookmarks) {
+            const q = query(collection(db, "posts"), where("postID", "==", bm));
+            const docs = await getDocs(q);
+            docs.forEach(doc => {
+                tempPosts.push(doc.data());
+            });
+        }
+        setBookmarkPosts(tempPosts);
+        console.log(tempPosts,"tempPostsSSS")
+        //setBookmarkUpdate(true);
+    }
     
     let bookmarkPost = 
     bookmarkPosts?.map(post =>   

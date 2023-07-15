@@ -87,14 +87,16 @@ const App = () => {
 //  }
 
 const fetchBookmarks = async () => {
+ 
   const q = query(collection(db, "users"), where("uid", "==", user?.uid));
   const docs = await getDocs(q);
+  console.log(docs, "docs!")
   let tempBookmarks: DocumentData[] = [];
   docs.forEach(doc => {
       const bookmarks = doc.data().bookmarks;
       tempBookmarks.push(...bookmarks)
   })
-
+  
   let tempPosts: DocumentData[] = [];
   for (const bm of tempBookmarks) {
       const q = query(collection(db, "posts"), where("postID", "==", bm));
@@ -104,6 +106,7 @@ const fetchBookmarks = async () => {
       });
   }
   setBookmarkPosts(tempPosts);
+  console.log("app component 22")
   console.log(tempPosts,"tempPostsSSS")
   //setBookmarkUpdate(true);
 }
@@ -112,7 +115,8 @@ const fetchBookmarks = async () => {
 
 useEffect(() => {
   fetchBookmarks();
-},[])
+  console.log("app component")
+},[user])
 
   return (
    

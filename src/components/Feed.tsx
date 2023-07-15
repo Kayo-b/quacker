@@ -9,7 +9,9 @@ import {
     DocumentData, 
     orderBy, 
     setDoc, 
-    doc } 
+    doc,
+    where
+    } 
     from "firebase/firestore";
 import { db } from "../firebase";
 import { query } from "firebase/firestore"
@@ -60,7 +62,7 @@ const Feed: React.FC<PostProps> = ({
 
     //const [posts, setPosts] = useState<DocumentData[]>([]);
     const [loading, setLoading] = React.useState(true);
-    const [mainFeedStatesCount, setMainFeedStatesCount] = React.useState<number>(0)
+    const [mainFeedStatesCount, setMainFeedStatesCount] = React.useState<number>(0);
     
 
     const fetchPosts = async () => {
@@ -72,9 +74,9 @@ const Feed: React.FC<PostProps> = ({
         setNewPost([])//making new posts array empty to avoid duplicate posts
         querySnapshot.forEach((doc) => {
 
-            setPosts(prevValue => [...prevValue, doc.data()])
+            setPosts(prevValue => [...prevValue, doc.data()]);
         })
-    }
+    };
 
     const waitForStates = () => {
         if(mainFeedStatesCount === 1) {
@@ -85,15 +87,14 @@ const Feed: React.FC<PostProps> = ({
                 setLoading(false)
             }, 200)
         }
-    }
+    };
 
     useEffect(() => {
         //update ? setFeedUpdate(true) : setFeedUpdate(false);
-        
         fetchPosts();
-        waitForStates();
+        waitForStates();     
         
-    },[mainFeedStatesCount])
+    },[mainFeedStatesCount]);
 
 
     return(
