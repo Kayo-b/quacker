@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, MouseEvent } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { DocumentData,   getDoc, 
   collection, 
@@ -167,6 +167,17 @@ const Post: React.FC<PostProps> = ({
     }
   }
 
+  const handleClick = (event: MouseEvent) => {
+    const targetElement = event.target as HTMLElement;
+    const nextElement = targetElement.nextElementSibling as HTMLElement;
+    if(event.target && nextElement.style.display === "none") {
+      nextElement.style.display = "block";
+    } else {
+      nextElement.style.display = "none";
+    }
+  };
+  
+
   //renaming post prop to be used inside posts.map
   let newPostValue = post
 
@@ -174,7 +185,10 @@ const Post: React.FC<PostProps> = ({
 
     let neuPost = newPost.map(post =>  post.parentID === null ?  
       <div className="post-container" key={post.postID}>
-        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <div id="options" style={{display: "none"}}>
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+        </div>
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -238,7 +252,10 @@ const Post: React.FC<PostProps> = ({
     //so the neuPost was created to improve the user experience by adding the new post right away.
     let loadPosts = posts.map(post => post.parentID === null ?
       <div className="post-container" key={post.postID}>
-        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <div id="options" style={{display: "none"}}>
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+        </div>
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -298,7 +315,10 @@ const Post: React.FC<PostProps> = ({
     //Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
     let comment = posts.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-page-container" key={post.postID}>
-        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <div id="options" style={{display: "none"}}>
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+        </div>
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -358,7 +378,10 @@ const Post: React.FC<PostProps> = ({
 
     let newComment = newPost.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-page-container" key={post.postID}>
-        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <div id="options" style={{display: "none"}}>
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+        </div>
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -417,8 +440,11 @@ const Post: React.FC<PostProps> = ({
     )
     
     let clickedPost =  
-      <div className="post-page-container" key={post?.postID} style={style} >
-        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+    <div className="post-page-container" key={post?.postID} style={style}>
+    <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+    <div id="options" style={{display: "none"}}>
+    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+    </div>
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={myImg}></img>
           <span>
@@ -478,7 +504,10 @@ const Post: React.FC<PostProps> = ({
 let clickedPostParentPost =   posts.map(post =>  
   post.postID === newPostValue?.parentID ?  
   <div className="post-page-container" key={post.postID} style={style}>
-    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <div id="options" style={{display: "none"}}>
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+        </div>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -539,7 +568,10 @@ let rootPost =  posts.map(post =>
   newPostValue?.parentID !== post.postID && 
   newPostValue?.parentID !== null ?  
   <div className="post-page-container" key={post.postID} style={style}>
-    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <div id="options" style={{display: "none"}}>
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+        </div>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -604,7 +636,10 @@ console.log(userMainFeed)
 let profilePostsFeed =  userMainFeed?.map(val => posts.map(post => 
   val === post.postID ?
   <div className="post-container" key={post.postID} style={style}>
-    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <div id="options" style={{display: "none"}}>
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+        </div>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -666,7 +701,10 @@ let profileNewPostsFeed =  newPost.map(post =>
   post.userID === newPostValue?.userID &&
   post.parentID === null ?  
   <div className="post-container" key={post.postID} style={style}>
-    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <div id="options" style={{display: "none"}}>
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+        </div>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -728,7 +766,10 @@ let profileResponsesFeed =  posts.map(post =>
   post.userID === newPostValue?.userID &&
   post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
-    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <div id="options" style={{display: "none"}}>
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+        </div>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
@@ -789,7 +830,10 @@ let profileNewResponsesFeed =  newPost.map(post =>
   post.userID === newPostValue?.userID &&
   post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
-    {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <div id="options" style={{display: "none"}}>
+        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+        </div>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
       <span>
