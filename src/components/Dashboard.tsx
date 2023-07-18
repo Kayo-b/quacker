@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { auth, db, logout } from "../firebase";
-import { query, collection, getDocs, where } from "firebase/firestore";
+import { query, collection, getDocs, where, DocumentData  } from "firebase/firestore";
 
 
 type UserProps = {
@@ -21,6 +21,11 @@ type DashboardProps = {
 
 const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setName})  => {
     const navigate = useNavigate();
+    const post = {
+        username: name,
+        userID: user.uid
+    }
+   
     const fetchUserName = async () => {
         try {
             const q = query(collection(db, "users"), where("uid", "==", user?.uid));
@@ -38,6 +43,11 @@ const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setNam
     }
 }
 
+const RedirectToProfilePage = (post: DocumentData | undefined) => {
+    navigate(`/profile/${post?.username}`, {state: {post}});
+    //update === true ? setUpdate(false) : setUpdate(true);
+}
+
     useEffect(() => {
         if(loading) return;
         if(!user) return navigate("/");
@@ -47,7 +57,7 @@ const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setNam
   return (
     <div className="dashboard">
         <div className="dashboard-container">
-            {!user ? "Logged Out" : "Logged in as:"} <div>{name}</div>
+            {!user ? "Logged Out" : "Logged in as:"} <div onClick={() => RedirectToProfilePage(post)}>{name}</div>
             <div>{user?.email}</div>
             {user ? <button 
             className="dashboard-btn" 
