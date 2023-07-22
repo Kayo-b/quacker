@@ -17,21 +17,27 @@ type DashboardProps = {
     error: string;
     name: string;
     setName: React.Dispatch<React.SetStateAction<string>>;
+    userID: string;
+    setUserID: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setName})  => {
+const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setName, userID, setUserID})  => {
     const navigate = useNavigate();
     const post = {
         username: name,
-        userID: user.uid
+        userID: userID,
     }
+
+    console.log(userID, "userID!@#")
+ 
    
     const fetchUserName = async () => {
         try {
             const q = query(collection(db, "users"), where("uid", "==", user?.uid));
             const doc = await getDocs(q);
             const data = doc.docs[0].data();
-            setName(data.name)
+            setName(data.name);
+            setUserID(data.uid);
         } catch(err: unknown) {
             if(err instanceof Error) {
                 console.error(err);

@@ -59,6 +59,7 @@ const App = () => {
   const [update, setUpdate] = useState<boolean | undefined>()
   const [newPost, setNewPost] = useState<DocumentData[]>([])
   const [name, setName] = useState("");
+  const [userID, setUserID] = useState("");
   const [postPageStatesCount, setPostFeedStatesCount] = React.useState<number>(0)
   const [profPost, setProfPost] = React.useState<boolean>(true);
   const [profPostCheck, setProfPostCheck] = React.useState<number>(0);
@@ -115,7 +116,7 @@ const fetchBookmarks = async () => {
 
 useEffect(() => {
   fetchBookmarks();
-  console.log("app component")
+  console.log("app componet", user)
 },[user])
 
   return (
@@ -125,6 +126,8 @@ useEffect(() => {
       <div className="sidebar">
       <Sidebar 
       name={name} 
+      userID={userID}
+      setUserID={setUserID}
       user={user as UserPropsOrigin} 
       loading={loading} 
       error={error ? error.toString() : ""} 
