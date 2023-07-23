@@ -129,7 +129,7 @@ const Post: React.FC<PostProps> = ({
       const userRef = doc(db, 'users', user.uid);
       await deleteDoc(doc(db, "posts", post?.postID));
       await setDoc(userRef, {mainFeed: arrayRemove(post?.postID)}, {merge: true});
-      console.log(posts)
+      console.log(userRef,"USERsREF")
     }
     //update === true ? setUpdate(false) : setUpdate(true);
     removePostFromDB();

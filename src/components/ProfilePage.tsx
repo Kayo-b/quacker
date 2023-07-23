@@ -98,8 +98,8 @@ const ProfilePage: React.FC<PostProps> = ({
     setProfPostCheck={setProfPostCheck}
     />
     const waitForStates = () => {
-        console.log(profileStatesCount, "< Profile States Count")
-        if(profileStatesCount === 1) {
+        console.log(profileStatesCount, "< Profile States Count", post,  "< POOST")
+        if(profileStatesCount === 1 || userMainFeed?.length === 0) {
             const profileContainer = 
                 document.querySelector(".user-container-profile-page-container") as HTMLElement;
             const postSubContainer = 
@@ -185,8 +185,9 @@ const ProfilePage: React.FC<PostProps> = ({
     }
     
     useEffect(() => {
-        if(savePostUser !== post.username) {
         
+        if(savePostUser !== post.username) {
+            console.log(savePostUser, post.username, "_________________---2_____-")
         setSavePostUser(post.username);
         const profileContainer = 
         document.querySelector(".user-container-profile-page-container") as HTMLElement;
@@ -208,12 +209,12 @@ const ProfilePage: React.FC<PostProps> = ({
     useEffect(() => {
         checkFollow();
         waitForStates();
-        console.log("useEffect1@@@@@1");
+        console.log("useEffect1@@@@2@1", repost);
     },[profileStatesCount, post])
 
     
   return (
-    <div>{loading ? "Loading..." : null}
+    <div>{loading ? "Loading...." : null}
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
         {post.username}
         <div className="user-container-profile-page">
@@ -232,7 +233,7 @@ const ProfilePage: React.FC<PostProps> = ({
                 </div>
                 <div className="feed-display">                                
                 {loading2 ? "Loading..." : null}
-                <div id="post-subcontainer">{renderPosts}</div>
+                <div id="post-subcontainer">{renderPosts}</div><>{console.log('render!!!!!')}</>
                 </div>
             </div>
     </div>

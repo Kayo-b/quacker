@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { auth, db, logout } from "../firebase";
-import { query, collection, getDocs, where, DocumentData  } from "firebase/firestore";
+import { query, collection, getDocs, where, DocumentData } from "firebase/firestore";
 
 
 type UserProps = {
@@ -27,10 +27,9 @@ const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setNam
         username: name,
         userID: userID,
     }
+    const location = useLocation();
+    const currentURL = location.pathname;
 
-    console.log(userID, "userID!@#")
- 
-   
     const fetchUserName = async () => {
         try {
             const q = query(collection(db, "users"), where("uid", "==", user?.uid));
@@ -44,13 +43,22 @@ const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setNam
                 alert(err.message);
             } else {
                 console.error(err);
-                alert("an error has occurred");
+                alert("an error has occursred");
             }
     }
 }
 
 const RedirectToProfilePage = (post: DocumentData | undefined) => {
-    navigate(`/profile/${post?.username}`, {state: {post}});
+    //Navigating first to homepage when accessing a profile from another profile as a workaround so that it renders the posts
+    if(currentURL.startsWith(`/profile/`)) {
+            navigate('/homepage/');
+            setTimeout(() => {
+                navigate(`/profile/${post?.username}`, {state: {post}});
+            },100)
+    } else {
+        navigate(`/profile/${post?.username}`, {state: {post}});
+    }
+    
     //update === true ? setUpdate(false) : setUpdate(true);
 }
 
