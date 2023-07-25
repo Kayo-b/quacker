@@ -122,7 +122,6 @@ const ProfilePage: React.FC<PostProps> = ({
                 setLoading2(false);
                 postSubContainer.style.visibility = "visible";
             }, 300)
-            
         };
         if(setProfPostCheck !== undefined) setProfPostCheck(0); 
     }
@@ -187,15 +186,14 @@ const ProfilePage: React.FC<PostProps> = ({
     useEffect(() => {
         
         if(savePostUser !== post.username) {
-            console.log(savePostUser, post.username, "_________________---2_____-")
-        setSavePostUser(post.username);
-        const profileContainer = 
-        document.querySelector(".user-container-profile-page-container") as HTMLElement;
-        profileContainer.style.visibility = "hidden";
-        const postSubContainer = 
-                document.getElementById("post-subcontainer") as HTMLElement;
-                postSubContainer.style.visibility = "hidden";
-        setLoading(true)
+            setSavePostUser(post.username);
+            const profileContainer = 
+                    document.querySelector(".user-container-profile-page-container") as HTMLElement;
+            profileContainer.style.visibility = "hidden";
+            const postSubContainer = 
+                    document.getElementById("post-subcontainer") as HTMLElement;
+                    postSubContainer.style.visibility = "hidden";
+            setLoading(true)
         
         }
 
@@ -209,7 +207,6 @@ const ProfilePage: React.FC<PostProps> = ({
     useEffect(() => {
         checkFollow();
         waitForStates();
-        console.log("useEffect1@@@@2@1", repost);
     },[profileStatesCount, post])
 
     

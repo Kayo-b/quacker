@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DocumentData } from 'firebase/firestore'
 import CreatePost from './CreatePost'
 import Feed from './Feed'
@@ -53,7 +53,7 @@ const Homepage: React.FC<HomepageProps> = ({
     userMainFeed,
     setUserMainFeed
     }) => {
-        
+
     //const [update, setUpdate] = useState<boolean | undefined>(false)
 
     return(

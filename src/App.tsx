@@ -118,7 +118,9 @@ useEffect(() => {
   fetchBookmarks();
   console.log("app componet", user)
 },[user])
-
+if(user){
+  
+}
   return (
    
     <BrowserRouter>
@@ -237,8 +239,6 @@ useEffect(() => {
       </div>
       </div>
     </BrowserRouter>
-    
-
   );
 }
 

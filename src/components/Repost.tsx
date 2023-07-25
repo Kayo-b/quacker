@@ -52,7 +52,6 @@ const Repost: React.FC<PostProps> = ({
   const [reposted, setReposted] = useState<boolean>(false);
   
   const hasUserReposted = async(postId: string) => {
-    console.log("addto states couint")
       const userRef = doc(db, 'users', user.uid);
       const userDoc = await getDoc(userRef);
       // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
@@ -60,9 +59,11 @@ const Repost: React.FC<PostProps> = ({
       // const userData = docs.docs[0].data();
       if(userDoc.exists()) {
           if(userDoc.data().reposts.includes(postId) || post?.repostByUsers.includes(user.uid)) {
+            console.log("TRUE!@")
             setReposted(true);
           } else {
             setReposted(false);
+            console.log("FALSE!@")
           }
           
           if(addToStatesCount) {
@@ -105,7 +106,7 @@ const Repost: React.FC<PostProps> = ({
               .filter(
                   post =>
                       post.postID !== postId))
-                    }       
+                    } 
       };
   
   console.log(repost)
@@ -245,9 +246,9 @@ async function addRepostData(postId: string) {
       //   })
       //   hasUserReposted(post?.postID);
       // } 
-      console.log("222useffect addto states ", repost)
+    
       useEffect(() => {
-        console.log("useffect addto states ")
+        
         //Logic to only show reposts that have been reposted by the current logged user when accessing the user profile
         // if(profPost) {
         //   // console.log(")!!)!))!)!)!)!>>> TRUE")
@@ -268,7 +269,7 @@ async function addRepostData(postId: string) {
         hasUserReposted(post?.postID);
 
         
-      },[repost])
+      },[])
 
 
 

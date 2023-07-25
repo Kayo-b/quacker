@@ -97,7 +97,7 @@ const Feed: React.FC<PostProps> = ({
     },[mainFeedStatesCount]);
 
 
-    return(
+    if(user !== null) {return(
         <div>{loading ? "Loading..." : null}
         <div className="feed-main-container" style={{visibility:"hidden"}}> 
            <ul>
@@ -123,7 +123,11 @@ const Feed: React.FC<PostProps> = ({
         </div>
         </div>
         
-    )
+    )} else {
+        return (
+            <></>
+        )
+    }
 }
 
 export default Feed;

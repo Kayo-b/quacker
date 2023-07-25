@@ -64,9 +64,14 @@ const RedirectToProfilePage = (post: DocumentData | undefined) => {
 
     useEffect(() => {
         if(loading) return;
-        if(!user) return navigate("/");
+        if(!user) navigate("/");
         fetchUserName();
     }, [user, loading]);
+
+    const Logout = () => {
+        navigate("/");
+        logout();
+    }
 
   return (
     <div className="dashboard">
@@ -75,7 +80,7 @@ const RedirectToProfilePage = (post: DocumentData | undefined) => {
             <div>{user?.email}</div>
             {user ? <button 
             className="dashboard-btn" 
-            onClick={logout}>
+            onClick={Logout}>
             Logout
             </button> : null}
         </div>

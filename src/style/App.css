@@ -17,6 +17,9 @@ li {
   display: flex;
   flex-direction: row;
   border: 1px solid pink;
+  justify-content: center;
+  
+  
 }
 
 .sb-main-container {
@@ -82,6 +85,7 @@ li {
 
 .user-container {
   display: flex;
+  margin: 0px;
   padding: 5px;
 
 }
@@ -107,4 +111,27 @@ li {
 
 .content {
   margin-top: 2px;
+}
+
+.option-btn-container {
+  display: flex;
+  height: 0px;
+  margin: 0px;
+  padding: 0px;
+  justify-content: end;
+
+}
+.profile-line-connector {
+  display: flex;
+
+  flex-direction: column;
+}
+.connecting-comments-line {
+  border-left: 2px solid #292c2e;
+  margin-top: 36px;
+  margin-left: 17px;
+  position: absolute
+
+
+  
 }
