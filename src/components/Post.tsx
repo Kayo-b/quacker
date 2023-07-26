@@ -176,6 +176,27 @@ const Post: React.FC<PostProps> = ({
       nextElement.style.display = "none";
     }
   };
+
+  //Getting the height of the post element dynamically to create the connection line between posts and its reponses.
+  const userContainer = document.querySelector(".user-container")
+  if(userContainer) {
+    const userContainerStyle = window.getComputedStyle(userContainer)
+    const userContainerHeight = userContainerStyle.getPropertyValue('height');
+    const connectingLine = document.querySelector(".connecting-comments-line") as HTMLElement;
+    if(connectingLine) {
+      connectingLine.style.height = userContainerHeight 
+      }
+  }
+
+  const userContainer2 = document.querySelector(".user-container2")
+  if(userContainer2) {
+    const userContainerStyle = window.getComputedStyle(userContainer2)
+    const userContainerHeight = userContainerStyle.getPropertyValue('height');
+    const connectingLine = document.querySelector(".connecting-comments-line2") as HTMLElement;
+    if(connectingLine) {
+      connectingLine.style.height = userContainerHeight 
+      }
+  }
   
 
   //renaming post prop to be used inside posts.map
@@ -255,7 +276,7 @@ const Post: React.FC<PostProps> = ({
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <div>Nope</div>}
         </div>
         </div>
         <div className="user-container">
@@ -507,19 +528,8 @@ const Post: React.FC<PostProps> = ({
         />
       </div> 
       </div>
+
 //clickedPostParentPost renders the parent post of the clicked post (if it has a parentID)
-
-const userContainer = document.querySelector(".user-container")
-if(userContainer) {
-  const userContainerStyle = window.getComputedStyle(userContainer)
-  const userContainerHeight = userContainerStyle.getPropertyValue('height');
-  const connectingLine = document.querySelector(".connecting-comments-line") as HTMLElement;
-if(connectingLine) {
-  connectingLine.style.height = userContainerHeight 
-}
-}
-
-
 let clickedPostParentPost =   posts.map(post =>  
   post.postID === newPostValue?.parentID ?  
   <div className="post-page-container" key={post.postID} style={style}>
@@ -529,10 +539,10 @@ let clickedPostParentPost =   posts.map(post =>
           {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
           </div>
         </div>
-    <div className="user-container">
+    <div className="user-container2">
       <div className="profile-line-connector">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
-      <span className="connecting-comments-line"></span>
+      <span className="connecting-comments-line2"></span>
       </div>
       <span>
         <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
@@ -599,7 +609,10 @@ let rootPost =  posts.map(post =>
           </div>
         </div>
     <div className="user-container">
+      <div className="profile-line-connector">
       <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <span className="connecting-comments-line"></span>
+      </div>
       <span>
         <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
           {post.username}

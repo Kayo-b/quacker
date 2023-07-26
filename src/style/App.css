@@ -89,6 +89,12 @@ li {
   padding: 5px;
 
 }
+.user-container2 {
+  display: flex;
+  margin: 0px;
+  padding: 5px;
+
+}
 
 .profile-picture {
   height: 35px;
@@ -114,16 +120,29 @@ li {
 }
 
 .option-btn-container {
-  display: flex;
-  height: 0px;
-  margin: 0px;
-  padding: 0px;
+  display:flex;
   justify-content: end;
 
 }
+
+.options-btn {
+  position: absolute;
+
+  
+}
+#options {
+  display: flex;
+  position: absolute;
+  flex-direction: row-reverse;
+}
+
+#options>* {
+  position: absolute;
+  
+}
+
 .profile-line-connector {
   display: flex;
-
   flex-direction: column;
 }
 .connecting-comments-line {
@@ -131,7 +150,10 @@ li {
   margin-top: 36px;
   margin-left: 17px;
   position: absolute
-
-
-  
+}
+.connecting-comments-line2 {
+  border-left: 2px solid #292c2e;
+  margin-top: 36px;
+  margin-left: 17px;
+  position: absolute
 }
