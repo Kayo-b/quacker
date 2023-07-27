@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useParams, useLocation } from 'react-router-dom';
 import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
 import { db } from "../firebase";
-import FollowBtn from './FollowBtn';
 import Post from '../components/Post';
 import myImg from '../img/user-icon.png';
 import '../style/ProfilePage.css';

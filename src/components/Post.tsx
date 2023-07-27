@@ -10,7 +10,8 @@ import { DocumentData,   getDoc,
   query,
   getDocs,
   deleteDoc,
-  arrayRemove} from 'firebase/firestore';
+  arrayRemove,
+  arrayUnion} from 'firebase/firestore';
 import { db } from "../firebase";
 import Like from './Like'
 import BookmarkBtn from './BookmarkBtn';
@@ -85,7 +86,7 @@ const Post: React.FC<PostProps> = ({
   setProfPostCheck,
   bookmarkUpdate
   }) => {
-  
+  const [followBtn, setFollowBtn] = React.useState<boolean>(false);
   const navigate = useNavigate();
   const style = {"fontSize": "large"}
 
@@ -129,7 +130,6 @@ const Post: React.FC<PostProps> = ({
       const userRef = doc(db, 'users', user.uid);
       await deleteDoc(doc(db, "posts", post?.postID));
       await setDoc(userRef, {mainFeed: arrayRemove(post?.postID)}, {merge: true});
-      console.log(userRef,"USERsREF")
     }
     //update === true ? setUpdate(false) : setUpdate(true);
     removePostFromDB();
@@ -137,32 +137,44 @@ const Post: React.FC<PostProps> = ({
   }
 
   const FollowUser = async(post: DocumentData | undefined) => {
-    
     const userRef1 = doc(db, 'users', user.uid);
+    const userRef2 = doc(db, 'users', post?.userID);
     const res = await getDoc(userRef1);
     const userData = res.data();
     if(userData){
-      console.log(userData.following)
+      if(userData.following.includes(post?.userID)) {
+          setDoc(userRef1, {following: arrayRemove(post?.userID)}, {merge: true});
+          setDoc(userRef2, {followers: arrayRemove(user.uid)}, {merge: true});
+          setFollowBtn(false);
+        } else {
+          setDoc(userRef1, {following: arrayUnion(post?.userID)}, {merge: true});
+          setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true});
+          setFollowBtn(true);
+        }
     }
-    
-    //const userRef2 = doc(db, 'users', post.userID);
-    // if(user.following.includes(post.userID)) {
-    //     setDoc(userRef1, {following: arrayUnion(post.userID)}, {merge: true});
-    //     setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true});
-
-    // } else {
-    //     setDoc(userRef1, {following: arrayRemove(post.userID)}, {merge: true});
-    //     setDoc(userRef2, {followers: arrayRemove(user.uid)}, {merge: true});
-    //     setFollowBtn(false);
-    //     setFollowersCount(followersCount - 1);
-    // }
   }
+
+  const checkFollow = async() => {
+    const userRef1 = doc(db, 'users', user.uid);
+    const userDoc1 = await getDoc(userRef1);
+    if(userDoc1.exists()) {
+        const userData1 = userDoc1.data();
+        const following = userData1.following;
+        if(following.includes(post?.userID)) {
+            setFollowBtn(true);
+        } else {
+            setFollowBtn(false);
+        }
+    }
+
+}
 
   //Add setUSerMainFeed in the useEffect to reset the userMainFeed
   useEffect(() => {
     if(user === null) navigate("/")
     // if(setProfPost)setProfPost(true)
     getUserMainFeed()
+    
     //setUserMainFeed(prevVal => prevVal.filter(value => value !== post?.postID))
    
     //setTimeout(() => getUserMainFeed(), 250)
@@ -170,7 +182,9 @@ const Post: React.FC<PostProps> = ({
     // fetchUserMainFeed()
    }, [repost, update, user])//all posts rerender when these change
    //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
-
+   useEffect(() => {
+    checkFollow();
+   },[])
    let getUserMainFeed = async () => {
 
     if(user && post?.userID) {
@@ -298,7 +312,7 @@ const Post: React.FC<PostProps> = ({
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <button onClick={() => FollowUser(post)}>ADD</button>}
+          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <button onClick={() => FollowUser(post)}>{followBtn === false ? "Follow" : "Unfollow"}</button>}
         </div>
         </div>
         <div className="user-container">
