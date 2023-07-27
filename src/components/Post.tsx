@@ -1,4 +1,4 @@
-import React, { useEffect, useState, MouseEvent } from 'react'
+import React, { useEffect, useState, MouseEvent, ReactElement } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { DocumentData,   getDoc, 
   collection, 
@@ -134,6 +134,28 @@ const Post: React.FC<PostProps> = ({
     //update === true ? setUpdate(false) : setUpdate(true);
     removePostFromDB();
     //update === true ? setUpdate(false) : setUpdate(true)
+  }
+
+  const FollowUser = async(post: DocumentData | undefined) => {
+    
+    const userRef1 = doc(db, 'users', user.uid);
+    const res = await getDoc(userRef1);
+    const userData = res.data();
+    if(userData){
+      console.log(userData.following)
+    }
+    
+    //const userRef2 = doc(db, 'users', post.userID);
+    // if(user.following.includes(post.userID)) {
+    //     setDoc(userRef1, {following: arrayUnion(post.userID)}, {merge: true});
+    //     setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true});
+
+    // } else {
+    //     setDoc(userRef1, {following: arrayRemove(post.userID)}, {merge: true});
+    //     setDoc(userRef2, {followers: arrayRemove(user.uid)}, {merge: true});
+    //     setFollowBtn(false);
+    //     setFollowersCount(followersCount - 1);
+    // }
   }
 
   //Add setUSerMainFeed in the useEffect to reset the userMainFeed
@@ -276,7 +298,7 @@ const Post: React.FC<PostProps> = ({
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <div>Nope</div>}
+          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <button onClick={() => FollowUser(post)}>ADD</button>}
         </div>
         </div>
         <div className="user-container">
@@ -1152,7 +1174,7 @@ let repostsFromUser = posts.map(post =>
 
   } else {
     return (
-      <div>oi
+      <div>
         </div>
     )
   }

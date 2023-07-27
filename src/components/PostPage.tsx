@@ -13,7 +13,7 @@ type UserProps = {
     email: string;
     name?: string;
     uid: string;
-    bookmarks?: Array<string>;
+    bookmarks?: Array<string>;    
 }  
 
 type PostProps = {
@@ -66,7 +66,6 @@ const PostPage: React.FC<PostProps> = ({
     const postPageContainers = 
             document.querySelectorAll(".post-page-container");
     if(postPageStatesCount === 1) {
-      console.log("OOOOOOOOOOOOOOOW")
       
       setTimeout(() => {
           postPageContainers.forEach((container: Element) => {
@@ -82,8 +81,6 @@ const PostPage: React.FC<PostProps> = ({
  useEffect(() => {
   waitForStates();
  },[postPageStatesCount])
-
- console.log("YEEEAHHHh")
  
  
   return (

@@ -12,6 +12,7 @@ type UserProps = {
     name?: string;
     uid: string;
     bookmarks?: Array<string>;
+
     
 }  
 
