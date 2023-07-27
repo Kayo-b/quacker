@@ -122,6 +122,8 @@ li {
 .option-btn-container {
   display:flex;
   justify-content: end;
+  position: relative;
+  
 
 }
 
@@ -133,11 +135,14 @@ li {
 #options {
   display: flex;
   position: absolute;
-  flex-direction: row-reverse;
+  top: 0;
+  right: 14%;
 }
 
 #options>* {
+  display: flex;
   position: absolute;
+  
   
 }
 
