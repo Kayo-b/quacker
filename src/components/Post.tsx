@@ -154,19 +154,21 @@ const Post: React.FC<PostProps> = ({
     }
   }
 
-  const checkFollow = async() => {
+  const checkFollow = async(post: DocumentData | undefined) => {
     const userRef1 = doc(db, 'users', user.uid);
     const userDoc1 = await getDoc(userRef1);
     if(userDoc1.exists()) {
         const userData1 = userDoc1.data();
         const following = userData1.following;
         if(following.includes(post?.userID)) {
+          console.log('INCLUDES')
             setFollowBtn(true);
         } else {
             setFollowBtn(false);
+            console.log('NOT INCLUDES')
         }
     }
-
+    return null;
 }
 
   //Add setUSerMainFeed in the useEffect to reset the userMainFeed
@@ -182,9 +184,6 @@ const Post: React.FC<PostProps> = ({
     // fetchUserMainFeed()
    }, [repost, update, user])//all posts rerender when these change
    //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
-   useEffect(() => {
-    checkFollow();
-   },[])
    let getUserMainFeed = async () => {
 
     if(user && post?.userID) {
@@ -307,8 +306,10 @@ const Post: React.FC<PostProps> = ({
     //LoadPosts also sets the posts into the feed, but it does it by getting the information from a sql query done in the previous component.
     //The separation between both types of setting posts into the feed is because the loadPosts takes long to render because of the query, 
     //so the neuPost was created to improve the user experience by adding the new post right away.
-    let loadPosts = posts.map(post => post.parentID === null ?
-      <div className="post-container" key={post.postID}>
+    let loadPosts = posts.map(post => { 
+      if(post.parentID === null) {
+        checkFollow(post);
+        return <div className="post-container" key={post.postID}>
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
@@ -369,8 +370,14 @@ const Post: React.FC<PostProps> = ({
         />
       </div>
       </div>
-      : <></>
-    )
+      } else {
+        return <></>
+        
+      }
+  })
+  
+     
+
     //Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
     let comment = posts.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-page-container" key={post.postID}>
