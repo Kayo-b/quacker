@@ -16,6 +16,7 @@ import { db } from "../firebase";
 import Like from './Like'
 import BookmarkBtn from './BookmarkBtn';
 import PostPage from './PostPage';
+import FollowBtn from './FollowBtn';
 import Comment from './Comment';
 import Repost from './Repost';
 import myImg from '../img/user-icon.png';
@@ -86,7 +87,8 @@ const Post: React.FC<PostProps> = ({
   setProfPostCheck,
   bookmarkUpdate
   }) => {
-  const [followBtn, setFollowBtn] = React.useState<boolean>(false);
+
+  // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
   const navigate = useNavigate();
   const style = {"fontSize": "large"}
 
@@ -136,40 +138,38 @@ const Post: React.FC<PostProps> = ({
     //update === true ? setUpdate(false) : setUpdate(true)
   }
 
-  const FollowUser = async(post: DocumentData | undefined) => {
-    const userRef1 = doc(db, 'users', user.uid);
-    const userRef2 = doc(db, 'users', post?.userID);
-    const res = await getDoc(userRef1);
-    const userData = res.data();
-    if(userData){
-      if(userData.following.includes(post?.userID)) {
-          setDoc(userRef1, {following: arrayRemove(post?.userID)}, {merge: true});
-          setDoc(userRef2, {followers: arrayRemove(user.uid)}, {merge: true});
-          setFollowBtn(false);
-        } else {
-          setDoc(userRef1, {following: arrayUnion(post?.userID)}, {merge: true});
-          setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true});
-          setFollowBtn(true);
-        }
-    }
-  }
+//   const FollowUser = async(post: DocumentData | undefined) => {
+//     const userRef1 = doc(db, 'users', user.uid);
+//     const userRef2 = doc(db, 'users', post?.userID);
+//     const res = await getDoc(userRef1);
+//     const userData = res.data();
+//     if(userData){
+//       if(userData.following.includes(post?.userID)) {
+//           setDoc(userRef1, {following: arrayRemove(post?.userID)}, {merge: true});
+//           setDoc(userRef2, {followers: arrayRemove(user.uid)}, {merge: true});
+//           setFollowBtn(false);
+//         } else {
+//           setDoc(userRef1, {following: arrayUnion(post?.userID)}, {merge: true});
+//           setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true});
+//           setFollowBtn(true);
+//         }
+//     }
+//   }
 
-  const checkFollow = async(post: DocumentData | undefined) => {
-    const userRef1 = doc(db, 'users', user.uid);
-    const userDoc1 = await getDoc(userRef1);
-    if(userDoc1.exists()) {
-        const userData1 = userDoc1.data();
-        const following = userData1.following;
-        if(following.includes(post?.userID)) {
-          console.log('INCLUDES')
-            setFollowBtn(true);
-        } else {
-            setFollowBtn(false);
-            console.log('NOT INCLUDES')
-        }
-    }
-    return null;
-}
+//   const checkFollow = async(post: DocumentData | undefined) => {
+//     const userRef1 = doc(db, 'users', user.uid);
+//     const userDoc1 = await getDoc(userRef1);
+//     if(userDoc1.exists()) {
+//         const userData1 = userDoc1.data();
+//         const following = userData1.following;
+//         if(following.includes(post?.userID)) {
+//           return "Follow"
+//         } else {
+//           return "Unfollow"
+//         }
+//     }
+//     return
+// }
 
   //Add setUSerMainFeed in the useEffect to reset the userMainFeed
   useEffect(() => {
@@ -244,7 +244,11 @@ const Post: React.FC<PostProps> = ({
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+          {
+            user.uid === post?.userID ?
+            <button onClick={() => RemovePost(post)}>Delete post</button> :
+            <div><FollowBtn post={post} user={user}/></div>
+          }
           </div>
         </div>
         <div className="user-container">
@@ -308,12 +312,16 @@ const Post: React.FC<PostProps> = ({
     //so the neuPost was created to improve the user experience by adding the new post right away.
     let loadPosts = posts.map(post => { 
       if(post.parentID === null) {
-        checkFollow(post);
+        
         return <div className="post-container" key={post.postID}>
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <button onClick={() => FollowUser(post)}>{followBtn === false ? "Follow" : "Unfollow"}</button>}
+          {
+            user.uid === post?.userID ?
+            <button onClick={() => RemovePost(post)}>Delete post</button> :
+            <div><FollowBtn post={post} user={user}/></div>
+          }
         </div>
         </div>
         <div className="user-container">
@@ -384,7 +392,11 @@ const Post: React.FC<PostProps> = ({
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+          {
+            user.uid === post?.userID ?
+            <button onClick={() => RemovePost(post)}>Delete post</button> :
+            <div><FollowBtn post={post} user={user}/></div>
+          }
         </div>
         </div>
         <div className="user-container">
@@ -449,7 +461,11 @@ const Post: React.FC<PostProps> = ({
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+          {
+            user.uid === post?.userID ?
+            <button onClick={() => RemovePost(post)}>Delete post</button> :
+            <div><FollowBtn post={post} user={user}/></div>
+          }
         </div>
         </div>
         <div className="user-container">
@@ -514,7 +530,11 @@ const Post: React.FC<PostProps> = ({
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+          {
+            user.uid === post?.userID ?
+            <button onClick={() => RemovePost(post)}>Delete post</button> :
+            <div><FollowBtn post={post} user={user}/></div>
+          }
           </div>
         </div>
         <div className="user-container">
@@ -579,7 +599,11 @@ let clickedPostParentPost =   posts.map(post =>
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+          {
+            user.uid === post?.userID ?
+            <button onClick={() => RemovePost(post)}>Delete post</button> :
+            <div><FollowBtn post={post} user={user}/></div>
+          }
           </div>
         </div>
     <div className="user-container2">
@@ -648,7 +672,11 @@ let rootPost =  posts.map(post =>
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+          {
+            user.uid === post?.userID ?
+            <button onClick={() => RemovePost(post)}>Delete post</button> :
+            <div><FollowBtn post={post} user={user}/></div>
+          }
           </div>
         </div>
     <div className="user-container">
@@ -721,7 +749,11 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+          {
+            user.uid === post?.userID ?
+            <button onClick={() => RemovePost(post)}>Delete post</button> :
+            <div><FollowBtn post={post} user={user}/></div>
+          }
           </div>
         </div>
     <div className="user-container">
@@ -788,7 +820,11 @@ let profileNewPostsFeed =  newPost.map(post =>
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+          {
+            user.uid === post?.userID ?
+            <button onClick={() => RemovePost(post)}>Delete post</button> :
+            <div><FollowBtn post={post} user={user}/></div>
+          }
           </div>
         </div>
     <div className="user-container">
@@ -855,7 +891,11 @@ let profileResponsesFeed =  posts.map(post =>
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+          {
+            user.uid === post?.userID ?
+            <button onClick={() => RemovePost(post)}>Delete post</button> :
+            <div><FollowBtn post={post} user={user}/></div>
+          }
           </div>
         </div>
     <div className="user-container">
@@ -921,7 +961,11 @@ let profileNewResponsesFeed =  newPost.map(post =>
         <div className="option-btn-container">
           <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
           <div id="options" style={{display: "none"}}>
-          {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+          {
+            user.uid === post?.userID ?
+            <button onClick={() => RemovePost(post)}>Delete post</button> :
+            <div><FollowBtn post={post} user={user}/></div>
+          }
           </div>
         </div>
     <div className="user-container">

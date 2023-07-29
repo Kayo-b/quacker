@@ -25,6 +25,7 @@ import Like from './Like'
 import BookmarkBtn from './BookmarkBtn';
 import Comment from './Comment';
 import Repost from './Repost';
+import FollowBtn from "./FollowBtn";
 import '../style/App.css';
 
 type UserProps = {
@@ -191,11 +192,16 @@ const handleClick = (event: MouseEvent) => {
     bookmarkPosts?.map(post =>   
       
       <div className="post-container" key={post.postID}>
-        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
-        <div id="options" style={{display: "none"}}>
-        {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>Delete post</button> : <>Nope</>}
+        <div className="option-btn-container">
+          <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+          <div id="options" style={{display: "none"}}>
+          {
+            user.uid === post?.userID ?
+            <button onClick={() => RemovePost(post)}>Delete post</button> :
+            <div><FollowBtn post={post} user={user}/></div>
+          }
+          </div>
         </div>
-     
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={myImg}></img>
         <span>
