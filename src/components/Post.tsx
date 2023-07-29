@@ -59,6 +59,7 @@ type PostProps = {
     bookmarkUpdate?: undefined | boolean;
     favorited?: boolean;
     setFavorited?: React.Dispatch<React.SetStateAction<boolean>>;
+    search?: string;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -85,7 +86,8 @@ const Post: React.FC<PostProps> = ({
   addToStatesCount,
   setLoading,
   setProfPostCheck,
-  bookmarkUpdate
+  bookmarkUpdate,
+  search
   }) => {
 
   // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
@@ -138,51 +140,12 @@ const Post: React.FC<PostProps> = ({
     //update === true ? setUpdate(false) : setUpdate(true)
   }
 
-//   const FollowUser = async(post: DocumentData | undefined) => {
-//     const userRef1 = doc(db, 'users', user.uid);
-//     const userRef2 = doc(db, 'users', post?.userID);
-//     const res = await getDoc(userRef1);
-//     const userData = res.data();
-//     if(userData){
-//       if(userData.following.includes(post?.userID)) {
-//           setDoc(userRef1, {following: arrayRemove(post?.userID)}, {merge: true});
-//           setDoc(userRef2, {followers: arrayRemove(user.uid)}, {merge: true});
-//           setFollowBtn(false);
-//         } else {
-//           setDoc(userRef1, {following: arrayUnion(post?.userID)}, {merge: true});
-//           setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true});
-//           setFollowBtn(true);
-//         }
-//     }
-//   }
-
-//   const checkFollow = async(post: DocumentData | undefined) => {
-//     const userRef1 = doc(db, 'users', user.uid);
-//     const userDoc1 = await getDoc(userRef1);
-//     if(userDoc1.exists()) {
-//         const userData1 = userDoc1.data();
-//         const following = userData1.following;
-//         if(following.includes(post?.userID)) {
-//           return "Follow"
-//         } else {
-//           return "Unfollow"
-//         }
-//     }
-//     return
-// }
-
   //Add setUSerMainFeed in the useEffect to reset the userMainFeed
   useEffect(() => {
-    if(user === null) navigate("/")
-    // if(setProfPost)setProfPost(true)
-    getUserMainFeed()
-    
-    //setUserMainFeed(prevVal => prevVal.filter(value => value !== post?.postID))
-   
-    //setTimeout(() => getUserMainFeed(), 250)
-
-    // fetchUserMainFeed()
+    if(user === null) navigate("/");
+    getUserMainFeed();
    }, [repost, update, user])//all posts rerender when these change
+   
    //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
    let getUserMainFeed = async () => {
 
@@ -384,7 +347,79 @@ const Post: React.FC<PostProps> = ({
       }
   })
   
-     
+  let loadSearch = posts.map(post => { 
+    if(post.textContent.includes(search)) {
+      
+      return <div className="post-container" key={post.postID}>
+      <div className="option-btn-container">
+        <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <div id="options" style={{display: "none"}}>
+        {
+          user.uid === post?.userID ?
+          <button onClick={() => RemovePost(post)}>Delete post</button> :
+          <div><FollowBtn post={post} user={user}/></div>
+        }
+      </div>
+      </div>
+      <div className="user-container">
+        <img className="profile-picture" alt="user icon" src={myImg}></img>
+        <span>
+          <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+            {post.username}
+          </div>
+        <div className="content" onClick={() => RedirectToPostPage(post)}>
+          <li key={post.id}>
+            {post.textContent}
+          </li>
+        </div>
+        </span>
+      </div>
+      <div className="main-btn-container">
+      <Like 
+      user={user} 
+      post={post}
+      /> 
+      <BookmarkBtn 
+        user={user} 
+        post={post} 
+        update={update} 
+        setUpdate={setUpdate}
+        bookmarkPosts={bookmarkPosts} 
+        setBookmarkPosts={setBookmarkPosts}
+      />
+      <Comment
+      user={user}
+      post={post}
+      setUpdate={setUpdate}
+      setNewPost={setNewPost}
+      newPost={newPost}
+      update={update}
+      name={name}
+      />
+      <Repost 
+       user={user}
+       post={post}
+       setUpdate={setUpdate}
+       setNewPost={setNewPost}
+       newPost={newPost}
+       update={update}
+       name={name}
+       repost={repost}
+       setRepost={setRepost}
+       userMainFeed={userMainFeed}
+       setUserMainFeed={setUserMainFeed}
+       profPost={profPost}
+       setProfPost={setProfPost}
+       addToStatesCount={addToStatesCount}
+
+      />
+    </div>
+    </div>
+    } else {
+      return <></>
+      
+    }
+})   
 
     //Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
     let comment = posts.map(post =>  post.parentID === parentPost?.postID ?  
@@ -1228,6 +1263,8 @@ let repostsFromUser = posts.map(post =>
         //   <div>
         //     <div>{bookmarkedPosts}</div>
         //   </div>
+        ) : search ? (
+          <div>{loadSearch}</div>
         ) : (
           <div>
             <div>{neuPost}</div>

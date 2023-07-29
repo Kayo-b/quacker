@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Post from "./Post";
 import {
     getDocs, 
@@ -63,7 +63,7 @@ const Feed: React.FC<PostProps> = ({
     //const [posts, setPosts] = useState<DocumentData[]>([]);
     const [loading, setLoading] = React.useState(true);
     const [mainFeedStatesCount, setMainFeedStatesCount] = React.useState<number>(0);
-    
+    const { search } = useParams();
 
     const fetchPosts = async () => {
         
@@ -118,6 +118,7 @@ const Feed: React.FC<PostProps> = ({
             userMainFeed={userMainFeed}
             setUserMainFeed={setUserMainFeed}
             addToStatesCount={setMainFeedStatesCount}
+            search={search}
             />
             </ul>  
         </div>

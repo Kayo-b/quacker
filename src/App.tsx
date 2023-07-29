@@ -23,6 +23,7 @@ import Register from './components/Register';
 import Reset from './components/Reset';
 import PostPage from './components/PostPage';
 import ProfilePage from './components/ProfilePage';
+import Feed from './components/Feed';
 import Dashboard from './components/Dashboard';
 import logo from './logo.svg';
 import './style/App.css';
@@ -118,6 +119,7 @@ useEffect(() => {
   fetchBookmarks();
   console.log("app componet", user)
 },[user])
+
   return (
    
     <BrowserRouter>
@@ -134,7 +136,7 @@ useEffect(() => {
       </div>
       
       <div className="center-container">
-      <Navbar />
+      <Navbar      />
       <Routes>
         <Route 
         path="/" 
@@ -231,6 +233,27 @@ useEffect(() => {
         profPostCheck={profPostCheck}
         setProfPostCheck={setProfPostCheck}
         />}
+        />
+        <Route
+        path="/search/:search"
+        element={
+          < Feed 
+            setUpdate={setUpdate} 
+            update={update} 
+            newPost={newPost} 
+            setNewPost={setNewPost} 
+            user={user as UserPropsOrigin} 
+            posts={posts}
+            setPosts={setPosts}
+            bookmarkPosts={bookmarkPosts} 
+            setBookmarkPosts={setBookmarkPosts}
+            name={name}
+            repost={repost}
+            setRepost={setRepost}
+            userMainFeed={userMainFeed}
+            setUserMainFeed={setUserMainFeed}
+            />
+        }
         />
       </Routes>
       </div>
