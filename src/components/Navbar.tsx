@@ -20,7 +20,6 @@ const Navbar = () => {
 
     return(
         <div className="nav-main-container">
-            Navbar
             <div className="search-container">
                 <div>
                 <Searchbar

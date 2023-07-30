@@ -32,12 +32,12 @@ const handleClick = async (text: String) => {
     return(
         <div className="post-main-container">     
             <input 
-                type="text" placeholder="Say something..."
+                type="text" placeholder="Look for..."
                 value={text} 
                 onChange={e => setText(e.target.value)}>
             </input>
             <input 
-                type="button" value="Post" 
+                type="button" value="Search" 
                 onClick={() => handleClick(text)}>
             </input>
         </div>
