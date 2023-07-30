@@ -172,7 +172,7 @@ const Post: React.FC<PostProps> = ({
     
     const nextElement = targetElement.nextElementSibling as HTMLElement;
     if(event.target && nextElement.style.display === "none") {
-      nextElement.style.display = "block";
+      nextElement.style.display = "flex";
     } else {
       nextElement.style.display = "none";
     }
@@ -210,7 +210,7 @@ const Post: React.FC<PostProps> = ({
     let neuPost = newPost.map(post =>  post.parentID === null ?  
       <div className="post-container" key={post.postID}>
         <div className="option-btn-container">
-          <button className="options-btn" onClick={(e) => handleClick(e) }>{dotsSvg}</button>
+          <button className="options-btn" onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?

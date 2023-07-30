@@ -159,8 +159,11 @@ li {
   height: 20px;
 }
 
-button.options-btn svg * {
+button.options-btn, button.options-btn svg * {
   pointer-events: none;
+}
+button.options-btn * {
+  pointer-events:all
 }
 
 .threeDotsSvg:hover {
