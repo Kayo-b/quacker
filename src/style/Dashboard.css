@@ -23,3 +23,12 @@
   .dashboard div {
     margin-top: 7px;
   }
+  button{
+    border: 0px;
+    background: none;
+  }
+  button:hover {
+    background:fixed;
+    background-color: yellowgreen;
+    cursor:pointer;
+  }

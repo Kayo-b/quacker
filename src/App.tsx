@@ -134,9 +134,8 @@ useEffect(() => {
       error={error ? error.toString() : ""} 
       setName={setName}/>
       </div>
-      
       <div className="center-container">
-      <Navbar      />
+      
       <Routes>
         <Route 
         path="/" 
@@ -237,27 +236,32 @@ useEffect(() => {
         <Route
         path="/search/:search"
         element={
-          < Feed 
-            setUpdate={setUpdate} 
-            update={update} 
-            newPost={newPost} 
-            setNewPost={setNewPost} 
-            user={user as UserPropsOrigin} 
-            posts={posts}
-            setPosts={setPosts}
-            bookmarkPosts={bookmarkPosts} 
-            setBookmarkPosts={setBookmarkPosts}
-            name={name}
-            repost={repost}
-            setRepost={setRepost}
-            userMainFeed={userMainFeed}
-            setUserMainFeed={setUserMainFeed}
-            />
+        <Feed 
+         setUpdate={setUpdate} 
+         update={update} 
+         newPost={newPost} 
+         setNewPost={setNewPost} 
+         user={user as UserPropsOrigin} 
+         posts={posts}
+         setPosts={setPosts}
+         bookmarkPosts={bookmarkPosts} 
+         setBookmarkPosts={setBookmarkPosts}
+         name={name}
+         repost={repost}
+         setRepost={setRepost}
+         userMainFeed={userMainFeed}
+         setUserMainFeed={setUserMainFeed}
+        />
         }
         />
       </Routes>
       </div>
+      <div className="right-container">
+        <Navbar/>
       </div>
+      
+      </div>
+      
     </BrowserRouter>
   );
 }

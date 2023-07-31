@@ -100,7 +100,6 @@ const Feed: React.FC<PostProps> = ({
     if(user !== null) {return(
         <div>{loading ? "Loading..." : null}
         <div className="feed-main-container" style={{visibility:"hidden"}}> 
-           <ul>
             <Post 
             name={name}
             newPost={newPost}
@@ -120,7 +119,6 @@ const Feed: React.FC<PostProps> = ({
             addToStatesCount={setMainFeedStatesCount}
             search={search}
             />
-            </ul>  
         </div>
         </div>
         

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Searchbar from "./Searchbar";
 
 // type UserProps = {
@@ -16,16 +16,22 @@ import Searchbar from "./Searchbar";
 //     //update: undefined | boolean;
 //     user: UserProps;
 //   };
+
+
 const Navbar = () => {
+
+    const navigate = useNavigate();
 
     return(
         <div className="nav-main-container">
             <div className="search-container">
-                <div>
+
+                <button onClick={() => navigate(-1)}>
+                    Back
+                </button>
                 <Searchbar
                 />
                 </div>
-            </div>
         </div>
     )
 }
