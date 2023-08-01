@@ -25,12 +25,7 @@ const Navbar = () => {
     return(
         <div className="nav-main-container">
             <div className="search-container">
-
-                <button onClick={() => navigate(-1)}>
-                    Back
-                </button>
-                <Searchbar
-                />
+                <Searchbar/>
                 </div>
         </div>
     )

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate  } from "react-router-dom";
 import Post from "./Post";
 import {
     getDocs, 
@@ -64,6 +64,7 @@ const Feed: React.FC<PostProps> = ({
     const [loading, setLoading] = React.useState(true);
     const [mainFeedStatesCount, setMainFeedStatesCount] = React.useState<number>(0);
     const { search } = useParams();
+    const navigate = useNavigate();
 
     const fetchPosts = async () => {
         

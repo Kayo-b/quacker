@@ -257,9 +257,15 @@ useEffect(() => {
       </Routes>
       </div>
       <div className="right-container">
+      <Navbar/>
+        {/* <Routes>
+      <Route
+        path="/homepage/"
+        element={
         <Navbar/>
+      }/>
+      </Routes> */}
       </div>
-      
       </div>
       
     </BrowserRouter>

@@ -213,9 +213,17 @@ button{
 }
 button:hover {
   background:fixed;
-  background-color: yellowgreen;
   cursor:pointer;
 }
 .search-container {
   display: flex;
+}
+
+/* ICONS */
+
+.back-arrow-icon {
+  font-size: 20px;
+}
+.back-arrow-icon:hover {
+  color:#292c2e;
 }
