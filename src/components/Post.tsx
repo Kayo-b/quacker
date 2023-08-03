@@ -1,4 +1,4 @@
-import React, { useEffect, useState, MouseEvent, ReactElement } from 'react'
+import React, { useEffect, useState, MouseEvent, ReactElement, FocusEvent } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { DocumentData,   getDoc, 
   collection, 
@@ -180,13 +180,17 @@ const Post: React.FC<PostProps> = ({
     }
   };
 
-  const handleBlur = () => {
+  const handleBlur = (event: FocusEvent) => {
     let optionsEle = document.querySelectorAll("#options");
+    let targetElement = event.target as HTMLElement;
     if(optionsEle) {
-      for(let x = 0; x < optionsEle.length;x++) {
-        (optionsEle[x] as HTMLElement).style.display = "none"
+      for(let x = 0; x < optionsEle.length; x++) {
+        if((optionsEle[x] as HTMLElement) !== targetElement.nextElementSibling) {
+          (optionsEle[x] as HTMLElement).style.display = "none";
+        } 
       }
     }
+    console.log("handle blurrrrr")
   }
 
   //Getting the height of the post element dynamically to create the connection line between posts and its reponses.
@@ -221,7 +225,7 @@ const Post: React.FC<PostProps> = ({
     let neuPost = newPost.map(post =>  post.parentID === null ?  
       <div className="post-container" key={post.postID}>
         <div className="option-btn-container">
-          <button className="options-btn" onBlur={() => handleBlur()} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn" onBlur={(e) => handleBlur(e)} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?
@@ -294,7 +298,7 @@ const Post: React.FC<PostProps> = ({
         
         return <div className="post-container" key={post.postID}>
         <div className="option-btn-container">
-          <button className="options-btn" onBlur={() => handleBlur()} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn" onBlur={(e) => handleBlur(e)} onClick={(e) => handleClick(e) }>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?
@@ -367,7 +371,7 @@ const Post: React.FC<PostProps> = ({
     if(post.textContent.includes(search)) {
       return <div className="post-container" key={post.postID}>
       <div className="option-btn-container">
-        <button className="options-btn" onBlur={e => handleBlur()} onClick={(e) => handleClick(e) }>{dotsSvg}</button>
+        <button className="options-btn" onBlur={(e) => handleBlur(e)} onClick={(e) => handleClick(e) }>{dotsSvg}</button>
         <div id="options" style={{display: "none"}}>
         {
           user.uid === post?.userID ?
@@ -440,7 +444,7 @@ const Post: React.FC<PostProps> = ({
     let comment = posts.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-page-container" key={post.postID}>
         <div className="option-btn-container">
-         <button className="options-btn" onBlur={() => handleBlur()} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+         <button className="options-btn" onBlur={(e) => handleBlur(e)} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?
@@ -509,7 +513,7 @@ const Post: React.FC<PostProps> = ({
     let newComment = newPost.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-page-container" key={post.postID}>
         <div className="option-btn-container">
-          <button className="options-btn" onBlur={() => handleBlur()} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn" onBlur={(e) => handleBlur(e)} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?
@@ -578,7 +582,7 @@ const Post: React.FC<PostProps> = ({
     let clickedPost =  
     <div className="post-page-container" key={post?.postID} style={style}>
         <div className="option-btn-container">
-          <button className="options-btn" onBlur={() => handleBlur()} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn" onBlur={(e) => handleBlur(e)} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?
@@ -647,7 +651,7 @@ let clickedPostParentPost =   posts.map(post =>
   post.postID === newPostValue?.parentID ?  
   <div className="post-page-container" key={post.postID} style={style}>
         <div className="option-btn-container">
-          <button className="options-btn" onBlur={() => handleBlur()} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn" onBlur={(e) => handleBlur(e)} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?
@@ -720,7 +724,7 @@ let rootPost =  posts.map(post =>
   newPostValue?.parentID !== null ?  
   <div className="post-page-container" key={post.postID} style={style}>
         <div className="option-btn-container">
-          <button className="options-btn" onBlur={() => handleBlur()} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn" onBlur={(e) => handleBlur(e)} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?
@@ -797,7 +801,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
   val === post.postID ?
   <div className="post-container" key={post.postID} style={style}>
         <div className="option-btn-container">
-          <button className="options-btn" onBlur={() => handleBlur()} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn" onBlur={(e) => handleBlur(e)} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?
@@ -868,7 +872,7 @@ let profileNewPostsFeed =  newPost.map(post =>
   post.parentID === null ?  
   <div className="post-container" key={post.postID} style={style}>
         <div className="option-btn-container">
-          <button className="options-btn" onBlur={() => handleBlur()} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn" onBlur={(e) => handleBlur(e)} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?
@@ -939,7 +943,7 @@ let profileResponsesFeed =  posts.map(post =>
   post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
         <div className="option-btn-container">
-          <button className="options-btn" onBlur={() => handleBlur()} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn" onBlur={(e) => handleBlur(e)} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?
@@ -1009,7 +1013,7 @@ let profileNewResponsesFeed =  newPost.map(post =>
   post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
         <div className="option-btn-container">
-          <button className="options-btn" onBlur={() => handleBlur()} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn" onBlur={(e) => handleBlur(e)} onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?

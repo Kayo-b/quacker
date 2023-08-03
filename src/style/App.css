@@ -148,6 +148,7 @@ li {
   top: 0;
   right: 14%;
   bottom: 10%;
+  background-color: red;
 }
 
 #options>* {
