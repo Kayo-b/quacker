@@ -92,6 +92,7 @@ const Post: React.FC<PostProps> = ({
   }) => {
 
   // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
+  
   const navigate = useNavigate();
   const style = {"fontSize": "large"}
 
@@ -180,17 +181,35 @@ const Post: React.FC<PostProps> = ({
     }
   };
 
-  //Event to set display none for all options elements when these are not the current element being interacted with
+  //Event to set display=none for all option elements(follow/unfollow and delete post) when these are not the current element being interacted with.
   document.addEventListener("click", function(event) {
     let targetElement = event.target as HTMLElement;
+    let allOptions = document.querySelectorAll("#options");
     let optionsBtn = targetElement.closest(".options-btn");
     let options = targetElement.closest("#options");
-    if (!optionsBtn && !options) {
-      let allOptions = document.querySelectorAll("#options");
-      allOptions.forEach(function(optionsEle) {
+    let allOptionsBtn = document.querySelectorAll(".options-btn");
+    let arraAllOptions = Array.from(allOptions)
+    let arraAllOptionsBtn = Array.from(allOptionsBtn)
+    
+    arraAllOptionsBtn.forEach(optionBtn => {
+      if(optionsBtn) {
+        if (arraAllOptionsBtn.indexOf(optionsBtn) !== arraAllOptionsBtn.indexOf(optionBtn)) {
+          (optionBtn.nextElementSibling as HTMLElement).style.display = "none";
+          }
+      } else if(!options && !optionsBtn) {
+        (optionBtn.nextElementSibling as HTMLElement).style.display = "none";
+      }
+    })
+
+    allOptions.forEach(optionsEle => {
+      if(options) {
+        if (arraAllOptions.indexOf(options) !== arraAllOptions.indexOf(optionsEle)) {
+          (optionsEle as HTMLElement).style.display = "none";
+          }
+      } else if(!options && !optionsBtn) {
         (optionsEle as HTMLElement).style.display = "none";
-      });
-    }
+      }
+    });
   });
 
   //Getting the height of the post element dynamically to create the connection line between posts and its reponses.
