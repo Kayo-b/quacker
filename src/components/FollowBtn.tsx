@@ -15,15 +15,21 @@ type UserProps = {
 type PostProps = {
     user: UserProps;
     post?: DocumentData;
+    updateFollow?: boolean;
+    setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
+    handleFollow?:() => void;
     
 }
 
 const FollowBtn: React.FC<PostProps> = ({
     user,
-    post
+    post,
+    updateFollow,
+    setUpdateFollow,
+    handleFollow
 }) => {
-    const [followBtn, setFollowBtn] = React.useState<boolean>(false);
 
+    const [followBtn, setFollowBtn] = React.useState<boolean>(false);
     const FollowUser = async(post: DocumentData | undefined) => {
         const userRef1 = doc(db, 'users', user.uid);
         const userRef2 = doc(db, 'users', post?.userID);
@@ -38,6 +44,9 @@ const FollowBtn: React.FC<PostProps> = ({
               setDoc(userRef1, {following: arrayUnion(post?.userID)}, {merge: true});
               setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true});
               setFollowBtn(true);
+            }
+            if(handleFollow && setUpdateFollow){
+              handleFollow();                                                                       
             }
         }
       }
@@ -59,7 +68,7 @@ const FollowBtn: React.FC<PostProps> = ({
 
       useEffect(() => {
         checkFollow(post);
-      }, [])
+      }, [updateFollow])
 
     return(
         <button className="followBtn" onClick={() => FollowUser(post)}>{followBtn === false ?

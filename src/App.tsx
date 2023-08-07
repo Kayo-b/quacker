@@ -109,7 +109,7 @@ const fetchBookmarks = async () => {
   }
   setBookmarkPosts(tempPosts);
   console.log("app component 22")
-  console.log(tempPosts,"tempPostsSSS")
+  console.log(tempPosts,"tempPosstsSSS")
   //setBookmarkUpdate(true);
 }
 

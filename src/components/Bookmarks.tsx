@@ -87,7 +87,7 @@ const Bookmarks: React.FC<BookmarksProps> = ({
   const [empty, setEmpty] = React.useState(false);
   const [bookmarksStatesCount, setBookmarksProfileStatesCount] = React.useState<number>(0);
   const navigate = useNavigate();
-
+  const dotsSvg = <svg viewBox="0 0 24 24" className="threeDotsSvg" aria-hidden="true"><g><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path></g></svg>
 
   const waitForStates = () => {
     const bookmarksContainer = 
@@ -155,11 +155,22 @@ const RemovePost = (post: DocumentData | undefined) => {
   //update === true ? setUpdate(false) : setUpdate(true)
 }
 
+// const handleClick = (event: MouseEvent) => {
+//   const targetElement = event.target as HTMLElement;
+//   const nextElement = targetElement.nextElementSibling as HTMLElement;
+//   if(event.target && nextElement.style.display === "none") {
+//     nextElement.style.display = "block";
+//   } else {
+//     nextElement.style.display = "none";
+//   }
+// };
 const handleClick = (event: MouseEvent) => {
-  const targetElement = event.target as HTMLElement;
+  let targetElement = event.target as HTMLElement;
+  targetElement = targetElement.parentElement as HTMLElement;
+  
   const nextElement = targetElement.nextElementSibling as HTMLElement;
   if(event.target && nextElement.style.display === "none") {
-    nextElement.style.display = "block";
+    nextElement.style.display = "flex";
   } else {
     nextElement.style.display = "none";
   }
@@ -193,7 +204,7 @@ const handleClick = (event: MouseEvent) => {
       
       <div className="post-container" key={post.postID}>
         <div className="option-btn-container">
-          <button className="options-btn" onClick={(e) => handleClick(e) }>...</button>
+        <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
             user.uid === post?.userID ?

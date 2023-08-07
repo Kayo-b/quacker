@@ -1,4 +1,4 @@
-import React, { useEffect, useState, MouseEvent, ReactElement, FocusEvent } from 'react'
+import React, { useEffect, useState, MouseEvent, ReactElement, FocusEvent, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { DocumentData,   getDoc, 
   collection, 
@@ -21,6 +21,7 @@ import FollowBtn from './FollowBtn';
 import Comment from './Comment';
 import Repost from './Repost';
 import myImg from '../img/user-icon.png';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 
 type UserProps = {
@@ -61,6 +62,9 @@ type PostProps = {
     favorited?: boolean;
     setFavorited?: React.Dispatch<React.SetStateAction<boolean>>;
     search?: string;
+    updateFollow?: boolean;
+    setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
+    handleFollow?:() => void;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -88,7 +92,10 @@ const Post: React.FC<PostProps> = ({
   setLoading,
   setProfPostCheck,
   bookmarkUpdate,
-  search
+  search,
+  updateFollow,
+  setUpdateFollow,
+  handleFollow
   }) => {
 
   // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
@@ -169,7 +176,6 @@ const Post: React.FC<PostProps> = ({
 
   const handleClick = (event: MouseEvent) => {
     let targetElement = event.target as HTMLElement;
-    console.log(targetElement,"EVENT TARGET")
     targetElement = targetElement.parentElement as HTMLElement;
     
     const nextElement = targetElement.nextElementSibling as HTMLElement;
@@ -177,7 +183,6 @@ const Post: React.FC<PostProps> = ({
       nextElement.style.display = "flex";
     } else {
       nextElement.style.display = "none";
-      
     }
   };
 
@@ -249,7 +254,7 @@ const Post: React.FC<PostProps> = ({
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
           }
           </div>
         </div>
@@ -322,7 +327,7 @@ const Post: React.FC<PostProps> = ({
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
           }
         </div>
         </div>
@@ -395,7 +400,7 @@ const Post: React.FC<PostProps> = ({
         {
           user.uid === post?.userID ?
           <button onClick={() => RemovePost(post)}>Delete post</button> :
-          <div><FollowBtn post={post} user={user}/></div>
+          <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
         }
       </div>
       </div>
@@ -468,7 +473,7 @@ const Post: React.FC<PostProps> = ({
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
           }
         </div>
         </div>
@@ -537,7 +542,7 @@ const Post: React.FC<PostProps> = ({
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
           }
         </div>
         </div>
@@ -606,7 +611,7 @@ const Post: React.FC<PostProps> = ({
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
           }
           </div>
         </div>
@@ -675,7 +680,7 @@ let clickedPostParentPost =   posts.map(post =>
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
           }
           </div>
         </div>
@@ -748,7 +753,7 @@ let rootPost =  posts.map(post =>
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
           }
           </div>
         </div>
@@ -825,7 +830,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
           }
           </div>
         </div>
@@ -896,7 +901,7 @@ let profileNewPostsFeed =  newPost.map(post =>
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
           }
           </div>
         </div>
@@ -967,7 +972,7 @@ let profileResponsesFeed =  posts.map(post =>
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
           }
           </div>
         </div>
@@ -1037,7 +1042,7 @@ let profileNewResponsesFeed =  newPost.map(post =>
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
           }
           </div>
         </div>
