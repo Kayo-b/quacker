@@ -17,7 +17,6 @@ type PostProps = {
     post?: DocumentData;
     updateFollow?: boolean;
     setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
-    handleFollow?:() => void;
     
 }
 
@@ -25,8 +24,7 @@ const FollowBtn: React.FC<PostProps> = ({
     user,
     post,
     updateFollow,
-    setUpdateFollow,
-    handleFollow
+    setUpdateFollow
 }) => {
 
     const [followBtn, setFollowBtn] = React.useState<boolean>(false);
@@ -45,8 +43,8 @@ const FollowBtn: React.FC<PostProps> = ({
               setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true});
               setFollowBtn(true);
             }
-            if(handleFollow && setUpdateFollow){
-              handleFollow();                                                                       
+            if(setUpdateFollow){ 
+              setUpdateFollow(!updateFollow)                                                                     
             }
         }
       }

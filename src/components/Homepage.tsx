@@ -32,6 +32,8 @@ type HomepageProps = {
     newPost: DocumentData[] ;
     userMainFeed?: DocumentData[];
     setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    updateFollow?: boolean;
+    setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
     
 }
 
@@ -52,7 +54,9 @@ const Homepage: React.FC<HomepageProps> = ({
     repost,
     setRepost,
     userMainFeed,
-    setUserMainFeed
+    setUserMainFeed,
+    updateFollow,
+    setUpdateFollow
     }) => {
 
     //const [update, setUpdate] = useState<boolean | undefined>(false)
@@ -83,6 +87,8 @@ const Homepage: React.FC<HomepageProps> = ({
             setRepost={setRepost}
             userMainFeed={userMainFeed}
             setUserMainFeed={setUserMainFeed}
+            updateFollow={updateFollow}
+            setUpdateFollow={setUpdateFollow}
             />
         </div>
     )

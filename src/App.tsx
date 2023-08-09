@@ -64,6 +64,8 @@ const App = () => {
   const [postPageStatesCount, setPostFeedStatesCount] = React.useState<number>(0)
   const [profPost, setProfPost] = React.useState<boolean>(true);
   const [profPostCheck, setProfPostCheck] = React.useState<number>(0);
+  const [updateFollow, setUpdateFollow] = React.useState<boolean>(false);
+
   // const [favorited, setFavorited] = useState<boolean>(false);
 
 //  useEffect(() => {
@@ -167,6 +169,8 @@ useEffect(() => {
         setRepost={setRepost}
         userMainFeed={userMainFeed}
         setUserMainFeed={setUserMainFeed}
+        updateFollow={updateFollow}
+        setUpdateFollow={setUpdateFollow}
         />}
         />
         <Route
@@ -189,6 +193,8 @@ useEffect(() => {
         setUserMainFeed={setUserMainFeed}
         postPageStatesCount={postPageStatesCount}
         addToStatesCount={setPostFeedStatesCount}
+        updateFollow={updateFollow}
+        setUpdateFollow={setUpdateFollow}
         />}
         />
         <Route
@@ -251,6 +257,8 @@ useEffect(() => {
          setRepost={setRepost}
          userMainFeed={userMainFeed}
          setUserMainFeed={setUserMainFeed}
+         updateFollow={updateFollow}
+         setUpdateFollow={setUpdateFollow}
         />
         }
         />

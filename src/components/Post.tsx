@@ -254,7 +254,7 @@ const Post: React.FC<PostProps> = ({
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -327,7 +327,7 @@ const Post: React.FC<PostProps> = ({
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
         </div>
         </div>
@@ -400,7 +400,7 @@ const Post: React.FC<PostProps> = ({
         {
           user.uid === post?.userID ?
           <button onClick={() => RemovePost(post)}>Delete post</button> :
-          <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
+          <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
         }
       </div>
       </div>
@@ -473,7 +473,7 @@ const Post: React.FC<PostProps> = ({
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
         </div>
         </div>
@@ -542,7 +542,7 @@ const Post: React.FC<PostProps> = ({
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
         </div>
         </div>
@@ -611,7 +611,7 @@ const Post: React.FC<PostProps> = ({
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -680,7 +680,7 @@ let clickedPostParentPost =   posts.map(post =>
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -753,7 +753,7 @@ let rootPost =  posts.map(post =>
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -830,7 +830,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -901,7 +901,7 @@ let profileNewPostsFeed =  newPost.map(post =>
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -972,7 +972,7 @@ let profileResponsesFeed =  posts.map(post =>
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -1042,7 +1042,7 @@ let profileNewResponsesFeed =  newPost.map(post =>
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} handleFollow={handleFollow}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>

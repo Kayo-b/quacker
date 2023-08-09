@@ -39,6 +39,8 @@ type PostProps = {
     setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     userMainFeed?: DocumentData[];
     setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    updateFollow?: boolean;
+    setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
 
   };
 
@@ -57,21 +59,23 @@ const Feed: React.FC<PostProps> = ({
     repost,
     setRepost,
     userMainFeed,
-    setUserMainFeed
+    setUserMainFeed,
+    updateFollow,
+    setUpdateFollow
     }) => {
 
     //const [posts, setPosts] = useState<DocumentData[]>([]);
     const [loading, setLoading] = React.useState(true);
     const [mainFeedStatesCount, setMainFeedStatesCount] = React.useState<number>(0);
-    const [updateFollow, setUpdateFollow] = React.useState<boolean>(false);
+    //const [updateFollow, setUpdateFollow] = React.useState<boolean>(false);
     const { search } = useParams();
     const navigate = useNavigate();
 
-    //Function that will change updateFollow State and be passed as prop to FollowBtn
-    const handleFollow = () => {
-        setUpdateFollow(!updateFollow);
-        console.log(updateFollow,"updateFollow")
-    }
+    // //Function that will change updateFollow State and be passed as prop to FollowBtn
+    // const handleFollow = () => {
+    //     setUpdateFollow(!updateFollow);
+    //     console.log(updateFollow,"updateFollow")
+    // }
         
 
     const fetchPosts = async () => {
@@ -129,7 +133,6 @@ const Feed: React.FC<PostProps> = ({
             search={search}
             setUpdateFollow={setUpdateFollow} 
             updateFollow={updateFollow}
-            handleFollow={handleFollow}
             />
         </div>
         </div>

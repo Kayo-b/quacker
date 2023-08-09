@@ -58,8 +58,8 @@ type BookmarksProps = {
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     profPost?: boolean;
     setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
-    // profPostCheck: number;
-    // setProfPostCheck?: React.Dispatch<React.SetStateAction<number>>;
+    updateFollow?: boolean;
+    setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
@@ -80,7 +80,9 @@ const Bookmarks: React.FC<BookmarksProps> = ({
   addToStatesCount,
   setPosts,
   profPost,
-  setProfPost
+  setProfPost,
+  updateFollow,
+  setUpdateFollow
 }) => {
   const [bookmarkUpdate, setBookmarkUpdate] = useState<boolean | undefined>(true) 
   const [loading, setLoading] = React.useState(true);
@@ -209,7 +211,7 @@ const handleClick = (event: MouseEvent) => {
           {
             user.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user}/></div>
+            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow}/></div>
           }
           </div>
         </div>
