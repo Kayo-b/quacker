@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { ref, uploadBytes } from 'firebase/storage'
 import { useParams, useLocation } from 'react-router-dom';
 import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 import Post from '../components/Post';
 import myImg from '../img/user-icon.png';
 
@@ -13,39 +14,45 @@ type UserProps = {
     bookmarks?: Array<string>;
 }  
 
-type EditProfileProps = { 
-    name: string;
-    setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
-    newPost: DocumentData[] ;
-    posts: DocumentData[] ;
-    update: undefined | boolean;
+type EditProfileProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
-    user: UserProps;
+    setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     post?: DocumentData;
-    setPosts?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
-    bookmarkPosts?: DocumentData[];
-    setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
-    isComment?: boolean | undefined;
-    parentPost?: DocumentData;
-    repost?: DocumentData[];
-    setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
-    userMainFeed?: DocumentData[];
-    setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
-    postPageStatesCount: number;
-    addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
-    profPost?: boolean;
-    setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
-    updateFollow?: boolean;
-    setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
-}
+    newPost: DocumentData[];
+    update: undefined | boolean;
+    name?: string;
+    user: UserProps;
+  };
 
 
 const EditProfile: React.FC<EditProfileProps> = ({name}) => {
 
+    const [imageUpload, setImageUpload] = React.useState<File | null>(null)
+
+    const handleClick = () => {
+        console.log("CLICK")
+        if(imageUpload === null) return null;
+        const imageRef =  ref(storage, `profile_images/${imageUpload.name + Math.floor(Math.random() * 999999999)}`);
+        uploadBytes(imageRef, imageUpload).then(() => {
+            alert("img uploaded")
+        })
+    }
+
 
     return(
-        <></>
-    )
-}
+        <div className="edit-profile-main-container">
+            <h3>Edit Profile</h3>
+            <input 
+            type="file"
+            onChange={(e) => 
+                e.target.files !== null ?
+                setImageUpload((e.target.files[0])) :
+                null
+            }
+            >
+            </input>
+            <button onClick={handleClick}>Upload Picture</button>
+        </div>
+    )}
 
 export default EditProfile;

@@ -33,7 +33,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-export const storage = getStorage(app);
+const storage = getStorage(app);
 
 //Google Sign-up
 const googleProvider = new GoogleAuthProvider();
@@ -147,6 +147,7 @@ const logout = () => {
 export {
     auth,
     db,
+    storage,
     signInWithGoogle,
     signUpWithEmail,
     registerEmail,

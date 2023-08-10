@@ -28,7 +28,7 @@ type UserProps = {
 }
 
 //Modal for the comment popup
-function Modal({ isOpen, onClose, children}: ModalProps) {
+function Modal({ isOpen, onClose, children }: ModalProps) {
     if (!isOpen) return null;
   
     return (

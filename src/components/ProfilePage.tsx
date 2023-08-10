@@ -3,6 +3,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
 import { db } from "../firebase";
 import Post from '../components/Post';
+import EditProfile from './EditProfile';
 import myImg from '../img/user-icon.png';
 import '../style/ProfilePage.css';
 import { setgroups } from 'process';
@@ -17,6 +18,12 @@ type UserProps = {
     uid: string;
     bookmarks?: Array<string>;
   }  
+
+type ModalProps = {
+    isOpen: boolean;
+    onClose: () => void;
+    children: React.ReactNode;
+  }
   
   type PostProps = {
       name: string;
@@ -72,9 +79,31 @@ const ProfilePage: React.FC<PostProps> = ({
     const [profileStatesCount, setProfileStatesCount] = React.useState<number>(0);
     const [profilePageStateCount, setProfilePageStateCount] = React.useState<boolean>(false);
     const [savePostUser, setSavePostUser] = React.useState<string>('');
-
+    
+    //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
+
+    //Modal variables
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+    
+    //Modal for the comment popup
+    function Modal({ isOpen, onClose, children }: ModalProps) {
+        if (!isOpen) return null;
+    
+        return (
+        <div className="modal">
+            <div className="modal-content">
+            <button className="close-button" onClick={onClose}>
+                X
+            </button>
+            {children}
+            </div>
+        </div>
+        );
+    }
 
     var renderPosts = 
     <Post 
@@ -97,6 +126,7 @@ const ProfilePage: React.FC<PostProps> = ({
     addToStatesCount={setProfileStatesCount}
     setProfPostCheck={setProfPostCheck}
     />
+    
     const waitForStates = () => {
         console.log(profileStatesCount, "< Profile States Count", post,  "< POOST")
         if(profileStatesCount === 1 || userMainFeed?.length === 0) {
@@ -209,7 +239,6 @@ const ProfilePage: React.FC<PostProps> = ({
         waitForStates();
     },[profileStatesCount, post])
 
-    
   return (
     <div>{loading ? "Loading...." : null}
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
@@ -218,6 +247,18 @@ const ProfilePage: React.FC<PostProps> = ({
             <img className="profile-picture-profile-page" alt="user icon" src={myImg}></img>
                 <div className="user-name">
                     @{post.username}{post.userID !== user.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
+                    <button onClick={openModal}>Edit Profile</button>
+                    <Modal isOpen={isModalOpen} onClose={closeModal}>   
+                        {<EditProfile
+                        user={user}
+                        post={post}
+                        setUpdate={setUpdate}
+                        setNewPost={setNewPost}
+                        newPost={newPost}
+                        update={update}
+                        name={name}
+                        />}
+                    </Modal>
                 </div>
             </div>
             <div className="follow-stats">
