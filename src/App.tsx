@@ -65,6 +65,7 @@ const App = () => {
   const [profPost, setProfPost] = React.useState<boolean>(true);
   const [profPostCheck, setProfPostCheck] = React.useState<number>(0);
   const [updateFollow, setUpdateFollow] = React.useState<boolean>(false);
+  
 
   // const [favorited, setFavorited] = useState<boolean>(false);
 
@@ -94,13 +95,14 @@ const fetchBookmarks = async () => {
  
   const q = query(collection(db, "users"), where("uid", "==", user?.uid));
   const docs = await getDocs(q);
-  console.log(docs, "docs!")
+ 
   let tempBookmarks: DocumentData[] = [];
   docs.forEach(doc => {
+    console.log(doc.data(), "DOC!S")
       const bookmarks = doc.data().bookmarks;
       tempBookmarks.push(...bookmarks)
   })
-  
+  console.log(docs,"docs")
   let tempPosts: DocumentData[] = [];
   for (const bm of tempBookmarks) {
       const q = query(collection(db, "posts"), where("postID", "==", bm));

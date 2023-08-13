@@ -79,6 +79,8 @@ const ProfilePage: React.FC<PostProps> = ({
     const [profileStatesCount, setProfileStatesCount] = React.useState<number>(0);
     const [profilePageStateCount, setProfilePageStateCount] = React.useState<boolean>(false);
     const [savePostUser, setSavePostUser] = React.useState<string>('');
+    const [bioText, setBioText] = React.useState<string>('');
+    const [displayedName, setDisplayedName] = React.useState<string>('');
     
     //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
@@ -128,7 +130,7 @@ const ProfilePage: React.FC<PostProps> = ({
     />
     
     const waitForStates = () => {
-        console.log(profileStatesCount, "< Profile States Count", post,  "< POOST")
+
         if(profileStatesCount === 1 || userMainFeed?.length === 0) {
             const profileContainer = 
                 document.querySelector(".user-container-profile-page-container") as HTMLElement;
@@ -168,7 +170,6 @@ const ProfilePage: React.FC<PostProps> = ({
             if(postSubContainer !== null) postSubContainer.style.visibility = "hidden"
             setLoading2(true);
         }
-        
     }
 
     const checkFollow = async() => {
@@ -190,8 +191,14 @@ const ProfilePage: React.FC<PostProps> = ({
             const userData2 = userDoc2.data();
             const following = userData2.following;
             const followers = userData2.followers;
+            const bioTxt = userData2.bioText;
+            const displayName = userData2.displayedName;
+            setDisplayedName(displayName)
+            setBioText(bioTxt);
+            console.log(userData2,"userDATA")
             setFollowingCount(following.length);
             setFollowersCount(followers.length);
+
         }
         setProfilePageStateCount(true)
     }
@@ -242,7 +249,7 @@ const ProfilePage: React.FC<PostProps> = ({
   return (
     <div>{loading ? "Loading...." : null}
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
-        {post.username}
+        {displayedName}
         <div className="user-container-profile-page">
             <img className="profile-picture-profile-page" alt="user icon" src={myImg}></img>
                 <div className="user-name">
@@ -257,12 +264,19 @@ const ProfilePage: React.FC<PostProps> = ({
                         newPost={newPost}
                         update={update}
                         name={name}
+                        bioText={bioText}
+                        setBioText={setBioText}
+                        setDisplayedName={setDisplayedName}
+
                         />}
                     </Modal>
                 </div>
             </div>
             <div className="follow-stats">
             {followingCount} Following / {followersCount}  Followers
+            </div>
+            <div className="bio-container">
+                <p>{bioText}</p>
             </div>
             <div className="feed-container">
                 <div className="feed-types-select">

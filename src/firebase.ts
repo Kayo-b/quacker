@@ -47,13 +47,15 @@ const signInWithGoogle = async() => {
             await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid,
                 name: user.displayName,
+                displayName: user.displayName,
                 authProvider: "google",
                 email: user.email,
                 bookmarks: [],
                 reposts: [],
                 mainFeed:[],
                 followers:[],
-                following:[]
+                following:[],
+                bioText:''
             });
         }
     } catch (err: unknown) {
@@ -96,6 +98,7 @@ const registerEmail = async(name: string, email: string, password: string) => {
         if(docs.docs.length === 0 && docs2.docs.length === 0) {
             await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid,
+                displayedName: name,
                 name: name,
                 authProvider: "local",
                 email: user.email,
@@ -103,7 +106,8 @@ const registerEmail = async(name: string, email: string, password: string) => {
                 reposts: [],
                 mainFeed:[],
                 followers:[],
-                following:[]
+                following:[],
+                bioText:''
             });
         } else {
             await user.delete();

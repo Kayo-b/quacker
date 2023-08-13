@@ -69,10 +69,10 @@ li {
 
 .modal {
   position: absolute;
-  width: 200px;
-  height: 200px;
-  border: 1px solid red;
-  top: 30vh;
+  background-color: #292c2e;
+  top: 15%;
+  right: 60%;
+  border: 1px solid rgb(255, 255, 255);
 }
 
 .nav-main-container {
@@ -227,4 +227,13 @@ button:hover {
 }
 .back-arrow-icon:hover {
   color:#292c2e;
+}
+
+.edit-profile-main-container {
+  width: 500px;
+  height: 350px;
+  position: absolute;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 15px;
+  background-color: rgb(38, 36, 36);
 }
