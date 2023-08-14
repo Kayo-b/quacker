@@ -254,7 +254,7 @@ const ProfilePage: React.FC<PostProps> = ({
             <img className="profile-picture-profile-page" alt="user icon" src={myImg}></img>
                 <div className="user-name">
                     @{post.username}{post.userID !== user.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
-                    <button onClick={openModal}>Edit Profile</button>
+                    {post.userID === user.uid ? <button onClick={openModal}>Edit Profile</button> : null}
                     <Modal isOpen={isModalOpen} onClose={closeModal}>   
                         {<EditProfile
                         user={user}
