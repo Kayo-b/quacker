@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useParams, useLocation } from 'react-router-dom';
 import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
 import { db } from "../firebase";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import Post from '../components/Post';
 import EditProfile from './EditProfile';
 import myImg from '../img/user-icon.png';
@@ -81,7 +82,16 @@ const ProfilePage: React.FC<PostProps> = ({
     const [savePostUser, setSavePostUser] = React.useState<string>('');
     const [bioText, setBioText] = React.useState<string>('');
     const [displayedName, setDisplayedName] = React.useState<string>('');
+    const storage = getStorage();
     
+
+    //Getting profile image from storage
+    let storageRef = ref(storage, `images/${user.uid}/profile_image/profile_img`)
+    getDownloadURL(storageRef)
+    .then((url) => {
+        const img = document.getElementById('myimg');
+        img?.setAttribute('src', url)
+    })
     //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
@@ -246,12 +256,14 @@ const ProfilePage: React.FC<PostProps> = ({
         waitForStates();
     },[profileStatesCount, post])
 
+    
+
   return (
     <div>{loading ? "Loading...." : null}
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
         {displayedName}
         <div className="user-container-profile-page">
-            <img className="profile-picture-profile-page" alt="user icon" src={myImg}></img>
+            <img className="profile-picture-profile-page" id="myimg" alt="user icon" src={myImg}></img>
                 <div className="user-name">
                     @{post.username}{post.userID !== user.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
                     {post.userID === user.uid ? <button onClick={openModal}>Edit Profile</button> : null}

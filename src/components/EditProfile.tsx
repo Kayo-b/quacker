@@ -28,7 +28,7 @@ type EditProfileProps = {
   };
 
 
-const EditProfile: React.FC<EditProfileProps> = ({bioText, setBioText, post, setDisplayedName}) => {
+const EditProfile: React.FC<EditProfileProps> = ({bioText, setBioText, post, setDisplayedName, user}) => {
 
     const [imageUpload, setImageUpload] = React.useState<File | null>(null)
     const [bioTempText, setTempBioText] = React.useState<String>('');
@@ -36,24 +36,24 @@ const EditProfile: React.FC<EditProfileProps> = ({bioText, setBioText, post, set
 
     const handleClick = () => {
         if(imageUpload === null) return null;
-        const imageRef =  ref(storage, `profile_images/${Math.floor(Math.random() * 999999999) + '_' + imageUpload.name}`);
+        const imageRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img`);
         uploadBytes(imageRef, imageUpload).then(() => {
-            alert("img uploaded")
+            alert("img uploaded");
         })
     }
 
     const handleClick2 = () => {
         if(imageUpload === null) return null;
-        const imageRef =  ref(storage, `background_images/${Math.floor(Math.random() * 999999999) + '_' + imageUpload.name}`);
+        const imageRef =  ref(storage, `/images/${user.uid}/background_image/background_img`);
         uploadBytes(imageRef, imageUpload).then(() => {
-            alert("img uploaded")
+            alert("img uploaded");
         })
     }
 
     const handleClick3 = async() => {
         const userRef2 = doc(db, 'users', post?.userID);
-        await setDoc(userRef2, {displayedName: nameTempText}, {merge: true})
-        setDisplayedName(nameTempText as string)
+        await setDoc(userRef2, {displayedName: nameTempText}, {merge: true});
+        setDisplayedName(nameTempText as string);
         
     }
 
@@ -61,8 +61,8 @@ const EditProfile: React.FC<EditProfileProps> = ({bioText, setBioText, post, set
 
     const handleClick4 = async() => {
         const userRef2 = doc(db, 'users', post?.userID);
-        await setDoc(userRef2, {bioText: bioTempText}, {merge: true})
-        setBioText(bioTempText as string)
+        await setDoc(userRef2, {bioText: bioTempText}, {merge: true});
+        setBioText(bioTempText as string);
         
     }
 
@@ -70,6 +70,7 @@ const EditProfile: React.FC<EditProfileProps> = ({bioText, setBioText, post, set
     return(
         <div className="edit-profile-main-container">
             <h3>Edit Profile</h3>
+            
             <input 
             type="file"
             onChange={(e) => 
@@ -80,6 +81,7 @@ const EditProfile: React.FC<EditProfileProps> = ({bioText, setBioText, post, set
             >
             </input>
             <button onClick={handleClick}>Upload Profile Picture</button>
+
             <input 
             type="file"
             onChange={(e) => 
