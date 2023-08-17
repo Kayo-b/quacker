@@ -17,8 +17,13 @@ import {
      setDoc,
      doc } from 'firebase/firestore';
 import {
-    getStorage
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
 } from 'firebase/storage'
+import myImg from './img/user-icon.png';
+
 const firebaseConfig = {
     apiKey: "AIzaSyB7ZtQsJrhm4whoqz_Vbg4MULY0JkK_IyM",
     authDomain: "twitter-clone-project-quack.firebaseapp.com",
@@ -27,7 +32,6 @@ const firebaseConfig = {
     storageBucket: "twitter-clone-project-quack.appspot.com",
     messagingSenderId: "374815127447",
     appId: "1:374815127447:web:1dec4a51895f3dfc6cf6d2"
-  
   };
   
 const app = initializeApp(firebaseConfig);
@@ -44,20 +48,31 @@ const signInWithGoogle = async() => {
         const q = query(collection(db, "users"), where("uid", "==", user.uid));
         const docs = await getDocs(q);
         if(docs.docs.length === 0) {
-            await setDoc(doc(db, "users", user.uid), {
-                uid: user.uid,
-                name: user.displayName,
-                displayName: user.displayName,
-                authProvider: "google",
-                email: user.email,
-                bookmarks: [],
-                reposts: [],
-                mainFeed:[],
-                followers:[],
-                following:[],
-                bioText:''
-            });
-        }
+            let img = await fetch(myImg);
+            let blob = await img.blob();
+
+            const imageRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img.png`);
+            uploadBytes(imageRef, blob)
+            .then(() => {
+                getDownloadURL(imageRef)
+                .then((url) => {
+                    setDoc(doc(db, "users", user.uid), {
+                        uid: user.uid,
+                        name: user.displayName,
+                        displayName: user.displayName,
+                        authProvider: "google",
+                        email: user.email,
+                        bookmarks: [],
+                        reposts: [],
+                        mainFeed:[],
+                        followers:[],
+                        following:[],
+                        bioText:'',
+                        imgUrl: url
+                    });
+                })
+            })
+    }
     } catch (err: unknown) {
         if(err instanceof Error) {
             console.error(err);
@@ -96,19 +111,30 @@ const registerEmail = async(name: string, email: string, password: string) => {
         const docs2 = await getDocs(q2);
         console.log("docs length", docs2.docs.length)
         if(docs.docs.length === 0 && docs2.docs.length === 0) {
-            await setDoc(doc(db, "users", user.uid), {
-                uid: user.uid,
-                displayedName: name,
-                name: name,
-                authProvider: "local",
-                email: user.email,
-                bookmarks: [],
-                reposts: [],
-                mainFeed:[],
-                followers:[],
-                following:[],
-                bioText:''
-            });
+            let img = await fetch(myImg);
+            let blob = await img.blob();
+
+            const imageRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img.png`);
+            uploadBytes(imageRef, blob)
+            .then(() => {
+                getDownloadURL(imageRef)
+                .then((url) => {
+                    setDoc(doc(db, "users", user.uid), {
+                    uid: user.uid,
+                    displayedName: name,
+                    name: name,
+                    authProvider: "local",
+                    email: user.email,
+                    bookmarks: [],
+                    reposts: [],
+                    mainFeed:[],
+                    followers:[],
+                    following:[],
+                    bioText:'',
+                    imgUrl: url
+                });
+        })
+    })
         } else {
             await user.delete();
             alert("Username or email already exists")

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, MouseEvent, ReactElement, FocusEvent, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { DocumentData,   getDoc, 
   collection, 
   serverTimestamp,
@@ -31,6 +32,7 @@ type UserProps = {
   uid: string;
   bookmarks?: Array<string>;
   reposts?: Array<string>;
+  imgUrl?: string
 }  
 
 type PostProps = {
@@ -101,8 +103,19 @@ const Post: React.FC<PostProps> = ({
   // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
   
   const navigate = useNavigate();
+  const storage = getStorage();
+  const [profileImg, setProfileImg] = useState("")
   const style = {"fontSize": "large"}
-    console.log(user,"userrr")
+
+   //Getting profile image from storage
+   let storageRef = ref(storage, `images/${user.uid}/profile_image/profile_img.png`)
+   getDownloadURL(storageRef)
+   .then((url) => {
+      const img = document.getElementById('myimg');
+      img?.setAttribute('src', url)
+   })
+
+
   //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
     if(addToStatesCount) addToStatesCount(0);
@@ -111,8 +124,7 @@ const Post: React.FC<PostProps> = ({
     const postPageContainers = document.querySelectorAll(".post-page-container");
     postPageContainers.forEach((container: Element) => {
     (container.parentElement?.parentElement as HTMLElement).style.visibility = "hidden";
-});
-    
+    });
   }
 
   const RedirectToProfilePage = (post: DocumentData | undefined) => {
@@ -121,7 +133,6 @@ const Post: React.FC<PostProps> = ({
     //             document.querySelector(".user-container-profile-page-container") as HTMLElement;
     //             profileContainer.style.visibility = "hidden" }     
     navigate(`/profile/${post?.username}`, {state: {post}});
-  
     update === true ? setUpdate(false) : setUpdate(true);
     
   }
@@ -154,7 +165,7 @@ const Post: React.FC<PostProps> = ({
     if(user === null) navigate("/");
     getUserMainFeed();
    }, [repost, update, user])//all posts rerender when these change
-   
+
    //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
    let getUserMainFeed = async () => {
 
@@ -329,10 +340,12 @@ const Post: React.FC<PostProps> = ({
             <button onClick={() => RemovePost(post)}>Delete post</button> :
             <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
+         
         </div>
         </div>
         <div className="user-container">
-          <img className="profile-picture" alt="user icon" src={myImg}></img>
+          <img className="profile-picture" alt="user icon" src={post.imgUrl}></img>
+          
           <span>
             <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
               {post.username}

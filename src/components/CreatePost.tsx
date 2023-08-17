@@ -9,6 +9,7 @@ type UserProps = {
     email: string;
     name?: string;
     uid: string;
+    imgUrl?: string;
 }  
 
 type PostProps = {
@@ -24,9 +25,12 @@ type PostProps = {
 const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost, post}) => {
 const[text, setText] = useState("");
 
+
+
 const handleClick = async (text: String) => {
     //setUpdate(true);
     // handle form submission here.
+    console.log(user)
 
     try {
         const docRef = await addDoc(collection(db, "posts"), {
@@ -38,7 +42,8 @@ const handleClick = async (text: String) => {
             likedByUsers: [],
             repostByUsers: [],
             childComments: [],
-            timestamp: serverTimestamp()
+            timestamp: serverTimestamp(),
+            imgUrl: user.imgUrl
         })
 
         const userDocRef = doc(db, "users", user.uid);
@@ -61,13 +66,14 @@ const handleClick = async (text: String) => {
             likedByUsers: [],
             repostByUsers: [],
             childComments: [],
-            timestamp: serverTimestamp()
+            timestamp: serverTimestamp(),
+            imgUrl: user.imgUrl
         }, ...prev]);
         //setDoc will add values into doRef after the docRef has been created.
         setDoc(docRef, {
             postID: docRef.id,  
             rootPostID: post ?
-            post.rootPostID : 
+            post.rootPostID  : 
             docRef.id}, {
                 merge: true})
        

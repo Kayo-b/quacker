@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ref, uploadBytes } from 'firebase/storage'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { useParams, useLocation } from 'react-router-dom';
 import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
 import { db, storage } from "../firebase";
@@ -36,9 +36,14 @@ const EditProfile: React.FC<EditProfileProps> = ({bioText, setBioText, post, set
 
     const handleClick = () => {
         if(imageUpload === null) return null;
-        const imageRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img`);
+        const imageRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img.png`);
         uploadBytes(imageRef, imageUpload).then(() => {
             alert("img uploaded");
+            // getDownloadURL(imageRef)
+            // .then((url) => {
+            //     const img = document.getElementById('myimg');
+            //     img?.setAttribute('src', url)
+            // })
         })
     }
 

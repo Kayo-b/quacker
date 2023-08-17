@@ -83,18 +83,19 @@ const ProfilePage: React.FC<PostProps> = ({
     const [bioText, setBioText] = React.useState<string>('');
     const [displayedName, setDisplayedName] = React.useState<string>('');
     const storage = getStorage();
-    
+
+    //Getting post data via location
+    const location = useLocation() as {state: { post: DocumentData}};
+    const post = location.state?.post;
+
 
     //Getting profile image from storage
-    let storageRef = ref(storage, `images/${user.uid}/profile_image/profile_img`)
+    let storageRef = ref(storage, `images/${post?.userID}/profile_image/profile_img.png`)
     getDownloadURL(storageRef)
     .then((url) => {
         const img = document.getElementById('myimg');
         img?.setAttribute('src', url)
     })
-    //Getting post data via location
-    const location = useLocation() as {state: { post: DocumentData}};
-    const post = location.state?.post;
 
     //Modal variables
     const [isModalOpen, setIsModalOpen] = React.useState(false);
