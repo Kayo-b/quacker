@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {  addDoc, collection, serverTimestamp, DocumentData, setDoc, doc, arrayUnion } from "firebase/firestore";
+import {  
+    addDoc, 
+    collection, 
+    serverTimestamp, 
+    DocumentData, 
+    setDoc, 
+    doc, 
+    arrayUnion,
+    getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 
@@ -24,13 +32,37 @@ type PostProps = {
 
 const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost, post}) => {
 const[text, setText] = useState("");
+const [imgUrl, setImgUrl] = useState("");
 
+// const getImg = async() => {
+//     const userDocRef = doc(db, "users", user.uid);
+//     const userDocSnap = await getDoc(userDocRef);
+//     const userDocSnapData = userDocSnap.data();
+//     if(userDocSnapData){
+//         console.log("Snap")
+//         console.log(imgUrl)
+//         setImgUrl(userDocSnapData.imgUrl);
+//     }
+
+// }
 
 
 const handleClick = async (text: String) => {
     //setUpdate(true);
     // handle form submission here.
     console.log(user)
+
+    const userDocRef = doc(db, "users", user.uid);
+    const userDocSnap = await getDoc(userDocRef);
+    const userDocSnapData = userDocSnap.data();
+    if(userDocSnapData){
+        console.log("Snap")
+        console.log(userDocSnapData.imgUrl)
+        setImgUrl(userDocSnapData.imgUrl);
+    }
+    console.log("Snap3")
+    console.log(userDocSnapData?.imgUrl)
+    
 
     try {
         const docRef = await addDoc(collection(db, "posts"), {
@@ -43,7 +75,7 @@ const handleClick = async (text: String) => {
             repostByUsers: [],
             childComments: [],
             timestamp: serverTimestamp(),
-            imgUrl: user.imgUrl
+            imgUrl: userDocSnapData?.imgUrl
         })
 
         const userDocRef = doc(db, "users", user.uid);
@@ -67,7 +99,7 @@ const handleClick = async (text: String) => {
             repostByUsers: [],
             childComments: [],
             timestamp: serverTimestamp(),
-            imgUrl: user.imgUrl
+            imgUrl: imgUrl
         }, ...prev]);
         //setDoc will add values into doRef after the docRef has been created.
         setDoc(docRef, {

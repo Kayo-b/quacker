@@ -270,7 +270,7 @@ const Post: React.FC<PostProps> = ({
           </div>
         </div>
         <div className="user-container">
-          <img className="profile-picture" alt="user icon" src={myImg}></img>
+          <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           <span>
             <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
               {post.username}
@@ -344,7 +344,7 @@ const Post: React.FC<PostProps> = ({
         </div>
         </div>
         <div className="user-container">
-          <img className="profile-picture" alt="user icon" src={post.imgUrl}></img>
+          <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           
           <span>
             <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
@@ -418,7 +418,7 @@ const Post: React.FC<PostProps> = ({
       </div>
       </div>
       <div className="user-container">
-        <img className="profile-picture" alt="user icon" src={myImg}></img>
+        <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
         <span>
           <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
             {post.username}
@@ -491,7 +491,7 @@ const Post: React.FC<PostProps> = ({
         </div>
         </div>
         <div className="user-container">
-          <img className="profile-picture" alt="user icon" src={myImg}></img>
+          <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           <span>
             <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
               {post.username}
@@ -560,7 +560,7 @@ const Post: React.FC<PostProps> = ({
         </div>
         </div>
         <div className="user-container">
-          <img className="profile-picture" alt="user icon" src={myImg}></img>
+          <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           <span>
             <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
               {post.username}
@@ -629,7 +629,7 @@ const Post: React.FC<PostProps> = ({
           </div>
         </div>
         <div className="user-container">
-          <img className="profile-picture" alt="user icon" src={myImg}></img>
+          <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           <span>
             <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
               {post?.username}
@@ -699,7 +699,7 @@ let clickedPostParentPost =   posts.map(post =>
         </div>
     <div className="user-container2">
       <div className="profile-line-connector">
-      <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
       <span className="connecting-comments-line2"></span>
       </div>
       <span>
@@ -772,7 +772,7 @@ let rootPost =  posts.map(post =>
         </div>
     <div className="user-container">
       <div className="profile-line-connector">
-      <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
       <span className="connecting-comments-line"></span>
       </div>
       <span>
@@ -848,7 +848,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
           </div>
         </div>
     <div className="user-container">
-      <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
       <span>
         <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
@@ -919,7 +919,7 @@ let profileNewPostsFeed =  newPost.map(post =>
           </div>
         </div>
     <div className="user-container">
-      <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
       <span>
         <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
@@ -990,7 +990,7 @@ let profileResponsesFeed =  posts.map(post =>
           </div>
         </div>
     <div className="user-container">
-      <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
       <span>
         <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
@@ -1060,7 +1060,7 @@ let profileNewResponsesFeed =  newPost.map(post =>
           </div>
         </div>
     <div className="user-container">
-      <img className="profile-picture" alt="user icon" src={myImg}></img>
+      <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
       <span>
         <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
@@ -1122,7 +1122,7 @@ let repostsFromUser = posts.map(post =>
     <div className="post-container" key={post.postID} style={style}>
       {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
       <div className="user-container">
-        <img className="profile-picture" alt="user icon" src={myImg}></img>
+        <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
         <span>
           <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
             {post.username}
@@ -1182,7 +1182,7 @@ let repostsFromUser = posts.map(post =>
     <div className="post-container" key={post.postID} style={style}>
       {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
       <div className="user-container">
-        <img className="profile-picture" alt="user icon" src={myImg}></img>
+        <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
         <span>
           <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
             {post.username}
@@ -1239,7 +1239,7 @@ let repostsFromUser = posts.map(post =>
   //   <div className="post-container" key={post.postID} style={style}>
   //   {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
   //   <div className="user-container">
-  //     <img className="profile-picture" alt="user icon" src={myImg}></img>
+  //     <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
   //     <span>
   //       <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
   //         {post.username}

@@ -28,7 +28,7 @@ type EditProfileProps = {
   };
 
 
-const EditProfile: React.FC<EditProfileProps> = ({bioText, setBioText, post, setDisplayedName, user}) => {
+const EditProfile: React.FC<EditProfileProps> = ({update, setUpdate,bioText, setBioText, post, setDisplayedName, user}) => {
 
     const [imageUpload, setImageUpload] = React.useState<File | null>(null)
     const [bioTempText, setTempBioText] = React.useState<String>('');
@@ -37,14 +37,15 @@ const EditProfile: React.FC<EditProfileProps> = ({bioText, setBioText, post, set
     const handleClick = () => {
         if(imageUpload === null) return null;
         const imageRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img.png`);
-        uploadBytes(imageRef, imageUpload).then(() => {
-            alert("img uploaded");
-            // getDownloadURL(imageRef)
-            // .then((url) => {
-            //     const img = document.getElementById('myimg');
-            //     img?.setAttribute('src', url)
-            // })
-        })
+        uploadBytes(imageRef, imageUpload)
+        // .then(() => {
+        //     alert("img uploaded");
+        //     getDownloadURL(imageRef)
+        //     .then((url) => {
+        //         setDoc(doc(db, "users", user.uid), {imgUrl: url}, {merge: true})
+        //     })
+        // })
+        //!update ? setUpdate(true) : setUpdate(false)
     }
 
     const handleClick2 = () => {
