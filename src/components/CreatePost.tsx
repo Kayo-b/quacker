@@ -99,7 +99,7 @@ const handleClick = async (text: String) => {
             repostByUsers: [],
             childComments: [],
             timestamp: serverTimestamp(),
-            imgUrl: imgUrl
+            imgUrl: userDocSnapData?.imgUrl
         }, ...prev]);
         //setDoc will add values into doRef after the docRef has been created.
         setDoc(docRef, {

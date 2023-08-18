@@ -108,12 +108,12 @@ const Post: React.FC<PostProps> = ({
   const style = {"fontSize": "large"}
 
    //Getting profile image from storage
-   let storageRef = ref(storage, `images/${user.uid}/profile_image/profile_img.png`)
-   getDownloadURL(storageRef)
-   .then((url) => {
-      const img = document.getElementById('myimg');
-      img?.setAttribute('src', url)
-   })
+  //  let storageRef = ref(storage, `images/${user.uid}/profile_image/profile_img.png`)
+  //  getDownloadURL(storageRef)
+  //  .then((url) => {
+  //     const img = document.getElementById('myimg');
+  //     img?.setAttribute('src', url)
+  //  })
 
 
   //Getting single post object values and passing them to the postPage URL
@@ -251,7 +251,10 @@ const Post: React.FC<PostProps> = ({
 
   const dotsSvg = <svg viewBox="0 0 24 24" className="threeDotsSvg" aria-hidden="true"><g><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path></g></svg>
   
+  document.querySelectorAll(".profile-picture").forEach(val => {
 
+    val.setAttribute('src', (val as HTMLImageElement).src+"&");
+})
   //renaming post prop to be used inside posts.map
   let newPostValue = post
 
@@ -1293,6 +1296,7 @@ let repostsFromUser = posts.map(post =>
 
     return (
       <div>
+        <>{console.log("POST_+_+_+_+_")}</>
         {isComment ? (
           
           <div>

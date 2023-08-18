@@ -45,7 +45,6 @@ const EditProfile: React.FC<EditProfileProps> = ({update, setUpdate,bioText, set
         //         setDoc(doc(db, "users", user.uid), {imgUrl: url}, {merge: true})
         //     })
         // })
-        //!update ? setUpdate(true) : setUpdate(false)
     }
 
     const handleClick2 = () => {

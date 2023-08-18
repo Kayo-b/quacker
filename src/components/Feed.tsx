@@ -86,7 +86,7 @@ const Feed: React.FC<PostProps> = ({
         setPosts([])
         setNewPost([])//making new posts array empty to avoid duplicate posts
         querySnapshot.forEach((doc) => {
-
+            console.log(doc.data(), "docData++++++")
             setPosts(prevValue => [...prevValue, doc.data()]);
         })
     };
@@ -111,7 +111,9 @@ const Feed: React.FC<PostProps> = ({
 
 
     if(user !== null) {return(
+        
         <div>{loading ? "Loading..." : null}
+        <>{console.log("FEED")}</>
         <div className="feed-main-container" style={{visibility:"hidden"}}> 
             <Post 
             name={name}
