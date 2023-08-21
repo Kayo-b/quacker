@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { useParams, useLocation } from 'react-router-dom';
-import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
+import { DocumentData, writeBatch, doc, setDoc , getDoc, collection, where, query, getDocs, QuerySnapshot} from "firebase/firestore"
 import { db, storage } from "../firebase";
 import Post from '../components/Post';
 import myImg from '../img/user-icon.png';
@@ -42,16 +42,21 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
         if(imageUpload === null) return null;
         const imageRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img.png`);
         uploadBytes(imageRef, imageUpload)
-        // posts.forEach(post => {
-        //     if(post.userID === user.uid) {
-        //         post.imgUrl = imgUrlFromEle+"!@#"
-        //     }
-        // })
         .then(() => {
             alert("img uploaded");
             getDownloadURL(imageRef)
             .then((url) => {
                 setDoc(doc(db, "users", user.uid), {imgUrl: url+"%$#"}, {merge: true})
+                const q = query(collection(db, "posts"), where("userID", "==", user.uid));
+                const batch = writeBatch(db);
+                getDocs(q).then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        batch.update(doc.ref, {imgUrl: url+"%$#"});
+                    });
+                    return batch.commit();
+                });
+                
+                
             })
         })
     }
