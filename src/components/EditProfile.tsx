@@ -18,6 +18,7 @@ type EditProfileProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     post?: DocumentData;
+    posts: DocumentData[];
     newPost: DocumentData[];
     update: undefined | boolean;
     name?: string;
@@ -28,23 +29,31 @@ type EditProfileProps = {
   };
 
 
-const EditProfile: React.FC<EditProfileProps> = ({update, setUpdate,bioText, setBioText, post, setDisplayedName, user}) => {
+const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioText, setBioText, post, setDisplayedName, user}) => {
 
     const [imageUpload, setImageUpload] = React.useState<File | null>(null)
     const [bioTempText, setTempBioText] = React.useState<String>('');
     const [nameTempText, setNameTempText] = React.useState<String>('');
 
     const handleClick = () => {
+        let id = document.getElementById("myimgprofile")
+        let imgUrlFromEle = (id as HTMLImageElement).src
+        console.log(imgUrlFromEle,"imgUrlFromEle")
         if(imageUpload === null) return null;
         const imageRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img.png`);
         uploadBytes(imageRef, imageUpload)
-        // .then(() => {
-        //     alert("img uploaded");
-        //     getDownloadURL(imageRef)
-        //     .then((url) => {
-        //         setDoc(doc(db, "users", user.uid), {imgUrl: url}, {merge: true})
-        //     })
+        // posts.forEach(post => {
+        //     if(post.userID === user.uid) {
+        //         post.imgUrl = imgUrlFromEle+"!@#"
+        //     }
         // })
+        .then(() => {
+            alert("img uploaded");
+            getDownloadURL(imageRef)
+            .then((url) => {
+                setDoc(doc(db, "users", user.uid), {imgUrl: url+"%$#"}, {merge: true})
+            })
+        })
     }
 
     const handleClick2 = () => {

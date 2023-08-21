@@ -86,17 +86,18 @@ const ProfilePage: React.FC<PostProps> = ({
     //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
-
+    const img = document.getElementById('myimgprofile');
+    img?.setAttribute('src', post.imgUrl)
 
     //Getting profile image from storage
-    let storageRef = ref(storage, `images/${post?.userID}/profile_image/profile_img.png`)
-    console.log(post.userID, "USERID")
-    getDownloadURL(storageRef)
-    .then((url) => {
-        console.log(url,"URL")
-        const img = document.getElementById('myimgprofile');
-        img?.setAttribute('src', url)
-    })
+    // let storageRef = ref(storage, `images/${post?.userID}/profile_image/profile_img.png`)
+    // console.log(post.userID, "USERID")
+    // getDownloadURL(storageRef)
+    // .then((url) => {
+    //     console.log(url,"URL")
+    //     const img = document.getElementById('myimgprofile');
+    //     img?.setAttribute('src', url)
+    // })
 
     //Modal variables
     const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -274,6 +275,7 @@ const ProfilePage: React.FC<PostProps> = ({
                         {<EditProfile
                         user={user}
                         post={post}
+                        posts={posts}
                         setUpdate={setUpdate}
                         setNewPost={setNewPost}
                         newPost={newPost}
