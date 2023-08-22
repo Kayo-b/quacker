@@ -106,7 +106,7 @@ const Post: React.FC<PostProps> = ({
   const storage = getStorage();
   const [profileImg, setProfileImg] = useState("")
   const style = {"fontSize": "large"}
-console.log(posts,"posts here")
+console.log(posts,"posts heres")
    //Getting profile image from storage
   //  let storageRef = ref(storage, `images/${user.uid}/profile_image/profile_img.png`)
   //  getDownloadURL(storageRef)

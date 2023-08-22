@@ -43,20 +43,23 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
         const imageRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img.png`);
         uploadBytes(imageRef, imageUpload)
         .then(() => {
+
             alert("img uploaded");
             getDownloadURL(imageRef)
             .then((url) => {
+                //updates all posts from user with the new img
+                //(added random chars "%$#" to force the img to update in the frontend)
                 setDoc(doc(db, "users", user.uid), {imgUrl: url+"%$#"}, {merge: true})
                 const q = query(collection(db, "posts"), where("userID", "==", user.uid));
                 const batch = writeBatch(db);
                 getDocs(q).then((querySnapshot) => {
+
                     querySnapshot.forEach((doc) => {
+
                         batch.update(doc.ref, {imgUrl: url+"%$#"});
                     });
                     return batch.commit();
                 });
-                
-                
             })
         })
     }

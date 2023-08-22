@@ -86,24 +86,27 @@ const ProfilePage: React.FC<PostProps> = ({
     //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
-    const img = document.getElementById('myimgprofile');
-    img?.setAttribute('src', post.imgUrl)
+    // const img = document.getElementById('myimgprofile');
+    // img?.setAttribute('src', post.imgUrl)
 
     //Getting profile image from storage
     // let storageRef = ref(storage, `images/${post?.userID}/profile_image/profile_img.png`)
     // console.log(post.userID, "USERID")
     // getDownloadURL(storageRef)
     // .then((url) => {
-    //     console.log(url,"URL")
+    //     console.log(url,"UAARL")
     //     const img = document.getElementById('myimgprofile');
     //     img?.setAttribute('src', url)
+    //     // document.querySelectorAll(".profile-picture").forEach(val => {
+    //     // val.setAttribute('src', url);
+    //     // })
     // })
 
     //Modal variables
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
-    
+    console.log(isModalOpen,"modal")
     //Modal for the comment popup
     function Modal({ isOpen, onClose, children }: ModalProps) {
         if (!isOpen) return null;
@@ -259,14 +262,11 @@ const ProfilePage: React.FC<PostProps> = ({
         waitForStates();
     },[profileStatesCount, post])
 
-    console.log(post.imgUrl,"POST IMG")
-
   return (
     <div>{loading ? "Loading...." : null}
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
         {displayedName}
         <div className="user-container-profile-page">
-            <>{console.log(post.imgUrl,"POST IMG2")}</>
             <img className="profile-picture-profile-page" id="myimgprofile" alt="user icon" src={post.imgUrl}></img>
                 <div className="user-name">
                     @{post.username}{post.userID !== user.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
@@ -284,7 +284,6 @@ const ProfilePage: React.FC<PostProps> = ({
                         bioText={bioText}
                         setBioText={setBioText}
                         setDisplayedName={setDisplayedName}
-
                         />}
                     </Modal>
                 </div>
