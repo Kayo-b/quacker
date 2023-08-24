@@ -110,9 +110,24 @@ li {
 }
 
 .profile-picture-profile-page {
-  height: 65px;
+  height: 85px;
   margin-right: 10px;
   border-radius: 50px;
+  margin-top: 50px;
+  
+}
+
+#profile-background {
+  border: 1px solid orange;
+  height: 100px;
+  background-image:url(../img/neo-pepe-.png);
+}
+
+#profile-info {
+  border: 1px solid yellow;
+  height:80px;
+  padding-top: 30px;
+
 }
 
 .post-container, .post-page-container {

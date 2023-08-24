@@ -280,32 +280,37 @@ const ProfilePage: React.FC<PostProps> = ({
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
         {displayedName}
         <div className="user-container-profile-page">
-            <img className="profile-picture-profile-page" id="myimgprofile" alt="user icon" src={post.imgUrl}></img>
-                <div className="user-name">
-                    @{post.username}{post.userID !== user.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
-                    {post.userID === user.uid ? <button onClick={openModal}>Edit Profile</button> : null}
-                    <Modal isOpen={isModalOpen} onClose={closeModal}>   
-                        {<EditProfile
-                        user={user}
-                        post={post}
-                        posts={posts}
-                        setUpdate={setUpdate}
-                        setNewPost={setNewPost}
-                        newPost={newPost}
-                        update={update}
-                        name={name}
-                        bioText={bioText}
-                        setBioText={setBioText}
-                        setDisplayedName={setDisplayedName}
-                        />}
-                    </Modal>
+            <div id="profile-background">
+                <img className="profile-picture-profile-page" id="myimgprofile" alt="user icon" src={post.imgUrl}></img>
+            </div>
+            <div id="profile-info">
+                    <div className="user-name">
+                        @{post.username}{post.userID !== user.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
+                        {post.userID === user.uid ? <button onClick={openModal}>Edit Profile</button> : null}
+                        <Modal isOpen={isModalOpen} onClose={closeModal}>   
+                            {<EditProfile
+                            user={user}
+                            post={post}
+                            posts={posts}
+                            setUpdate={setUpdate}
+                            setNewPost={setNewPost}
+                            newPost={newPost}
+                            update={update}
+                            name={name}
+                            bioText={bioText}
+                            setBioText={setBioText}
+                            setDisplayedName={setDisplayedName}
+                            />}
+                        </Modal>
+                    </div>
+                
+                <div className="follow-stats">
+                {followingCount} Following / {followersCount}  Followers
                 </div>
-            </div>
-            <div className="follow-stats">
-            {followingCount} Following / {followersCount}  Followers
-            </div>
-            <div className="bio-container">
-                <p>{bioText}</p>
+                <div className="bio-container">
+                    <p>{bioText}</p>
+                </div>
+                </div>
             </div>
             <div className="feed-container">
                 <div className="feed-types-select">
