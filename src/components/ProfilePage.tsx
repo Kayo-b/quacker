@@ -280,7 +280,7 @@ const ProfilePage: React.FC<PostProps> = ({
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
         {displayedName}
         <div className="user-container-profile-page">
-            <div id="profile-background">
+            <div id="profile-background" style={{backgroundImage:`url(${post.imgUrl})`}}>
                 <img className="profile-picture-profile-page" id="myimgprofile" alt="user icon" src={post.imgUrl}></img>
             </div>
             <div id="profile-info">
