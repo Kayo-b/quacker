@@ -86,9 +86,22 @@ const ProfilePage: React.FC<PostProps> = ({
     //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
-    // const img = document.getElementById('myimgprofile');
-    // img?.setAttribute('src', post.imgUrl)
+    const img = document.getElementById('myimgprofile');
+    const imgposts = document.querySelectorAll('.profile-picture-profile-feed');
 
+    const fetchProfileImg = async() => {    
+        const userDocRef = doc(db, "users", post?.userID);
+        const userDocSnap = await getDoc(userDocRef);
+        const userDocSnapData = userDocSnap.data();
+        if(userDocSnapData){
+            img?.setAttribute('src', userDocSnapData.imgUrl)
+            imgposts.forEach(post => {
+                post.setAttribute('src', userDocSnapData.imgUrl)
+            });
+        };
+    };
+
+    fetchProfileImg();
     //Getting profile image from storage
     // let storageRef = ref(storage, `images/${post?.userID}/profile_image/profile_img.png`)
     // console.log(post.userID, "USERID")
@@ -260,7 +273,7 @@ const ProfilePage: React.FC<PostProps> = ({
     useEffect(() => {
         checkFollow();
         waitForStates();
-    },[profileStatesCount, post])
+    },[profileStatesCount, post, update])
 
   return (
     <div>{loading ? "Loading...." : null}

@@ -102,7 +102,7 @@ li {
 
 }
 
-.profile-picture {
+.profile-picture, .profile-picture-profile-feed {
   height: 35px;
   margin-right: 10px;
   border-radius: 25px;

@@ -851,7 +851,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
           </div>
         </div>
     <div className="user-container">
-      <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
+      <img className="profile-picture-profile-feed" alt="user icon" src={post?.imgUrl}></img>
       <span>
         <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
@@ -1296,7 +1296,6 @@ let repostsFromUser = posts.map(post =>
 
     return (
       <div>
-        <>{console.log("POST_+_+_+_+_")}</>
         {isComment ? (
           
           <div>
