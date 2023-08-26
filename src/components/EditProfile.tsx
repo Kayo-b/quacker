@@ -70,6 +70,23 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
         const imageRef =  ref(storage, `/images/${user.uid}/background_image/background_img`);
         uploadBytes(imageRef, imageUpload).then(() => {
             alert("img uploaded");
+            getDownloadURL(imageRef)
+            .then((url) => {
+                //updates all posts from user with the new img
+                setDoc(doc(db, "users", user.uid), {bkgImgUrl: url}, {merge: true})
+                const q = query(collection(db, "posts"), where("userID", "==", user.uid));
+                const batch = writeBatch(db);
+                getDocs(q).then((querySnapshot) => {
+
+                    querySnapshot.forEach((doc) => {
+
+                        batch.update(doc.ref, {bkgImgUrl: url});
+                    });
+                    setUpdate(!update)
+                    return batch.commit();
+
+                });
+            })
         })
     }
 

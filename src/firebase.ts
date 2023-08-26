@@ -114,11 +114,12 @@ const registerEmail = async(name: string, email: string, password: string) => {
             let img = await fetch(myImg);
             let blob = await img.blob();
 
-            const imageRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img.png`);
-            uploadBytes(imageRef, blob)
+            const profileImgRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img.png`);
+            const backgroundImgRef =  ref(storage, `/images/${user.uid}/background_image/background_img.png`);
+            Promise.all([uploadBytes(profileImgRef, blob), uploadBytes(backgroundImgRef, blob)])
             .then(() => {
-                getDownloadURL(imageRef)
-                .then((url) => {
+                Promise.all([getDownloadURL(profileImgRef), getDownloadURL(backgroundImgRef)])
+                .then(([url1, url2]) => {
                     setDoc(doc(db, "users", user.uid), {
                     uid: user.uid,
                     displayedName: name,
@@ -131,7 +132,8 @@ const registerEmail = async(name: string, email: string, password: string) => {
                     followers:[],
                     following:[],
                     bioText:'',
-                    imgUrl: url
+                    imgUrl: url1,
+                    bkgImgUrl: url2
                 });
         })
     })
