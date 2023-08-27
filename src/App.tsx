@@ -216,6 +216,10 @@ useEffect(() => {
           setRepost={setRepost}
           userMainFeed={userMainFeed}
           setUserMainFeed={setUserMainFeed}
+          setPosts={setPosts}
+          addToStatesCount={setPostFeedStatesCount}
+          updateFollow={updateFollow}
+          setUpdateFollow={setUpdateFollow}
           />}
         />
         <Route
@@ -239,6 +243,7 @@ useEffect(() => {
         setProfPost={setProfPost}
         profPostCheck={profPostCheck}
         setProfPostCheck={setProfPostCheck}
+        
         />}
         />
         <Route

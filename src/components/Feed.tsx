@@ -32,7 +32,7 @@ type PostProps = {
     user: UserProps;
     posts: DocumentData[];
     post?: DocumentData;
-    setPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    setPosts?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     bookmarkPosts?: DocumentData[];
     setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     repost?: DocumentData[];
@@ -41,6 +41,10 @@ type PostProps = {
     setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     updateFollow?: boolean;
     setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
+    isComment?: boolean | undefined;
+    parentPost?: DocumentData;
+    setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+    addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
 
   };
 
@@ -61,7 +65,10 @@ const Feed: React.FC<PostProps> = ({
     userMainFeed,
     setUserMainFeed,
     updateFollow,
-    setUpdateFollow
+    setUpdateFollow,
+    isComment,
+    parentPost,
+    addToStatesCount
     }) => {
 
     //const [posts, setPosts] = useState<DocumentData[]>([]);
@@ -83,11 +90,14 @@ const Feed: React.FC<PostProps> = ({
         //const q = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")))
         const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")));
         console.log("fetch!!")
-        setPosts([])
-        setNewPost([])//making new posts array empty to avoid duplicate posts
-        querySnapshot.forEach((doc) => {
-            setPosts(prevValue => [...prevValue, doc.data()]);
-        })
+        if(setPosts){
+            setPosts([])
+            setNewPost([])//making new posts array empty to avoid duplicate posts
+            querySnapshot.forEach((doc) => {
+                setPosts(prevValue => [...prevValue, doc.data()]);
+            })
+        }
+        
     };
 
     const waitForStates = () => {
@@ -134,6 +144,9 @@ const Feed: React.FC<PostProps> = ({
             search={search}
             setUpdateFollow={setUpdateFollow} 
             updateFollow={updateFollow}
+            isComment={isComment}
+            parentPost={parentPost}
+            setLoading={setLoading}
             />
         </div>
         </div>

@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react'
 import { useParams, useLocation } from 'react-router-dom';
+import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
+import { db } from "../firebase";
 import Post from "./Post";
+import Feed from './Feed';
 import Like from './Like'
 import BookmarkBtn from './BookmarkBtn';
 import myImg from '../img/user-icon.png';
-
-import { DocumentData } from 'firebase/firestore';
 
 
 type UserProps = {
@@ -31,6 +32,10 @@ type PostProps = {
     setRepost?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     userMainFeed?: DocumentData[];
     setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    setPosts?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
+    updateFollow?: boolean;
+    setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
     
 }
 
@@ -47,7 +52,11 @@ const PostPage: React.FC<PostProps> = ({
   setBookmarkPosts, 
   setUpdate,
   userMainFeed,
-  setUserMainFeed
+  setUserMainFeed,
+  setPosts,
+  addToStatesCount,
+  updateFollow,
+  setUpdateFollow
   }) => {
 
     
@@ -55,8 +64,27 @@ const PostPage: React.FC<PostProps> = ({
   const location = useLocation() as { state: { post: DocumentData } };
   const [loading, setLoading] = React.useState(true);
   const [postPageStatesCount, setPostFeedStatesCount] = React.useState<number>(0)
-  const post = location.state?.post
+  const [post, setPost] = React.useState<DocumentData>()
+  const endpointLocation = useLocation();
+  const holepath = endpointLocation.pathname;
+  const endpoint = holepath.split('/')[2];
+    
+
+
+  console.log(endpoint,"PATH")
+
+  //const post = location.state?.post !== undefined ? location.state?.post :
+  const fetchPost = async() => {    
+    const postDocRef = doc(db, "posts", endpoint);
+    const postDocSnap = await getDoc(postDocRef);
+    const postDocSnapData = postDocSnap.data();
+    setPost(postDocSnapData);
+};
+  fetchPost();
   const isComment = true;
+
+  console.log(post,"POST!!")
+
 
   console.log(postPageStatesCount)
 
@@ -87,7 +115,7 @@ const PostPage: React.FC<PostProps> = ({
 
       <div>{loading ? "Loading...#" : null}
       <div className="post-page-main-container" style={{visibility:"hidden"}}>
-      <Post 
+      {/* <Post 
           name={name}
           update={update}
           setUpdate={setUpdate}
@@ -107,7 +135,31 @@ const PostPage: React.FC<PostProps> = ({
           setLoading={setLoading}
           addToStatesCount={setPostFeedStatesCount}
           
-          />
+          /> */}
+      <Feed 
+          name={name}
+          update={update}
+          setUpdate={setUpdate}
+          posts={posts}
+          user={user}
+          bookmarkPosts={bookmarkPosts} 
+          setBookmarkPosts={setBookmarkPosts}
+          setNewPost={setNewPost}
+          newPost={newPost}
+          post={post}
+          isComment={isComment}
+          parentPost={post}
+          repost={repost}
+          setRepost={setRepost}
+          userMainFeed={userMainFeed}
+          setUserMainFeed={setUserMainFeed}
+          setLoading={setLoading}
+          addToStatesCount={setPostFeedStatesCount}
+          setPosts={setPosts}
+          updateFollow={updateFollow}
+          setUpdateFollow={setUpdateFollow}
+          
+        />    
       </div>
     </div>
   )

@@ -10,7 +10,6 @@ import { setgroups } from 'process';
 import { profile } from 'console';
 
 
-
 type UserProps = {
     authProvider?: string;
     email: string;
@@ -68,7 +67,7 @@ const ProfilePage: React.FC<PostProps> = ({
     profPostCheck,
     setProfPostCheck
     }) => {
-      
+
     // const [profPost, setProfPost] = React.useState<boolean>(true);
     // const [profPostCheck, setProfPostCheck] = React.useState<number>(0);
     const [followBtn, setFollowBtn] = React.useState<boolean>(false);
@@ -87,21 +86,24 @@ const ProfilePage: React.FC<PostProps> = ({
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
     const img = document.getElementById('myimgprofile');
+    const bkgImg = document.getElementById('profile-background');
     const imgposts = document.querySelectorAll('.profile-picture-profile-feed');
-
+    console.log(user, "USER!")
+    console.log(post, "USER!")
     const fetchProfileImg = async() => {    
         const userDocRef = doc(db, "users", post?.userID);
         const userDocSnap = await getDoc(userDocRef);
         const userDocSnapData = userDocSnap.data();
         if(userDocSnapData){
             img?.setAttribute('src', userDocSnapData.imgUrl)
+            bkgImg?.setAttribute('style', `background-image: url(${userDocSnapData.bkgImgUrl})`)
             imgposts.forEach(post => {
                 post.setAttribute('src', userDocSnapData.imgUrl)
             });
         };
     };
 
-    fetchProfileImg();
+    
     //Getting profile image from storage
     // let storageRef = ref(storage, `images/${post?.userID}/profile_image/profile_img.png`)
     // console.log(post.userID, "USERID")
@@ -273,6 +275,7 @@ const ProfilePage: React.FC<PostProps> = ({
     useEffect(() => {
         checkFollow();
         waitForStates();
+        fetchProfileImg();
     },[profileStatesCount, post, update])
 
   return (
