@@ -66,6 +66,7 @@ type PostProps = {
     search?: string;
     updateFollow?: boolean;
     setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
+    setPostFeedStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     handleFollow?:() => void;
 }
 
@@ -97,7 +98,8 @@ const Post: React.FC<PostProps> = ({
   search,
   updateFollow,
   setUpdateFollow,
-  handleFollow
+  handleFollow,
+  setPostFeedStatesCount
   }) => {
 
   // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
@@ -106,7 +108,7 @@ const Post: React.FC<PostProps> = ({
   const storage = getStorage();
   const [profileImg, setProfileImg] = useState("")
   const style = {"fontSize": "large"}
-console.log(posts,"posts heres")
+  console.log(posts,"posts heres")
    //Getting profile image from storage
   //  let storageRef = ref(storage, `images/${user.uid}/profile_image/profile_img.png`)
   //  getDownloadURL(storageRef)
@@ -118,7 +120,8 @@ console.log(posts,"posts heres")
 
   //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
-    if(addToStatesCount) addToStatesCount(0);
+    //if(addToStatesCount) addToStatesCount(0);
+    if(setPostFeedStatesCount) setPostFeedStatesCount(0)
     if(setLoading) setLoading(true);
     navigate(`/post/${post.postID}`, {state: {post}})
     const postPageContainers = document.querySelectorAll(".post-page-container");
@@ -322,6 +325,7 @@ console.log(posts,"posts heres")
          profPost={profPost}
          setProfPost={setProfPost}
          addToStatesCount={addToStatesCount}
+         setPostFeedStatesCount={setPostFeedStatesCount}
         />
         </div>
       </div>
@@ -397,6 +401,7 @@ console.log(posts,"posts heres")
          profPost={profPost}
          setProfPost={setProfPost}
          addToStatesCount={addToStatesCount}
+         setPostFeedStatesCount={setPostFeedStatesCount}
 
         />
       </div>
@@ -470,6 +475,7 @@ console.log(posts,"posts heres")
        profPost={profPost}
        setProfPost={setProfPost}
        addToStatesCount={addToStatesCount}
+       setPostFeedStatesCount={setPostFeedStatesCount}
 
       />
     </div>
@@ -543,6 +549,7 @@ console.log(posts,"posts heres")
          profPost={profPost}
          setProfPost={setProfPost}
          addToStatesCount={addToStatesCount}
+         setPostFeedStatesCount={setPostFeedStatesCount}
 
         />
       </div>
@@ -612,6 +619,7 @@ console.log(posts,"posts heres")
          profPost={profPost}
          setProfPost={setProfPost}
          addToStatesCount={addToStatesCount}
+         setPostFeedStatesCount={setPostFeedStatesCount}
 
         />
         </div>
@@ -681,6 +689,7 @@ console.log(posts,"posts heres")
          profPost={profPost}
          setProfPost={setProfPost}
          addToStatesCount={addToStatesCount}
+         setPostFeedStatesCount={setPostFeedStatesCount}
 
         />
       </div> 
@@ -753,6 +762,7 @@ let clickedPostParentPost =   posts.map(post =>
       profPost={profPost}
       setProfPost={setProfPost}
       addToStatesCount={addToStatesCount}
+      setPostFeedStatesCount={setPostFeedStatesCount}
     />
   </div>  
   </div>
@@ -826,7 +836,7 @@ let rootPost =  posts.map(post =>
       profPost={profPost}
       setProfPost={setProfPost}
       addToStatesCount={addToStatesCount}
-
+      setPostFeedStatesCount={setPostFeedStatesCount}
     />
   </div>  
   </div>
@@ -900,6 +910,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
       profPost={profPost}
       setProfPost={setProfPost}
       addToStatesCount={addToStatesCount}
+      setPostFeedStatesCount={setPostFeedStatesCount}
       
     /> 
   </div>  
@@ -971,6 +982,7 @@ let profileNewPostsFeed =  newPost.map(post =>
       profPost={profPost}
       setProfPost={setProfPost}
       addToStatesCount={addToStatesCount}
+      setPostFeedStatesCount={setPostFeedStatesCount}
       
     />
   </div>  
@@ -1043,6 +1055,7 @@ let profileResponsesFeed =  posts.map(post =>
       setProfPost={setProfPost}
       addToStatesCount={addToStatesCount}
       setProfPostCheck={setProfPostCheck}
+      setPostFeedStatesCount={setPostFeedStatesCount}
     />
   </div>
   </div>
@@ -1112,6 +1125,7 @@ let profileNewResponsesFeed =  newPost.map(post =>
       profPost={profPost}
       setProfPost={setProfPost}
       addToStatesCount={addToStatesCount}
+      setPostFeedStatesCount={setPostFeedStatesCount}
     />
   </div>
   </div>
@@ -1173,6 +1187,8 @@ let repostsFromUser = posts.map(post =>
         profPost={profPost}
         setProfPost={setProfPost}
         addToStatesCount={addToStatesCount}
+        setPostFeedStatesCount={setPostFeedStatesCount}
+        
       
       />
     </div>
@@ -1233,6 +1249,7 @@ let repostsFromUser = posts.map(post =>
         profPost={profPost}
         setProfPost={setProfPost}
         addToStatesCount={addToStatesCount}
+        setPostFeedStatesCount={setPostFeedStatesCount}
       />
     </div>
     : <></>

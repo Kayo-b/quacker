@@ -45,6 +45,8 @@ type PostProps = {
     parentPost?: DocumentData;
     setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
+    postPageStatesCount?: number;
+    setPostFeedStatesCount?: React.Dispatch<React.SetStateAction<number>>;
 
   };
 
@@ -68,7 +70,9 @@ const Feed: React.FC<PostProps> = ({
     setUpdateFollow,
     isComment,
     parentPost,
-    addToStatesCount
+    addToStatesCount,
+    postPageStatesCount,
+    setPostFeedStatesCount
     }) => {
 
     //const [posts, setPosts] = useState<DocumentData[]>([]);
@@ -101,13 +105,13 @@ const Feed: React.FC<PostProps> = ({
     };
 
     const waitForStates = () => {
-        if(mainFeedStatesCount === 1) {
+        if(mainFeedStatesCount === 1 || postPageStatesCount === 1) {
             const mainFeedContainer = 
                 document.querySelector(".feed-main-container") as HTMLElement;
             if(mainFeedContainer) setTimeout(() => {
                 mainFeedContainer.style.visibility = "visible";
                 setLoading(false)
-            }, 200)
+            }, 200) 
         }
     };
 
@@ -116,12 +120,12 @@ const Feed: React.FC<PostProps> = ({
         fetchPosts();
         waitForStates();     
         
-    },[mainFeedStatesCount, update]);
+    },[mainFeedStatesCount, postPageStatesCount, update]);
 
 
     if(user !== null) {return(
         
-        <div>{loading ? "Loading..." : null}
+        <div>{loading ? "Loading...!" : null}
         <>{console.log("FEED")}</>
         <div className="feed-main-container" style={{visibility:"hidden"}}> 
             <Post 
@@ -147,6 +151,7 @@ const Feed: React.FC<PostProps> = ({
             isComment={isComment}
             parentPost={parentPost}
             setLoading={setLoading}
+            setPostFeedStatesCount={setPostFeedStatesCount}
             />
         </div>
         </div>

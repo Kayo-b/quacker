@@ -88,8 +88,7 @@ const ProfilePage: React.FC<PostProps> = ({
     const img = document.getElementById('myimgprofile');
     const bkgImg = document.getElementById('profile-background');
     const imgposts = document.querySelectorAll('.profile-picture-profile-feed');
-    console.log(user, "USER!")
-    console.log(post, "USER!")
+
     const fetchProfileImg = async() => {    
         const userDocRef = doc(db, "users", post?.userID);
         const userDocSnap = await getDoc(userDocRef);

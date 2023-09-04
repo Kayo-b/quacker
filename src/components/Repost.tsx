@@ -29,6 +29,7 @@ type UserProps = {
     setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     setProfPostCheck?: React.Dispatch<React.SetStateAction<number>>;
+    setPostFeedStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     
 }
 
@@ -46,7 +47,8 @@ const Repost: React.FC<PostProps> = ({
     setProfPost,
     profPost,
     addToStatesCount,
-    setProfPostCheck
+    setProfPostCheck,
+    setPostFeedStatesCount
     }) => {
 
   const [reposted, setReposted] = useState<boolean>(false);
@@ -65,7 +67,8 @@ const Repost: React.FC<PostProps> = ({
             setReposted(false);
             console.log("FALSE!@")
           }
-          
+          if(setPostFeedStatesCount)
+              setPostFeedStatesCount(1)
           if(addToStatesCount) {
             addToStatesCount(1);
             console.log("reposted!!!")};

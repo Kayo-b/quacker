@@ -68,25 +68,19 @@ const PostPage: React.FC<PostProps> = ({
   const endpointLocation = useLocation();
   const holepath = endpointLocation.pathname;
   const endpoint = holepath.split('/')[2];
-    
-
-
-  console.log(endpoint,"PATH")
-
-  //const post = location.state?.post !== undefined ? location.state?.post :
+  
+  
   const fetchPost = async() => {    
     const postDocRef = doc(db, "posts", endpoint);
     const postDocSnap = await getDoc(postDocRef);
     const postDocSnapData = postDocSnap.data();
+    location.state?.post !== undefined ? 
+    setPost(location.state?.post) :
     setPost(postDocSnapData);
 };
-  fetchPost();
+
+  
   const isComment = true;
-
-  console.log(post,"POST!!")
-
-
-  console.log(postPageStatesCount)
 
   const waitForStates = () => {
     const postPageContainer = 
@@ -108,6 +102,7 @@ const PostPage: React.FC<PostProps> = ({
 
  useEffect(() => {
   waitForStates();
+  fetchPost();
  },[postPageStatesCount])
  
  
@@ -154,7 +149,8 @@ const PostPage: React.FC<PostProps> = ({
           userMainFeed={userMainFeed}
           setUserMainFeed={setUserMainFeed}
           setLoading={setLoading}
-          addToStatesCount={setPostFeedStatesCount}
+          postPageStatesCount={postPageStatesCount}
+          setPostFeedStatesCount={setPostFeedStatesCount}
           setPosts={setPosts}
           updateFollow={updateFollow}
           setUpdateFollow={setUpdateFollow}
