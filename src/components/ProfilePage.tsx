@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useParams, useLocation } from 'react-router-dom';
 import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
 import { db } from "../firebase";
@@ -8,6 +8,7 @@ import EditProfile from './EditProfile';
 import '../style/ProfilePage.css';
 import { setgroups } from 'process';
 import { profile } from 'console';
+import { UserContext } from '../App';
 
 
 type UserProps = {
@@ -81,10 +82,13 @@ const ProfilePage: React.FC<PostProps> = ({
     const [bioText, setBioText] = React.useState<string>('');
     const [displayedName, setDisplayedName] = React.useState<string>('');
     const storage = getStorage();
-
+    const user = useContext(UserContext);
+   
     //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
+    console.log(user,"POST CONSOLE LOG")
+    //const userID = post.uid;
     const img = document.getElementById('myimgprofile');
     const bkgImg = document.getElementById('profile-background');
     const imgposts = document.querySelectorAll('.profile-picture-profile-feed');

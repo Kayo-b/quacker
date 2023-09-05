@@ -15,6 +15,7 @@ import {
     from "firebase/firestore";
 import { db } from "../firebase";
 import { query } from "firebase/firestore"
+import { idText } from "typescript";
 
 type UserProps = {
     authProvider?: string;
@@ -87,7 +88,14 @@ const Feed: React.FC<PostProps> = ({
     //     setUpdateFollow(!updateFollow);
     //     console.log(updateFollow,"updateFollow")
     // }
-        
+    // const loadingScreen = () => {
+    //     if(loading) {
+    //         const postPageContainers = document.querySelectorAll(".post-page-container");
+    //         postPageContainers.forEach((container: Element) => {
+    //         (container.parentElement?.parentElement as HTMLElement).style.visibility = "hidden";
+    //         });
+    //     }
+    // }    
 
     const fetchPosts = async () => {
         
@@ -115,10 +123,13 @@ const Feed: React.FC<PostProps> = ({
         }
     };
 
+
+
     useEffect(() => {
         //update ? setFeedUpdate(true) : setFeedUpdate(false);
         fetchPosts();
-        waitForStates();     
+        waitForStates();  
+         
         
     },[mainFeedStatesCount, postPageStatesCount, update]);
 

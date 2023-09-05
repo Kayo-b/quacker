@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, createContext} from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {
   getDoc, 
@@ -40,6 +40,13 @@ type UserPropsOrigin = {
   bookmarks?: Array<string>;
 
 }  
+interface User {
+  authProvider?: string;
+  email: string;
+  name?: string;
+  uid: string;
+  bookmarks?: Array<string>;
+}
 
 // type AppProps = { 
 //   user: UserPropsOrigin ;
@@ -49,7 +56,8 @@ type UserPropsOrigin = {
 //   setName: React.Dispatch<React.SetStateAction<string>>;
 // }
 
-
+   
+export const UserContext = createContext<User | null | undefined>(undefined);
 
 const App = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -121,11 +129,11 @@ const fetchBookmarks = async () => {
 
 useEffect(() => {
   fetchBookmarks();
-  console.log("app componet", user)
+  console.log("app componet", user )
 },[user])
 
   return (
-   
+    <UserContext.Provider value={user as UserPropsOrigin}> {
     <BrowserRouter>
      <div className="App">
       <div className="sidebar">
@@ -284,6 +292,7 @@ useEffect(() => {
       </div>
       
     </BrowserRouter>
+    } </UserContext.Provider>
   );
 }
 

@@ -121,13 +121,13 @@ const Post: React.FC<PostProps> = ({
   //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
     //if(addToStatesCount) addToStatesCount(0);
-    if(setPostFeedStatesCount) setPostFeedStatesCount(0)
-    if(setLoading) setLoading(true);
+    if(setPostFeedStatesCount) setPostFeedStatesCount(0);
     navigate(`/post/${post.postID}`, {state: {post}})
     const postPageContainers = document.querySelectorAll(".post-page-container");
     postPageContainers.forEach((container: Element) => {
     (container.parentElement?.parentElement as HTMLElement).style.visibility = "hidden";
     });
+    if(setLoading) setTimeout(() => setLoading(true),400)
   }
 
   const RedirectToProfilePage = (post: DocumentData | undefined) => {
