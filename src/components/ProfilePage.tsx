@@ -50,10 +50,10 @@ type ModalProps = {
       
   }
 const ProfilePage: React.FC<PostProps> = ({
-    user, 
     update, 
     posts, 
-    name, 
+    name,
+    user, 
     bookmarkPosts, 
     newPost, 
     repost, 
@@ -82,13 +82,12 @@ const ProfilePage: React.FC<PostProps> = ({
     const [bioText, setBioText] = React.useState<string>('');
     const [displayedName, setDisplayedName] = React.useState<string>('');
     const storage = getStorage();
-    const user = useContext(UserContext);
+    const userCtx = useContext(UserContext);
    
     //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
-    console.log(user,"POST CONSOLE LOG")
-    //const userID = post.uid;
+    console.log(userCtx,"USER PROFILE PAGE CONSOLE LOG")
     const img = document.getElementById('myimgprofile');
     const bkgImg = document.getElementById('profile-background');
     const imgposts = document.querySelectorAll('.profile-picture-profile-feed');
@@ -142,15 +141,16 @@ const ProfilePage: React.FC<PostProps> = ({
     }
 
     var renderPosts = 
+    <UserContext.Provider value={userCtx as UserProps}> {
     <Post 
     name={name}
+    user={user}
     newPost={newPost}
     setNewPost={setNewPost}
     update={update}
     setUpdate={setUpdate}
     posts={posts}
     post={post}
-    user={user}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
     profPost={profPost}
@@ -162,6 +162,7 @@ const ProfilePage: React.FC<PostProps> = ({
     addToStatesCount={setProfileStatesCount}
     setProfPostCheck={setProfPostCheck}
     />
+    } </UserContext.Provider>
     
     const waitForStates = () => {
 
@@ -207,7 +208,8 @@ const ProfilePage: React.FC<PostProps> = ({
     }
 
     const checkFollow = async() => {
-        const userRef1 = doc(db, 'users', user.uid);
+        if(userCtx) {
+            const userRef1 = doc(db, 'users', userCtx.uid);
         const userRef2 = doc(db, 'users', post.userID);
         const userDoc1 = await getDoc(userRef1);
         const userDoc2 = await getDoc(userRef2);
@@ -234,23 +236,26 @@ const ProfilePage: React.FC<PostProps> = ({
             setFollowersCount(followers.length);
 
         }
+        }
         setProfilePageStateCount(true)
     }
 
     const followUser = async() => {
-        const userRef1 = doc(db, 'users', user.uid);
-        const userRef2 = doc(db, 'users', post.userID);
-        if(followBtn === false) {
-            setDoc(userRef1, {following: arrayUnion(post.userID)}, {merge: true});
-            setDoc(userRef2, {followers: arrayUnion(user.uid)}, {merge: true});
-            setFollowBtn(true);
-            setFollowersCount(followersCount + 1);
-        } else {
-            setDoc(userRef1, {following: arrayRemove(post.userID)}, {merge: true});
-            setDoc(userRef2, {followers: arrayRemove(user.uid)}, {merge: true});
-            setFollowBtn(false);
-            setFollowersCount(followersCount - 1);
-        }
+        if(userCtx) {
+            const userRef1 = doc(db, 'users', userCtx.uid);
+            const userRef2 = doc(db, 'users', post.userID);    
+            if(followBtn === false) {
+                setDoc(userRef1, {following: arrayUnion(post.userID)}, {merge: true});
+                setDoc(userRef2, {followers: arrayUnion(userCtx?.uid)}, {merge: true});
+                setFollowBtn(true);
+                setFollowersCount(followersCount + 1);
+            } else {
+                setDoc(userRef1, {following: arrayRemove(post.userID)}, {merge: true});
+                setDoc(userRef2, {followers: arrayRemove(userCtx?.uid)}, {merge: true});
+                setFollowBtn(false);
+                setFollowersCount(followersCount - 1);
+            }
+    }
 
     }
     
@@ -291,11 +296,11 @@ const ProfilePage: React.FC<PostProps> = ({
             </div>
             <div id="profile-info">
                     <div className="user-name">
-                        @{post.username}{post.userID !== user.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
-                        {post.userID === user.uid ? <button onClick={openModal}>Edit Profile</button> : null}
+                        @{post.username}{post.userID !== userCtx?.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
+                        {post.userID === userCtx?.uid ? <button onClick={openModal}>Edit Profile</button> : null}
                         <Modal isOpen={isModalOpen} onClose={closeModal}>   
                             {<EditProfile
-                            user={user}
+                            user={userCtx as UserProps}
                             post={post}
                             posts={posts}
                             setUpdate={setUpdate}

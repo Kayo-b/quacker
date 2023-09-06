@@ -1,5 +1,6 @@
-import React, { useEffect, useState, MouseEvent, ReactElement, FocusEvent, useCallback } from 'react'
+import React, { useEffect, useState, MouseEvent, useContext} from 'react'
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../App';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { DocumentData,   getDoc, 
   collection, 
@@ -101,23 +102,23 @@ const Post: React.FC<PostProps> = ({
   handleFollow,
   setPostFeedStatesCount
   }) => {
-
+    
   // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
-  
+  const userCtx = useContext(UserContext);
   const navigate = useNavigate();
   const storage = getStorage();
   const [profileImg, setProfileImg] = useState("")
   const style = {"fontSize": "large"}
   console.log(posts,"posts heres")
    //Getting profile image from storage
-  //  let storageRef = ref(storage, `images/${user.uid}/profile_image/profile_img.png`)
+  //  let storageRef = ref(storage, `images/${userCtx?.uid}/profile_image/profile_img.png`)
   //  getDownloadURL(storageRef)
   //  .then((url) => {
   //     const img = document.getElementById('myimg');
   //     img?.setAttribute('src', url)
   //  })
 
-
+  console.log(userCtx, "USER POST !")
   //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
     //if(addToStatesCount) addToStatesCount(0);
@@ -154,9 +155,14 @@ const Post: React.FC<PostProps> = ({
       }
 
     var removePostFromDB = async () =>  {
-      const userRef = doc(db, 'users', user.uid);
-      await deleteDoc(doc(db, "posts", post?.postID));
-      await setDoc(userRef, {mainFeed: arrayRemove(post?.postID)}, {merge: true});
+      if(userCtx){
+        const userRef = doc(db, 'users', userCtx.uid);
+        await deleteDoc(doc(db, "posts", post?.postID));
+        await setDoc(userRef, {mainFeed: arrayRemove(post?.postID)}, {merge: true});
+      }
+      
+      
+      
     }
     //update === true ? setUpdate(false) : setUpdate(true);
     removePostFromDB();
@@ -165,14 +171,14 @@ const Post: React.FC<PostProps> = ({
 
   //Add setUSerMainFeed in the useEffect to reset the userMainFeed
   useEffect(() => {
-    if(user === null) navigate("/");
+    if(userCtx === null) navigate("/");
     getUserMainFeed();
    }, [repost, update, user])//all posts rerender when these change
 
    //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
    let getUserMainFeed = async () => {
 
-    if(user && post?.userID) {
+    if(userCtx && post?.userID) {
       const userDocRef = doc(db, "users", post?.userID);
       const userDocSnap = await getDoc(userDocRef);
       if(userDocSnap.exists()){
@@ -269,9 +275,9 @@ const Post: React.FC<PostProps> = ({
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
-            user.uid === post?.userID ?
+            userCtx?.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -290,11 +296,11 @@ const Post: React.FC<PostProps> = ({
         </div>
         <div className="main-btn-container">
         <Like 
-        user={user} 
+        user={userCtx as UserProps} 
         post={post}
         /> 
         <BookmarkBtn 
-          user={user} 
+          user={userCtx as UserProps} 
           post={post} 
           update={update} 
           setUpdate={setUpdate}
@@ -302,7 +308,7 @@ const Post: React.FC<PostProps> = ({
           setBookmarkPosts={setBookmarkPosts}
         />
         <Comment 
-         user={user}
+         user={userCtx as UserProps}
          post={post}
          setUpdate={setUpdate}
          setNewPost={setNewPost}
@@ -311,7 +317,7 @@ const Post: React.FC<PostProps> = ({
          name={name}
         />
         <Repost 
-         user={user}
+         user={userCtx as UserProps}
          post={post}
          setUpdate={setUpdate}
          setNewPost={setNewPost}
@@ -343,9 +349,9 @@ const Post: React.FC<PostProps> = ({
           <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
-            user.uid === post?.userID ?
+            userCtx?.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
          
         </div>
@@ -366,11 +372,11 @@ const Post: React.FC<PostProps> = ({
         </div>
         <div className="main-btn-container">
         <Like 
-        user={user} 
+        user={userCtx as UserProps} 
         post={post}
         /> 
         <BookmarkBtn 
-          user={user} 
+          user={userCtx as UserProps} 
           post={post} 
           update={update} 
           setUpdate={setUpdate}
@@ -378,7 +384,7 @@ const Post: React.FC<PostProps> = ({
           setBookmarkPosts={setBookmarkPosts}
         />
         <Comment
-        user={user}
+        user={userCtx as UserProps}
         post={post}
         setUpdate={setUpdate}
         setNewPost={setNewPost}
@@ -387,7 +393,7 @@ const Post: React.FC<PostProps> = ({
         name={name}
         />
         <Repost 
-         user={user}
+         user={userCtx as UserProps}
          post={post}
          setUpdate={setUpdate}
          setNewPost={setNewPost}
@@ -419,9 +425,9 @@ const Post: React.FC<PostProps> = ({
         <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
         <div id="options" style={{display: "none"}}>
         {
-          user.uid === post?.userID ?
+          userCtx?.uid === post?.userID ?
           <button onClick={() => RemovePost(post)}>Delete post</button> :
-          <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+          <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
         }
       </div>
       </div>
@@ -440,11 +446,11 @@ const Post: React.FC<PostProps> = ({
       </div>
       <div className="main-btn-container">
       <Like 
-      user={user} 
+      user={userCtx as UserProps} 
       post={post}
       /> 
       <BookmarkBtn 
-        user={user} 
+        user={userCtx as UserProps} 
         post={post} 
         update={update} 
         setUpdate={setUpdate}
@@ -452,7 +458,7 @@ const Post: React.FC<PostProps> = ({
         setBookmarkPosts={setBookmarkPosts}
       />
       <Comment
-      user={user}
+      user={userCtx as UserProps}
       post={post}
       setUpdate={setUpdate}
       setNewPost={setNewPost}
@@ -461,7 +467,7 @@ const Post: React.FC<PostProps> = ({
       name={name}
       />
       <Repost 
-       user={user}
+       user={userCtx as UserProps}
        post={post}
        setUpdate={setUpdate}
        setNewPost={setNewPost}
@@ -493,9 +499,9 @@ const Post: React.FC<PostProps> = ({
          <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
-            user.uid === post?.userID ?
+            userCtx?.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
         </div>
         </div>
@@ -514,11 +520,11 @@ const Post: React.FC<PostProps> = ({
         </div>
         <div className="main-btn-container">
         <Like 
-        user={user} 
+        user={userCtx as UserProps} 
         post={post}
         /> 
         <BookmarkBtn 
-          user={user} 
+          user={userCtx as UserProps} 
           post={post} 
           update={update} 
           setUpdate={setUpdate}
@@ -526,7 +532,7 @@ const Post: React.FC<PostProps> = ({
           setBookmarkPosts={setBookmarkPosts}
         />
         <Comment 
-         user={user}
+         user={userCtx as UserProps}
          post={post}
          setUpdate={setUpdate}
          setNewPost={setNewPost}
@@ -535,7 +541,7 @@ const Post: React.FC<PostProps> = ({
          name={name}
         />
         <Repost 
-         user={user}
+         user={userCtx as UserProps}
          post={post}
          setUpdate={setUpdate}
          setNewPost={setNewPost}
@@ -563,9 +569,9 @@ const Post: React.FC<PostProps> = ({
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
-            user.uid === post?.userID ?
+            userCtx?.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
         </div>
         </div>
@@ -584,11 +590,11 @@ const Post: React.FC<PostProps> = ({
         </div>
         <div className="main-btn-container">
         <Like 
-        user={user} 
+        user={userCtx as UserProps} 
         post={post}
         /> 
         <BookmarkBtn 
-          user={user} 
+          user={userCtx as UserProps} 
           post={post} 
           update={update} 
           setUpdate={setUpdate}
@@ -596,7 +602,7 @@ const Post: React.FC<PostProps> = ({
           setBookmarkPosts={setBookmarkPosts}
         />
         <Comment 
-         user={user}
+         user={userCtx as UserProps}
          post={post}
          setUpdate={setUpdate}
          setNewPost={setNewPost}
@@ -605,7 +611,7 @@ const Post: React.FC<PostProps> = ({
          name={name}
         />
         <Repost 
-         user={user}
+         user={userCtx as UserProps}
          post={post}
          setUpdate={setUpdate}
          setNewPost={setNewPost}
@@ -633,9 +639,9 @@ const Post: React.FC<PostProps> = ({
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
-            user.uid === post?.userID ?
+            userCtx?.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -654,11 +660,11 @@ const Post: React.FC<PostProps> = ({
         </div>
         <div className="main-btn-container">
         <Like 
-        user={user} 
+        user={userCtx as UserProps} 
         post={post}
         /> 
         <BookmarkBtn 
-          user={user} 
+          user={userCtx as UserProps} 
           post={post} 
           update={update} 
           setUpdate={setUpdate}
@@ -666,7 +672,7 @@ const Post: React.FC<PostProps> = ({
           setBookmarkPosts={setBookmarkPosts}
         />
         <Comment 
-         user={user}
+         user={userCtx as UserProps}
          post={post}
          setUpdate={setUpdate}
          setNewPost={setNewPost}
@@ -675,7 +681,7 @@ const Post: React.FC<PostProps> = ({
          name={name}
         />
         <Repost 
-         user={user}
+         user={userCtx as UserProps}
          post={post}
          setUpdate={setUpdate}
          setNewPost={setNewPost}
@@ -703,9 +709,9 @@ let clickedPostParentPost =   posts.map(post =>
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
-            user.uid === post?.userID ?
+            userCtx?.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -727,11 +733,11 @@ let clickedPostParentPost =   posts.map(post =>
     </div>
     <div className="main-btn-container">
     <Like 
-    user={user} 
+    user={userCtx as UserProps} 
     post={post}
     /> 
     <BookmarkBtn 
-    user={user} 
+    user={userCtx as UserProps} 
     post={post} 
     update={update} 
     setUpdate={setUpdate}
@@ -739,7 +745,7 @@ let clickedPostParentPost =   posts.map(post =>
     setBookmarkPosts={setBookmarkPosts}
     />
     <Comment 
-     user={user}
+     user={userCtx as UserProps}
      post={post}
      setUpdate={setUpdate}
      setNewPost={setNewPost}
@@ -748,7 +754,7 @@ let clickedPostParentPost =   posts.map(post =>
      name={name}
     />
     <Repost 
-      user={user}
+      user={userCtx as UserProps}
       post={post}
       setUpdate={setUpdate}
       setNewPost={setNewPost}
@@ -777,9 +783,9 @@ let rootPost =  posts.map(post =>
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
-            user.uid === post?.userID ?
+            userCtx?.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -801,11 +807,11 @@ let rootPost =  posts.map(post =>
     </div>
     <div className="main-btn-container">
     <Like 
-    user={user} 
+    user={userCtx as UserProps} 
     post={post}
     /> 
     <BookmarkBtn 
-    user={user} 
+    user={userCtx as UserProps} 
     post={post} 
     update={update} 
     setUpdate={setUpdate}
@@ -813,7 +819,7 @@ let rootPost =  posts.map(post =>
     setBookmarkPosts={setBookmarkPosts}
     />
     <Comment 
-     user={user}
+     user={userCtx as UserProps}
      post={post}
      setUpdate={setUpdate}
      setNewPost={setNewPost}
@@ -822,7 +828,7 @@ let rootPost =  posts.map(post =>
      name={name}
     />
     <Repost 
-      user={user}
+      user={userCtx as UserProps}
       post={post}
       setUpdate={setUpdate}
       setNewPost={setNewPost}
@@ -854,9 +860,9 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
-            user.uid === post?.userID ?
+            userCtx?.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -875,11 +881,11 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
     </div>
     <div className="main-btn-container">
     <Like 
-    user={user} 
+    user={userCtx as UserProps} 
     post={post}
     /> 
     <BookmarkBtn 
-    user={user} 
+    user={userCtx as UserProps} 
     post={post} 
     update={update} 
     setUpdate={setUpdate}
@@ -887,7 +893,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
     setBookmarkPosts={setBookmarkPosts}
     />
     <Comment 
-     user={user}
+     user={userCtx as UserProps}
      post={post}
      setUpdate={setUpdate}
      setNewPost={setNewPost}
@@ -896,7 +902,7 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
      name={name}
     />
     <Repost 
-      user={user}
+      user={userCtx as UserProps}
       post={post}
       setUpdate={setUpdate}
       setNewPost={setNewPost}
@@ -926,9 +932,16 @@ let profileNewPostsFeed =  newPost.map(post =>
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
-            user.uid === post?.userID ?
+            userCtx?.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            <div>
+              <FollowBtn 
+                post={post} 
+                user={userCtx as UserProps} 
+                setUpdateFollow={setUpdateFollow} 
+                updateFollow={updateFollow} 
+                />
+            </div>
           }
           </div>
         </div>
@@ -947,11 +960,11 @@ let profileNewPostsFeed =  newPost.map(post =>
     </div>
     <div className="main-btn-container">
     <Like 
-    user={user} 
+    user={userCtx as UserProps} 
     post={post}
     /> 
     <BookmarkBtn 
-    user={user} 
+    user={userCtx as UserProps} 
     post={post} 
     update={update} 
     setUpdate={setUpdate}
@@ -959,7 +972,7 @@ let profileNewPostsFeed =  newPost.map(post =>
     setBookmarkPosts={setBookmarkPosts}
     />
     <Comment 
-     user={user}
+     user={userCtx as UserProps}
      post={post}
      setUpdate={setUpdate}
      setNewPost={setNewPost}
@@ -968,7 +981,7 @@ let profileNewPostsFeed =  newPost.map(post =>
      name={name}
     />
     <Repost 
-      user={user}
+      user={userCtx as UserProps}
       post={post}
       setUpdate={setUpdate}
       setNewPost={setNewPost}
@@ -998,9 +1011,15 @@ let profileResponsesFeed =  posts.map(post =>
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
-            user.uid === post?.userID ?
+            userCtx?.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            <div>
+              <FollowBtn 
+                post={post} 
+                user={userCtx as UserProps} 
+                setUpdateFollow={setUpdateFollow} 
+                updateFollow={updateFollow} 
+                /></div>
           }
           </div>
         </div>
@@ -1019,11 +1038,11 @@ let profileResponsesFeed =  posts.map(post =>
     </div>
     <div className="main-btn-container">
     <Like 
-    user={user} 
+    user={userCtx as UserProps} 
     post={post}
     /> 
     <BookmarkBtn 
-    user={user} 
+    user={userCtx as UserProps} 
     post={post} 
     update={update} 
     setUpdate={setUpdate}
@@ -1031,7 +1050,7 @@ let profileResponsesFeed =  posts.map(post =>
     setBookmarkPosts={setBookmarkPosts}
     />
     <Comment 
-     user={user}
+     user={userCtx as UserProps}
      post={post}
      setUpdate={setUpdate}
      setNewPost={setNewPost}
@@ -1040,7 +1059,7 @@ let profileResponsesFeed =  posts.map(post =>
      name={name}
     />
     <Repost 
-      user={user}
+      user={userCtx as UserProps}
       post={post}
       setUpdate={setUpdate}
       setNewPost={setNewPost}
@@ -1069,9 +1088,9 @@ let profileNewResponsesFeed =  newPost.map(post =>
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div id="options" style={{display: "none"}}>
           {
-            user.uid === post?.userID ?
+            userCtx?.uid === post?.userID ?
             <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
           }
           </div>
         </div>
@@ -1090,11 +1109,11 @@ let profileNewResponsesFeed =  newPost.map(post =>
     </div>
     <div className="main-btn-container">
     <Like 
-    user={user} 
+    user={userCtx as UserProps} 
     post={post}
     /> 
     <BookmarkBtn 
-    user={user} 
+    user={userCtx as UserProps} 
     post={post} 
     update={update} 
     setUpdate={setUpdate}
@@ -1102,7 +1121,7 @@ let profileNewResponsesFeed =  newPost.map(post =>
     setBookmarkPosts={setBookmarkPosts}
     />
     <Comment 
-     user={user}
+     user={userCtx as UserProps}
      post={post}
      setUpdate={setUpdate}
      setNewPost={setNewPost}
@@ -1111,7 +1130,7 @@ let profileNewResponsesFeed =  newPost.map(post =>
      name={name}
     />
     <Repost 
-      user={user}
+      user={userCtx as UserProps}
       post={post}
       setUpdate={setUpdate}
       setNewPost={setNewPost}
@@ -1137,7 +1156,7 @@ let repostsFromUser = posts.map(post =>
     //user.reposts?.find(repost => repost === post.postID) 
     post.repostByUsers.includes(newPostValue?.userID) ?
     <div className="post-container" key={post.postID} style={style}>
-      {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+      {userCtx?.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
         <span>
@@ -1152,11 +1171,11 @@ let repostsFromUser = posts.map(post =>
         </span>   
       </div>
       <Like 
-      user={user} 
+      user={userCtx as UserProps} 
       post={post}
       /> 
       <BookmarkBtn 
-        user={user} 
+        user={userCtx as UserProps} 
         post={post} 
         update={update} 
         setUpdate={setUpdate}
@@ -1164,7 +1183,7 @@ let repostsFromUser = posts.map(post =>
         setBookmarkPosts={setBookmarkPosts}
         />
       <Comment 
-       user={user}
+       user={userCtx as UserProps}
        post={post}
        setUpdate={setUpdate}
        setNewPost={setNewPost}
@@ -1173,7 +1192,7 @@ let repostsFromUser = posts.map(post =>
        name={name}
       />
       <Repost 
-        user={user}
+        user={userCtx as UserProps}
         post={post}
         setUpdate={setUpdate}
         setNewPost={setNewPost}
@@ -1199,7 +1218,7 @@ let repostsFromUser = posts.map(post =>
     //repost?.find(repost => repost.postID === post.postID) ?
     repost?.includes(post) ?
     <div className="post-container" key={post.postID} style={style}>
-      {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+      {userCtx?.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
         <span>
@@ -1214,11 +1233,11 @@ let repostsFromUser = posts.map(post =>
         </span>   
       </div>
       <Like 
-      user={user} 
+      user={userCtx as UserProps} 
       post={post}
       /> 
       <BookmarkBtn 
-        user={user} 
+        user={userCtx as UserProps} 
         post={post} 
         update={update} 
         setUpdate={setUpdate}
@@ -1226,7 +1245,7 @@ let repostsFromUser = posts.map(post =>
         setBookmarkPosts={setBookmarkPosts}
         />
       <Comment 
-       user={user}
+       user={userCtx as UserProps}
        post={post}
        setUpdate={setUpdate}
        setNewPost={setNewPost}
@@ -1235,7 +1254,7 @@ let repostsFromUser = posts.map(post =>
        name={name}
       />
       <Repost 
-        user={user}
+        user={userCtx as UserProps}
         post={post}
         setUpdate={setUpdate}
         setNewPost={setNewPost}
@@ -1257,7 +1276,7 @@ let repostsFromUser = posts.map(post =>
 
   // let bookmarkedPosts = bookmarkPosts?.map(post => post !== undefined ?
   //   <div className="post-container" key={post.postID} style={style}>
-  //   {user.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+  //   {userCtx?.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
   //   <div className="user-container">
   //     <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
   //     <span>
@@ -1272,17 +1291,17 @@ let repostsFromUser = posts.map(post =>
   //     </span>   
   //   </div>
   //   <Like 
-  //   user={user} 
+  //   user={userCtx as UserProps} 
   //   post={post}
   //   /> 
   //   <BookmarkBtn 
-  //   user={user} 
+  //   user={userCtx as UserProps} 
   //   post={post} 
   //   update={update} 
   //   setUpdate={setUpdate}
   //   />
   //   <Comment 
-  //    user={user}
+  //    user={userCtx as UserProps}
   //    post={post}
   //    setUpdate={setUpdate}
   //    setNewPost={setNewPost}
@@ -1291,7 +1310,7 @@ let repostsFromUser = posts.map(post =>
   //    name={name}
   //   />
   //   <Repost 
-  //     user={user}
+  //     user={userCtx as UserProps}
   //     post={post}
   //     setUpdate={setUpdate}
   //     setNewPost={setNewPost}

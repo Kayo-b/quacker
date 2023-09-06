@@ -61,6 +61,7 @@ export const UserContext = createContext<User | null | undefined>(undefined);
 
 const App = () => {
   const [user, loading, error] = useAuthState(auth);
+  //const [userCtx, loadingCtx, errorCtx] = useAuthState(auth);
   const [userMainFeed, setUserMainFeed] = useState<DocumentData[]>([]);
   const [posts, setPosts] = useState<DocumentData[]>([]);
   const [bookmarkPosts, setBookmarkPosts] = useState<DocumentData[]>([])

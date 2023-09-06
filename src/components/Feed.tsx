@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate  } from "react-router-dom";
+import { UserContext } from '../App';
 import Post from "./Post";
 import {
     getDocs, 
@@ -82,6 +83,7 @@ const Feed: React.FC<PostProps> = ({
     //const [updateFollow, setUpdateFollow] = React.useState<boolean>(false);
     const { search } = useParams();
     const navigate = useNavigate();
+    const userCtx = useContext(UserContext);
 
     // //Function that will change updateFollow State and be passed as prop to FollowBtn
     // const handleFollow = () => {
