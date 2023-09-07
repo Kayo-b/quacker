@@ -1,9 +1,10 @@
 import React, { useEffect, useContext } from 'react'
 import { useParams, useLocation } from 'react-router-dom';
-import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
+import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs, orderBy} from "firebase/firestore"
 import { db } from "../firebase";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import Post from '../components/Post';
+import Feed from './Feed';
 import EditProfile from './EditProfile';
 import '../style/ProfilePage.css';
 import { setgroups } from 'process';
@@ -30,6 +31,7 @@ type ModalProps = {
       setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
       newPost: DocumentData[] ;
       posts: DocumentData[] ;
+      setPosts?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
       update: undefined | boolean;
       setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
       user: UserProps;
@@ -66,7 +68,8 @@ const ProfilePage: React.FC<PostProps> = ({
     profPost,
     setProfPost,
     profPostCheck,
-    setProfPostCheck
+    setProfPostCheck,
+    setPosts
     }) => {
 
     // const [profPost, setProfPost] = React.useState<boolean>(true);
@@ -83,16 +86,25 @@ const ProfilePage: React.FC<PostProps> = ({
     const [displayedName, setDisplayedName] = React.useState<string>('');
     const storage = getStorage();
     const userCtx = useContext(UserContext);
+    const [postsRenew, setPostsRenew] = React.useState<DocumentData[]>([]);
    
     //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
-    console.log(userCtx,"USER PROFILE PAGE CONSOLE LOG")
+    console.log(post.userID,"USER PROFILE PAGE CONSOLE LOG")
     const img = document.getElementById('myimgprofile');
     const bkgImg = document.getElementById('profile-background');
     const imgposts = document.querySelectorAll('.profile-picture-profile-feed');
 
     const fetchProfileImg = async() => {    
+        const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")));
+        console.log("fetcssh!!",setPostsRenew)
+            setPostsRenew([])
+            querySnapshot.forEach((doc) => {
+                setPostsRenew(prevValue => [...prevValue, doc.data()]);
+            })
+            console.log("fetcssh!!",postsRenew)
+        
         const userDocRef = doc(db, "users", post?.userID);
         const userDocSnap = await getDoc(userDocRef);
         const userDocSnapData = userDocSnap.data();
@@ -127,7 +139,6 @@ const ProfilePage: React.FC<PostProps> = ({
     //Modal for the comment popup
     function Modal({ isOpen, onClose, children }: ModalProps) {
         if (!isOpen) return null;
-    
         return (
         <div className="modal">
             <div className="modal-content">
@@ -139,30 +150,6 @@ const ProfilePage: React.FC<PostProps> = ({
         </div>
         );
     }
-
-    var renderPosts = 
-    <UserContext.Provider value={userCtx as UserProps}> {
-    <Post 
-    name={name}
-    user={user}
-    newPost={newPost}
-    setNewPost={setNewPost}
-    update={update}
-    setUpdate={setUpdate}
-    posts={posts}
-    post={post}
-    bookmarkPosts={bookmarkPosts} 
-    setBookmarkPosts={setBookmarkPosts}
-    profPost={profPost}
-    repost={repost}
-    setRepost={setRepost}
-    userMainFeed={userMainFeed}
-    setUserMainFeed={setUserMainFeed}
-    setProfPost={setProfPost}
-    addToStatesCount={setProfileStatesCount}
-    setProfPostCheck={setProfPostCheck}
-    />
-    } </UserContext.Provider>
     
     const waitForStates = () => {
 
@@ -177,7 +164,6 @@ const ProfilePage: React.FC<PostProps> = ({
                 setLoading(false);
                 setLoading2(false);
             }, 300)
-    
         };
          setProfileStatesCount(0);
     };
@@ -234,7 +220,6 @@ const ProfilePage: React.FC<PostProps> = ({
             console.log(userData2,"userDATA")
             setFollowingCount(following.length);
             setFollowersCount(followers.length);
-
         }
         }
         setProfilePageStateCount(true)
@@ -270,9 +255,7 @@ const ProfilePage: React.FC<PostProps> = ({
                     document.getElementById("post-subcontainer") as HTMLElement;
                     postSubContainer.style.visibility = "hidden";
             setLoading(true)
-        
         }
-
     },[post])
         
     useEffect(() => {
@@ -286,6 +269,33 @@ const ProfilePage: React.FC<PostProps> = ({
         fetchProfileImg();
     },[profileStatesCount, post, update])
 
+    var renderPosts = 
+    <UserContext.Provider value={userCtx as UserProps}> {
+    <Post
+    name={name}
+    user={user}
+    newPost={newPost}
+    setNewPost={setNewPost}
+    update={update}
+    setUpdate={setUpdate}
+    posts={posts}
+    post={post}
+    bookmarkPosts={bookmarkPosts} 
+    setBookmarkPosts={setBookmarkPosts}
+    profPost={profPost}
+    repost={repost}
+    setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
+    setProfPost={setProfPost}
+    addToStatesCount={setProfileStatesCount}
+    setProfPostCheck={setProfPostCheck}
+    postsRenew={postsRenew}
+    />
+    } </UserContext.Provider>
+    
+console.log(postsRenew,"posts here??s?")
+console.log(post,"posts here?!!!!?")
   return (
     <div>{loading ? "Loading...." : null}
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
@@ -314,7 +324,6 @@ const ProfilePage: React.FC<PostProps> = ({
                             />}
                         </Modal>
                     </div>
-                
                 <div className="follow-stats">
                 {followingCount} Following / {followersCount}  Followers
                 </div>

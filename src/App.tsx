@@ -24,6 +24,7 @@ import Reset from './components/Reset';
 import PostPage from './components/PostPage';
 import ProfilePage from './components/ProfilePage';
 import Feed from './components/Feed';
+import Post from './components/Post'
 import Dashboard from './components/Dashboard';
 import logo from './logo.svg';
 import './style/App.css';
@@ -131,7 +132,7 @@ const fetchBookmarks = async () => {
 useEffect(() => {
   fetchBookmarks();
   console.log("app componet", user )
-},[user])
+},[])
 
   return (
     <UserContext.Provider value={user as UserPropsOrigin}> {

@@ -41,6 +41,7 @@ type PostProps = {
     setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     newPost: DocumentData[];
     posts: DocumentData[];
+    postsRenew?: DocumentData[];
     setPosts?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     update: undefined | boolean;
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
@@ -69,6 +70,7 @@ type PostProps = {
     setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
     setPostFeedStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     handleFollow?:() => void;
+    setProfileStatesCount?: React.Dispatch<React.SetStateAction<number>>
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -100,7 +102,9 @@ const Post: React.FC<PostProps> = ({
   updateFollow,
   setUpdateFollow,
   handleFollow,
-  setPostFeedStatesCount
+  setPostFeedStatesCount,
+  setProfileStatesCount,
+  postsRenew
   }) => {
     
   // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
@@ -109,7 +113,35 @@ const Post: React.FC<PostProps> = ({
   const storage = getStorage();
   const [profileImg, setProfileImg] = useState("")
   const style = {"fontSize": "large"}
-  console.log(posts,"posts heres")
+  const postsArray = posts.length === 0 ? postsRenew : posts; 
+  //const newPostsArray = newPost.length === 0 ? postsRenew : postsRenew;
+  
+//   const fetchPosts = async() => {    
+//     console.log("KAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWWWWWWWWWWWWWww")
+//     const postDocRef = doc(db, "posts");
+//     const postDocSnap = await getDoc(postDocRef);
+//     const postDocSnapData = postDocSnap.data();
+//     console.log(postDocSnapData, "SNAP")
+//     if(setPosts) {
+//       setPosts((postDocSnapData as DocumentData[]).map(val => {
+//         console.log("VALAAAAA", val)
+//         return val;
+//       }));
+//     }
+// };
+
+// const fetchPosts = async() => {    
+//   const postDocSnapData = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")));
+//   console.log(postDocSnapData, "SNAP")
+//   if(setPosts) {
+//     postDocSnapData.forEach(doc => {
+//       setPosts(prevValue => [...prevValue, doc.data()])
+//     })
+//   }
+// };
+console.log(postsRenew,"posts#!@ #heres1")
+console.log(profPost,"posts#!@ PrSoPost")
+console.log(postsArray,"posts#!@ ")
    //Getting profile image from storage
   //  let storageRef = ref(storage, `images/${userCtx?.uid}/profile_image/profile_img.png`)
   //  getDownloadURL(storageRef)
@@ -171,9 +203,10 @@ const Post: React.FC<PostProps> = ({
 
   //Add setUSerMainFeed in the useEffect to reset the userMainFeed
   useEffect(() => {
-    if(userCtx === null) navigate("/");
+    //if(userCtx === null) navigate("/");
     getUserMainFeed();
-   }, [repost, update, user])//all posts rerender when these change
+    //fetchPosts();
+   }, [repost, update, postsArray])//all posts rerender when these change
 
    //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
    let getUserMainFeed = async () => {
@@ -317,21 +350,21 @@ const Post: React.FC<PostProps> = ({
          name={name}
         />
         <Repost 
-         user={userCtx as UserProps}
-         post={post}
-         setUpdate={setUpdate}
-         setNewPost={setNewPost}
-         newPost={newPost}
-         update={update}
-         name={name}
-         repost={repost}
-         setRepost={setRepost}
-         userMainFeed={userMainFeed}
-         setUserMainFeed={setUserMainFeed}
-         profPost={profPost}
-         setProfPost={setProfPost}
-         addToStatesCount={addToStatesCount}
-         setPostFeedStatesCount={setPostFeedStatesCount}
+        user={userCtx as UserProps}
+        post={post}
+        setUpdate={setUpdate}
+        setNewPost={setNewPost}
+        newPost={newPost}
+        update={update}
+        name={name}
+        repost={repost}
+        setRepost={setRepost}
+        userMainFeed={userMainFeed}
+        setUserMainFeed={setUserMainFeed}
+        profPost={profPost}
+        setProfPost={setProfPost}
+        addToStatesCount={addToStatesCount}
+        setPostFeedStatesCount={setPostFeedStatesCount}
         />
         </div>
       </div>
@@ -341,7 +374,7 @@ const Post: React.FC<PostProps> = ({
     //LoadPosts also sets the posts into the feed, but it does it by getting the information from a sql query done in the previous component.
     //The separation between both types of setting posts into the feed is because the loadPosts takes long to render because of the query, 
     //so the neuPost was created to improve the user experience by adding the new post right away.
-    let loadPosts = posts.map(post => { 
+    let loadPosts = postsArray?.map(post => { 
       if(post.parentID === null) {
         
         return <div className="post-container" key={post.postID}>
@@ -393,23 +426,23 @@ const Post: React.FC<PostProps> = ({
         name={name}
         />
         <Repost 
-         user={userCtx as UserProps}
-         post={post}
-         setUpdate={setUpdate}
-         setNewPost={setNewPost}
-         newPost={newPost}
-         update={update}
-         name={name}
-         repost={repost}
-         setRepost={setRepost}
-         userMainFeed={userMainFeed}
-         setUserMainFeed={setUserMainFeed}
-         profPost={profPost}
-         setProfPost={setProfPost}
-         addToStatesCount={addToStatesCount}
-         setPostFeedStatesCount={setPostFeedStatesCount}
-
-        />
+        user={userCtx as UserProps}
+        post={post}
+        setUpdate={setUpdate}
+        setNewPost={setNewPost}
+        newPost={newPost}
+        update={update}
+        name={name}
+        repost={repost}
+        setRepost={setRepost}
+        userMainFeed={userMainFeed}
+        setUserMainFeed={setUserMainFeed}
+        profPost={profPost}
+        setProfPost={setProfPost}
+        addToStatesCount={addToStatesCount}
+        setPostFeedStatesCount={setPostFeedStatesCount}
+        
+       />
       </div>
       </div>
       } else {
@@ -418,7 +451,7 @@ const Post: React.FC<PostProps> = ({
       }
   })
   
-  let loadSearch = posts.map(post => { 
+  let loadSearch = postsArray?.map(post => { 
     if(post.textContent.includes(search)) {
       return <div className="post-container" key={post.postID}>
       <div className="option-btn-container">
@@ -466,24 +499,24 @@ const Post: React.FC<PostProps> = ({
       update={update}
       name={name}
       />
-      <Repost 
-       user={userCtx as UserProps}
-       post={post}
-       setUpdate={setUpdate}
-       setNewPost={setNewPost}
-       newPost={newPost}
-       update={update}
-       name={name}
-       repost={repost}
-       setRepost={setRepost}
-       userMainFeed={userMainFeed}
-       setUserMainFeed={setUserMainFeed}
-       profPost={profPost}
-       setProfPost={setProfPost}
-       addToStatesCount={addToStatesCount}
-       setPostFeedStatesCount={setPostFeedStatesCount}
-
-      />
+     <Repost 
+    user={userCtx as UserProps}
+    post={post}
+    setUpdate={setUpdate}
+    setNewPost={setNewPost}
+    newPost={newPost}
+    update={update}
+    name={name}
+    repost={repost}
+    setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
+    profPost={profPost}
+    setProfPost={setProfPost}
+    addToStatesCount={addToStatesCount}
+    setPostFeedStatesCount={setPostFeedStatesCount}
+    
+   />
     </div>
     </div>
     } else {
@@ -493,7 +526,7 @@ const Post: React.FC<PostProps> = ({
 })   
 
     //Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
-    let comment = posts.map(post =>  post.parentID === parentPost?.postID ?  
+    let comment = postsArray?.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-page-container" key={post.postID}>
         <div className="option-btn-container">
          <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
@@ -541,29 +574,29 @@ const Post: React.FC<PostProps> = ({
          name={name}
         />
         <Repost 
-         user={userCtx as UserProps}
-         post={post}
-         setUpdate={setUpdate}
-         setNewPost={setNewPost}
-         newPost={newPost}
-         update={update}
-         name={name}
-         repost={repost}
-         setRepost={setRepost}
-         userMainFeed={userMainFeed}
-         setUserMainFeed={setUserMainFeed}
-         profPost={profPost}
-         setProfPost={setProfPost}
-         addToStatesCount={addToStatesCount}
-         setPostFeedStatesCount={setPostFeedStatesCount}
-
-        />
+    user={userCtx as UserProps}
+    post={post}
+    setUpdate={setUpdate}
+    setNewPost={setNewPost}
+    newPost={newPost}
+    update={update}
+    name={name}
+    repost={repost}
+    setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
+    profPost={profPost}
+    setProfPost={setProfPost}
+    addToStatesCount={addToStatesCount}
+    setPostFeedStatesCount={setPostFeedStatesCount}
+    
+   />
       </div>
       </div>
       : <></>
     )
 
-    let newComment = newPost.map(post =>  post.parentID === parentPost?.postID ?  
+    let newComment = postsArray?.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-page-container" key={post.postID}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
@@ -611,23 +644,23 @@ const Post: React.FC<PostProps> = ({
          name={name}
         />
         <Repost 
-         user={userCtx as UserProps}
-         post={post}
-         setUpdate={setUpdate}
-         setNewPost={setNewPost}
-         newPost={newPost}
-         update={update}
-         name={name}
-         repost={repost}
-         setRepost={setRepost}
-         userMainFeed={userMainFeed}
-         setUserMainFeed={setUserMainFeed}
-         profPost={profPost}
-         setProfPost={setProfPost}
-         addToStatesCount={addToStatesCount}
-         setPostFeedStatesCount={setPostFeedStatesCount}
-
-        />
+    user={userCtx as UserProps}
+    post={post}
+    setUpdate={setUpdate}
+    setNewPost={setNewPost}
+    newPost={newPost}
+    update={update}
+    name={name}
+    repost={repost}
+    setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
+    profPost={profPost}
+    setProfPost={setProfPost}
+    addToStatesCount={addToStatesCount}
+    setPostFeedStatesCount={setPostFeedStatesCount}
+    
+   />
         </div>
       </div>
       : <></>
@@ -681,28 +714,28 @@ const Post: React.FC<PostProps> = ({
          name={name}
         />
         <Repost 
-         user={userCtx as UserProps}
-         post={post}
-         setUpdate={setUpdate}
-         setNewPost={setNewPost}
-         newPost={newPost}
-         update={update}
-         name={name}
-         repost={repost}
-         setRepost={setRepost}
-         userMainFeed={userMainFeed}
-         setUserMainFeed={setUserMainFeed}
-         profPost={profPost}
-         setProfPost={setProfPost}
-         addToStatesCount={addToStatesCount}
-         setPostFeedStatesCount={setPostFeedStatesCount}
-
-        />
+    user={userCtx as UserProps}
+    post={post}
+    setUpdate={setUpdate}
+    setNewPost={setNewPost}
+    newPost={newPost}
+    update={update}
+    name={name}
+    repost={repost}
+    setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
+    profPost={profPost}
+    setProfPost={setProfPost}
+    addToStatesCount={addToStatesCount}
+    setPostFeedStatesCount={setPostFeedStatesCount}
+    
+   />
       </div> 
       </div>
 
 //clickedPostParentPost renders the parent post of the clicked post (if it has a parentID)
-let clickedPostParentPost =   posts.map(post =>  
+let clickedPostParentPost =   postsArray?.map(post =>  
   post.postID === newPostValue?.parentID ?  
   <div className="post-page-container" key={post.postID} style={style}>
         <div className="option-btn-container">
@@ -754,27 +787,28 @@ let clickedPostParentPost =   posts.map(post =>
      name={name}
     />
     <Repost 
-      user={userCtx as UserProps}
-      post={post}
-      setUpdate={setUpdate}
-      setNewPost={setNewPost}
-      newPost={newPost}
-      update={update}
-      name={name}
-      repost={repost}
-      setRepost={setRepost}
-      userMainFeed={userMainFeed}
-      setUserMainFeed={setUserMainFeed}
-      profPost={profPost}
-      setProfPost={setProfPost}
-      addToStatesCount={addToStatesCount}
-      setPostFeedStatesCount={setPostFeedStatesCount}
-    />
+    user={userCtx as UserProps}
+    post={post}
+    setUpdate={setUpdate}
+    setNewPost={setNewPost}
+    newPost={newPost}
+    update={update}
+    name={name}
+    repost={repost}
+    setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
+    profPost={profPost}
+    setProfPost={setProfPost}
+    addToStatesCount={addToStatesCount}
+    setPostFeedStatesCount={setPostFeedStatesCount}
+    
+   />
   </div>  
   </div>
   : <></>
 )
-let rootPost =  posts.map(post =>  
+let rootPost =  postsArray?.map(post =>  
   post.postID === newPostValue?.rootPostID &&
   newPostValue?.parentID !== post.postID && 
   newPostValue?.parentID !== null ?  
@@ -828,22 +862,23 @@ let rootPost =  posts.map(post =>
      name={name}
     />
     <Repost 
-      user={userCtx as UserProps}
-      post={post}
-      setUpdate={setUpdate}
-      setNewPost={setNewPost}
-      newPost={newPost}
-      update={update}
-      name={name}
-      repost={repost}
-      setRepost={setRepost}
-      userMainFeed={userMainFeed}
-      setUserMainFeed={setUserMainFeed}
-      profPost={profPost}
-      setProfPost={setProfPost}
-      addToStatesCount={addToStatesCount}
-      setPostFeedStatesCount={setPostFeedStatesCount}
-    />
+    user={userCtx as UserProps}
+    post={post}
+    setUpdate={setUpdate}
+    setNewPost={setNewPost}
+    newPost={newPost}
+    update={update}
+    name={name}
+    repost={repost}
+    setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
+    profPost={profPost}
+    setProfPost={setProfPost}
+    addToStatesCount={addToStatesCount}
+    setPostFeedStatesCount={setPostFeedStatesCount}
+    
+   />
   </div>  
   </div>
   : <></>
@@ -853,7 +888,7 @@ console.log(userMainFeed)
 
 //Loads the profile main feed(posts and reposts), the order of the userMainFeed array was inverted
 //and the posts.map was nested inside it so that it obeys the sequence of the userMainFeed array.
-let profilePostsFeed =  userMainFeed?.map(val => posts.map(post => 
+let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post => 
   val === post.postID ?
   <div className="post-container" key={post.postID} style={style}>
         <div className="option-btn-container">
@@ -901,24 +936,24 @@ let profilePostsFeed =  userMainFeed?.map(val => posts.map(post =>
      update={update}
      name={name}
     />
-    <Repost 
-      user={userCtx as UserProps}
-      post={post}
-      setUpdate={setUpdate}
-      setNewPost={setNewPost}
-      newPost={newPost}
-      update={update}
-      name={name}
-      repost={repost}
-      setRepost={setRepost}
-      userMainFeed={userMainFeed}
-      setUserMainFeed={setUserMainFeed}
-      profPost={profPost}
-      setProfPost={setProfPost}
-      addToStatesCount={addToStatesCount}
-      setPostFeedStatesCount={setPostFeedStatesCount}
-      
-    /> 
+   <Repost 
+    user={userCtx as UserProps}
+    post={post}
+    setUpdate={setUpdate}
+    setNewPost={setNewPost}
+    newPost={newPost}
+    update={update}
+    name={name}
+    repost={repost}
+    setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
+    profPost={profPost}
+    setProfPost={setProfPost}
+    addToStatesCount={addToStatesCount}
+    setPostFeedStatesCount={setPostFeedStatesCount}
+    
+   />
   </div>  
   </div>
   : <></>
@@ -980,30 +1015,30 @@ let profileNewPostsFeed =  newPost.map(post =>
      update={update}
      name={name}
     />
-    <Repost 
-      user={userCtx as UserProps}
-      post={post}
-      setUpdate={setUpdate}
-      setNewPost={setNewPost}
-      newPost={newPost}
-      update={update}
-      name={name}
-      repost={repost}
-      setRepost={setRepost}
-      userMainFeed={userMainFeed}
-      setUserMainFeed={setUserMainFeed}
-      profPost={profPost}
-      setProfPost={setProfPost}
-      addToStatesCount={addToStatesCount}
-      setPostFeedStatesCount={setPostFeedStatesCount}
-      
-    />
+  <Repost 
+    user={userCtx as UserProps}
+    post={post}
+    setUpdate={setUpdate}
+    setNewPost={setNewPost}
+    newPost={newPost}
+    update={update}
+    name={name}
+    repost={repost}
+    setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
+    profPost={profPost}
+    setProfPost={setProfPost}
+    addToStatesCount={addToStatesCount}
+    setPostFeedStatesCount={setPostFeedStatesCount}
+    
+   />
   </div>  
   </div>
   : <></>
 )
 
-let profileResponsesFeed =  posts.map(post =>  
+let profileResponsesFeed =  postsArray?.map(post =>  
   post.userID === newPostValue?.userID &&
   post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
@@ -1058,29 +1093,29 @@ let profileResponsesFeed =  posts.map(post =>
      update={update}
      name={name}
     />
-    <Repost 
-      user={userCtx as UserProps}
-      post={post}
-      setUpdate={setUpdate}
-      setNewPost={setNewPost}
-      newPost={newPost}
-      update={update}
-      name={name}
-      repost={repost}
-      setRepost={setRepost}
-      userMainFeed={userMainFeed}
-      setUserMainFeed={setUserMainFeed}
-      profPost={profPost}
-      setProfPost={setProfPost}
-      addToStatesCount={addToStatesCount}
-      setProfPostCheck={setProfPostCheck}
-      setPostFeedStatesCount={setPostFeedStatesCount}
-    />
+   <Repost 
+    user={userCtx as UserProps}
+    post={post}
+    setUpdate={setUpdate}
+    setNewPost={setNewPost}
+    newPost={newPost}
+    update={update}
+    name={name}
+    repost={repost}
+    setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
+    profPost={profPost}
+    setProfPost={setProfPost}
+    addToStatesCount={addToStatesCount}
+    setPostFeedStatesCount={setPostFeedStatesCount}
+    
+   />
   </div>
   </div>
   : <></>
 )
-let profileNewResponsesFeed =  newPost.map(post =>  
+let profileNewResponsesFeed =  postsArray?.map(post =>  
   post.userID === newPostValue?.userID &&
   post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
@@ -1130,28 +1165,29 @@ let profileNewResponsesFeed =  newPost.map(post =>
      name={name}
     />
     <Repost 
-      user={userCtx as UserProps}
-      post={post}
-      setUpdate={setUpdate}
-      setNewPost={setNewPost}
-      newPost={newPost}
-      update={update}
-      name={name}
-      repost={repost}
-      setRepost={setRepost}
-      userMainFeed={userMainFeed}
-      setUserMainFeed={setUserMainFeed}
-      profPost={profPost}
-      setProfPost={setProfPost}
-      addToStatesCount={addToStatesCount}
-      setPostFeedStatesCount={setPostFeedStatesCount}
-    />
+    user={userCtx as UserProps}
+    post={post}
+    setUpdate={setUpdate}
+    setNewPost={setNewPost}
+    newPost={newPost}
+    update={update}
+    name={name}
+    repost={repost}
+    setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
+    profPost={profPost}
+    setProfPost={setProfPost}
+    addToStatesCount={addToStatesCount}
+    setPostFeedStatesCount={setPostFeedStatesCount}
+    
+   />
   </div>
   </div>
   : <></>
 )
 
-let repostsFromUser = posts.map(post =>  
+let repostsFromUser = postsArray?.map(post =>  
   
     //user.reposts?.find(repost => repost === post.postID) 
     post.repostByUsers.includes(newPostValue?.userID) ?
@@ -1214,7 +1250,7 @@ let repostsFromUser = posts.map(post =>
     : <></>
   )
 
-  let newRepostsFromUser = posts.map(post => 
+  let newRepostsFromUser = postsArray?.map(post => 
     //repost?.find(repost => repost.postID === post.postID) ?
     repost?.includes(post) ?
     <div className="post-container" key={post.postID} style={style}>

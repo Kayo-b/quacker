@@ -33,8 +33,10 @@ type PostProps = {
     newPost: DocumentData[];
     user: UserProps;
     posts: DocumentData[];
+    postsRenew?: DocumentData[];
     post?: DocumentData;
     setPosts?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
+    setPostsRenew?: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     bookmarkPosts?: DocumentData[];
     setBookmarkPosts: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     repost?: DocumentData[];
@@ -49,6 +51,7 @@ type PostProps = {
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     postPageStatesCount?: number;
     setPostFeedStatesCount?: React.Dispatch<React.SetStateAction<number>>;
+
 
   };
 
@@ -134,13 +137,13 @@ const Feed: React.FC<PostProps> = ({
          
         
     },[mainFeedStatesCount, postPageStatesCount, update]);
-
-
+    
     if(user !== null) {return(
         
         <div>{loading ? "Loading...!" : null}
         <>{console.log("FEED")}</>
         <div className="feed-main-container" style={{visibility:"hidden"}}> 
+        <UserContext.Provider value={userCtx as UserProps}> {
             <Post 
             name={name}
             newPost={newPost}
@@ -166,6 +169,7 @@ const Feed: React.FC<PostProps> = ({
             setLoading={setLoading}
             setPostFeedStatesCount={setPostFeedStatesCount}
             />
+        } </UserContext.Provider>
         </div>
         </div>
         
