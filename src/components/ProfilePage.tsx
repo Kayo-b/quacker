@@ -87,11 +87,12 @@ const ProfilePage: React.FC<PostProps> = ({
     const storage = getStorage();
     const userCtx = useContext(UserContext);
     const [postsRenew, setPostsRenew] = React.useState<DocumentData[]>([]);
-   
+    const [userData, setUserData] = React.useState<DocumentData>();
+   console.log(userData?.bkgImgUrl,"USERDATA")
     //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
-    console.log(post.userID,"USER PROFILE PAGE CONSOLE LOG")
+    console.log(userCtx?.uid,"USER PROFILE PAGE CONSOLE LOG")
     const img = document.getElementById('myimgprofile');
     const bkgImg = document.getElementById('profile-background');
     const imgposts = document.querySelectorAll('.profile-picture-profile-feed');
@@ -104,23 +105,28 @@ const ProfilePage: React.FC<PostProps> = ({
                 setPostsRenew(prevValue => [...prevValue, doc.data()]);
             })
             console.log("fetcssh!!",postsRenew)
+        if(userCtx){
+            const userDocRef = doc(db, "users", userCtx.uid);
+            const userDocSnap = await getDoc(userDocRef);
+            const userDocSnapData = userDocSnap.data();
+            if(userDocSnapData)
+                setUserData(userDocSnapData);
+            if(userDocSnapData){
+                img?.setAttribute('src', userDocSnapData.imgUrl)
+                bkgImg?.setAttribute('style', `background-image: url(${userDocSnapData.bkgImgUrl})`)
+                imgposts.forEach(post => {
+                    post.setAttribute('src', userDocSnapData.imgUrl)
+                });
+            };
+        }
         
-        const userDocRef = doc(db, "users", post?.userID);
-        const userDocSnap = await getDoc(userDocRef);
-        const userDocSnapData = userDocSnap.data();
-        if(userDocSnapData){
-            img?.setAttribute('src', userDocSnapData.imgUrl)
-            bkgImg?.setAttribute('style', `background-image: url(${userDocSnapData.bkgImgUrl})`)
-            imgposts.forEach(post => {
-                post.setAttribute('src', userDocSnapData.imgUrl)
-            });
-        };
+       
     };
 
     
     //Getting profile image from storage
     // let storageRef = ref(storage, `images/${post?.userID}/profile_image/profile_img.png`)
-    // console.log(post.userID, "USERID")
+    // console.log(userCtx?.uid, "USERID")
     // getDownloadURL(storageRef)
     // .then((url) => {
     //     console.log(url,"UAARL")
@@ -195,15 +201,15 @@ const ProfilePage: React.FC<PostProps> = ({
 
     const checkFollow = async() => {
         if(userCtx) {
-            const userRef1 = doc(db, 'users', userCtx.uid);
-        const userRef2 = doc(db, 'users', post.userID);
+            const userRef1 = doc(db, 'users', userCtx?.uid);
+        const userRef2 = doc(db, 'users', userCtx?.uid);
         const userDoc1 = await getDoc(userRef1);
         const userDoc2 = await getDoc(userRef2);
         if(userDoc1.exists()) {
             console.log("check follow2");
             const userData1 = userDoc1.data();
             const following = userData1.following;
-            if(following.includes(post.userID)) {
+            if(following.includes(userCtx?.uid)) {
                 setFollowBtn(true);
             } else {
                 setFollowBtn(false);
@@ -227,15 +233,15 @@ const ProfilePage: React.FC<PostProps> = ({
 
     const followUser = async() => {
         if(userCtx) {
-            const userRef1 = doc(db, 'users', userCtx.uid);
-            const userRef2 = doc(db, 'users', post.userID);    
+            const userRef1 = doc(db, 'users', userCtx?.uid);
+            const userRef2 = doc(db, 'users', userCtx?.uid);    
             if(followBtn === false) {
-                setDoc(userRef1, {following: arrayUnion(post.userID)}, {merge: true});
+                setDoc(userRef1, {following: arrayUnion(userCtx?.uid)}, {merge: true});
                 setDoc(userRef2, {followers: arrayUnion(userCtx?.uid)}, {merge: true});
                 setFollowBtn(true);
                 setFollowersCount(followersCount + 1);
             } else {
-                setDoc(userRef1, {following: arrayRemove(post.userID)}, {merge: true});
+                setDoc(userRef1, {following: arrayRemove(userCtx?.uid)}, {merge: true});
                 setDoc(userRef2, {followers: arrayRemove(userCtx?.uid)}, {merge: true});
                 setFollowBtn(false);
                 setFollowersCount(followersCount - 1);
@@ -301,13 +307,13 @@ console.log(post,"posts here?!!!!?")
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
         {displayedName}
         <div className="user-container-profile-page">
-            <div id="profile-background" style={{backgroundImage:`url(${post.bkgImgUrl})`}}>
-                <img className="profile-picture-profile-page" id="myimgprofile" alt="user icon" src={post.imgUrl}></img>
+            <div id="profile-background" style={{backgroundImage:`url(${userData?.bkgImgUrl})`}}>
+                <img className="profile-picture-profile-page" id="myimgprofile" alt="user icon" src={userData?.imgUrl}></img>
             </div>
             <div id="profile-info">
                     <div className="user-name">
-                        @{post.username}{post.userID !== userCtx?.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
-                        {post.userID === userCtx?.uid ? <button onClick={openModal}>Edit Profile</button> : null}
+                        @{userData?.username}{<button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button>}
+                        {userCtx?.uid === userCtx?.uid ? <button onClick={openModal}>Edit Profile</button> : null}
                         <Modal isOpen={isModalOpen} onClose={closeModal}>   
                             {<EditProfile
                             user={userCtx as UserProps}
