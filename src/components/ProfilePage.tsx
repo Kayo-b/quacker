@@ -88,7 +88,7 @@ const ProfilePage: React.FC<PostProps> = ({
     const userCtx = useContext(UserContext);
     const [postsRenew, setPostsRenew] = React.useState<DocumentData[]>([]);
     const [userData, setUserData] = React.useState<DocumentData>();
-   console.log(userData?.bkgImgUrl,"USERDATA")
+   
     //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
@@ -96,7 +96,11 @@ const ProfilePage: React.FC<PostProps> = ({
     const img = document.getElementById('myimgprofile');
     const bkgImg = document.getElementById('profile-background');
     const imgposts = document.querySelectorAll('.profile-picture-profile-feed');
-
+    const endpointLocation = useLocation();
+    const holepath = endpointLocation.pathname;
+    const endpoint = holepath.split('/')[2];
+    
+        console.log(userData,"USER DATA PORRA")
     const fetchProfileImg = async() => {    
         const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")));
         console.log("fetcssh!!",setPostsRenew)
@@ -105,22 +109,35 @@ const ProfilePage: React.FC<PostProps> = ({
                 setPostsRenew(prevValue => [...prevValue, doc.data()]);
             })
             console.log("fetcssh!!",postsRenew)
-        if(userCtx){
-            const userDocRef = doc(db, "users", userCtx.uid);
-            const userDocSnap = await getDoc(userDocRef);
-            const userDocSnapData = userDocSnap.data();
-            if(userDocSnapData)
-                setUserData(userDocSnapData);
-            if(userDocSnapData){
-                img?.setAttribute('src', userDocSnapData.imgUrl)
-                bkgImg?.setAttribute('style', `background-image: url(${userDocSnapData.bkgImgUrl})`)
+            const userDocRef2 = query(collection(db, "users"));
+            const userQuery = query (userDocRef2, where("name", "==", `${endpoint}`));
+            //const userDocSnap = await getDoc(userDocRef);
+            const userDocSnapData2 = await getDocs(userQuery)
+            userDocSnapData2.forEach(val => {
+                var docs = val.data();
+                setUserData(docs);
+                img?.setAttribute('src', docs.imgUrl)
+                bkgImg?.setAttribute('style', `background-image: url(${docs.bkgImgUrl})`)
                 imgposts.forEach(post => {
-                    post.setAttribute('src', userDocSnapData.imgUrl)
+                    post.setAttribute('src', docs.imgUrl)
                 });
-            };
-        }
-        
-       
+            })
+            //console.log(docs, "SNAPDATAAAA")
+            // img?.setAttribute('src', docs)
+            // bkgImg?.setAttribute('style', `background-image: url(${docs.bkgImgUrl})`)
+            // imgposts.forEach(post => {
+            //     post.setAttribute('src', docs.imgUrl)
+            // });
+        // const userDocRef = doc(db, "users", post?.userID);
+        // const userDocSnap = await getDoc(userDocRef);
+        // const userDocSnapData = userDocSnap.data();
+        // if(userDocSnapData){
+        //     img?.setAttribute('src', userDocSnapData.imgUrl)
+        //     bkgImg?.setAttribute('style', `background-image: url(${userDocSnapData.bkgImgUrl})`)
+        //     imgposts.forEach(post => {
+        //         post.setAttribute('src', userDocSnapData.imgUrl)
+        //     });
+        // };
     };
 
     
@@ -312,7 +329,7 @@ console.log(post,"posts here?!!!!?")
             </div>
             <div id="profile-info">
                     <div className="user-name">
-                        @{userData?.username}{<button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button>}
+                        @{userData?.username}{userCtx?.uid !== userCtx?.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
                         {userCtx?.uid === userCtx?.uid ? <button onClick={openModal}>Edit Profile</button> : null}
                         <Modal isOpen={isModalOpen} onClose={closeModal}>   
                             {<EditProfile
