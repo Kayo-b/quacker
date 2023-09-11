@@ -71,6 +71,7 @@ type PostProps = {
     setPostFeedStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     handleFollow?:() => void;
     setProfileStatesCount?: React.Dispatch<React.SetStateAction<number>>
+    userData?: DocumentData;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -104,9 +105,10 @@ const Post: React.FC<PostProps> = ({
   handleFollow,
   setPostFeedStatesCount,
   setProfileStatesCount,
-  postsRenew
+  postsRenew,
+  userData
   }) => {
-    
+    console.log(post,"USER DATa")
   // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
@@ -114,6 +116,7 @@ const Post: React.FC<PostProps> = ({
   const [profileImg, setProfileImg] = useState("")
   const style = {"fontSize": "large"}
   const postsArray = posts.length === 0 ? postsRenew : posts; 
+  console.log(postsArray, "posts assssrray")
   //const newPostsArray = newPost.length === 0 ? postsRenew : postsRenew;
   
 //   const fetchPosts = async() => {    
@@ -211,12 +214,12 @@ console.log(postsArray,"posts#!@ ")
    //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
    let getUserMainFeed = async () => {
 
-    if(userCtx && post?.userID) {
-      const userDocRef = doc(db, "users", post?.userID);
+    if(userCtx) {
+      const userDocRef = doc(db, "users", userCtx.uid);
       const userDocSnap = await getDoc(userDocRef);
       if(userDocSnap.exists()){
         const userDocSnapData = userDocSnap.data();
-        console.log(userDocSnapData,"!!!!!!!!!!!")
+        console.log(userDocSnapData,"!!!!!!!!!!!!")
         setUserMainFeed(userDocSnapData.mainFeed.reverse());
         
       } else {
@@ -877,7 +880,6 @@ let rootPost =  postsArray?.map(post =>
     setProfPost={setProfPost}
     addToStatesCount={addToStatesCount}
     setPostFeedStatesCount={setPostFeedStatesCount}
-    
    />
   </div>  
   </div>
@@ -1374,7 +1376,7 @@ let repostsFromUser = postsArray?.map(post =>
           <div>{rootPost}</div>
           <div>{clickedPostParentPost}</div>
           <div>{clickedPost}</div>
-          <div>{newComment}</div>
+          {/* <div>{newComment}</div> */}
           <div>{comment}</div>
           </div>
   
@@ -1388,7 +1390,7 @@ let repostsFromUser = postsArray?.map(post =>
         ) : profPost === false ? (
           <div>
             <div>{profileNewResponsesFeed}</div>
-            <div>{profileResponsesFeed}</div>
+            {/* <div>{profileResponsesFeed}</div> */}
           </div>  
         // ) : bookmarkUpdate === true ? (    
         //   <div>

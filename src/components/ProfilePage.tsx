@@ -100,15 +100,15 @@ const ProfilePage: React.FC<PostProps> = ({
     const holepath = endpointLocation.pathname;
     const endpoint = holepath.split('/')[2];
     
-        console.log(userData,"USER DATA PORRA")
+        console.log(userData?.mainFeed,"USER DATa")
     const fetchProfileImg = async() => {    
         const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")));
-        console.log("fetcssh!!",setPostsRenew)
+        console.log("fetcssssh!!",setPostsRenew)
             setPostsRenew([])
             querySnapshot.forEach((doc) => {
                 setPostsRenew(prevValue => [...prevValue, doc.data()]);
             })
-            console.log("fetcssh!!",postsRenew)
+            console.log("fetcssssssh!!",postsRenew)
             const userDocRef2 = query(collection(db, "users"));
             const userQuery = query (userDocRef2, where("name", "==", `${endpoint}`));
             //const userDocSnap = await getDoc(userDocRef);
@@ -121,6 +121,7 @@ const ProfilePage: React.FC<PostProps> = ({
                 imgposts.forEach(post => {
                     post.setAttribute('src', docs.imgUrl)
                 });
+                
             })
             //console.log(docs, "SNAPDATAAAA")
             // img?.setAttribute('src', docs)
@@ -138,6 +139,7 @@ const ProfilePage: React.FC<PostProps> = ({
         //         post.setAttribute('src', userDocSnapData.imgUrl)
         //     });
         // };
+        //setUserMainFeed(userData?.mainFeed.reverse())
     };
 
     
@@ -267,19 +269,19 @@ const ProfilePage: React.FC<PostProps> = ({
 
     }
     
-    useEffect(() => {
+    // useEffect(() => {
         
-        if(savePostUser !== post.username) {
-            setSavePostUser(post.username);
-            const profileContainer = 
-                    document.querySelector(".user-container-profile-page-container") as HTMLElement;
-            profileContainer.style.visibility = "hidden";
-            const postSubContainer = 
-                    document.getElementById("post-subcontainer") as HTMLElement;
-                    postSubContainer.style.visibility = "hidden";
-            setLoading(true)
-        }
-    },[post])
+    //     if(savePostUser !== post.username) {
+    //         setSavePostUser(post.username);
+    //         const profileContainer = 
+    //                 document.querySelector(".user-container-profile-page-container") as HTMLElement;
+    //         profileContainer.style.visibility = "hidden";
+    //         const postSubContainer = 
+    //                 document.getElementById("post-subcontainer") as HTMLElement;
+    //                 postSubContainer.style.visibility = "hidden";
+    //         setLoading(true)
+    //     }
+    // },[post])
         
     useEffect(() => {
         waitForStates2();
@@ -314,6 +316,7 @@ const ProfilePage: React.FC<PostProps> = ({
     addToStatesCount={setProfileStatesCount}
     setProfPostCheck={setProfPostCheck}
     postsRenew={postsRenew}
+    userData={userData}
     />
     } </UserContext.Provider>
     
@@ -329,7 +332,7 @@ console.log(post,"posts here?!!!!?")
             </div>
             <div id="profile-info">
                     <div className="user-name">
-                        @{userData?.username}{userCtx?.uid !== userCtx?.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
+                        @{userData?.name}{<button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button>}
                         {userCtx?.uid === userCtx?.uid ? <button onClick={openModal}>Edit Profile</button> : null}
                         <Modal isOpen={isModalOpen} onClose={closeModal}>   
                             {<EditProfile

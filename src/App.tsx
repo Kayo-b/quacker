@@ -96,9 +96,6 @@ const App = () => {
 //     } else {
 //       console.log("no user")
 //     }
-
-  
- 
 //  }
 
 const fetchBookmarks = async () => {
@@ -132,7 +129,7 @@ const fetchBookmarks = async () => {
 useEffect(() => {
   fetchBookmarks();
   console.log("app componet", user )
-},[])
+},[user])
 
   return (
     <UserContext.Provider value={user as UserPropsOrigin}> {
