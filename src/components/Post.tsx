@@ -108,7 +108,8 @@ const Post: React.FC<PostProps> = ({
   postsRenew,
   userData
   }) => {
-    console.log(post,"USER DATa")
+    console.log(post,"post")
+    
   // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
@@ -144,7 +145,7 @@ const Post: React.FC<PostProps> = ({
 // };
 console.log(postsRenew,"posts#!@ #heres1")
 console.log(profPost,"posts#!@ PrSoPost")
-console.log(postsArray,"posts#!@ ")
+console.log(postsArray,"postss#!@ ")
    //Getting profile image from storage
   //  let storageRef = ref(storage, `images/${userCtx?.uid}/profile_image/profile_img.png`)
   //  getDownloadURL(storageRef)
@@ -154,6 +155,7 @@ console.log(postsArray,"posts#!@ ")
   //  })
 
   console.log(userCtx, "USER POST !")
+
   //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
     //if(addToStatesCount) addToStatesCount(0);
@@ -167,12 +169,12 @@ console.log(postsArray,"posts#!@ ")
   }
 
   const RedirectToProfilePage = (post: DocumentData | undefined) => {
-    // if(profPost){
-    //   const profileContainer = 
-    //             document.querySelector(".user-container-profile-page-container") as HTMLElement;
-    //             profileContainer.style.visibility = "hidden" }     
+    if(profPost){
+      const profileContainer = 
+                document.querySelector(".user-container-profile-page-container") as HTMLElement;
+                profileContainer.style.visibility = "hidden" }     
     navigate(`/profile/${post?.username}`, {state: {post}});
-    update === true ? setUpdate(false) : setUpdate(true);
+    setUpdate(!update)
     
   }
 
@@ -195,9 +197,7 @@ console.log(postsArray,"posts#!@ ")
         await deleteDoc(doc(db, "posts", post?.postID));
         await setDoc(userRef, {mainFeed: arrayRemove(post?.postID)}, {merge: true});
       }
-      
-      
-      
+ 
     }
     //update === true ? setUpdate(false) : setUpdate(true);
     removePostFromDB();
@@ -207,28 +207,29 @@ console.log(postsArray,"posts#!@ ")
   //Add setUSerMainFeed in the useEffect to reset the userMainFeed
   useEffect(() => {
     //if(userCtx === null) navigate("/");
-    getUserMainFeed();
+    //getUserMainFeed();
     //fetchPosts();
    }, [repost, update, postsArray])//all posts rerender when these change
 
    //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
-   let getUserMainFeed = async () => {
-
-    if(userCtx) {
-      const userDocRef = doc(db, "users", userCtx.uid);
-      const userDocSnap = await getDoc(userDocRef);
-      if(userDocSnap.exists()){
-        const userDocSnapData = userDocSnap.data();
-        console.log(userDocSnapData,"!!!!!!!!!!!!")
-        setUserMainFeed(userDocSnapData.mainFeed.reverse());
+  //  let getUserMainFeed = async () => {
+    
+  //   if(userData) {
+  //     const userDocRef = doc(db, "users", userData.uid);
+  //     const userDocSnap = await getDoc(userDocRef);
+  //     if(userDocSnap.exists()){
+  //       const userDocSnapData = userDocSnap.data();
+  //       setUserMainFeed(userDocSnapData.mainFeed.reverse());
         
-      } else {
-        console.log("userDocSnap doesnt exist")
-      }
-    } else {
-      console.log("no user")
-    }
-  }
+  //     } else {
+  //       console.log("userDocSnap doesnt exist")
+  //     }
+  //   } else {
+  //     console.log("no user")
+  //   }
+  // }
+  console.log(userData, "user Data")
+  console.log(userMainFeed, 'user Data feed')
 
   const handleClick = (event: MouseEvent) => {
     let targetElement = event.target as HTMLElement;

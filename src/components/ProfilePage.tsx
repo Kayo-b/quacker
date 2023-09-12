@@ -116,45 +116,14 @@ const ProfilePage: React.FC<PostProps> = ({
             userDocSnapData2.forEach(val => {
                 var docs = val.data();
                 setUserData(docs);
+                setUserMainFeed(docs.mainFeed.reverse())
                 img?.setAttribute('src', docs.imgUrl)
                 bkgImg?.setAttribute('style', `background-image: url(${docs.bkgImgUrl})`)
                 imgposts.forEach(post => {
                     post.setAttribute('src', docs.imgUrl)
                 });
-                
             })
-            //console.log(docs, "SNAPDATAAAA")
-            // img?.setAttribute('src', docs)
-            // bkgImg?.setAttribute('style', `background-image: url(${docs.bkgImgUrl})`)
-            // imgposts.forEach(post => {
-            //     post.setAttribute('src', docs.imgUrl)
-            // });
-        // const userDocRef = doc(db, "users", post?.userID);
-        // const userDocSnap = await getDoc(userDocRef);
-        // const userDocSnapData = userDocSnap.data();
-        // if(userDocSnapData){
-        //     img?.setAttribute('src', userDocSnapData.imgUrl)
-        //     bkgImg?.setAttribute('style', `background-image: url(${userDocSnapData.bkgImgUrl})`)
-        //     imgposts.forEach(post => {
-        //         post.setAttribute('src', userDocSnapData.imgUrl)
-        //     });
-        // };
-        //setUserMainFeed(userData?.mainFeed.reverse())
     };
-
-    
-    //Getting profile image from storage
-    // let storageRef = ref(storage, `images/${post?.userID}/profile_image/profile_img.png`)
-    // console.log(userCtx?.uid, "USERID")
-    // getDownloadURL(storageRef)
-    // .then((url) => {
-    //     console.log(url,"UAARL")
-    //     const img = document.getElementById('myimgprofile');
-    //     img?.setAttribute('src', url)
-    //     // document.querySelectorAll(".profile-picture").forEach(val => {
-    //     // val.setAttribute('src', url);
-    //     // })
-    // })
 
     //Modal variables
     const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -219,11 +188,11 @@ const ProfilePage: React.FC<PostProps> = ({
     }
 
     const checkFollow = async() => {
-        if(userCtx) {
-            const userRef1 = doc(db, 'users', userCtx?.uid);
-        const userRef2 = doc(db, 'users', userCtx?.uid);
-        const userDoc1 = await getDoc(userRef1);
-        const userDoc2 = await getDoc(userRef2);
+        if(userData && userCtx) {
+            const userRef1 = doc(db, 'users', userData?.uid);
+            const userRef2 = doc(db, 'users', userCtx?.uid);
+            const userDoc1 = await getDoc(userRef1);
+            const userDoc2 = await getDoc(userRef2);
         if(userDoc1.exists()) {
             console.log("check follow2");
             const userData1 = userDoc1.data();
@@ -251,38 +220,23 @@ const ProfilePage: React.FC<PostProps> = ({
     }
 
     const followUser = async() => {
-        if(userCtx) {
-            const userRef1 = doc(db, 'users', userCtx?.uid);
-            const userRef2 = doc(db, 'users', userCtx?.uid);    
+        if(userData) {
+            const userRef1 = doc(db, 'users', userData?.uid);
+            const userRef2 = doc(db, 'users', userData?.uid);    
             if(followBtn === false) {
-                setDoc(userRef1, {following: arrayUnion(userCtx?.uid)}, {merge: true});
-                setDoc(userRef2, {followers: arrayUnion(userCtx?.uid)}, {merge: true});
+                setDoc(userRef1, {following: arrayUnion(userData?.uid)}, {merge: true});
+                setDoc(userRef2, {followers: arrayUnion(userData?.uid)}, {merge: true});
                 setFollowBtn(true);
                 setFollowersCount(followersCount + 1);
             } else {
-                setDoc(userRef1, {following: arrayRemove(userCtx?.uid)}, {merge: true});
-                setDoc(userRef2, {followers: arrayRemove(userCtx?.uid)}, {merge: true});
+                setDoc(userRef1, {following: arrayRemove(userData?.uid)}, {merge: true});
+                setDoc(userRef2, {followers: arrayRemove(userData?.uid)}, {merge: true});
                 setFollowBtn(false);
                 setFollowersCount(followersCount - 1);
             }
     }
-
     }
-    
-    // useEffect(() => {
-        
-    //     if(savePostUser !== post.username) {
-    //         setSavePostUser(post.username);
-    //         const profileContainer = 
-    //                 document.querySelector(".user-container-profile-page-container") as HTMLElement;
-    //         profileContainer.style.visibility = "hidden";
-    //         const postSubContainer = 
-    //                 document.getElementById("post-subcontainer") as HTMLElement;
-    //                 postSubContainer.style.visibility = "hidden";
-    //         setLoading(true)
-    //     }
-    // },[post])
-        
+
     useEffect(() => {
         waitForStates2();
     },[profPostCheck])
@@ -320,7 +274,7 @@ const ProfilePage: React.FC<PostProps> = ({
     />
     } </UserContext.Provider>
     
-console.log(postsRenew,"posts here??s?")
+console.log(postsRenew,"posts heres??s?")
 console.log(post,"posts here?!!!!?")
   return (
     <div>{loading ? "Loading...." : null}
@@ -332,8 +286,8 @@ console.log(post,"posts here?!!!!?")
             </div>
             <div id="profile-info">
                     <div className="user-name">
-                        @{userData?.name}{<button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button>}
-                        {userCtx?.uid === userCtx?.uid ? <button onClick={openModal}>Edit Profile</button> : null}
+                        @{userData?.name}{userData?.uid !== userCtx?.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
+                        {userData?.uid === userCtx?.uid ? <button onClick={openModal}>Edit Profile</button> : null}
                         <Modal isOpen={isModalOpen} onClose={closeModal}>   
                             {<EditProfile
                             user={userCtx as UserProps}
