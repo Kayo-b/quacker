@@ -189,8 +189,8 @@ const ProfilePage: React.FC<PostProps> = ({
 
     const checkFollow = async() => {
         if(userData && userCtx) {
-            const userRef1 = doc(db, 'users', userData?.uid);
-            const userRef2 = doc(db, 'users', userCtx?.uid);
+            const userRef1 = doc(db, 'users', userCtx?.uid);
+            const userRef2 = doc(db, 'users', userData?.uid);
             const userDoc1 = await getDoc(userRef1);
             const userDoc2 = await getDoc(userRef2);
         if(userDoc1.exists()) {
@@ -220,17 +220,17 @@ const ProfilePage: React.FC<PostProps> = ({
     }
 
     const followUser = async() => {
-        if(userData) {
-            const userRef1 = doc(db, 'users', userData?.uid);
+        if(userData && userCtx) {
+            const userRef1 = doc(db, 'users', userCtx?.uid);
             const userRef2 = doc(db, 'users', userData?.uid);    
             if(followBtn === false) {
                 setDoc(userRef1, {following: arrayUnion(userData?.uid)}, {merge: true});
-                setDoc(userRef2, {followers: arrayUnion(userData?.uid)}, {merge: true});
+                setDoc(userRef2, {followers: arrayUnion(userCtx?.uid)}, {merge: true});
                 setFollowBtn(true);
                 setFollowersCount(followersCount + 1);
             } else {
                 setDoc(userRef1, {following: arrayRemove(userData?.uid)}, {merge: true});
-                setDoc(userRef2, {followers: arrayRemove(userData?.uid)}, {merge: true});
+                setDoc(userRef2, {followers: arrayRemove(userCtx?.uid)}, {merge: true});
                 setFollowBtn(false);
                 setFollowersCount(followersCount - 1);
             }

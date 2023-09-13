@@ -29,7 +29,7 @@ const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setNam
     }
     const location = useLocation();
     const currentURL = location.pathname;
-
+    console.log(user,"USER DASH")
     const fetchUserName = async () => {
         try {
             const q = query(collection(db, "users"), where("uid", "==", user?.uid));
