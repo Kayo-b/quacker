@@ -146,8 +146,7 @@ const ProfilePage: React.FC<PostProps> = ({
     }
     
     const waitForStates = () => {
-
-        if(profileStatesCount === 1 || userMainFeed?.length === 0) {
+        if(profileStatesCount === 1) {
             const profileContainer = 
                 document.querySelector(".user-container-profile-page-container") as HTMLElement;
             const postSubContainer = 
@@ -157,7 +156,7 @@ const ProfilePage: React.FC<PostProps> = ({
                 postSubContainer.style.visibility = "visible";
                 setLoading(false);
                 setLoading2(false);
-            }, 300)
+            }, 400)
         };
          setProfileStatesCount(0);
     };
@@ -188,35 +187,36 @@ const ProfilePage: React.FC<PostProps> = ({
     }
 
     const checkFollow = async() => {
+        console.log(userData,'userData')
         if(userData && userCtx) {
             const userRef1 = doc(db, 'users', userCtx?.uid);
             const userRef2 = doc(db, 'users', userData?.uid);
             const userDoc1 = await getDoc(userRef1);
             const userDoc2 = await getDoc(userRef2);
-        if(userDoc1.exists()) {
-            console.log("check follow2");
-            const userData1 = userDoc1.data();
-            const following = userData1.following;
-            if(following.includes(userCtx?.uid)) {
-                setFollowBtn(true);
-            } else {
-                setFollowBtn(false);
+            if(userDoc1.exists()) {
+                console.log("check follow2");
+                const userData1 = userDoc1.data();
+                const following = userData1.following;
+                if(following.includes(userCtx?.uid)) {
+                    setFollowBtn(true);
+                } else {
+                    setFollowBtn(false);
+                }
+            }
+            if(userDoc2.exists()) {
+                const userData2 = userDoc2.data();
+                const following = userData2.following;
+                const followers = userData2.followers;
+                // const bioTxt = userData2.bioText;
+                // const displayName = userData2.displayedName;
+                // setDisplayedName(displayName)
+                // setBioText(bioTxt);
+                console.log(userData2,"userDATA")
+                setFollowingCount(following.length);
+                setFollowersCount(followers.length);
             }
         }
-        if(userDoc2.exists()) {
-            const userData2 = userDoc2.data();
-            const following = userData2.following;
-            const followers = userData2.followers;
-            const bioTxt = userData2.bioText;
-            const displayName = userData2.displayedName;
-            setDisplayedName(displayName)
-            setBioText(bioTxt);
-            console.log(userData2,"userDATA")
-            setFollowingCount(following.length);
-            setFollowersCount(followers.length);
-        }
-        }
-        setProfilePageStateCount(true)
+        //setProfilePageStateCount(true)
     }
 
     const followUser = async() => {
@@ -246,7 +246,7 @@ const ProfilePage: React.FC<PostProps> = ({
         checkFollow();
         waitForStates();
         fetchProfileImg();
-    },[profileStatesCount, post, update])
+    },[profileStatesCount, displayedName, bioText, post, update])
 
     var renderPosts = 
     <UserContext.Provider value={userCtx as UserProps}> {
@@ -279,7 +279,7 @@ console.log(post,"posts here?!!!!?")
   return (
     <div>{loading ? "Loading...." : null}
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
-        {displayedName}
+        {userData?.displayedName}
         <div className="user-container-profile-page">
             <div id="profile-background" style={{backgroundImage:`url(${userData?.bkgImgUrl})`}}>
                 <img className="profile-picture-profile-page" id="myimgprofile" alt="user icon" src={userData?.imgUrl}></img>
@@ -308,7 +308,7 @@ console.log(post,"posts here?!!!!?")
                 {followingCount} Following / {followersCount}  Followers
                 </div>
                 <div className="bio-container">
-                    <p>{bioText}</p>
+                    <p>{userData?.bioText}</p>
                 </div>
                 </div>
             </div>
