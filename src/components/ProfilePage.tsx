@@ -197,11 +197,11 @@ const ProfilePage: React.FC<PostProps> = ({
                 console.log("check follow2");
                 const userData1 = userDoc1.data();
                 const following = userData1.following;
-                if(following.includes(userCtx?.uid)) {
-                    setFollowBtn(true);
-                } else {
-                    setFollowBtn(false);
-                }
+                // if(following.includes(userData?.uid)) {
+                //     setFollowBtn(true);
+                // } else {
+                //     setFollowBtn(false);
+                // }
             }
             if(userDoc2.exists()) {
                 const userData2 = userDoc2.data();
@@ -211,11 +211,12 @@ const ProfilePage: React.FC<PostProps> = ({
                 // const displayName = userData2.displayedName;
                 // setDisplayedName(displayName)
                 // setBioText(bioTxt);
-                console.log(userData2,"userDATA")
-                setFollowingCount(following.length);
-                setFollowersCount(followers.length);
+                console.log(userCtx,"userDATA")
+                // setFollowingCount(following.length);
+                // setFollowersCount(followers.length);
             }
         }
+
         //setProfilePageStateCount(true)
     }
 
@@ -246,6 +247,8 @@ const ProfilePage: React.FC<PostProps> = ({
         checkFollow();
         waitForStates();
         fetchProfileImg();
+        setFollowingCount(userData?.following.length)
+        setFollowersCount(userData?.followers.length)
     },[profileStatesCount, displayedName, bioText, post, update])
 
     var renderPosts = 
@@ -305,7 +308,7 @@ console.log(post,"posts here?!!!!?")
                         </Modal>
                     </div>
                 <div className="follow-stats">
-                {followingCount} Following / {followersCount}  Followers
+                {userData?.following.length} Following / {followersCount}  Followers
                 </div>
                 <div className="bio-container">
                     <p>{userData?.bioText}</p>
