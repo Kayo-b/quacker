@@ -117,7 +117,7 @@ const Post: React.FC<PostProps> = ({
   const [profileImg, setProfileImg] = useState("")
   const style = {"fontSize": "large"}
   const postsArray = posts.length === 0 ? postsRenew : posts; 
-  console.log(postsArray, "posts assssrray")
+  console.log(postsArray, "posts asssssrray")
   //const newPostsArray = newPost.length === 0 ? postsRenew : postsRenew;
   
 //   const fetchPosts = async() => {    

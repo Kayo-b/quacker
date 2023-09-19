@@ -108,7 +108,7 @@ const ProfilePage: React.FC<PostProps> = ({
             querySnapshot.forEach((doc) => {
                 setPostsRenew(prevValue => [...prevValue, doc.data()]);
             })
-            console.log("fetcssssssh!!",postsRenew)
+            console.log("fetcssssssssh!!",postsRenew)
             const userDocRef2 = query(collection(db, "users"));
             const userQuery = query (userDocRef2, where("name", "==", `${endpoint}`));
             //const userDocSnap = await getDoc(userDocRef);
@@ -130,6 +130,7 @@ const ProfilePage: React.FC<PostProps> = ({
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
     console.log(isModalOpen,"modal")
+    
     //Modal for the comment popup
     function Modal({ isOpen, onClose, children }: ModalProps) {
         if (!isOpen) return null;
@@ -174,12 +175,13 @@ const ProfilePage: React.FC<PostProps> = ({
   
     const loadPostsList = (postOrComment: string) => {
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
-        if(postOrComment === "posts") {
+        
+        if(postOrComment === "posts" && profPost === false) {
             if(setProfPost !== undefined) setProfPost(true);
             if(postSubContainer !== null) postSubContainer.style.visibility = "hidden";
             setLoading2(true);
         }
-        else if(postOrComment === "responses") {
+        else if(postOrComment === "responses" && profPost === true) {
             if(setProfPost !== undefined) setProfPost(false);
             if(postSubContainer !== null) postSubContainer.style.visibility = "hidden"
             setLoading2(true);
@@ -197,27 +199,27 @@ const ProfilePage: React.FC<PostProps> = ({
                 console.log("check follow2");
                 const userData1 = userDoc1.data();
                 const following = userData1.following;
-                // if(following.includes(userData?.uid)) {
-                //     setFollowBtn(true);
-                // } else {
-                //     setFollowBtn(false);
-                // }
+                if(following.includes(userData?.uid)) {
+                    setFollowBtn(true);
+                } else {
+                    setFollowBtn(false);
+                }
             }
             if(userDoc2.exists()) {
                 const userData2 = userDoc2.data();
                 const following = userData2.following;
                 const followers = userData2.followers;
-                // const bioTxt = userData2.bioText;
+                const bioTxt = userData2.bioText;
                 // const displayName = userData2.displayedName;
                 // setDisplayedName(displayName)
-                // setBioText(bioTxt);
+                setBioText(bioTxt);
                 console.log(userCtx,"userDATA")
-                // setFollowingCount(following.length);
-                // setFollowersCount(followers.length);
+                setFollowingCount(following.length);
+                setFollowersCount(followers.length);
             }
         }
-
-        //setProfilePageStateCount(true)
+        
+        //setProfilePageStateCount(!profilePageStateCount)
     }
 
     const followUser = async() => {
@@ -236,6 +238,8 @@ const ProfilePage: React.FC<PostProps> = ({
                 setFollowersCount(followersCount - 1);
             }
     }
+    setBioText(bioText + ".")
+    //setProfilePageStateCount(!profilePageStateCount)
     }
 
     useEffect(() => {
@@ -247,8 +251,6 @@ const ProfilePage: React.FC<PostProps> = ({
         checkFollow();
         waitForStates();
         fetchProfileImg();
-        setFollowingCount(userData?.following.length)
-        setFollowersCount(userData?.followers.length)
     },[profileStatesCount, displayedName, bioText, post, update])
 
     var renderPosts = 
@@ -289,7 +291,7 @@ console.log(post,"posts here?!!!!?")
             </div>
             <div id="profile-info">
                     <div className="user-name">
-                        @{userData?.name}{userData?.uid !== userCtx?.uid ? <button onClick={() => followUser()}>{followBtn === false ? "Follow" : "Unfollow"}</button> : null}
+                        @{userData?.name}{userData?.uid !== userCtx?.uid ? <button onClick={() => followUser()}>{userData?.followers.includes(userCtx?.uid) ? "Unfollow" : "Follow"}</button> : null}
                         {userData?.uid === userCtx?.uid ? <button onClick={openModal}>Edit Profile</button> : null}
                         <Modal isOpen={isModalOpen} onClose={closeModal}>   
                             {<EditProfile
@@ -308,7 +310,7 @@ console.log(post,"posts here?!!!!?")
                         </Modal>
                     </div>
                 <div className="follow-stats">
-                {userData?.following.length} Following / {followersCount}  Followers
+                {userData?.following.length} Following / {userData?.followers.length < followersCount ? followersCount : userData?.followers.length}  Followers
                 </div>
                 <div className="bio-container">
                     <p>{userData?.bioText}</p>
@@ -317,12 +319,12 @@ console.log(post,"posts here?!!!!?")
             </div>
             <div className="feed-container">
                 <div className="feed-types-select">
-                    <div className="quacks-select" onClick={() => loadPostsList("posts")}>Quacks</div>
-                    <div className="responses-select" onClick={() => loadPostsList("responses")}>Responses</div>
+                    <div className="quacks-select" onClick={(e) => loadPostsList("posts")}>Quacks</div>
+                    <div className="responses-select" onClick={(e) => loadPostsList("responses")}>Responses</div>
                 </div>
                 <div className="feed-display">                                
                 {loading2 ? "Loading..." : null}
-                <div id="post-subcontainer">{renderPosts}</div><>{console.log('render!!!!!')}</>
+                <div id="post-subcontainer">{renderPosts}</div>
                 </div>
             </div>
     </div>
