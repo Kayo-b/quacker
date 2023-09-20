@@ -22,10 +22,9 @@ type PostProps = {
     bookmarkUpdate?: undefined | boolean;
     setBookmarkUpdate?: React.Dispatch<React.SetStateAction<boolean>>;
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
+    userData?: DocumentData;
     
 }
-
-
 
 const BookmarkBtn: React.FC<PostProps> = ({
     user,
@@ -36,7 +35,8 @@ const BookmarkBtn: React.FC<PostProps> = ({
     setBookmarkPosts,
     bookmarkUpdate,
     setBookmarkUpdate,
-    addToStatesCount
+    addToStatesCount,
+    userData
 
 }) => {
 
@@ -51,7 +51,7 @@ const [favorited, setFavorited] = useState<boolean>(false);
 
 //     hasUserBookmarkedPost(postId)
 // }
-
+console.log(post,"bookmarkUser")
 const hasUserBookmarkedPost = async(postId: string) => {
     const userRef = doc(db, 'users', user.uid);
     const userDoc = await getDoc(userRef);
@@ -76,7 +76,6 @@ const removeBookmarkPost = (postId: string) => {
                     post.postID !== postId)) 
     };
 
-    
 const addBookmarkPost = (newPost: DocumentData) => {
         
         if(setBookmarkPosts) setBookmarkPosts(
@@ -106,18 +105,14 @@ const addBookmark = async (postId: string) => {
             removeBookmarkPost(post?.postID);
         }
         //update === false ? setUpdate(true) : setUpdate(false);
-        
     }
-// const addBookmarkBtn = (postId: string) => {
-//     addBookmark(postId)
-// }
 
     useEffect(() => {
         // hasUserBookmarkedPost2(post?.postID);
         hasUserBookmarkedPost(post?.postID);
         
     },[bookmarkPosts])
-
+    console.log(userData, "UserDATA111")
     return(
         <div className="bm-main-container">
             <button onClick={() => addBookmark(post?.postID)}>

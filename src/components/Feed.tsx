@@ -124,7 +124,7 @@ const Feed: React.FC<PostProps> = ({
             if(mainFeedContainer) setTimeout(() => {
                 mainFeedContainer.style.visibility = "visible";
                 setLoading(false)
-            }, 200) 
+            }, 400) 
         }
     };
 

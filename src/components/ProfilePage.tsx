@@ -157,7 +157,7 @@ const ProfilePage: React.FC<PostProps> = ({
                 postSubContainer.style.visibility = "visible";
                 setLoading(false);
                 setLoading2(false);
-            }, 400)
+            }, 300)
         };
          setProfileStatesCount(0);
     };
@@ -168,7 +168,7 @@ const ProfilePage: React.FC<PostProps> = ({
             setTimeout(() => {
                 setLoading2(false);
                 postSubContainer.style.visibility = "visible";
-            }, 300)
+            }, 400)
         };
         if(setProfPostCheck !== undefined) setProfPostCheck(0); 
     }
@@ -218,7 +218,6 @@ const ProfilePage: React.FC<PostProps> = ({
                 setFollowersCount(followers.length);
             }
         }
-        
         //setProfilePageStateCount(!profilePageStateCount)
     }
 

@@ -54,8 +54,6 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
           setLiked(false);
           console.log(false,post,"liked????!!!")
         }
-
-    
     //if(setLoading) setLoading(false);
   }
 
@@ -63,29 +61,24 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
     const postRef = doc(db, 'posts', postId)
     if(!liked) {
       setLiked(true);
-      //post?.likedByUsers.push(user.uid)
+      post?.likedByUsers.push(user.uid)
       setDoc(postRef, {likedByUsers: arrayUnion(user.uid)}, {merge: true})
     } else {
       setLiked(false);
       let indexValue = post?.likedByUsers.indexOf(user.uid);
-      //post?.likedByUsers.splice(indexValue, 1)
+      post?.likedByUsers.splice(indexValue, 1)
       setDoc(postRef, {likedByUsers: arrayRemove(user.uid)}, {merge: true})
     }
     console.log(post?.likedByUsers, "liked by users +_+_+_+_+")
   }
 
   useEffect(() => {
-    
-    hasUserLikedPost(post?.postID)
-   // hasUserLikedPost2()
-   //likedPostCheck(post?.postID)
+    likedPostCheck(post?.postID)
   },[])
 
   return (
-   
       <button className="like-btn" onClick={e => addLike(post?.postID)}>
-        {liked ? "Liked": "Like"}</button> 
-    
+        {post?.likedByUsers.includes(user.uid) ? "Liked" : "Like"}</button> 
   )
 }
 
