@@ -169,13 +169,12 @@ console.log(postsArray,"postss#!@ ")
   }
 
   const RedirectToProfilePage = (post: DocumentData | undefined) => {
-    if(profPost){
+    if(profPost) {
       const profileContainer = 
                 document.querySelector(".user-container-profile-page-container") as HTMLElement;
                 profileContainer.style.visibility = "hidden" }     
     navigate(`/profile/${post?.username}`, {state: {post}});
     setUpdate(!update)
-    
   }
 
   const RemovePost = (post: DocumentData | undefined) => {
@@ -343,7 +342,7 @@ console.log(postsArray,"postss#!@ ")
           setUpdate={setUpdate}
           bookmarkPosts={bookmarkPosts} 
           setBookmarkPosts={setBookmarkPosts}
-          userData={userData}
+          //userData={userData}
         />
         <Comment 
          user={userCtx as UserProps}
@@ -420,7 +419,7 @@ console.log(postsArray,"postss#!@ ")
           setUpdate={setUpdate}
           bookmarkPosts={bookmarkPosts} 
           setBookmarkPosts={setBookmarkPosts}
-          userData={userData}
+          //userData={userData}
         />
         <Comment
         user={userCtx as UserProps}
@@ -495,7 +494,7 @@ console.log(postsArray,"postss#!@ ")
         setUpdate={setUpdate}
         bookmarkPosts={bookmarkPosts} 
         setBookmarkPosts={setBookmarkPosts}
-        userData={userData}
+        //userData={userData}
       />
       <Comment
       user={userCtx as UserProps}
@@ -570,7 +569,7 @@ console.log(postsArray,"postss#!@ ")
           setUpdate={setUpdate}
           bookmarkPosts={bookmarkPosts} 
           setBookmarkPosts={setBookmarkPosts}
-          userData={userData}
+          //userData={userData}
         />
         <Comment 
          user={userCtx as UserProps}
@@ -641,7 +640,7 @@ console.log(postsArray,"postss#!@ ")
           setUpdate={setUpdate}
           bookmarkPosts={bookmarkPosts} 
           setBookmarkPosts={setBookmarkPosts}
-          userData={userData}
+          //userData={userData}
         />
         <Comment 
          user={userCtx as UserProps}
@@ -712,7 +711,7 @@ console.log(postsArray,"postss#!@ ")
           setUpdate={setUpdate}
           bookmarkPosts={bookmarkPosts} 
           setBookmarkPosts={setBookmarkPosts}
-          userData={userData}
+          //userData={userData}
         />
         <Comment 
          user={userCtx as UserProps}
@@ -786,7 +785,7 @@ let clickedPostParentPost =   postsArray?.map(post =>
     setUpdate={setUpdate}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
-    userData={userData}
+    //userData={userData}
     />
     <Comment 
      user={userCtx as UserProps}
@@ -862,7 +861,7 @@ let rootPost =  postsArray?.map(post =>
     setUpdate={setUpdate}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
-    userData={userData}
+    //userData={userData}
     />
     <Comment 
      user={userCtx as UserProps}
@@ -937,7 +936,7 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
     setUpdate={setUpdate}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
-    userData={userData}
+    //userData={userData}
     />
     <Comment 
      user={userCtx as UserProps}
@@ -964,6 +963,7 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
     setProfPost={setProfPost}
     addToStatesCount={addToStatesCount}
     setPostFeedStatesCount={setPostFeedStatesCount}
+    setProfPostCheck={setProfPostCheck}
     
    />
   </div>  
@@ -1017,7 +1017,7 @@ let profileNewPostsFeed =  newPost.map(post =>
     setUpdate={setUpdate}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
-    userData={userData}
+    //userData={userData}
     />
     <Comment 
      user={userCtx as UserProps}
@@ -1096,7 +1096,7 @@ let profileResponsesFeed =  postsArray?.map(post =>
     setUpdate={setUpdate}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
-    userData={userData}
+    //userData={userData}
     />
     <Comment 
      user={userCtx as UserProps}
@@ -1168,7 +1168,7 @@ let profileNewResponsesFeed =  postsArray?.map(post =>
     setUpdate={setUpdate}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
-    userData={userData}
+    //userData={userData}
     />
     <Comment 
      user={userCtx as UserProps}
@@ -1232,7 +1232,7 @@ let repostsFromUser = postsArray?.map(post =>
         setUpdate={setUpdate}
         bookmarkPosts={bookmarkPosts} 
         setBookmarkPosts={setBookmarkPosts}
-        userData={userData}
+        //userData={userData}
         />
       <Comment 
        user={userCtx as UserProps}
@@ -1295,7 +1295,7 @@ let repostsFromUser = postsArray?.map(post =>
         setUpdate={setUpdate}
         bookmarkPosts={bookmarkPosts} 
         setBookmarkPosts={setBookmarkPosts}
-        userData={userData}
+        //userData={userData}
         />
       <Comment 
        user={userCtx as UserProps}

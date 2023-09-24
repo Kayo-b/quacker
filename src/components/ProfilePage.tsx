@@ -88,7 +88,7 @@ const ProfilePage: React.FC<PostProps> = ({
     const userCtx = useContext(UserContext);
     const [postsRenew, setPostsRenew] = React.useState<DocumentData[]>([]);
     const [userData, setUserData] = React.useState<DocumentData>();
-   
+
     //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
@@ -103,8 +103,9 @@ const ProfilePage: React.FC<PostProps> = ({
         console.log(userData?.mainFeed,"USER DATa")
     const fetchProfileImg = async() => {    
         const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")));
-        console.log("fetcssssh!!",setPostsRenew)
+        console.log("zzzzz!!",postsRenew)
             setPostsRenew([])
+            console.log("zzzzz!!",postsRenew)
             querySnapshot.forEach((doc) => {
                 setPostsRenew(prevValue => [...prevValue, doc.data()]);
             })
@@ -154,21 +155,22 @@ const ProfilePage: React.FC<PostProps> = ({
                 document.getElementById("post-subcontainer") as HTMLElement;
             if(profileContainer) setTimeout(() => {
                 profileContainer.style.visibility = "visible";
-                postSubContainer.style.visibility = "visible";
+                //postSubContainer.style.visibility = "visible";
                 setLoading(false);
-                setLoading2(false);
+                //setLoading2(false);
             }, 300)
         };
          setProfileStatesCount(0);
     };
 
-    const waitForStates2 = () => {
+    const waitForStates2 = async () => {
+        console.log(profPostCheck, "profPost")
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
-        if(profPostCheck === 1) {
+        if(profPostCheck === 0) {
             setTimeout(() => {
                 setLoading2(false);
                 postSubContainer.style.visibility = "visible";
-            }, 400)
+            }, 1000)
         };
         if(setProfPostCheck !== undefined) setProfPostCheck(0); 
     }
@@ -190,6 +192,7 @@ const ProfilePage: React.FC<PostProps> = ({
 
     const checkFollow = async() => {
         console.log(userData,'userData')
+        const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
         if(userData && userCtx) {
             const userRef1 = doc(db, 'users', userCtx?.uid);
             const userRef2 = doc(db, 'users', userData?.uid);
@@ -204,6 +207,7 @@ const ProfilePage: React.FC<PostProps> = ({
                 } else {
                     setFollowBtn(false);
                 }
+
             }
             if(userDoc2.exists()) {
                 const userData2 = userDoc2.data();
@@ -213,11 +217,20 @@ const ProfilePage: React.FC<PostProps> = ({
                 // const displayName = userData2.displayedName;
                 // setDisplayedName(displayName)
                 setBioText(bioTxt);
-                console.log(userCtx,"userDATA")
+                console.log(userCtx,"userDsATA")
                 setFollowingCount(following.length);
                 setFollowersCount(followers.length);
             }
+            
+            // setLoading2(false);
+            // postSubContainer.style.visibility = "visible";
+            // setTimeout(() => {
+            //     setLoading2(false);
+            //     postSubContainer.style.visibility = "visible";
+            // }, 200)
+            console.log(loading2,"LOADING")
         }
+
         //setProfilePageStateCount(!profilePageStateCount)
     }
 
@@ -250,7 +263,7 @@ const ProfilePage: React.FC<PostProps> = ({
         checkFollow();
         waitForStates();
         fetchProfileImg();
-    },[profileStatesCount, displayedName, bioText, post, update])
+    },[profileStatesCount, displayedName, bioText, post, update, profPostCheck])
 
     var renderPosts = 
     <UserContext.Provider value={userCtx as UserProps}> {
@@ -323,7 +336,7 @@ console.log(post,"posts here?!!!!?")
                 </div>
                 <div className="feed-display">                                
                 {loading2 ? "Loading..." : null}
-                <div id="post-subcontainer">{renderPosts}</div>
+                <div id="post-subcontainer" style={{visibility:"hidden"}}>{renderPosts}</div>
                 </div>
             </div>
     </div>
