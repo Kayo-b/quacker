@@ -157,6 +157,8 @@ const ProfilePage: React.FC<PostProps> = ({
                 profileContainer.style.visibility = "visible";
                 //postSubContainer.style.visibility = "visible";
                 setLoading(false);
+                if(setProfPostCheck !== undefined)
+                setProfPostCheck(1)
                 //setLoading2(false);
             }, 300)
         };
@@ -166,11 +168,11 @@ const ProfilePage: React.FC<PostProps> = ({
     const waitForStates2 = async () => {
         console.log(profPostCheck, "profPost")
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
-        if(profPostCheck === 0) {
+        if(profPostCheck === 1) {
             setTimeout(() => {
                 setLoading2(false);
                 postSubContainer.style.visibility = "visible";
-            }, 1000)
+            }, 300)
         };
         if(setProfPostCheck !== undefined) setProfPostCheck(0); 
     }

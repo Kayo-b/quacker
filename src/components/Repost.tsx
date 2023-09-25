@@ -72,12 +72,11 @@ const Repost: React.FC<PostProps> = ({
           if(addToStatesCount) {
             addToStatesCount(1);
             console.log("reposted!!!")};
-            if(!profPost) {
-              console.log("profPost!")
-              if(setProfPostCheck) setProfPostCheck(1)
-            } 
+            // if(!profPost) {
+            //   console.log("profPost!")
+            //   if(setProfPostCheck) setProfPostCheck(1)
+            // } 
             console.log("post", post)
-            
       }
   }
 
