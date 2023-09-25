@@ -110,13 +110,12 @@ const addBookmark = async (postId: string) => {
     useEffect(() => {
         // hasUserBookmarkedPost2(post?.postID);
         hasUserBookmarkedPost(post?.postID);
-        
     },[bookmarkPosts])
     console.log(userData, "UserDATA111")
     return(
         <div className="bm-main-container">
             <button onClick={() => addBookmark(post?.postID)}>
-                {favorited ? "Unfavorite" : "Favorite"}</button>
+                {userData?.bookmarks.includes(post?.postID) ? "Unfavorite" : "Favorite"}</button>
         </div>
     )
 }

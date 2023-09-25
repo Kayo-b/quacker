@@ -342,7 +342,7 @@ console.log(postsArray,"postss#!@ ")
           setUpdate={setUpdate}
           bookmarkPosts={bookmarkPosts} 
           setBookmarkPosts={setBookmarkPosts}
-          //userData={userData}
+          userData={userData}
         />
         <Comment 
          user={userCtx as UserProps}
@@ -419,7 +419,7 @@ console.log(postsArray,"postss#!@ ")
           setUpdate={setUpdate}
           bookmarkPosts={bookmarkPosts} 
           setBookmarkPosts={setBookmarkPosts}
-          //userData={userData}
+          userData={userData}
         />
         <Comment
         user={userCtx as UserProps}
@@ -494,7 +494,7 @@ console.log(postsArray,"postss#!@ ")
         setUpdate={setUpdate}
         bookmarkPosts={bookmarkPosts} 
         setBookmarkPosts={setBookmarkPosts}
-        //userData={userData}
+        userData={userData}
       />
       <Comment
       user={userCtx as UserProps}
@@ -506,23 +506,22 @@ console.log(postsArray,"postss#!@ ")
       name={name}
       />
      <Repost 
-    user={userCtx as UserProps}
-    post={post}
-    setUpdate={setUpdate}
-    setNewPost={setNewPost}
-    newPost={newPost}
-    update={update}
-    name={name}
-    repost={repost}
-    setRepost={setRepost}
-    userMainFeed={userMainFeed}
-    setUserMainFeed={setUserMainFeed}
-    profPost={profPost}
-    setProfPost={setProfPost}
-    addToStatesCount={addToStatesCount}
-    setPostFeedStatesCount={setPostFeedStatesCount}
-    
-   />
+       user={userCtx as UserProps}
+       post={post}
+       setUpdate={setUpdate}
+       setNewPost={setNewPost}
+       newPost={newPost}
+       update={update}
+       name={name}
+       repost={repost}
+       setRepost={setRepost}
+       userMainFeed={userMainFeed}
+       setUserMainFeed={setUserMainFeed}
+       profPost={profPost}
+       setProfPost={setProfPost}
+       addToStatesCount={addToStatesCount}
+       setPostFeedStatesCount={setPostFeedStatesCount}
+      />
     </div>
     </div>
     } else {
@@ -569,7 +568,7 @@ console.log(postsArray,"postss#!@ ")
           setUpdate={setUpdate}
           bookmarkPosts={bookmarkPosts} 
           setBookmarkPosts={setBookmarkPosts}
-          //userData={userData}
+          userData={userData}
         />
         <Comment 
          user={userCtx as UserProps}
@@ -581,23 +580,22 @@ console.log(postsArray,"postss#!@ ")
          name={name}
         />
         <Repost 
-    user={userCtx as UserProps}
-    post={post}
-    setUpdate={setUpdate}
-    setNewPost={setNewPost}
-    newPost={newPost}
-    update={update}
-    name={name}
-    repost={repost}
-    setRepost={setRepost}
-    userMainFeed={userMainFeed}
-    setUserMainFeed={setUserMainFeed}
-    profPost={profPost}
-    setProfPost={setProfPost}
-    addToStatesCount={addToStatesCount}
-    setPostFeedStatesCount={setPostFeedStatesCount}
-    
-   />
+         user={userCtx as UserProps}
+         post={post}
+         setUpdate={setUpdate}
+         setNewPost={setNewPost}
+         newPost={newPost}
+         update={update}
+         name={name}
+         repost={repost}
+         setRepost={setRepost}
+         userMainFeed={userMainFeed}
+         setUserMainFeed={setUserMainFeed}
+         profPost={profPost}
+         setProfPost={setProfPost}
+         addToStatesCount={addToStatesCount}
+         setPostFeedStatesCount={setPostFeedStatesCount}
+         />
       </div>
       </div>
       : <></>
@@ -634,13 +632,13 @@ console.log(postsArray,"postss#!@ ")
         post={post}
         /> 
         <BookmarkBtn 
-          user={userCtx as UserProps} 
-          post={post} 
-          update={update} 
-          setUpdate={setUpdate}
-          bookmarkPosts={bookmarkPosts} 
-          setBookmarkPosts={setBookmarkPosts}
-          //userData={userData}
+         user={userCtx as UserProps} 
+         post={post} 
+         update={update} 
+         setUpdate={setUpdate}
+         bookmarkPosts={bookmarkPosts} 
+         setBookmarkPosts={setBookmarkPosts}
+         userData={userData}
         />
         <Comment 
          user={userCtx as UserProps}
@@ -652,23 +650,22 @@ console.log(postsArray,"postss#!@ ")
          name={name}
         />
         <Repost 
-    user={userCtx as UserProps}
-    post={post}
-    setUpdate={setUpdate}
-    setNewPost={setNewPost}
-    newPost={newPost}
-    update={update}
-    name={name}
-    repost={repost}
-    setRepost={setRepost}
-    userMainFeed={userMainFeed}
-    setUserMainFeed={setUserMainFeed}
-    profPost={profPost}
-    setProfPost={setProfPost}
-    addToStatesCount={addToStatesCount}
-    setPostFeedStatesCount={setPostFeedStatesCount}
-    
-   />
+         user={userCtx as UserProps}
+         post={post}
+         setUpdate={setUpdate}
+         setNewPost={setNewPost}
+         newPost={newPost}
+         update={update}
+         name={name}
+         repost={repost}
+         setRepost={setRepost}
+         userMainFeed={userMainFeed}
+         setUserMainFeed={setUserMainFeed}
+         profPost={profPost}
+         setProfPost={setProfPost}
+         addToStatesCount={addToStatesCount}
+         setPostFeedStatesCount={setPostFeedStatesCount}
+         />
         </div>
       </div>
       : <></>
@@ -711,7 +708,7 @@ console.log(postsArray,"postss#!@ ")
           setUpdate={setUpdate}
           bookmarkPosts={bookmarkPosts} 
           setBookmarkPosts={setBookmarkPosts}
-          //userData={userData}
+          userData={userData}
         />
         <Comment 
          user={userCtx as UserProps}
@@ -785,7 +782,7 @@ let clickedPostParentPost =   postsArray?.map(post =>
     setUpdate={setUpdate}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
-    //userData={userData}
+    userData={userData}
     />
     <Comment 
      user={userCtx as UserProps}
@@ -861,7 +858,7 @@ let rootPost =  postsArray?.map(post =>
     setUpdate={setUpdate}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
-    //userData={userData}
+    userData={userData}
     />
     <Comment 
      user={userCtx as UserProps}
@@ -936,7 +933,7 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
     setUpdate={setUpdate}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
-    //userData={userData}
+    userData={userData}
     />
     <Comment 
      user={userCtx as UserProps}
@@ -1017,7 +1014,7 @@ let profileNewPostsFeed =  newPost.map(post =>
     setUpdate={setUpdate}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
-    //userData={userData}
+    userData={userData}
     />
     <Comment 
      user={userCtx as UserProps}
@@ -1096,7 +1093,7 @@ let profileResponsesFeed =  postsArray?.map(post =>
     setUpdate={setUpdate}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
-    //userData={userData}
+    userData={userData}
     />
     <Comment 
      user={userCtx as UserProps}
@@ -1168,7 +1165,7 @@ let profileNewResponsesFeed =  postsArray?.map(post =>
     setUpdate={setUpdate}
     bookmarkPosts={bookmarkPosts} 
     setBookmarkPosts={setBookmarkPosts}
-    //userData={userData}
+    userData={userData}
     />
     <Comment 
      user={userCtx as UserProps}
@@ -1232,7 +1229,7 @@ let repostsFromUser = postsArray?.map(post =>
         setUpdate={setUpdate}
         bookmarkPosts={bookmarkPosts} 
         setBookmarkPosts={setBookmarkPosts}
-        //userData={userData}
+        userData={userData}
         />
       <Comment 
        user={userCtx as UserProps}
@@ -1295,7 +1292,7 @@ let repostsFromUser = postsArray?.map(post =>
         setUpdate={setUpdate}
         bookmarkPosts={bookmarkPosts} 
         setBookmarkPosts={setBookmarkPosts}
-        //userData={userData}
+        userData={userData}
         />
       <Comment 
        user={userCtx as UserProps}
