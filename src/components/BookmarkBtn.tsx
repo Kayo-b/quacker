@@ -23,6 +23,7 @@ type PostProps = {
     setBookmarkUpdate?: React.Dispatch<React.SetStateAction<boolean>>;
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     userData?: DocumentData;
+    userDoc?: DocumentData;
     
 }
 
@@ -36,11 +37,13 @@ const BookmarkBtn: React.FC<PostProps> = ({
     bookmarkUpdate,
     setBookmarkUpdate,
     addToStatesCount,
-    userData
+    userData,
+    userDoc
 
 }) => {
 
 const [favorited, setFavorited] = useState<boolean>(false);
+const isFav = userDoc?.bookmarks.includes(post?.postID)
 
 // const hasUserBookmarkedPost2 = (postId: string) => {
 //     if(post !== undefined ) {
@@ -52,13 +55,10 @@ const [favorited, setFavorited] = useState<boolean>(false);
 //     hasUserBookmarkedPost(postId)
 // }
 console.log(post,"bookmarkUser")
+console.log(isFav,"isFAV1")
 const hasUserBookmarkedPost = async(postId: string) => {
     const userRef = doc(db, 'users', user.uid);
     const userDoc = await getDoc(userRef);
-    
-    // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
-    // const docs = await getDocs(q);
-    // const userData = docs.docs[0].data();
     if(userDoc.exists()) {
         if(userDoc.data().bookmarks.includes(postId)) {
             setFavorited(true);
@@ -77,7 +77,6 @@ const removeBookmarkPost = (postId: string) => {
     };
 
 const addBookmarkPost = (newPost: DocumentData) => {
-        
         if(setBookmarkPosts) setBookmarkPosts(
             prevBookmarkPosts => [...prevBookmarkPosts, newPost]) 
             
@@ -96,11 +95,13 @@ const addBookmark = async (postId: string) => {
             setFavorited(true);
             setDoc(userRef, {bookmarks: arrayUnion(postId)}, {merge: true})
             setUpdate(true);
-            if(post) addBookmarkPost(post); 
+            //userDoc?.bookmarks.push(post?.postID)
+            if(post) addBookmarkPost(post?.postID); 
             
     } else {
             setFavorited(false);
             setDoc(userRef, {bookmarks: arrayRemove(postId)}, {merge: true});
+            //userDoc?.bookmarks.splice(userDoc?.bookmarks.indexOf(postId),1)
             setUpdate(false);
             removeBookmarkPost(post?.postID);
         }
@@ -110,12 +111,12 @@ const addBookmark = async (postId: string) => {
     useEffect(() => {
         // hasUserBookmarkedPost2(post?.postID);
         hasUserBookmarkedPost(post?.postID);
-    },[bookmarkPosts])
-    console.log(userData, "UserDATA111")
+    },[bookmarkPosts, userDoc])
+    console.log(user, "UserDATA111")
     return(
         <div className="bm-main-container">
             <button onClick={() => addBookmark(post?.postID)}>
-                {userData?.bookmarks.includes(post?.postID) ? "Unfavorite" : "Favorite"}</button>
+                {favorited ? "Unfavorite" : "Favorite"}</button>
         </div>
     )
 }

@@ -172,7 +172,7 @@ const ProfilePage: React.FC<PostProps> = ({
             setTimeout(() => {
                 setLoading2(false);
                 postSubContainer.style.visibility = "visible";
-            }, 300)
+            }, 700)
         };
         if(setProfPostCheck !== undefined) setProfPostCheck(0); 
     }
