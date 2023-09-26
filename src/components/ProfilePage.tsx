@@ -166,9 +166,9 @@ const ProfilePage: React.FC<PostProps> = ({
     };
 
     const waitForStates2 = async () => {
-        console.log(profPostCheck, "profPost")
+        console.log(posts, "po@@@sts")
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
-        if(profPostCheck === 1) {
+        if(profPostCheck === 1 || posts.length === 0) {
             setTimeout(() => {
                 setLoading2(false);
                 postSubContainer.style.visibility = "visible";
@@ -258,7 +258,7 @@ const ProfilePage: React.FC<PostProps> = ({
 
     useEffect(() => {
         waitForStates2();
-    },[profPostCheck])
+    },[profPostCheck, update])
     
 
     useEffect(() => {
@@ -294,7 +294,7 @@ const ProfilePage: React.FC<PostProps> = ({
     } </UserContext.Provider>
     
 console.log(postsRenew,"posts heres??s?")
-console.log(post,"posts here?!!!!?")
+console.log(posts,"posts here?!!!!?")
   return (
     <div>{loading ? "Loading...." : null}
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
@@ -337,7 +337,7 @@ console.log(post,"posts here?!!!!?")
                     <div className="responses-select" onClick={(e) => loadPostsList("responses")}>Responses</div>
                 </div>
                 <div className="feed-display">                                
-                {loading2 ? "Loading..." : null}
+                {loading2 ? "Loading..." : posts.length === 0 ? "No posts" : null}
                 <div id="post-subcontainer" style={{visibility:"hidden"}}>{renderPosts}</div>
                 </div>
             </div>

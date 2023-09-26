@@ -102,7 +102,7 @@ const fetchBookmarks = async () => {
  
   const q = query(collection(db, "users"), where("uid", "==", user?.uid));
   const docs = await getDocs(q);
- 
+
   let tempBookmarks: DocumentData[] = [];
   docs.forEach(doc => {
     console.log(doc.data(), "DOC!S")
@@ -124,11 +124,9 @@ const fetchBookmarks = async () => {
   //setBookmarkUpdate(true);
 }
 
-
-
 useEffect(() => {
   fetchBookmarks();
-  console.log("app componet", user )
+ 
 },[user])
 
   return (

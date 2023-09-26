@@ -38,12 +38,10 @@ const BookmarkBtn: React.FC<PostProps> = ({
     setBookmarkUpdate,
     addToStatesCount,
     userData,
-    userDoc
 
 }) => {
 
 const [favorited, setFavorited] = useState<boolean>(false);
-const isFav = userDoc?.bookmarks.includes(post?.postID)
 
 // const hasUserBookmarkedPost2 = (postId: string) => {
 //     if(post !== undefined ) {
@@ -55,7 +53,7 @@ const isFav = userDoc?.bookmarks.includes(post?.postID)
 //     hasUserBookmarkedPost(postId)
 // }
 console.log(post,"bookmarkUser")
-console.log(isFav,"isFAV1")
+
 const hasUserBookmarkedPost = async(postId: string) => {
     const userRef = doc(db, 'users', user.uid);
     const userDoc = await getDoc(userRef);
@@ -111,7 +109,7 @@ const addBookmark = async (postId: string) => {
     useEffect(() => {
         // hasUserBookmarkedPost2(post?.postID);
         hasUserBookmarkedPost(post?.postID);
-    },[bookmarkPosts, userDoc])
+    },[bookmarkPosts])
     console.log(user, "UserDATA111")
     return(
         <div className="bm-main-container">

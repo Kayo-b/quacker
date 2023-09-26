@@ -169,10 +169,10 @@ console.log(postsArray,"postss#!@ ")
   }
 
   const RedirectToProfilePage = (post: DocumentData | undefined) => {
-    if(profPost) {
-      const profileContainer = 
-                document.querySelector(".user-container-profile-page-container") as HTMLElement;
-                profileContainer.style.visibility = "hidden" }     
+    // if(profPost) {
+    //   const profileContainer = 
+    //             document.querySelector(".user-container-profile-page-container") as HTMLElement;
+    //             profileContainer.style.visibility = "hidden" }     
     navigate(`/profile/${post?.username}`, {state: {post}});
     setUpdate(!update)
   }

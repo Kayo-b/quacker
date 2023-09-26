@@ -28,7 +28,6 @@ const handleClick = async (text: String) => {
     navigate(`/search/${text}`);
   };
 
-
     return(
         <div className="post-main-container">     
             <input 
