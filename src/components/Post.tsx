@@ -961,7 +961,6 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
     addToStatesCount={addToStatesCount}
     setPostFeedStatesCount={setPostFeedStatesCount}
     setProfPostCheck={setProfPostCheck}
-    
    />
   </div>  
   </div>

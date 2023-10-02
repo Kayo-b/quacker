@@ -72,10 +72,10 @@ const Repost: React.FC<PostProps> = ({
           if(addToStatesCount) {
             addToStatesCount(1);
             console.log("reposted!!!")};
-            // if(!profPost) {
-            //   console.log("profPost!")
-            //   if(setProfPostCheck) setProfPostCheck(1)
-            // } 
+            if(!profPost) {
+              console.log("profPost!")
+              if(setProfPostCheck) setProfPostCheck(1)
+            } 
             console.log("post", post)
       }
   }
@@ -153,7 +153,7 @@ const Repost: React.FC<PostProps> = ({
 // }
 
 async function addRepostData(postId: string) {
-
+  console.log(reposted,"REPOSTED><><")
       // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
       // const docs = await getDocs(q);
       // const userRef = docs.docs[0].ref;
@@ -193,7 +193,7 @@ async function addRepostData(postId: string) {
               
             }
             setDoc(postRef, {repostByUsers: arrayUnion(user.uid)}, {merge: true})
-            !update ? setUpdate(true) : setUpdate(false);
+            //!update ? setUpdate(true) : setUpdate(false);
             if(post) addRepostPost(post);
             
 
@@ -226,7 +226,7 @@ async function addRepostData(postId: string) {
             }
             setDoc(userRef, {reposts: arrayRemove(postId)}, {merge: true});
             setDoc(postRef, {repostByUsers: arrayRemove(user.uid)}, {merge: true});
-            !update ? setUpdate(true) : setUpdate(false);
+            //!update ? setUpdate(true) : setUpdate(false);
             removeRepost(post?.postID);
           }
       }
