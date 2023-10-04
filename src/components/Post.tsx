@@ -117,7 +117,7 @@ const Post: React.FC<PostProps> = ({
   const [profileImg, setProfileImg] = useState("")
   const style = {"fontSize": "large"}
   const postsArray = posts.length === 0 ? postsRenew : posts; 
-  console.log(postsArray, "posts asssssrray")
+  console.log(postsArray, "posts assssssrray")
   //const newPostsArray = newPost.length === 0 ? postsRenew : postsRenew;
   
 //   const fetchPosts = async() => {    
@@ -890,7 +890,8 @@ let rootPost =  postsArray?.map(post =>
   </div>
   : <></>
 )
-console.log(userMainFeed)
+console.log(userMainFeed,"OPOP")
+console.log(postsArray,"OPOP")
 // let filteredPosts = posts.filter()
 
 //Loads the profile main feed(posts and reposts), the order of the userMainFeed array was inverted

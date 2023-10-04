@@ -120,9 +120,9 @@ const ProfilePage: React.FC<PostProps> = ({
                 setUserMainFeed(docs.mainFeed.reverse())
                 img?.setAttribute('src', docs.imgUrl)
                 bkgImg?.setAttribute('style', `background-image: url(${docs.bkgImgUrl})`)
-                imgposts.forEach(post => {
-                    post.setAttribute('src', docs.imgUrl)
-                });
+                // imgposts.forEach(post => {
+                //     post.setAttribute('src', docs.imgUrl)
+                // });
             })
     };
 
