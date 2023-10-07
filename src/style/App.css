@@ -1,3 +1,8 @@
+
+#root {
+  background-color: #292c2e;
+}
+
 .App {
   display: flex;
   width: 100%;
@@ -103,9 +108,10 @@ li {
 }
 
 .profile-picture, .profile-picture-profile-feed {
-  height: 35px;
+  height: 50px;
   margin-right: 10px;
   border-radius: 25px;
+  z-index: 1;
 
 }
 
@@ -144,35 +150,47 @@ li {
 
 .option-btn-container {
   display:flex;
-  justify-content: end;
+  justify-content: flex-end;
   position: relative;
-  
-
 }
 
 .options-btn {
   position: absolute;
+  margin-top: 1px;
   border: 0px;
   background:none;
+  z-index: 1;
   
 }
 
 #options {
   display: flex;
   position: absolute;
-  top: 0;
-  right: 14%;
-  bottom: 10%;
-  background-color: red;
+  margin-top: 3px;
+}
+
+.btnSubcontainer {
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  width: 100px;
+  height: 25px;
+  border: 1px solid red;
 }
 
 #options>* {
   display: flex;
-  position: absolute;
 }
 
 .followBtn {
-  margin-left: -18px;
+  /* margin-left: -18px; */
+  border: 1px solid blue;
+  height: 20px;
+}
+
+.deleteBtn {
+  border: 1px solid blue;
+  height: 20px;
 }
 
 .threeDotsSvg {
@@ -209,26 +227,26 @@ button.options-btn * {
 }
 
 .connecting-comments-line {
-  border-left: 2px solid #292c2e;
-  margin-top: 36px;
-  margin-left: 17px;
+  border-left: 2px solid #adadad;
+  margin-top: 42px;
+  margin-left: 25px;
   position: absolute
 }
 
 .connecting-comments-line2 {
-  border-left: 2px solid #292c2e;
-  margin-top: 36px;
-  margin-left: 17px;
+  border-left: 2px solid #adadad;
+  margin-top: 42px;
+  margin-left: 25px;
   position: absolute
 }
 
 button{
   border: 0px;
   background: none;
-  border-radius: 25px;
 }
 button:hover {
   background:fixed;
+  background-color: gray;
   cursor:pointer;
 }
 .search-container {

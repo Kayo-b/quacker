@@ -235,9 +235,12 @@ console.log(postsArray,"postss#!@ ")
     targetElement = targetElement.parentElement as HTMLElement;
     
     const nextElement = targetElement.nextElementSibling as HTMLElement;
+    const nextNextEle = nextElement.children[0] as HTMLElement;
     if(event.target && nextElement.style.display === "none") {
       nextElement.style.display = "flex";
+      nextNextEle.style.display = "flex";
     } else {
+      nextElement.style.display = "none";
       nextElement.style.display = "none";
     }
   };
@@ -309,12 +312,14 @@ console.log(postsArray,"postss#!@ ")
       <div className="post-container" key={post.postID}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
-          <div id="options" style={{display: "none"}}>
-          {
-            userCtx?.uid === post?.userID ?
-            <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
-          }
+          <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
+            </div>
           </div>
         </div>
         <div className="user-container">
@@ -384,14 +389,15 @@ console.log(postsArray,"postss#!@ ")
         return <div className="post-container" key={post.postID}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
-          <div id="options" style={{display: "none"}}>
-          {
-            userCtx?.uid === post?.userID ?
-            <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
-          }
-         
-        </div>
+          <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
+            </div>
+          </div>
         </div>
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
@@ -461,13 +467,15 @@ console.log(postsArray,"postss#!@ ")
       return <div className="post-container" key={post.postID}>
       <div className="option-btn-container">
         <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
-        <div id="options" style={{display: "none"}}>
-        {
-          userCtx?.uid === post?.userID ?
-          <button onClick={() => RemovePost(post)}>Delete post</button> :
-          <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
-        }
-      </div>
+        <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
+            </div>
+        </div>
       </div>
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
@@ -535,12 +543,14 @@ console.log(postsArray,"postss#!@ ")
       <div className="post-page-container" key={post.postID}>
         <div className="option-btn-container">
          <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
-          <div id="options" style={{display: "none"}}>
-          {
-            userCtx?.uid === post?.userID ?
-            <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
-          }
+         <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
+            </div>
         </div>
         </div>
         <div className="user-container">
@@ -605,12 +615,14 @@ console.log(postsArray,"postss#!@ ")
       <div className="post-page-container" key={post.postID}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
-          <div id="options" style={{display: "none"}}>
-          {
-            userCtx?.uid === post?.userID ?
-            <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
-          }
+          <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
+          </div>
         </div>
         </div>
         <div className="user-container">
@@ -675,13 +687,17 @@ console.log(postsArray,"postss#!@ ")
     <div className="post-page-container" key={post?.postID} style={style}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
-          <div id="options" style={{display: "none"}}>
-          {
-            userCtx?.uid === post?.userID ?
-            <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
-          }
+          <div style={{display: "none"}} className="btnSubcontainer">
+          <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
           </div>
+        </div>
+        </div>
         </div>
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
@@ -746,13 +762,15 @@ let clickedPostParentPost =   postsArray?.map(post =>
   <div className="post-page-container" key={post.postID} style={style}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
-          <div id="options" style={{display: "none"}}>
-          {
-            userCtx?.uid === post?.userID ?
-            <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
-          }
+          <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
           </div>
+        </div>
         </div>
     <div className="user-container2">
       <div className="profile-line-connector">
@@ -822,13 +840,15 @@ let rootPost =  postsArray?.map(post =>
   <div className="post-page-container" key={post.postID} style={style}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
-          <div id="options" style={{display: "none"}}>
-          {
-            userCtx?.uid === post?.userID ?
-            <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
-          }
+          <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
           </div>
+        </div>
         </div>
     <div className="user-container">
       <div className="profile-line-connector">
@@ -901,13 +921,15 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
   <div className="post-container" key={post.postID} style={style}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
-          <div id="options" style={{display: "none"}}>
-          {
-            userCtx?.uid === post?.userID ?
-            <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
-          }
+          <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
           </div>
+        </div>
         </div>
     <div className="user-container">
       <img className="profile-picture-profile-feed" alt="user icon" src={post?.imgUrl}></img>
@@ -974,20 +996,15 @@ let profileNewPostsFeed =  newPost.map(post =>
   <div className="post-container" key={post.postID} style={style}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
-          <div id="options" style={{display: "none"}}>
-          {
-            userCtx?.uid === post?.userID ?
-            <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div>
-              <FollowBtn 
-                post={post} 
-                user={userCtx as UserProps} 
-                setUpdateFollow={setUpdateFollow} 
-                updateFollow={updateFollow} 
-                />
-            </div>
-          }
+          <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
           </div>
+        </div>
         </div>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
@@ -1054,19 +1071,15 @@ let profileResponsesFeed =  postsArray?.map(post =>
   <div className="post-container" key={post.postID} style={style}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
-          <div id="options" style={{display: "none"}}>
-          {
-            userCtx?.uid === post?.userID ?
-            <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div>
-              <FollowBtn 
-                post={post} 
-                user={userCtx as UserProps} 
-                setUpdateFollow={setUpdateFollow} 
-                updateFollow={updateFollow} 
-                /></div>
-          }
+          <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
           </div>
+        </div>
         </div>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
@@ -1132,13 +1145,15 @@ let profileNewResponsesFeed =  postsArray?.map(post =>
   <div className="post-container" key={post.postID} style={style}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
-          <div id="options" style={{display: "none"}}>
-          {
-            userCtx?.uid === post?.userID ?
-            <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
-          }
+          <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
           </div>
+        </div>
         </div>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
