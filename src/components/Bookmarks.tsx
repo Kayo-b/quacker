@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, MouseEvent } from "react";
+import React, { useState, useEffect, useRef, MouseEvent, useContext} from "react";
 import { useNavigate } from 'react-router-dom';
 import Post from "./Post";
 import {

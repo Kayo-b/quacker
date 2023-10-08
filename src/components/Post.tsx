@@ -1211,7 +1211,27 @@ let profileNewResponsesFeed =  postsArray?.map(post =>
    />
   </div>
   </div>
-  : <></>
+  : <>
+  <div style={{display:"none"}}>
+  <Repost 
+    user={userCtx as UserProps}
+    post={post}
+    setUpdate={setUpdate}
+    setNewPost={setNewPost}
+    newPost={newPost}
+    update={update}
+    name={name}
+    repost={repost}
+    setRepost={setRepost}
+    userMainFeed={userMainFeed}
+    setUserMainFeed={setUserMainFeed}
+    profPost={profPost}
+    setProfPost={setProfPost}
+    addToStatesCount={addToStatesCount}
+    setPostFeedStatesCount={setPostFeedStatesCount}
+    />
+    </div>
+  </>
 )
 
 let repostsFromUser = postsArray?.map(post =>  

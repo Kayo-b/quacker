@@ -99,8 +99,9 @@ const ProfilePage: React.FC<PostProps> = ({
     const endpointLocation = useLocation();
     const holepath = endpointLocation.pathname;
     const endpoint = holepath.split('/')[2];
-    
-        console.log(userData?.mainFeed,"USER DATa")
+
+    console.log(userData?.mainFeed,"USER DATa")
+
     const fetchProfileImg = async() => {    
         const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")));
         console.log("zzzzz!!",postsRenew)
@@ -146,13 +147,14 @@ const ProfilePage: React.FC<PostProps> = ({
         </div>
         );
     }
-    
+    console.log(profileStatesCount,"OPOP")
+
     const waitForStates = () => {
+        const profileContainer = 
+        document.querySelector(".user-container-profile-page-container") as HTMLElement;
+        const postSubContainer = 
+        document.getElementById("post-subcontainer") as HTMLElement;
         if(profileStatesCount === 1) {
-            const profileContainer = 
-                document.querySelector(".user-container-profile-page-container") as HTMLElement;
-            const postSubContainer = 
-                document.getElementById("post-subcontainer") as HTMLElement;
             if(profileContainer) setTimeout(() => {
                 profileContainer.style.visibility = "visible";
                 //postSubContainer.style.visibility = "visible";
@@ -163,10 +165,15 @@ const ProfilePage: React.FC<PostProps> = ({
             }, 300)
         };
          setProfileStatesCount(0);
+        if(userMainFeed?.length === 0) {
+            profileContainer.style.visibility = "visible";
+                //postSubContainer.style.visibility = "visible";
+                setLoading(false);
+        }
     };
 
     const waitForStates2 = async () => {
-        console.log(posts, "po@@@sts")
+        console.log(posts, "po@@@@sts")
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
         if(profPostCheck === 1 || posts.length === 0) {
             setTimeout(() => {
@@ -174,7 +181,8 @@ const ProfilePage: React.FC<PostProps> = ({
                 postSubContainer.style.visibility = "visible";
             }, 700)
         };
-        if(setProfPostCheck !== undefined) setProfPostCheck(0); 
+        if(setProfPostCheck !== undefined) {setProfPostCheck(0);}
+        
     }
   
     const loadPostsList = (postOrComment: string) => {
@@ -190,6 +198,7 @@ const ProfilePage: React.FC<PostProps> = ({
             if(postSubContainer !== null) postSubContainer.style.visibility = "hidden"
             setLoading2(true);
         }
+        
     }
 
     const checkFollow = async() => {

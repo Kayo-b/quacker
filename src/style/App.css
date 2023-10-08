@@ -11,6 +11,7 @@
   justify-content:center;
   align-items: center;
   position: relative;
+  color: whitesmoke;
   
 }
 
@@ -23,7 +24,6 @@ li {
   flex-direction: row;
   border: 1px solid pink;
   justify-content: center;
-  
   
 }
 
@@ -243,6 +243,7 @@ button.options-btn * {
 button{
   border: 0px;
   background: none;
+  color: whitesmoke;
 }
 button:hover {
   background:fixed;
