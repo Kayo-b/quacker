@@ -94,7 +94,7 @@ const addBookmark = async (postId: string) => {
             setDoc(userRef, {bookmarks: arrayUnion(postId)}, {merge: true})
             setUpdate(true);
             //userDoc?.bookmarks.push(post?.postID)
-            if(post) addBookmarkPost(post?.postID); 
+            if(post) addBookmarkPost(post); 
             
     } else {
             setFavorited(false);

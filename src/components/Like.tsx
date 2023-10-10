@@ -24,19 +24,19 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
   const [liked, setLiked] = useState<boolean>(false)
   console.log(post,"post from liked>?>?>?>?>?>")
 
-  async function hasUserLikedPost(postId: string) {
-    const postRef = doc(db, 'posts', postId);
-    const postDoc = await getDoc(postRef);
-    if(postDoc.exists()) {
-      const postData = postDoc.data();
-      if(postData.likedByUsers && postData.likedByUsers.includes(user.uid)) {
-        setLiked(true)
-      } 
-    } else {
-      setLiked(false)
-    }
+  // async function hasUserLikedPost(postId: string) {
+  //   const postRef = doc(db, 'posts', postId);
+  //   const postDoc = await getDoc(postRef);
+  //   if(postDoc.exists()) {
+  //     const postData = postDoc.data();
+  //     if(postData.likedByUsers && postData.likedByUsers.includes(user.uid)) {
+  //       setLiked(true)
+  //     } 
+  //   } else {
+  //     setLiked(false)
+  //   }
     
-  }
+  // }
 //  const hasUserLikedPost2 = () => {
 //   console.log(post,"post!")
 //   if(post?.likedByUsers.includes(user.uid)) {
@@ -45,17 +45,17 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
 //     return false;
 //   }
 //  }
-  function likedPostCheck(postID: string) {
+  function likedPostCheck() {
     
     if(post?.likedByUsers.includes(user.uid)) {
-          setLiked(true);
-          console.log(true, post ,"liked????!!!")
-        } else {
-          setLiked(false);
-          console.log(false,post,"liked????!!!")
-        }
-    //if(setLoading) setLoading(false);
-  }
+            setLiked(true);
+            console.log(true, post ,"liked????!!!")
+          } else {
+            setLiked(false);
+            console.log(false,post,"liked????!!!")
+          }
+      //if(setLoading) setLoading(false);
+    }
 
   const addLike = (postId: string) => {
     const postRef = doc(db, 'posts', postId)
@@ -73,8 +73,8 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
   }
 
   useEffect(() => {
-    likedPostCheck(post?.postID)
-  },[])
+    likedPostCheck()
+  },[post])
 
   return (
       <button className="like-btn" onClick={e => addLike(post?.postID)}>

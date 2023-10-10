@@ -75,6 +75,7 @@ const App = () => {
   const [profPost, setProfPost] = React.useState<boolean>(true);
   const [profPostCheck, setProfPostCheck] = React.useState<number>(0);
   const [updateFollow, setUpdateFollow] = React.useState<boolean>(false);
+  const [userData, setUserData] = React.useState<DocumentData>();
   
 
   // const [favorited, setFavorited] = useState<boolean>(false);
@@ -200,8 +201,10 @@ useEffect(() => {
         setUserMainFeed={setUserMainFeed}
         postPageStatesCount={postPageStatesCount}
         addToStatesCount={setPostFeedStatesCount}
+        setPostFeedStatesCount={setPostFeedStatesCount}
         updateFollow={updateFollow}
         setUpdateFollow={setUpdateFollow}
+        userData={userData}
         />}
         />
         <Route

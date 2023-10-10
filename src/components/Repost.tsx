@@ -30,6 +30,7 @@ type UserProps = {
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     setProfPostCheck?: React.Dispatch<React.SetStateAction<number>>;
     setPostFeedStatesCount?: React.Dispatch<React.SetStateAction<number>>;
+    setBookmarksProfileStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     
 }
 
@@ -48,7 +49,8 @@ const Repost: React.FC<PostProps> = ({
     profPost,
     addToStatesCount,
     setProfPostCheck,
-    setPostFeedStatesCount
+    setPostFeedStatesCount,
+    setBookmarksProfileStatesCount
     }) => {
 
   const [reposted, setReposted] = useState<boolean>(false);
@@ -69,6 +71,9 @@ const Repost: React.FC<PostProps> = ({
           }
           if(setPostFeedStatesCount)
               setPostFeedStatesCount(1)
+          if(setBookmarksProfileStatesCount) {
+            setBookmarksProfileStatesCount(1)
+          }
           if(addToStatesCount) {
             addToStatesCount(1);
             console.log("reposted!!!")};

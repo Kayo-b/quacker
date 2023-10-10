@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, MouseEvent, useContext} from "react";
+import { UserContext } from '../App';
 import { useNavigate } from 'react-router-dom';
 import Post from "./Post";
 import {
@@ -60,6 +61,8 @@ type BookmarksProps = {
     setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
     updateFollow?: boolean;
     setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
+    userData?: DocumentData;
+    setPostFeedStatesCount?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 
@@ -82,13 +85,16 @@ const Bookmarks: React.FC<BookmarksProps> = ({
   profPost,
   setProfPost,
   updateFollow,
-  setUpdateFollow
+  setUpdateFollow,
+  setPostFeedStatesCount,
+  userData
 }) => {
   const [bookmarkUpdate, setBookmarkUpdate] = useState<boolean | undefined>(true) 
   const [loading, setLoading] = React.useState(true);
   const [empty, setEmpty] = React.useState(false);
   const [bookmarksStatesCount, setBookmarksProfileStatesCount] = React.useState<number>(0);
   const navigate = useNavigate();
+  const userCtx = useContext(UserContext);
   const dotsSvg = <svg viewBox="0 0 24 24" className="threeDotsSvg" aria-hidden="true"><g><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path></g></svg>
 
   const waitForStates = () => {
@@ -216,7 +222,7 @@ const handleClick = (event: MouseEvent) => {
           </div>
         </div>
       <div className="user-container">
-        <img className="profile-picture" alt="user icon" src={myImg}></img>
+        <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
         <span>
           <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
             {post.username}
@@ -230,45 +236,44 @@ const handleClick = (event: MouseEvent) => {
       </div>
     <div className="main-btn-container">
     <Like 
-    user={user} 
-    post={post}
-    /> 
-    <BookmarkBtn 
-      key={post.postID}
-      user={user} 
-      post={post} 
-      update={update} 
-      setUpdate={setUpdate} 
-      bookmarkPosts={bookmarkPosts} 
-      setBookmarkPosts={setBookmarkPosts}
-      addToStatesCount={setBookmarksProfileStatesCount}
-      />
-      <Comment
-      user={user}
-      post={post}
-      setUpdate={setUpdate}
-      setNewPost={setNewPost}
-      newPost={newPost}
-      update={update}
-      name={name}
-      />
-      <Repost 
-       user={user}
-       post={post}
-       setUpdate={setUpdate}
-       setNewPost={setNewPost}
-       newPost={newPost}
-       update={update}
-       name={name}
-       repost={repost}
-       setRepost={setRepost}
-       userMainFeed={userMainFeed}
-       setUserMainFeed={setUserMainFeed}
-       profPost={profPost}
-       setProfPost={setProfPost}
-       addToStatesCount={addToStatesCount}
-
-      />
+        user={userCtx as UserProps} 
+        post={post}
+        /> 
+        <BookmarkBtn 
+          user={userCtx as UserProps} 
+          post={post} 
+          update={update} 
+          setUpdate={setUpdate}
+          bookmarkPosts={bookmarkPosts} 
+          setBookmarkPosts={setBookmarkPosts}
+          userData={userData}
+        />
+        <Comment 
+         user={userCtx as UserProps}
+         post={post}
+         setUpdate={setUpdate}
+         setNewPost={setNewPost}
+         newPost={newPost}
+         update={update}
+         name={name}
+        />
+        <Repost 
+        user={userCtx as UserProps}
+        post={post}
+        setUpdate={setUpdate}
+        setNewPost={setNewPost}
+        newPost={newPost}
+        update={update}
+        name={name}
+        repost={repost}
+        setRepost={setRepost}
+        userMainFeed={userMainFeed}
+        setUserMainFeed={setUserMainFeed}
+        profPost={profPost}
+        setProfPost={setProfPost}
+        addToStatesCount={addToStatesCount}
+        setBookmarksProfileStatesCount={setBookmarksProfileStatesCount}
+        />
     </div>
    
     </div>
