@@ -213,12 +213,14 @@ const handleClick = (event: MouseEvent) => {
       <div className="post-container" key={post.postID}>
         <div className="option-btn-container">
         <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
-          <div id="options" style={{display: "none"}}>
-          {
-            user.uid === post?.userID ?
-            <button onClick={() => RemovePost(post)}>Delete post</button> :
-            <div><FollowBtn post={post} user={user} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow}/></div>
-          }
+        <div style={{display: "none"}} className="btnSubcontainer">
+            <div id="options" style={{display: "flex"}}>
+            {
+              userCtx?.uid === post?.userID ?
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+            }
+            </div>
           </div>
         </div>
       <div className="user-container">

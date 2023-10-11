@@ -167,7 +167,6 @@ const ProfilePage: React.FC<PostProps> = ({
          setProfileStatesCount(0);
         if(userMainFeed?.length === 0) {
             profileContainer.style.visibility = "visible";
-                //postSubContainer.style.visibility = "visible";
                 setLoading(false);
         }
     };
@@ -210,9 +209,10 @@ const ProfilePage: React.FC<PostProps> = ({
             const userDoc1 = await getDoc(userRef1);
             const userDoc2 = await getDoc(userRef2);
             if(userDoc1.exists()) {
-                console.log("check follow2");
+               
                 const userData1 = userDoc1.data();
                 const following = userData1.following;
+                console.log("check follow2", following.includes(userData?.uid));
                 if(following.includes(userData?.uid)) {
                     setFollowBtn(true);
                 } else {
@@ -246,6 +246,7 @@ const ProfilePage: React.FC<PostProps> = ({
     }
 
     const followUser = async() => {
+        console.log(followBtn,"_)_)_)_")
         if(userData && userCtx) {
             const userRef1 = doc(db, 'users', userCtx?.uid);
             const userRef2 = doc(db, 'users', userData?.uid);    
@@ -266,8 +267,9 @@ const ProfilePage: React.FC<PostProps> = ({
     }
 
     useEffect(() => {
+        checkFollow();
         waitForStates2();
-    },[profPostCheck, update])
+    },[profPostCheck, update, userData])
     
 
     useEffect(() => {
