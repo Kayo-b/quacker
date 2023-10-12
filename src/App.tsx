@@ -103,9 +103,10 @@ const fetchBookmarks = async () => {
  
   const q = query(collection(db, "users"), where("uid", "==", user?.uid));
   const docs = await getDocs(q);
-
+  
   let tempBookmarks: DocumentData[] = [];
   docs.forEach(doc => {
+    setUserData(doc.data())
     console.log(doc.data(), "DOC!S")
       const bookmarks = doc.data().bookmarks;
       tempBookmarks.push(...bookmarks)
@@ -123,11 +124,12 @@ const fetchBookmarks = async () => {
   console.log("app component 22")
   console.log(tempPosts,"tempPosstsSSS")
   //setBookmarkUpdate(true);
+  
 }
 
 useEffect(() => {
   fetchBookmarks();
- 
+
 },[user])
 
   return (
@@ -179,6 +181,7 @@ useEffect(() => {
         setUserMainFeed={setUserMainFeed}
         updateFollow={updateFollow}
         setUpdateFollow={setUpdateFollow}
+        userData={userData}
         />}
         />
         <Route

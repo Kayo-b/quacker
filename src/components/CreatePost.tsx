@@ -28,9 +28,10 @@ type PostProps = {
     update: undefined | boolean;
     name?: string;
     user: UserProps;
+    userData?: DocumentData;
   };
 
-const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost, post}) => {
+const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost, post, userData}) => {
 const[text, setText] = useState("");
 const [imgUrl, setImgUrl] = useState("");
 
@@ -117,7 +118,8 @@ const handleClick = async (text: String) => {
 
 
     return(
-        <div className="post-main-container">     
+        <div className="post-main-container"> 
+        <img className="profile-picture" alt="user icon" src={userData?.imgUrl}></img>    
             <input 
                 type="text" placeholder="Say something..."
                 value={text} 

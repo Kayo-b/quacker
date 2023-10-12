@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext} from "react";
+import { UserContext } from '../App';
 import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
@@ -42,7 +43,7 @@ const BookmarkBtn: React.FC<PostProps> = ({
 }) => {
 
 const [favorited, setFavorited] = useState<boolean>(false);
-
+console.log(user,"USER BOOKMARKBTN")
 // const hasUserBookmarkedPost2 = (postId: string) => {
 //     if(post !== undefined ) {
 //         if(bookmarkPosts?.includes(post)) {
