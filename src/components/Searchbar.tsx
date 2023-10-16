@@ -29,7 +29,7 @@ const handleClick = async (text: String) => {
   };
 
     return(
-        <div className="post-main-container">     
+        <div className="search-main-container">     
             <input 
                 type="text" placeholder="Look for..."
                 value={text} 

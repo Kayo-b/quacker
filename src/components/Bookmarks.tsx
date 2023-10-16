@@ -177,9 +177,12 @@ const handleClick = (event: MouseEvent) => {
   targetElement = targetElement.parentElement as HTMLElement;
   
   const nextElement = targetElement.nextElementSibling as HTMLElement;
+  const nextNextEle = nextElement.children[0] as HTMLElement;
   if(event.target && nextElement.style.display === "none") {
     nextElement.style.display = "flex";
+    nextNextEle.style.display = "flex";
   } else {
+    nextElement.style.display = "none";
     nextElement.style.display = "none";
   }
 };

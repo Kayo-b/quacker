@@ -90,10 +90,30 @@ li {
 
 .post-main-container {
   display: flex;
-  align-items: start;
+  align-items: center;
   text-align:  start;
+  height: 70px;
+  max-width: 420px;
+
+}
+.post-main-container>input[type="text"] {
+  border: 1px;
+  height: 30px;
+  max-width: 420px;
+  background-color: gray;
 }
 
+.search-main-container>input[type="text"] {
+  border: 1px;
+  height: 30px;
+  background-color: gray;
+}
+
+input[type="button"] {
+  border: 1px;
+  height: 32px;
+  background-color: gray;
+}
 .user-container {
   display: flex;
   margin: 0px;
