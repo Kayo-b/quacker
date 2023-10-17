@@ -118,17 +118,19 @@ const handleClick = async (text: String) => {
 
 
     return(
+        <div className="post-wrapper-container">
         <div className="post-main-container"> 
-        <img className="profile-picture" alt="user icon" src={userData?.imgUrl}></img>    
-            <input 
-                type="text" placeholder="Say something..."
+        <img className="profile-picture" alt="user icon" src={userData?.imgUrl}></img> 
+            <textarea 
+                placeholder="Say something..."
                 value={text} 
                 onChange={e => setText(e.target.value)}>
-            </input>
+            </textarea>
             <input 
                 type="button" value="Post" 
                 onClick={() => handleClick(text)}>
             </input>
+        </div>
         </div>
     )
 }

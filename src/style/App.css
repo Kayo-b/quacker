@@ -54,7 +54,8 @@ li {
   border-right: 1px solid purple;
   align-items: center;
   text-align:  start;
-  width: 60vh;
+  max-width: 60vh;
+  min-width: 30vh;
   height: 100vh;
   
 }
@@ -88,24 +89,46 @@ li {
   left: 60vh;
 }
 
+.post-wrapper-container {
+  display: flex;
+  
+}
+
 .post-main-container {
   display: flex;
   align-items: center;
   text-align:  start;
   height: 70px;
-  max-width: 420px;
+  width: 520px;
 
 }
-.post-main-container>input[type="text"] {
-  border: 1px;
+
+.post-main-container>textarea {
+  display: flex;
+  border: 1px solid rgba(255, 0, 0, 0);
   height: 30px;
-  max-width: 420px;
-  background-color: gray;
+  width: 100%;
+  min-width: 50%;
+  max-height: 90%;
+  min-height: 90%;
+  resize: none;
+  overflow: auto;
+  background-color:rgba(38, 36, 36, 0);
+  appearance: none;
+  outline-style: none;
+  box-sizing: border-box;
+  outline-style: none;
+  padding: 5px;
+}
+
+.post-main-container>input[type="text"]:focus {
+  border-bottom: 1px solid red;
 }
 
 .search-main-container>input[type="text"] {
   border: 1px;
   height: 30px;
+  min-width: 100px;
   background-color: gray;
 }
 
