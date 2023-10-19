@@ -233,9 +233,9 @@ const handleClick = (event: MouseEvent) => {
             {post.username}
           </div>
         <div className="content" onClick={() => RedirectToPostPage(post)}>
-          <li key={post.id}>
-            {post.textContent}
-          </li>
+            <li key={post.id} className="text-content-field">
+              {post.textContent}
+            </li>
         </div>
         </span>
       </div>

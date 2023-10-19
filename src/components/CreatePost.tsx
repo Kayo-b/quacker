@@ -115,13 +115,13 @@ const handleClick = async (text: String) => {
     }
     
   };
-
-
+  
     return(
         <div className="post-wrapper-container">
         <div className="post-main-container"> 
         <img className="profile-picture" alt="user icon" src={userData?.imgUrl}></img> 
             <textarea 
+                maxLength={150}
                 placeholder="Say something..."
                 value={text} 
                 onChange={e => setText(e.target.value)}>

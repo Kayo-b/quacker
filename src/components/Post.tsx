@@ -329,7 +329,7 @@ console.log(postsArray,"postss#!@ ")
               {post.username}
             </div>
           <div className="content" onClick={() => RedirectToPostPage(post)}>
-            <li key={post.id}>
+            <li key={post.id} className="text-content-field">
               {post.textContent}
             </li>
           </div>
@@ -407,7 +407,7 @@ console.log(postsArray,"postss#!@ ")
               {post.username}
             </div>
           <div className="content" onClick={() => RedirectToPostPage(post)}>
-            <li key={post.id}>
+            <li key={post.id} className="text-content-field">
               {post.textContent}
             </li>
           </div>
@@ -484,7 +484,7 @@ console.log(postsArray,"postss#!@ ")
             {post.username}
           </div>
         <div className="content" onClick={() => RedirectToPostPage(post)}>
-          <li key={post.id}>
+          <li key={post.id} className="text-content-field">
             {post.textContent}
           </li>
         </div>
@@ -560,7 +560,7 @@ console.log(postsArray,"postss#!@ ")
               {post.username}
             </div>
           <div className="content" onClick={() => RedirectToPostPage(post)}>
-            <li key={post.id}>
+            <li key={post.id} className="text-content-field">
               {post.textContent}
             </li>
           </div>
@@ -632,7 +632,7 @@ console.log(postsArray,"postss#!@ ")
               {post.username}
             </div>
           <div className="content" onClick={() => RedirectToPostPage(post)}>
-            <li key={post.id}>
+            <li key={post.id} className="text-content-field">
               {post.textContent}
             </li>
           </div>
@@ -782,7 +782,7 @@ let clickedPostParentPost =   postsArray?.map(post =>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
-        <li key={post.id}>
+        <li key={post.id} className="text-content-field">
           {post.textContent}
         </li>
       </div>
@@ -860,7 +860,7 @@ let rootPost =  postsArray?.map(post =>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
-        <li key={post.id}>
+        <li key={post.id} className="text-content-field">
           {post.textContent}
         </li>
       </div>
@@ -938,7 +938,7 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
-        <li key={post.id}>
+        <li key={post.id} className="text-content-field">
           {post.textContent}
         </li>
       </div>
@@ -1013,7 +1013,7 @@ let profileNewPostsFeed =  newPost.map(post =>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
-        <li key={post.id}>
+        <li key={post.id} className="text-content-field">
           {post.textContent}
         </li>
       </div>
@@ -1088,7 +1088,7 @@ let profileResponsesFeed =  postsArray?.map(post =>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
-        <li key={post.id}>
+        <li key={post.id} className="text-content-field">
           {post.textContent}
         </li>
       </div>
@@ -1162,7 +1162,7 @@ let profileNewResponsesFeed =  postsArray?.map(post =>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
-        <li key={post.id}>
+        <li key={post.id} className="text-content-field">
           {post.textContent}
         </li>
       </div>
@@ -1247,7 +1247,7 @@ let repostsFromUser = postsArray?.map(post =>
             {post.username}
           </div>
         <div className="content" onClick={() => RedirectToPostPage(post)}>
-          <li key={post.id}>
+          <li key={post.id} className="text-content-field">
             {post.textContent}
           </li>
         </div>
@@ -1310,7 +1310,7 @@ let repostsFromUser = postsArray?.map(post =>
             {post.username}
           </div>
         <div className="content" onClick={() => RedirectToPostPage(post)}>
-          <li key={post.id}>
+          <li key={post.id} className="text-content-field">
             {post.textContent}
           </li>
         </div>
@@ -1369,7 +1369,7 @@ let repostsFromUser = postsArray?.map(post =>
   //         {post.username}
   //       </div>
   //     <div className="content" onClick={() => RedirectToPostPage(post)}>
-  //       <li key={post.id}>
+  //       <li key={post.id} className="text-content-field">
   //         {post.textContent}
   //       </li>
   //     </div>
