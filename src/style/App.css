@@ -22,13 +22,11 @@ li {
 .main-btn-container {
   display: flex;
   flex-direction: row;
-  border: 1px solid pink;
   justify-content: center;
   
 }
 
 .sb-main-container {
-  border: 2px solid red;
   align-items: center;
   text-align:  start;
   width: 40vh;
@@ -50,16 +48,19 @@ li {
   
 }
 
-.center-container, .home-main-container {
+.center-container {
   border-right: 1px solid purple;
   align-items: center;
   text-align:  start;
-  max-width: 60vh;
+  width: 60vh;
   min-width: 30vh;
   height: 100vh;
   background-color: #1e1d1d;
-  
 }
+
+/* .home-main-container {
+  max-width: 60vh;
+} */
 
 .right-container {
   border: 1px solid purple;
@@ -79,14 +80,14 @@ li {
   background-color: #292c2e;
   top: 15%;
   right: 60%;
-  border: 1px solid rgb(255, 255, 255);
+  border: 1px solid rgba(245, 245, 245, 0.531);
 }
 
 .nav-main-container {
   display: flex;
   align-items: start;
   text-align:  start;
-  border: 1px solid red;
+  border: 1px solid rgba(245, 245, 245, 0.522);
   left: 60vh;
 }
 
@@ -120,11 +121,12 @@ li {
   box-sizing: border-box;
   outline-style: none;
   padding: 5px;
+  color: rgb(211, 211, 211);
 }
 
-.post-main-container>input[type="text"]:focus {
-  border-bottom: 1px solid red;
-}
+/* .post-main-container>input[type="text"]:focus {
+  border-bottom: 1px solid whitesmoke
+} */
 
 .search-main-container>input[type="text"] {
   border: 1px;
@@ -182,7 +184,8 @@ input[type="button"] {
 }
 
 .post-container, .post-page-container {
-  border: 1px solid red;
+  border: 1px solid rgba(245, 245, 245, 0.531);
+  margin-top: 2px;
 }
 
 .user-name {
@@ -235,38 +238,37 @@ span {
   justify-content: flex-start;
   position: absolute;
   width: 100px;
-  height: 25px;
-  border: 1px solid red;
+  height: 20px;
+  border: 1px solid gray;
+  background-color: rgb(14, 14, 14)
 }
 
 #options>* {
   display: flex;
 }
 
-.followBtn {
-  /* margin-left: -18px; */
-  border: 1px solid blue;
-  height: 20px;
-}
-
-.deleteBtn {
-  border: 1px solid blue;
-  height: 20px;
+.deleteBtn, .followBtn {
+  margin-top:-3px;
+  height: 20px; 
+  border-top: 1px solid rgba(0, 0, 0, 0);
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
 
 .threeDotsSvg {
   width: 20px;
   height: 20px;
+  filter: invert(80%);
+  
 }
 
 button.options-btn, button.options-btn svg * {
   pointer-events: none;
-  background-color: #292c2e;
+  background-color: #292c2e00;
   border-radius: 0px;
 }
 
 button.options-btn:hover {
-  background-color: #292c2e;
+  background-color: #292c2e00;
 }
 
 button.options-btn:hover svg g path{
