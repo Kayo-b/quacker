@@ -66,6 +66,7 @@ const FollowBtn: React.FC<PostProps> = ({
 
       useEffect(() => {
         checkFollow(post);
+        
       }, [updateFollow])
 
     return(

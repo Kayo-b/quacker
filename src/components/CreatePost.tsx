@@ -113,9 +113,9 @@ const handleClick = async (text: String) => {
     } catch(e) {
         console.error(e);
     }
-    
+    setUpdate(!update)
   };
-  
+
     return(
         <div className="post-wrapper-container">
         <div className="post-main-container"> 

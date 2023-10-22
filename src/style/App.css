@@ -37,7 +37,6 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: end;
-  border: 1px solid yellow;
   height: 90%;
  
 }
@@ -63,7 +62,6 @@ li {
 } */
 
 .right-container {
-  border: 1px solid purple;
   height: 100%;
 
 }
@@ -171,13 +169,11 @@ input[type="button"] {
 }
 
 #profile-background {
-  border: 1px solid orange;
   height: 100px;
   /* background-image:url(../img/neo-pepe-.png); */
 }
 
 #profile-info {
-  border: 1px solid yellow;
   height:80px;
   padding-top: 30px;
 
@@ -278,6 +274,49 @@ button.options-btn:hover svg g path{
 
 button.options-btn * {
   pointer-events:all
+}
+.searchContainer {
+  display: flex;
+  margin: 5px;
+  flex-wrap: nowrap;
+  width: 180px;
+}
+.searchElem {
+  display: flex;
+  align-items: center;
+  justify-content:flex-start;
+  border: none;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 180px;
+}
+.searchElem>input {
+  border-style: none;
+  background-color:rgba(38, 36, 36, 0);
+  color: rgb(211, 211, 211);
+  appearance: none;
+  outline-style: none;
+  box-sizing: border-box;
+  outline-style: none;
+  padding: 5px;
+  height: 25px;
+}
+.searchButton {
+  background: url(../img/search-svgrepo-com.svg) 0 0 no-repeat;
+  width: 30px; 
+  height: 30px;
+  text-indent: 999px;
+  display: block;
+  transform: scale(90%);
+  position: relative;
+  left: -30px;
+  border: 2px solid rgb(40, 40, 62, 0);
+}
+
+.searchButton:hover {
+  /* filter: invert(60%); */
+  transform: scale(96%);
+  cursor: pointer;
 }
 
 .threeDotsSvg:hover {

@@ -74,7 +74,7 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
 
   useEffect(() => {
     likedPostCheck()
-  },[post])
+  },[])
 
   return (
       <button className="like-btn" onClick={e => addLike(post?.postID)}>

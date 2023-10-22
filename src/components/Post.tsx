@@ -108,7 +108,7 @@ const Post: React.FC<PostProps> = ({
   postsRenew,
   userData
   }) => {
-    console.log(post,"post")
+    console.log(post,"post12")
     
   // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
   const userCtx = useContext(UserContext);
@@ -306,8 +306,7 @@ console.log(postsArray,"postss#!@ ")
   //renaming post prop to be used inside posts.map
   let newPostValue = post
 
-  //neuPosts sets the new post directly into the feed, without any server commmunication
-
+  //neuPost sets the new post directly into the feed, without any server commmunication
     let neuPost = newPost.map(post =>  post.parentID === null ?  
       <div className="post-container" key={post.postID}>
         <div className="option-btn-container">
@@ -538,7 +537,7 @@ console.log(postsArray,"postss#!@ ")
     }
 })   
 
-    //Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
+    // Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
     let comment = postsArray?.map(post =>  post.parentID === parentPost?.postID ?  
       <div className="post-page-container" key={post.postID}>
         <div className="option-btn-container">

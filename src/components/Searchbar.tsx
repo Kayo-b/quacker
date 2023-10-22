@@ -29,18 +29,42 @@ const handleClick = async (text: String) => {
   };
 
     return(
-        <div className="search-main-container">     
-            <input 
-                type="text" placeholder="Look for..."
-                value={text} 
-                onChange={e => setText(e.target.value)}>
-            </input>
-            <input 
-                type="button" value="Search" 
-                onClick={() => handleClick(text)}>
-            </input>
+        <div className="search-main-container">
+            <div className="searchContainer">
+                <div className="searchElem">
+                <input
+                    type="text"
+                    className="search"
+                    placeholder="Look for..."
+                    onChange={e => setText(e.target.value)}
+                    onKeyDown={(e) =>
+                    e.key === "Enter" ? handleClick(text) : () => null
+                    }
+                ></input>
+                 <input className="searchButton"
+                        type="button" value="Search" 
+                        onClick={() => handleClick(text)}>
+                </input> 
         </div>
-    )
+            </div>
+                </div>
+        // <div>
+        //     <div className="search-main-container">
+        //         <input 
+        //             type="className="searchButton"" placeholder="Look for..."
+        //             value={text} 
+        //             onChange={e => setText(e.target.value)}>
+        //         </input>
+        //         <input 
+        //             type="button" value="Search" 
+        //             onClick={() => handleClick(text)}>
+        //         </input> 
+        //     </div>
+        // </div>
+        )
+                    
+
+
 }
 
 export default Searchbar;
