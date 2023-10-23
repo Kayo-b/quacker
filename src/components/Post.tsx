@@ -705,7 +705,7 @@ console.log(postsArray,"postss#!@ ")
               {post?.username}
             </div>
           <div className="content" >
-            <li key={post?.id}>
+            <li key={post?.id} className="text-content-field">
               {post?.textContent}
             </li>
           </div>

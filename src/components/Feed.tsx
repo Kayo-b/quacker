@@ -82,6 +82,7 @@ const Feed: React.FC<PostProps> = ({
 
     //const [posts, setPosts] = useState<DocumentData[]>([]);
     const [loading, setLoading] = React.useState(true);
+    const [feedUpdate, setFeedUpdate] = React.useState(false);
     const [mainFeedStatesCount, setMainFeedStatesCount] = React.useState<number>(0);
     //const [updateFollow, setUpdateFollow] = React.useState<boolean>(false);
     const { search } = useParams();
@@ -131,16 +132,18 @@ const Feed: React.FC<PostProps> = ({
 
 
     useEffect(() => {
-        //update ? setFeedUpdate(true) : setFeedUpdate(false);
+        setFeedUpdate(!update)
         fetchPosts();
-        waitForStates();  
-         
-        
+        waitForStates();   
     },[mainFeedStatesCount, postPageStatesCount, update]);
-    
+
+    // useEffect(() => {
+    //     setFeedUpdate(!update)
+    // },[update])
+
     if(user !== null) {return(
         
-        <div>{loading ? "Loading...!" : null}
+        <div>{loading ? "Loading...!!" : null}
         <>{console.log("FEED")}</>
         <div className="feed-main-container" style={{visibility:"hidden"}}> 
         <UserContext.Provider value={userCtx as UserProps}> {

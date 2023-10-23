@@ -85,7 +85,7 @@ const handleClick = async (text: String) => {
                 mainFeed: arrayUnion(docRef.id)
             }, {merge: true})
         }
-        
+        setUpdate(!update)
         //update === true ? setUpdate(false) : setUpdate(true)
         //setNewPost will add the new post into the newPost array so it 
         //can render the posts into the screen without needing to fetch them.
@@ -113,7 +113,7 @@ const handleClick = async (text: String) => {
     } catch(e) {
         console.error(e);
     }
-    setUpdate(!update)
+    
   };
 
     return(
