@@ -30,31 +30,34 @@ li {
 }
 .sidebar-wrapper {
   height: 100%;
-  max-width: 250px;
+  max-width: 300px;
   position: relative;
+  margin-right: 150px;
 }
-
+/* .sidebar-fixed-wrapper {
+  height: auto;
+  max-width: 250px;
+  position: fixed;
+  left: 1;
+} */
 .sidebar {
   height: 100%;
-  max-width: 250px;
-  border: 1px solid rgb(255, 255, 255);
-
+  position: fixed;
+  left: 1;
 }
 
 .sb-main-container {
   align-items: center;
-  border: 1px solid rgb(4, 197, 152);
   text-align:  start;
-  max-width: 250px;
   height: 100vh;
+
 }
 
 .sidebar-dashboard {
   display: flex;
-  max-width: inherit;
   flex-direction: column;
   justify-content: end;
-  height: 90%;
+  height: 93%;
  
 }
 
