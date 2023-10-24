@@ -136,6 +136,7 @@ useEffect(() => {
     <UserContext.Provider value={user as UserPropsOrigin}> {
     <BrowserRouter>
      <div className="App">
+      <div className="sidebar-wrapper">
       <div className="sidebar">
       <Sidebar 
       name={name} 
@@ -145,6 +146,7 @@ useEffect(() => {
       loading={loading} 
       error={error ? error.toString() : ""} 
       setName={setName}/>
+      </div>
       </div>
       <div className="center-container">
       
@@ -282,6 +284,7 @@ useEffect(() => {
         />
       </Routes>
       </div>
+      <div className="right-container-wrapper">
       <div className="right-container">
       <Navbar/>
         {/* <Routes>
@@ -292,6 +295,8 @@ useEffect(() => {
       }/>
       </Routes> */}
       </div>
+      </div>
+
       </div>
       
     </BrowserRouter>
