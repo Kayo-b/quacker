@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { RxHome } from 'react-icons/rx'
+import { BsStar } from 'react-icons/bs'
 import { Link } from "react-router-dom";
 import Dashboard from "./Dashboard";
 
@@ -26,12 +28,12 @@ const Sidebar: React.FC<SidebarProps> = ({name, user, loading, error, setName, u
 
     return(
         <div className="sb-main-container">
-            <ul> 
+            <ul className="side-bar-menu"> 
                 <Link to="/homepage"> 
-                    <li>Homepage</li>
+                    <li><RxHome className="home-icon"/></li>
                 </Link>  
                 <Link to="/bookmarks"> 
-                    <li>Bookmarks</li>
+                    <li><BsStar className="star-icon"/></li>
                 </Link>  
             </ul>
             <div className="sidebar-dashboard">
