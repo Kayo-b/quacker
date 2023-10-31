@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { DOMElement, useEffect, useState } from 'react'
+import {GiPlasticDuck} from 'react-icons/gi';
 import { DocumentData, setDoc, collection, doc, arrayUnion, arrayRemove, query, where, getDoc } from 'firebase/firestore';
 import { db } from "../firebase";
+import { ClassElement } from 'typescript';
 
 
 type UserProps = {
@@ -77,8 +79,11 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
   },[])
 
   return (
-      <button className="like-btn" onClick={e => addLike(post?.postID)}>
-        {post?.likedByUsers.includes(user.uid) ? "Liked" : "Like"}</button> 
+      <GiPlasticDuck 
+      className="like-btn" 
+      onClick={e => addLike(post?.postID)}
+      style={{ color: post?.likedByUsers.includes(user.uid) ? "yellow" : "white" }}
+      ></GiPlasticDuck> 
   )
 }
 
