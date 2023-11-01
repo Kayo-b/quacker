@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
+import { BiRepost } from 'react-icons/bi';
 import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
 import { db } from "../firebase";
 import { count } from 'console';
@@ -283,8 +284,8 @@ async function addRepostData(postId: string) {
 
       return(
           <div className="bm-main-container">
-              <button onClick={() => addRepostData(post?.postID)}>
-                  {reposted ? "Reposted" : "Repost"}</button>
+              <BiRepost onClick={() => addRepostData(post?.postID)} style={{color: reposted ? "blue": undefined }}/>
+                  {/* {reposted ? "Reposted" : "Repost"}</button> */}
           </div>
       )
 }

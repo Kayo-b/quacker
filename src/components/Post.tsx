@@ -334,7 +334,8 @@ console.log(postsArray,"postss#!@ ")
           </div>
           </span>   
         </div>
-        <div className="main-btn-container">
+      <div className="main-btn-container">
+        <div className="btn-container"> 
         <Like 
         user={userCtx as UserProps} 
         post={post}
@@ -375,6 +376,7 @@ console.log(postsArray,"postss#!@ ")
         setPostFeedStatesCount={setPostFeedStatesCount}
         />
         </div>
+        </div>
       </div>
       : <></>
     )
@@ -412,7 +414,8 @@ console.log(postsArray,"postss#!@ ")
           </div>
           </span>
         </div>
-        <div className="main-btn-container">
+            <div className="main-btn-container">
+      <div className="btn-container"> 
         <Like 
         user={userCtx as UserProps} 
         post={post}
@@ -455,6 +458,7 @@ console.log(postsArray,"postss#!@ ")
        />
       </div>
       </div>
+      </div>
       } else {
         return <></>
         
@@ -490,6 +494,7 @@ console.log(postsArray,"postss#!@ ")
         </span>
       </div>
       <div className="main-btn-container">
+      <div className="btn-container"> 
       <Like 
       user={userCtx as UserProps} 
       post={post}
@@ -531,6 +536,7 @@ console.log(postsArray,"postss#!@ ")
       />
     </div>
     </div>
+    </div>
     } else {
       return <></>
       
@@ -565,7 +571,8 @@ console.log(postsArray,"postss#!@ ")
           </div>
           </span>   
         </div>
-        <div className="main-btn-container">
+      <div className="main-btn-container">
+      <div className="btn-container"> 
         <Like 
         user={userCtx as UserProps} 
         post={post}
@@ -607,6 +614,7 @@ console.log(postsArray,"postss#!@ ")
          />
       </div>
       </div>
+      </div>
       : <></>
     )
 
@@ -637,7 +645,8 @@ console.log(postsArray,"postss#!@ ")
           </div>
           </span>   
         </div>
-        <div className="main-btn-container">
+      <div className="main-btn-container">
+      <div className="btn-container"> 
         <Like 
         user={userCtx as UserProps} 
         post={post}
@@ -678,6 +687,7 @@ console.log(postsArray,"postss#!@ ")
          setPostFeedStatesCount={setPostFeedStatesCount}
          />
         </div>
+        </div>
       </div>
       : <></>
     )
@@ -711,7 +721,8 @@ console.log(postsArray,"postss#!@ ")
           </div>
           </span>   
         </div>
-        <div className="main-btn-container">
+      <div className="main-btn-container">
+      <div className="btn-container"> 
         <Like 
         user={userCtx as UserProps} 
         post={post}
@@ -753,6 +764,7 @@ console.log(postsArray,"postss#!@ ")
     
    />
       </div> 
+      </div> 
       </div>
 
 //clickedPostParentPost renders the parent post of the clicked post (if it has a parentID)
@@ -788,6 +800,7 @@ let clickedPostParentPost =   postsArray?.map(post =>
       </span>   
     </div>
     <div className="main-btn-container">
+    <div className="btn-container"> 
     <Like 
     user={userCtx as UserProps} 
     post={post}
@@ -830,6 +843,7 @@ let clickedPostParentPost =   postsArray?.map(post =>
    />
   </div>  
   </div>
+  </div>
   : <></>
 )
 let rootPost =  postsArray?.map(post =>  
@@ -866,6 +880,7 @@ let rootPost =  postsArray?.map(post =>
       </span>   
     </div>
     <div className="main-btn-container">
+    <div className="btn-container"> 
     <Like 
     user={userCtx as UserProps} 
     post={post}
@@ -906,6 +921,7 @@ let rootPost =  postsArray?.map(post =>
     setPostFeedStatesCount={setPostFeedStatesCount}
    />
   </div>  
+  </div>  
   </div>
   : <></>
 )
@@ -944,6 +960,7 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
       </span>   
     </div>
     <div className="main-btn-container">
+    <div className="btn-container"> 
     <Like 
     user={userCtx as UserProps} 
     post={post}
@@ -985,6 +1002,7 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
     setProfPostCheck={setProfPostCheck}
    />
   </div>  
+  </div>  
   </div>
   : <></>
 ))
@@ -1019,6 +1037,7 @@ let profileNewPostsFeed =  newPost.map(post =>
       </span>   
     </div>
     <div className="main-btn-container">
+    <div className="btn-container"> 
     <Like 
     user={userCtx as UserProps} 
     post={post}
@@ -1060,6 +1079,7 @@ let profileNewPostsFeed =  newPost.map(post =>
     
    />
   </div>  
+  </div>  
   </div>
   : <></>
 )
@@ -1094,6 +1114,7 @@ let profileResponsesFeed =  postsArray?.map(post =>
       </span>   
     </div>
     <div className="main-btn-container">
+    <div className="btn-container"> 
     <Like 
     user={userCtx as UserProps} 
     post={post}
@@ -1136,6 +1157,7 @@ let profileResponsesFeed =  postsArray?.map(post =>
    />
   </div>
   </div>
+  </div>
   : <></>
 )
 let profileNewResponsesFeed =  postsArray?.map(post =>  
@@ -1168,6 +1190,7 @@ let profileNewResponsesFeed =  postsArray?.map(post =>
       </span>   
     </div>
     <div className="main-btn-container">
+    <div className="btn-container"> 
     <Like 
     user={userCtx as UserProps} 
     post={post}
@@ -1208,6 +1231,7 @@ let profileNewResponsesFeed =  postsArray?.map(post =>
     setPostFeedStatesCount={setPostFeedStatesCount}
     
    />
+  </div>
   </div>
   </div>
   : <>

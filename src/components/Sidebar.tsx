@@ -48,9 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({name, user, loading, error, setName, u
                 setName={setName}
                 />
                 </div>
-            </div>
-            
-            
+            </div>  
         </div>
     )
 }

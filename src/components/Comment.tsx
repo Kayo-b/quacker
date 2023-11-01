@@ -1,5 +1,6 @@
 import React from 'react'
 import { DocumentData } from 'firebase/firestore';
+import { VscComment } from 'react-icons/vsc';
 import CreatePost from './CreatePost';
 import { setUncaughtExceptionCaptureCallback } from 'process';
 
@@ -52,7 +53,7 @@ const Comment: React.FC<PostProps> = ({user, post, name, setUpdate, update, newP
 
   return (
     <div>
-        <button onClick={openModal}>Comment</button>
+        <VscComment onClick={openModal}/>
         <Modal isOpen={isModalOpen} onClose={closeModal}>   
             {<CreatePost 
             user={user}

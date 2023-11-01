@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
 import { db } from "../firebase";
+import { BsStar } from 'react-icons/bs'
 
 type UserProps = {
     authProvider?: string;
@@ -114,8 +115,13 @@ const addBookmark = async (postId: string) => {
     console.log(user, "UserDATA111")
     return(
         <div className="bm-main-container">
-            <button onClick={() => addBookmark(post?.postID)}>
-                {favorited ? "Unfavorite" : "Favorite"}</button>
+            <BsStar 
+            className="star-icon-post" 
+            onClick={() => addBookmark(post?.postID)} 
+            style={{color: favorited ? "yellow" : undefined}}
+            />
+            {/* // <button onClick={() => addBookmark(post?.postID)}>
+            //     {favorited ? "Unfavorite" : "Favorite"}</button> */}
         </div>
     )
 }
