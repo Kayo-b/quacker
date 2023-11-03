@@ -305,7 +305,7 @@ const ProfilePage: React.FC<PostProps> = ({
     } </UserContext.Provider>
     
 console.log(postsRenew,"posts heres??s?")
-console.log(posts,"posts here?!!!!?")
+console.log(posts,"posts here?!!!s!?")
   return (
     <div>{loading ? "Loading...." : null}
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>

@@ -68,7 +68,7 @@ const Repost: React.FC<PostProps> = ({
             setReposted(true);
           } else {
             setReposted(false);
-            console.log("FALSE!@")
+            console.log("FALSE!@!")
           }
           if(setPostFeedStatesCount)
               setPostFeedStatesCount(1)

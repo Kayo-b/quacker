@@ -144,7 +144,7 @@ const Feed: React.FC<PostProps> = ({
     if(user !== null) {return(
         
         <div>{loading ? "Loading...!!" : null}
-        <>{console.log("FEED")}</>
+        <>{console.log("FEEsD")}</>
         <div className="feed-main-container" style={{visibility:"hidden"}}> 
         <UserContext.Provider value={userCtx as UserProps}> {
             <Post 
