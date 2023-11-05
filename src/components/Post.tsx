@@ -108,7 +108,7 @@ const Post: React.FC<PostProps> = ({
   postsRenew,
   userData
   }) => {
-    console.log(post,"post12")
+    console.log(post,"pos111t12")
     
   // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
   const userCtx = useContext(UserContext);
@@ -116,8 +116,9 @@ const Post: React.FC<PostProps> = ({
   const storage = getStorage();
   const [profileImg, setProfileImg] = useState("")
   const style = {"fontSize": "large"}
-  const postsArray = posts.length === 0 ? postsRenew : posts; 
-  console.log(postsArray, "posts asssssssrray")
+  //const [postsArray, setPostArray] = useState(posts.length === 0 ? postsRenew : posts)
+  const postsArray = posts.length === 0 ? postsRenew : posts
+  console.log(postsArray, "posts assssssssrrsay")
   //const newPostsArray = newPost.length === 0 ? postsRenew : postsRenew;
   
 //   const fetchPosts = async() => {    
@@ -145,7 +146,7 @@ const Post: React.FC<PostProps> = ({
 // };
 console.log(postsRenew,"posts#!@ #heres1")
 console.log(profPost,"posts#!@ PrSoPost")
-console.log(postsArray,"postss#!@ ")
+console.log(postsArray,"postss#!@@@ ")
    //Getting profile image from storage
   //  let storageRef = ref(storage, `images/${userCtx?.uid}/profile_image/profile_img.png`)
   //  getDownloadURL(storageRef)
@@ -180,7 +181,8 @@ console.log(postsArray,"postss#!@ ")
   const RemovePost = (post: DocumentData | undefined) => {
     
     if(!profPost) { 
-      postsArray?.filter(val => val !== post?.postID);
+      //setPostArray(postsArray?.filter(val => val !== post?.postID))
+      postsArray?.filter(val => val !== post?.postID)
       setUpdate(!update);
     }
     setUserMainFeed(prevVal => 
@@ -211,7 +213,7 @@ console.log(postsArray,"postss#!@ ")
     //if(userCtx === null) navigate("/");
     //getUserMainFeed();
     //fetchPosts();
-   }, [repost, update, postsArray])//all posts rerender when these change
+   }, [repost, update])//all posts rerender when these change
 
    //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
   //  let getUserMainFeed = async () => {
@@ -1087,8 +1089,8 @@ let profileNewPostsFeed =  newPost.map(post =>
   : <></>
 )
 
-let profileResponsesFeed =  postsArray?.map(post =>  
-  post.userID === newPostValue?.userID &&
+let profileResponsesFeed =  userMainFeed?.map(val => postsArray?.map(post =>  
+  post.postID === val &&
   post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
         <div className="option-btn-container">
@@ -1162,8 +1164,8 @@ let profileResponsesFeed =  postsArray?.map(post =>
   </div>
   </div>
   : <></>
-)
-let profileNewResponsesFeed =  postsArray?.map(post =>  
+))
+let profileNewResponsesFeed = postsRenew?.map(post =>  
   post.userID === newPostValue?.userID &&
   post.parentID !== null ?  
   <div className="post-container" key={post.postID} style={style}>
@@ -1174,7 +1176,9 @@ let profileNewResponsesFeed =  postsArray?.map(post =>
             {
               userCtx?.uid === post?.userID ?
               <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete3</button> :
-              <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
+              <div>
+                <FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow}/>
+              </div>
             }
           </div>
         </div>
@@ -1232,6 +1236,7 @@ let profileNewResponsesFeed =  postsArray?.map(post =>
     setProfPost={setProfPost}
     addToStatesCount={addToStatesCount}
     setPostFeedStatesCount={setPostFeedStatesCount}
+    setProfPostCheck={setProfPostCheck}
     
    />
   </div>

@@ -27,7 +27,7 @@ type UserProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     name?: string;
 }
-
+console.log("comment")
 //Modal for the comment popup
 function Modal({ isOpen, onClose, children }: ModalProps) {
     if (!isOpen) return null;

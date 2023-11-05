@@ -161,7 +161,7 @@ const ProfilePage: React.FC<PostProps> = ({
                 setLoading(false);
                 if(setProfPostCheck !== undefined)
                 setProfPostCheck(1)
-                //setLoading2(false);
+                setLoading2(false);
             }, 300)
         };
          setProfileStatesCount(0);
@@ -172,7 +172,7 @@ const ProfilePage: React.FC<PostProps> = ({
     };
 
     const waitForStates2 = async () => {
-        console.log(posts, "po@@@@sts")
+        console.log(posts, "po@@@@1111!sts")
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
         if(profPostCheck === 1 || posts.length === 0) {
             setTimeout(() => {
@@ -202,12 +202,14 @@ const ProfilePage: React.FC<PostProps> = ({
 
     const checkFollow = async() => {
         console.log(userData,'userData')
+        console.log("CHECK FOLLOW!")
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
         if(userData && userCtx) {
             const userRef1 = doc(db, 'users', userCtx?.uid);
             const userRef2 = doc(db, 'users', userData?.uid);
             const userDoc1 = await getDoc(userRef1);
             const userDoc2 = await getDoc(userRef2);
+            console.log(userDoc2.exists(),"CHECK FOLLOW userDoc1exist")
             if(userDoc1.exists()) {
                
                 const userData1 = userDoc1.data();
@@ -220,6 +222,7 @@ const ProfilePage: React.FC<PostProps> = ({
                 }
 
             }
+            console.log(userDoc2.exists(),"CHECK FOLLOW userDoc2exist")
             if(userDoc2.exists()) {
                 const userData2 = userDoc2.data();
                 const following = userData2.following;
@@ -239,7 +242,7 @@ const ProfilePage: React.FC<PostProps> = ({
             //     setLoading2(false);
             //     postSubContainer.style.visibility = "visible";
             // }, 200)
-            console.log(loading2,"LOADING")
+            console.log(loading2,"LOADING!")
         }
 
         //setProfilePageStateCount(!profilePageStateCount)
@@ -278,6 +281,9 @@ const ProfilePage: React.FC<PostProps> = ({
         fetchProfileImg();
     },[profileStatesCount, displayedName, bioText, post, update, profPostCheck])
 
+    useEffect(() => {
+
+    },[posts, postsRenew]) 
     var renderPosts = 
     <UserContext.Provider value={userCtx as UserProps}> {
     <Post

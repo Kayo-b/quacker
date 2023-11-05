@@ -54,7 +54,7 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
             console.log(true, post ,"liked????!!!")
           } else {
             setLiked(false);
-            console.log(false,post,"liked????!!!")
+            console.log(false,post,"liked???22?!!!")
           }
       //if(setLoading) setLoading(false);
     }

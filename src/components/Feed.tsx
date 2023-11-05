@@ -107,7 +107,7 @@ const Feed: React.FC<PostProps> = ({
         
         //const q = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")))
         const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")));
-        console.log("fetch!!!")
+        console.log("fetch!!!!.")
         if(setPosts){
             setPosts([])
             setNewPost([])//making new posts array empty to avoid duplicate posts
@@ -144,7 +144,7 @@ const Feed: React.FC<PostProps> = ({
     if(user !== null) {return(
         
         <div>{loading ? "Loading...!!" : null}
-        <>{console.log("FEEsD")}</>
+        <>{console.log("FEEsDssss")}</>
         <div className="feed-main-container" style={{visibility:"hidden"}}> 
         <UserContext.Provider value={userCtx as UserProps}> {
             <Post 

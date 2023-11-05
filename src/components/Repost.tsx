@@ -64,7 +64,7 @@ const Repost: React.FC<PostProps> = ({
       // const userData = docs.docs[0].data();
       if(userDoc.exists()) {
           if(userDoc.data().reposts.includes(postId) || post?.repostByUsers.includes(user.uid)) {
-            console.log("TRUE!@")
+            console.log("TRUE!@!")
             setReposted(true);
           } else {
             setReposted(false);
@@ -77,7 +77,7 @@ const Repost: React.FC<PostProps> = ({
           }
           if(addToStatesCount) {
             addToStatesCount(1);
-            console.log("reposted!!!")};
+            console.log("reposted!!!!")};
             if(!profPost) {
               console.log("profPost!")
               if(setProfPostCheck) setProfPostCheck(1)

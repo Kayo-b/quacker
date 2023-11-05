@@ -62,7 +62,7 @@ const Homepage: React.FC<HomepageProps> = ({
     }) => {
 
     //const [update, setUpdate] = useState<boolean | undefined>(false)
-        console.log(userData,"USER DATA HOME")
+        console.log(userData,"USER DATA HO11ME")
     return(
         <div className="home-main-container">
             < CreatePost 

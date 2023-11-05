@@ -108,7 +108,7 @@ const PostPage: React.FC<PostProps> = ({
  
   return (
 
-      <div>{loading ? "Loading...#" : null}
+      <div>{loading ? "Loading....#" : null}
       <div className="post-page-main-container" style={{visibility:"hidden"}}>
       {/* <Post 
           name={name}
