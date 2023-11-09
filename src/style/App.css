@@ -237,6 +237,16 @@ input[type="button"] {
   padding-top: 30px;
 
 }
+.quacks-select, .responses-select {
+  color:#5b5f62;
+}
+
+.quacks-select:hover,.responses-select:hover {
+  cursor: pointer;
+  color: whitesmoke;
+  background-color: rgb(69, 71, 72);;
+  
+}
 
 .post-container, .post-page-container {
   border-top: 1px solid rgba(245, 245, 245, 0.196);
@@ -429,6 +439,7 @@ button:hover {
 }
 
 .edit-profile-main-container {
+  display: grid;
   width: 500px;
   height: 350px;
   position: absolute;
@@ -437,3 +448,7 @@ button:hover {
   background-color: rgb(38, 36, 36);
   z-index: 2;
 }
+
+/* .edit-profile-main-container>input {
+  width: 250px;
+} */

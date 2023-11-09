@@ -1,11 +1,11 @@
 .feed-types-select {
     display: flex;
-    border: 1px solid rgb(165, 244, 165);
     justify-content: center;
     align-items: center;
 }
 .feed-types-select >* {
-    border: 1px solid green;
+    border: 1px solid gray;
     text-align: center;
     width: 100%;
+    padding: 2px;
 }
