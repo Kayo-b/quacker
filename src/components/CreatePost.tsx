@@ -127,7 +127,9 @@ const handleClick = async (text: String) => {
                 onChange={e => setText(e.target.value)}>
             </textarea>
             <input 
-                type="button" value="Post" 
+                type="button" 
+                value="Post"
+                className="post-btn" 
                 onClick={() => handleClick(text)}>
             </input>
         </div>

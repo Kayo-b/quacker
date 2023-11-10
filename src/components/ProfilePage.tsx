@@ -312,8 +312,19 @@ const ProfilePage: React.FC<PostProps> = ({
     
 console.log(postsRenew,"posts heres??s?")
 console.log(posts,"posts here?!!!s!?")
+
+  const loadingSvg = 
+  <svg xmlns="http://www.w3.org/2000/svg" width="94px" height="94px" viewBox="0 0 150 150" preserveAspectRatio="xMidYMid">
+      <circle cx="50" cy="50" fill="none" stroke="#6a6a6a" stroke-width="3" r="30" stroke-dasharray="141.37166941154067 49.12388980384689">
+      <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="0.7633587786259541s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+      </circle>
+  </svg>
+
   return (
-    <div>{loading ? "Loading...." : null}
+    <div>
+        <div className="loading-element-container" style={{border: loading ? "1px solid rgba(245, 245, 245, 0.307)" : "none"}}>
+            <div>{loading ? loadingSvg : null}</div>
+        </div>
     <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
         {userData?.displayedName}
         <div className="user-container-profile-page">
@@ -354,7 +365,9 @@ console.log(posts,"posts here?!!!s!?")
                     <div className="responses-select" onClick={(e) => loadPostsList("responses")}>Responses</div>
                 </div>
                 <div className="feed-display">                                
-                {loading2 ? "Loading..." : posts.length === 0 ? "No posts" : null}
+                <div className="loading-element-container" style={{border: loading ? "1px solid rgba(245, 245, 245, 0.307)" : "none"}}>
+                    <div>{loading2 ? loadingSvg : posts.length === 0 ? "No posts" : null}</div>
+                </div>
                 <div id="post-subcontainer" style={{visibility:"hidden"}}>{renderPosts}</div>
                 </div>
             </div>

@@ -945,7 +945,7 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete#</button> :
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
           </div>
@@ -1175,7 +1175,7 @@ let profileNewResponsesFeed = postsRenew?.map(post =>
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete3</button> :
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
               <div>
                 <FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow}/>
               </div>

@@ -137,14 +137,19 @@ const Feed: React.FC<PostProps> = ({
         waitForStates();   
     },[mainFeedStatesCount, postPageStatesCount, update]);
 
-    // useEffect(() => {
-    //     setFeedUpdate(!update)
-    // },[update])
+    const loadingSvg = 
+    <svg xmlns="http://www.w3.org/2000/svg" width="94px" height="94px" viewBox="0 0 150 150" preserveAspectRatio="xMidYMid">
+        <circle cx="50" cy="50" fill="none" stroke="#6a6a6a" stroke-width="3" r="30" stroke-dasharray="141.37166941154067 49.12388980384689">
+        <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="0.7633587786259541s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+        </circle>
+    </svg>
 
     if(user !== null) {return(
         
-        <div>{loading ? "Loading...!!" : null}
-        <>{console.log("FEEsDssss")}</>
+        <div>
+            <div className="loading-element-container" style={{border: loading ? "1px solid rgba(245, 245, 245, 0.307)" : "none"}}>
+                <div>{loading ? loadingSvg : null}</div>
+            </div>
         <div className="feed-main-container" style={{visibility:"hidden"}}> 
         <UserContext.Provider value={userCtx as UserProps}> {
             <Post 

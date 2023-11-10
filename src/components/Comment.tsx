@@ -52,7 +52,7 @@ const Comment: React.FC<PostProps> = ({user, post, name, setUpdate, update, newP
     const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div>
+    <div className="comment-btn">
         <VscComment onClick={openModal}/>
         <Modal isOpen={isModalOpen} onClose={closeModal}>   
             {<CreatePost 
