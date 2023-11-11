@@ -76,8 +76,11 @@ const RedirectToProfilePage = (post: DocumentData | undefined) => {
   return (
     <div className="dashboard">
         <div className="dashboard-container">
-            {!user ? "Logged Out" : ""} <div onClick={() => RedirectToProfilePage(post)}>{name}</div>
-            <div>{user?.email}</div>
+            {!user ? "Logged Out" : ""} 
+            <div className="profile-dashboard">
+                <div onClick={() => RedirectToProfilePage(post)}>{name}</div>
+                <div onClick={() => RedirectToProfilePage(post)}>{user?.email}</div>
+            </div>
             {user ? <button 
             className="dashboard-btn" 
             onClick={Logout}>

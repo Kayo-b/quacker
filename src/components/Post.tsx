@@ -329,7 +329,7 @@ console.log(postsArray,"postss#!@@@ ")
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           <span>
-            <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+            <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
               {post.username}
             </div>
           <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -409,7 +409,7 @@ console.log(postsArray,"postss#!@@@ ")
           <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           
           <span>
-            <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+            <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
               {post.username}
             </div>
           <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -488,7 +488,7 @@ console.log(postsArray,"postss#!@@@ ")
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
         <span>
-          <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+          <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
             {post.username}
           </div>
         <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -566,7 +566,7 @@ console.log(postsArray,"postss#!@@@ ")
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           <span>
-            <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+            <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
               {post.username}
             </div>
           <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -640,7 +640,7 @@ console.log(postsArray,"postss#!@@@ ")
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           <span>
-            <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+            <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
               {post.username}
             </div>
           <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -716,7 +716,7 @@ console.log(postsArray,"postss#!@@@ ")
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           <span>
-            <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+            <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
               {post?.username}
             </div>
           <div className="content" >
@@ -794,7 +794,7 @@ let clickedPostParentPost =   postsArray?.map(post =>
       <span className="connecting-comments-line2"></span>
       </div>
       <span>
-        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+        <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -874,7 +874,7 @@ let rootPost =  postsArray?.map(post =>
       <span className="connecting-comments-line"></span>
       </div>
       <span>
-        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+        <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -954,7 +954,7 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
     <div className="user-container">
       <img className="profile-picture-profile-feed" alt="user icon" src={post?.imgUrl}></img>
       <span>
-        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+        <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -1031,7 +1031,7 @@ let profileNewPostsFeed =  newPost.map(post =>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
       <span>
-        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+        <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -1108,7 +1108,7 @@ let profileResponsesFeed =  userMainFeed?.map(val => postsArray?.map(post =>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
       <span>
-        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+        <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -1186,7 +1186,7 @@ let profileNewResponsesFeed = postsRenew?.map(post =>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
       <span>
-        <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+        <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
           {post.username}
         </div>
       <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -1274,7 +1274,7 @@ let repostsFromUser = postsArray?.map(post =>
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
         <span>
-          <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+          <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
             {post.username}
           </div>
         <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -1337,7 +1337,7 @@ let repostsFromUser = postsArray?.map(post =>
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
         <span>
-          <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+          <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
             {post.username}
           </div>
         <div className="content" onClick={() => RedirectToPostPage(post)}>
@@ -1396,7 +1396,7 @@ let repostsFromUser = postsArray?.map(post =>
   //   <div className="user-container">
   //     <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
   //     <span>
-  //       <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+  //       <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
   //         {post.username}
   //       </div>
   //     <div className="content" onClick={() => RedirectToPostPage(post)}>

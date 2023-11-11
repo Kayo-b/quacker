@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    background-color: #dcdcdc;
+    background-color: #7c7c7c;
     padding: 30px;
     border-radius: 2px;
   }
@@ -56,4 +56,15 @@
   }
   .guest-login-btn {
     background-color: lightseagreen;
+    margin-top: 2px;
+  }
+
+  .login-btn-google,.guest-login-btn {
+    border: 0px;
+    background-color: rgb(39, 42, 42);
+  }
+  
+  .login-btn-google:hover, .guest-login-btn:hover {
+    background:fixed;
+    background-color: rgba(11, 57, 53, 0.885);
   }

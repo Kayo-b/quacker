@@ -27,6 +27,15 @@ li {
   filter: invert(90%);
   background-color: #adadad;
 
+
+}
+.profile-dashboard {
+  padding: 2px;
+}
+
+.profile-dashboard:hover {
+  background-color: rgb(98, 98, 98);
+  cursor: pointer;
 }
 
 .loading-element-container {
@@ -284,6 +293,11 @@ input[type="button"] {
 
 .user-name {
   font-weight:bold;
+}
+
+.user-name-post:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 span {
