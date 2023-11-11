@@ -102,6 +102,7 @@ const signUpWithEmail = async(email: string, password: string) => {
 }
 //Register with email
 const registerEmail = async(name: string, email: string, password: string) => {
+    console.log(name,email,password,"<<<<< EMAIL REGI")
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const user = res.user;
@@ -109,17 +110,21 @@ const registerEmail = async(name: string, email: string, password: string) => {
         const q2 = query(collection(db, "users"), where("name", "==", name));
         const docs = await getDocs(q);
         const docs2 = await getDocs(q2);
-        console.log("docs length", docs2.docs.length)
+        console.log("EMAIL REG docs length >>>>>>>>>>>", docs2.docs.length)
+        console.log("EMAIL REG CHECK 0 >>>>>>>>>>>", user)
+        console.log("EMAIL REG CHECK 0.5 >>>>>>>>>>>", docs.docs.length === 0, docs2.docs.length === 0)
         if(docs.docs.length === 0 && docs2.docs.length === 0) {
             let img = await fetch(myImg);
             let blob = await img.blob();
-
+            console.log("REG EMAIL CHECK 1 >>>", blob)
             const profileImgRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img.png`);
             const backgroundImgRef =  ref(storage, `/images/${user.uid}/background_image/background_img.png`);
             Promise.all([uploadBytes(profileImgRef, blob), uploadBytes(backgroundImgRef, blob)])
             .then(() => {
                 Promise.all([getDownloadURL(profileImgRef), getDownloadURL(backgroundImgRef)])
                 .then(([url1, url2]) => {
+                    console.log("REG EMAIL CHECK 2 >>> ", url1, url2)
+                    console.log("REG EMAIL CHECK 3 >>> ", user.uid)
                     setDoc(doc(db, "users", user.uid), {
                     uid: user.uid,
                     displayedName: name,

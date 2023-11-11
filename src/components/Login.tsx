@@ -42,6 +42,11 @@ return (
             <button className="login-btn-google" onClick={signInWithGoogle}>
                 Login with Google
             </button>
+            <button 
+            className="guest-login-btn"
+            onClick={() => signUpWithEmail("guest-user@quack.com", "123321")}>
+                Login as Guest
+            </button>
             <div>
                 <Link to="/reset">Forgot Password</Link>
             </div>

@@ -154,6 +154,16 @@ const ProfilePage: React.FC<PostProps> = ({
         document.querySelector(".user-container-profile-page-container") as HTMLElement;
         const postSubContainer = 
         document.getElementById("post-subcontainer") as HTMLElement;
+        const postsElement = document.querySelector(".quacks-select") as HTMLElement;
+        const responsesElement = document.querySelector(".responses-select") as HTMLElement;
+        if(profPost) {
+            postsElement.style.color = "white";
+            responsesElement.style.color = "#5b5f62";
+        } else {
+            responsesElement.style.color = "white"
+            postsElement.style.color = "#5b5f62";
+        }
+
         if(profileStatesCount === 1) {
             if(profileContainer) setTimeout(() => {
                 profileContainer.style.visibility = "visible";
@@ -186,15 +196,20 @@ const ProfilePage: React.FC<PostProps> = ({
   
     const loadPostsList = (postOrComment: string) => {
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
-        
+        const postsElement = document.querySelector(".quacks-select") as HTMLElement;
+        const responsesElement = document.querySelector(".responses-select") as HTMLElement;
         if(postOrComment === "posts" && profPost === false) {
             if(setProfPost !== undefined) setProfPost(true);
             if(postSubContainer !== null) postSubContainer.style.visibility = "hidden";
+            postsElement.style.color = "white";
+            responsesElement.style.color = "#5b5f62"
             setLoading2(true);
         }
         else if(postOrComment === "responses" && profPost === true) {
             if(setProfPost !== undefined) setProfPost(false);
             if(postSubContainer !== null) postSubContainer.style.visibility = "hidden"
+            responsesElement.style.color = "white"
+            postsElement.style.color = "#5b5f62";
             setLoading2(true);
         }
         
@@ -249,7 +264,7 @@ const ProfilePage: React.FC<PostProps> = ({
     }
 
     const followUser = async() => {
-        console.log(followBtn,"_)_)_)_")
+        console.log(followBtn,"_")
         if(userData && userCtx) {
             const userRef1 = doc(db, 'users', userCtx?.uid);
             const userRef2 = doc(db, 'users', userData?.uid);    
@@ -314,8 +329,8 @@ console.log(postsRenew,"posts heres??s?")
 console.log(posts,"posts here?!!!s!?")
 
   const loadingSvg = 
-  <svg xmlns="http://www.w3.org/2000/svg" width="94px" height="94px" viewBox="0 0 150 150" preserveAspectRatio="xMidYMid">
-      <circle cx="50" cy="50" fill="none" stroke="#6a6a6a" stroke-width="3" r="30" stroke-dasharray="141.37166941154067 49.12388980384689">
+  <svg xmlns="http://www.w3.org/2000/svg" width="94px" height="94px" viewBox="0 0 100 150" preserveAspectRatio="xMidYMid">
+      <circle cx="50" cy="50" fill="none" stroke="#6a6a6a" stroke-width="2" r="25" stroke-dasharray="141.37166941154067 49.12388980384689">
       <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="0.7633587786259541s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
       </circle>
   </svg>
@@ -361,8 +376,8 @@ console.log(posts,"posts here?!!!s!?")
             </div>
             <div className="feed-container">
                 <div className="feed-types-select">
-                    <div className="quacks-select" onClick={(e) => loadPostsList("posts")}>Quacks</div>
-                    <div className="responses-select" onClick={(e) => loadPostsList("responses")}>Responses</div>
+                    <div className="quacks-select" onClick={(e) => loadPostsList("posts")}>Posts</div>
+                    <div className="responses-select" onClick={(e) => loadPostsList("responses")}>Replies</div>
                 </div>
                 <div className="feed-display">                                
                 <div className="loading-element-container" style={{border: loading ? "1px solid rgba(245, 245, 245, 0.307)" : "none"}}>

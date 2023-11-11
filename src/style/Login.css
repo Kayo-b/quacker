@@ -8,6 +8,7 @@
     align-items: center;
     justify-content: center;
   }
+
   .login-container {
     display: flex;
     flex-direction: column;
@@ -16,6 +17,7 @@
     padding: 30px;
     border-radius: 2px;
   }
+
   .login-txt-input {
     padding: 10px;
     font-size: 16px;
@@ -25,10 +27,12 @@
     height: 10px;
     
   }
+
   .login-txt-input:focus {
       outline-color:rgb(26, 98, 94);
       outline-style:solid
   } 
+
   .login-btn-email {
     padding: 6px;
     font-size: 16px;
@@ -39,14 +43,17 @@
     cursor: pointer;
     
   }
+
   .login-btn-email:hover {
     background-color: rgba(11, 57, 53, 0.885);
   }
-
 
   .login-btn-google {
     background-color: #4285f4;
   }
   .login div {
     margin-top: 7px;
+  }
+  .guest-login-btn {
+    background-color: lightseagreen;
   }
