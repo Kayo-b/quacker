@@ -117,7 +117,7 @@ const handleClick = async (text: String) => {
     }
     
   };
-  console.log(userData,"USERDATA22")
+  console.log(userImg,"USERDATA22")
 //   if(userData !== undefined) {
 //     setUserImg(userData?.imgUrl)
 //     console.log(userImg,"NEW USERDATA22")
@@ -130,10 +130,11 @@ const handleClick = async (text: String) => {
 //     //   }
 //     console.log(userImg,"NEW USERDATA22")
 //   },[])
+ //!== userData?.imgUrl ? userImg : userData?.imgUrl
     return(
         <div className="post-wrapper-container">
         <div className="post-main-container"> 
-        <img className="profile-picture" alt="user icon" src={userImg !== userData?.imgUrl ? userImg : userData?.imgUrl}></img> 
+        <img className="profile-picture" alt="user icon" src={userImg}></img> 
             <textarea 
                 maxLength={150}
                 placeholder="Say something..."

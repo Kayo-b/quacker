@@ -36,6 +36,7 @@ type PostProps = {
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     updateFollow?: boolean;
     setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
+    userImg?: string;
     
 }
 
@@ -56,7 +57,8 @@ const PostPage: React.FC<PostProps> = ({
   setPosts,
   addToStatesCount,
   updateFollow,
-  setUpdateFollow
+  setUpdateFollow,
+  userImg
   }) => {
 
     
@@ -162,6 +164,7 @@ const PostPage: React.FC<PostProps> = ({
           setPosts={setPosts}
           updateFollow={updateFollow}
           setUpdateFollow={setUpdateFollow}
+          userImg={userImg}
           
         />    
       </div>

@@ -240,6 +240,7 @@ console.log(userData,"USER APP")
           addToStatesCount={setPostFeedStatesCount}
           updateFollow={updateFollow}
           setUpdateFollow={setUpdateFollow}
+          userImg={userImg}
           />}
         />
         <Route
