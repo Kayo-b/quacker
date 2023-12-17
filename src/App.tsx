@@ -76,6 +76,7 @@ const App = () => {
   const [profPostCheck, setProfPostCheck] = React.useState<number>(0);
   const [updateFollow, setUpdateFollow] = React.useState<boolean>(false);
   const [userData, setUserData] = React.useState<DocumentData>();
+  const [userImg, setUserImg] = React.useState<string>("")
   
 
   // const [favorited, setFavorited] = useState<boolean>(false);
@@ -107,6 +108,7 @@ const fetchBookmarks = async () => {
   let tempBookmarks: DocumentData[] = [];
   docs.forEach(doc => {
     setUserData(doc.data())
+    setUserImg(doc.data().imgUrl);
     console.log(doc.data(), "DOC!S")
       const bookmarks = doc.data().bookmarks;
       tempBookmarks.push(...bookmarks)
@@ -121,6 +123,7 @@ const fetchBookmarks = async () => {
       });
   }
   setBookmarkPosts(tempPosts);
+  
   console.log("app component 22")
   console.log(tempPosts,"tempPosstsSSS")
   //setBookmarkUpdate(true);
@@ -129,9 +132,10 @@ const fetchBookmarks = async () => {
 
 useEffect(() => {
   fetchBookmarks();
-
+  console.log(userImg,"USER APP33")
+  
 },[user])
-
+console.log(userData,"USER APP")
   return (
     <UserContext.Provider value={user as UserPropsOrigin}> {
     <BrowserRouter>
@@ -145,7 +149,9 @@ useEffect(() => {
       user={user as UserPropsOrigin} 
       loading={loading} 
       error={error ? error.toString() : ""} 
-      setName={setName}/>
+      setName={setName}
+      userData={userData}
+      />
       </div>
       </div>
       <div className="center-container">
@@ -183,6 +189,7 @@ useEffect(() => {
         setUserMainFeed={setUserMainFeed}
         updateFollow={updateFollow}
         setUpdateFollow={setUpdateFollow}
+        userImg={userImg}
         userData={userData}
         />}
         />
@@ -256,6 +263,7 @@ useEffect(() => {
         setProfPost={setProfPost}
         profPostCheck={profPostCheck}
         setProfPostCheck={setProfPostCheck}
+        userImg={userImg}
         
         />}
         />

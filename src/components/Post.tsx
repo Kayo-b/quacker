@@ -72,6 +72,7 @@ type PostProps = {
     handleFollow?:() => void;
     setProfileStatesCount?: React.Dispatch<React.SetStateAction<number>>
     userData?: DocumentData;
+    userImg?: string;
 }
 
 const Post: React.FC<PostProps> = ({ 
@@ -106,7 +107,8 @@ const Post: React.FC<PostProps> = ({
   setPostFeedStatesCount,
   setProfileStatesCount,
   postsRenew,
-  userData
+  userData,
+  userImg
   }) => {
     console.log(post,"pos111t12")
     
@@ -362,6 +364,8 @@ console.log(postsArray,"postss#!@@@ ")
          newPost={newPost}
          update={update}
          name={name}
+         userData={userData}
+         userImg={userImg}
         />
         <Repost 
         user={userCtx as UserProps}
@@ -442,6 +446,8 @@ console.log(postsArray,"postss#!@@@ ")
         newPost={newPost}
         update={update}
         name={name}
+        userData={userData}
+        userImg={userImg}
         />
         <Repost 
         user={userCtx as UserProps}
@@ -521,6 +527,8 @@ console.log(postsArray,"postss#!@@@ ")
       newPost={newPost}
       update={update}
       name={name}
+      userData={userData}
+      userImg={userImg}
       />
      <Repost 
        user={userCtx as UserProps}
@@ -599,6 +607,8 @@ console.log(postsArray,"postss#!@@@ ")
          newPost={newPost}
          update={update}
          name={name}
+         userData={userData}
+         userImg={userImg}
         />
         <Repost 
          user={userCtx as UserProps}
@@ -673,6 +683,8 @@ console.log(postsArray,"postss#!@@@ ")
          newPost={newPost}
          update={update}
          name={name}
+         userData={userData}
+         userImg={userImg}
         />
         <Repost 
          user={userCtx as UserProps}
@@ -749,6 +761,8 @@ console.log(postsArray,"postss#!@@@ ")
          newPost={newPost}
          update={update}
          name={name}
+         userData={userData}
+         userImg={userImg}
         />
         <Repost 
     user={userCtx as UserProps}
@@ -827,6 +841,8 @@ let clickedPostParentPost =   postsArray?.map(post =>
      newPost={newPost}
      update={update}
      name={name}
+     userData={userData}
+     userImg={userImg}
     />
     <Repost 
     user={userCtx as UserProps}
@@ -907,6 +923,8 @@ let rootPost =  postsArray?.map(post =>
      newPost={newPost}
      update={update}
      name={name}
+     userData={userData}
+     userImg={userImg}
     />
     <Repost 
     user={userCtx as UserProps}
@@ -987,6 +1005,8 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
      newPost={newPost}
      update={update}
      name={name}
+     userData={userData}
+     userImg={userImg}
     />
    <Repost 
     user={userCtx as UserProps}
@@ -1064,6 +1084,8 @@ let profileNewPostsFeed =  newPost.map(post =>
      newPost={newPost}
      update={update}
      name={name}
+     userData={userData}
+     userImg={userImg}
     />
   <Repost 
     user={userCtx as UserProps}
@@ -1141,6 +1163,8 @@ let profileResponsesFeed =  userMainFeed?.map(val => postsArray?.map(post =>
      newPost={newPost}
      update={update}
      name={name}
+     userData={userData}
+     userImg={userImg}
     />
    <Repost 
     user={userCtx as UserProps}
@@ -1219,6 +1243,8 @@ let profileNewResponsesFeed = postsRenew?.map(post =>
      newPost={newPost}
      update={update}
      name={name}
+     userData={userData}
+     userImg={userImg}
     />
     <Repost 
     user={userCtx as UserProps}
@@ -1305,6 +1331,8 @@ let repostsFromUser = postsArray?.map(post =>
        newPost={newPost}
        update={update}
        name={name}
+       userData={userData}
+       userImg={userImg}
       />
       <Repost 
         user={userCtx as UserProps}
@@ -1368,6 +1396,8 @@ let repostsFromUser = postsArray?.map(post =>
        newPost={newPost}
        update={update}
        name={name}
+       userData={userData}
+       userImg={userImg}
       />
       <Repost 
         user={userCtx as UserProps}

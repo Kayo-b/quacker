@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { RxHome } from 'react-icons/rx'
 import { BsStar } from 'react-icons/bs'
 import { Link } from "react-router-dom";
+import { DocumentData } from 'firebase/firestore'
 import Dashboard from "./Dashboard";
 
 
@@ -22,6 +23,7 @@ type SidebarProps = {
     setName: React.Dispatch<React.SetStateAction<string>>;
     userID: string;
     setUserID: React.Dispatch<React.SetStateAction<string>>;
+    userData?: DocumentData;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({name, user, loading, error, setName, userID, setUserID}) => {

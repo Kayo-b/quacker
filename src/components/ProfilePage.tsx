@@ -48,6 +48,7 @@ type ModalProps = {
       setProfPost?: React.Dispatch<React.SetStateAction<boolean>>;
       profPostCheck: number;
       setProfPostCheck?: React.Dispatch<React.SetStateAction<number>>;
+      userImg?: string;
 
       
   }
@@ -69,7 +70,8 @@ const ProfilePage: React.FC<PostProps> = ({
     setProfPost,
     profPostCheck,
     setProfPostCheck,
-    setPosts
+    setPosts,
+    userImg
     }) => {
 
     // const [profPost, setProfPost] = React.useState<boolean>(true);
@@ -322,6 +324,7 @@ const ProfilePage: React.FC<PostProps> = ({
     setProfPostCheck={setProfPostCheck}
     postsRenew={postsRenew}
     userData={userData}
+    userImg={userImg}
     />
     } </UserContext.Provider>
     

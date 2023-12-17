@@ -34,6 +34,7 @@ type HomepageProps = {
     setUserMainFeed: React.Dispatch<React.SetStateAction<DocumentData[]>>;
     updateFollow?: boolean;
     setUpdateFollow?:React.Dispatch<React.SetStateAction<boolean>>;
+    userImg?: string;
     userData?: DocumentData;
     
 }
@@ -58,11 +59,12 @@ const Homepage: React.FC<HomepageProps> = ({
     setUserMainFeed,
     updateFollow,
     setUpdateFollow,
+    userImg,
     userData
     }) => {
 
     //const [update, setUpdate] = useState<boolean | undefined>(false)
-        console.log(userData,"USER DATA HO11ME")
+        console.log(userImg,"USER IMG HO11ME")
     return(
         <div className="home-main-container">
             < CreatePost 
@@ -72,6 +74,7 @@ const Homepage: React.FC<HomepageProps> = ({
             user={user} 
             newPost={newPost} 
             setNewPost={setNewPost}
+            userImg={userImg}
             userData={userData}
             />
             < Feed 
@@ -92,6 +95,8 @@ const Homepage: React.FC<HomepageProps> = ({
             setUserMainFeed={setUserMainFeed}
             updateFollow={updateFollow}
             setUpdateFollow={setUpdateFollow}
+            userData={userData}
+            userImg={userImg}
             />
         </div>
     )

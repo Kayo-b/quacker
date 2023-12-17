@@ -28,11 +28,13 @@ type PostProps = {
     update: undefined | boolean;
     name?: string;
     user: UserProps;
+    userImg?: string;
     userData?: DocumentData;
   };
 
-const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost, post, userData}) => {
+const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost, post, userImg, userData}) => {
 const[text, setText] = useState("");
+//onst[userImg, setUserImg] = useState("");
 const [imgUrl, setImgUrl] = useState("");
 
 // const getImg = async() => {
@@ -115,11 +117,23 @@ const handleClick = async (text: String) => {
     }
     
   };
-
+  console.log(userData,"USERDATA22")
+//   if(userData !== undefined) {
+//     setUserImg(userData?.imgUrl)
+//     console.log(userImg,"NEW USERDATA22")
+//   }
+//   useEffect(() => {
+//     //getImg();
+//     setUserImg(userData?.imgUrl)
+//     // if(userData !== undefined) {
+//     //     setUserImg(userData?.imgUrl)
+//     //   }
+//     console.log(userImg,"NEW USERDATA22")
+//   },[])
     return(
         <div className="post-wrapper-container">
         <div className="post-main-container"> 
-        <img className="profile-picture" alt="user icon" src={userData?.imgUrl}></img> 
+        <img className="profile-picture" alt="user icon" src={userImg !== userData?.imgUrl ? userImg : userData?.imgUrl}></img> 
             <textarea 
                 maxLength={150}
                 placeholder="Say something..."

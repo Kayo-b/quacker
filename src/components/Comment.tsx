@@ -26,6 +26,8 @@ type UserProps = {
     update: undefined | boolean;
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     name?: string;
+    userData?: DocumentData;
+    userImg?: string;
 }
 console.log("comment")
 //Modal for the comment popup
@@ -44,13 +46,13 @@ function Modal({ isOpen, onClose, children }: ModalProps) {
     );
   }
 
-const Comment: React.FC<PostProps> = ({user, post, name, setUpdate, update, newPost, setNewPost}) => {
+const Comment: React.FC<PostProps> = ({user, post, name, setUpdate, update, newPost, setNewPost, userData, userImg}) => {
     
     const [isModalOpen, setIsModalOpen] = React.useState(false);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
-
+  console.log(userData,"USER DATA COMMENT")
   return (
     <div className="comment-btn">
         <VscComment onClick={openModal}/>
@@ -63,6 +65,8 @@ const Comment: React.FC<PostProps> = ({user, post, name, setUpdate, update, newP
             newPost={newPost}
             update={update}
             name={name}
+            userData={userData}
+            userImg={userImg}
             
             />}
         </Modal>

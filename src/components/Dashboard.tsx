@@ -19,9 +19,10 @@ type DashboardProps = {
     setName: React.Dispatch<React.SetStateAction<string>>;
     userID: string;
     setUserID: React.Dispatch<React.SetStateAction<string>>;
+    userData?: DocumentData;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setName, userID, setUserID})  => {
+const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setName, userID, setUserID, userData})  => {
     const navigate = useNavigate();
     const post = {
         username: name,
@@ -76,6 +77,7 @@ const RedirectToProfilePage = (post: DocumentData | undefined) => {
   return (
     <div className="dashboard">
         <div className="dashboard-container">
+             <img className="profile-picture" alt="user icon" src={userData?.imgUrl}></img>
             {!user ? "Logged Out" : ""} 
             <div className="profile-dashboard">
                 <div onClick={() => RedirectToProfilePage(post)}>{name}</div>

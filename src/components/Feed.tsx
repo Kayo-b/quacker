@@ -51,6 +51,8 @@ type PostProps = {
     addToStatesCount?: React.Dispatch<React.SetStateAction<number>>;
     postPageStatesCount?: number;
     setPostFeedStatesCount?: React.Dispatch<React.SetStateAction<number>>;
+    userData?: DocumentData;
+    userImg?: string;
 
 
   };
@@ -77,7 +79,9 @@ const Feed: React.FC<PostProps> = ({
     parentPost,
     addToStatesCount,
     postPageStatesCount,
-    setPostFeedStatesCount
+    setPostFeedStatesCount,
+    userData,
+    userImg
     }) => {
 
     //const [posts, setPosts] = useState<DocumentData[]>([]);
@@ -143,7 +147,7 @@ const Feed: React.FC<PostProps> = ({
         <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="0.7633587786259541s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
         </circle>
     </svg>
-
+    console.log(userImg,"USER IMG$#$#$")
     if(user !== null) {return(
         
         <div>
@@ -176,6 +180,8 @@ const Feed: React.FC<PostProps> = ({
             parentPost={parentPost}
             setLoading={setLoading}
             setPostFeedStatesCount={setPostFeedStatesCount}
+            userData={userData}
+            userImg={userImg}
             />
         } </UserContext.Provider>
         </div>
