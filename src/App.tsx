@@ -151,6 +151,7 @@ console.log(userData,"USER APP")
       error={error ? error.toString() : ""} 
       setName={setName}
       userData={userData}
+      userImg={userImg}
       />
       </div>
       </div>

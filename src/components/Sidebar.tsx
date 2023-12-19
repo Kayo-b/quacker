@@ -24,9 +24,10 @@ type SidebarProps = {
     userID: string;
     setUserID: React.Dispatch<React.SetStateAction<string>>;
     userData?: DocumentData;
+    userImg?: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({name, user, loading, error, setName, userID, setUserID}) => {
+const Sidebar: React.FC<SidebarProps> = ({name, user, loading, error, setName, userID, setUserID, userImg}) => {
 
     return(
         <div className="sb-main-container">
@@ -48,6 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({name, user, loading, error, setName, u
                 loading={loading} 
                 error={error} 
                 setName={setName}
+                userImg={userImg}
                 />
                 </div>
             </div>  
