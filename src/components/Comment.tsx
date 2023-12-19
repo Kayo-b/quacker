@@ -56,20 +56,24 @@ const Comment: React.FC<PostProps> = ({user, post, name, setUpdate, update, newP
   return (
     <div className="comment-btn">
         <VscComment onClick={openModal}/>
-        <Modal isOpen={isModalOpen} onClose={closeModal}>   
-            {<CreatePost 
-            user={user}
-            post={post}
-            setUpdate={setUpdate}
-            setNewPost={setNewPost}
-            newPost={newPost}
-            update={update}
-            name={name}
-            userData={userData}
-            userImg={userImg}
-            
-            />}
-        </Modal>
+       
+          <Modal isOpen={isModalOpen} onClose={closeModal}>   
+          <div className={"modal-frame"}>
+              {<CreatePost 
+              user={user}
+              post={post}
+              setUpdate={setUpdate}
+              setNewPost={setNewPost}
+              newPost={newPost}
+              update={update}
+              name={name}
+              userData={userData}
+              userImg={userImg}
+              />}
+          </div>
+          </Modal>
+
+       
         
     </div>
   )
