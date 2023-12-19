@@ -65,7 +65,7 @@ li {
   height: 100%;
   max-width: 300px;
   position: relative;
-  margin-right: 150px;
+  
 }
 /* .sidebar-fixed-wrapper {
   height: auto;
@@ -75,8 +75,8 @@ li {
 } */
 .sidebar {
   height: 100%;
-  position: fixed;
-  left: 1;
+  position: relative;
+  left: 2;
 }
 /* .like-btn {
   background: url(../img/search-svgrepo-com.svg) 0 0 no-repeat;
