@@ -157,7 +157,7 @@ console.log(postsArray,"postss#!@@@ ")
   //     img?.setAttribute('src', url)
   //  })
 
-  console.log(userCtx, "USER POST !")
+  console.log(userCtx, "USER POST !1")
 
   //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
@@ -208,6 +208,7 @@ console.log(postsArray,"postss#!@@@ ")
     }
     removePostFromDB();
     //update === true ? setUpdate(false) : setUpdate(true)
+    setUpdate(!update);
   }
 
   //Add setUSerMainFeed in the useEffect to reset the userMainFeed

@@ -111,7 +111,7 @@ const Feed: React.FC<PostProps> = ({
         
         //const q = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")))
         const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")));
-        console.log("fetch!!!!.")
+        console.log("fetch!!!!.x")
         if(setPosts){
             setPosts([])
             setNewPost([])//making new posts array empty to avoid duplicate posts

@@ -328,7 +328,7 @@ const ProfilePage: React.FC<PostProps> = ({
     />
     } </UserContext.Provider>
     
-console.log(postsRenew,"posts heres??s?")
+console.log(postsRenew,"posts heres?1?s?")
 console.log(posts,"posts here?!!!s!?")
 
   const loadingSvg = 

@@ -51,9 +51,26 @@ li {
   width: 70%;
   justify-content: space-evenly;
 }
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 1;
+  margin: 0px;
+  border: 0px;
+  z-index: 2;
+  background: none;
+  color: whitesmoke;
+}
+
 .like-btn:hover, .star-icon-post:hover, .comment-btn:hover, .bm-main-container:hover {
   cursor: pointer;
 }
+
+.modal-faded-background:hover, .modal-content:hover {
+  cursor:default;
+}
+
 .main-btn-container {
   display: flex;
   flex-direction: row;
@@ -187,9 +204,17 @@ li {
   top: 50%;
   left: -175px;
   border: 1px solid rgba(245, 245, 245, 0.531);
-  z-index: 2;
+  z-index: 5;
 }
-
+.modal-faded-background {
+  top: 0;
+  left: 0; 
+  position: fixed;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 .nav-main-container {
   display: flex;
   align-items: start;
@@ -273,6 +298,7 @@ input[type="button"] {
   z-index: 1;
   padding-left: 4px;
   padding-top: 4px;
+  display: flex;
 
 }
 

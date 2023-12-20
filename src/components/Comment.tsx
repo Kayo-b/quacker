@@ -58,19 +58,22 @@ const Comment: React.FC<PostProps> = ({user, post, name, setUpdate, update, newP
         <VscComment onClick={openModal}/>
        
           <Modal isOpen={isModalOpen} onClose={closeModal}>   
-          <div className={"modal-frame"}>
-              {<CreatePost 
-              user={user}
-              post={post}
-              setUpdate={setUpdate}
-              setNewPost={setNewPost}
-              newPost={newPost}
-              update={update}
-              name={name}
-              userData={userData}
-              userImg={userImg}
-              />}
-          </div>
+            
+              <div className={"modal-frame"}>
+                  {<CreatePost 
+                  user={user} 
+                  post={post}
+                  setUpdate={setUpdate}
+                  setNewPost={setNewPost}
+                  newPost={newPost}
+                  update={update}
+                  name={name}
+                  userData={userData}
+                  userImg={userImg}
+                  />}
+              </div>
+              <div className="modal-faded-background"></div>
+            
           </Modal>
 
        
