@@ -117,6 +117,7 @@ const Post: React.FC<PostProps> = ({
   const navigate = useNavigate();
   const storage = getStorage();
   const [profileImg, setProfileImg] = useState("")
+  const [displayVar1, setDisplayVar1] = useState("")
   const style = {"fontSize": "large"}
   //const [postsArray, setPostArray] = useState(posts.length === 0 ? postsRenew : posts)
   const postsArray = posts.length === 0 ? postsRenew : posts
@@ -181,11 +182,18 @@ console.log(postsArray,"postss#!@@@ ")
   }
 
   const RemovePost = (post: DocumentData | undefined) => {
-    
+    // document query selector based on key as in: div className="post-container" key={post?.postID}
+
+
+    const postContainer = document.getElementById(`${post?.postID}`);
+   // const specificPost = Array.from(postContainers).filter(postContainer => postContainer.getAttribute("key") === post?.postID) as unknown as HTMLElement;
+    console.log(post?.postID,"SPECIFIC")
     if(!profPost) { 
       //setPostArray(postsArray?.filter(val => val !== post?.postID))
       postsArray?.filter(val => val !== post?.postID)
-      setUpdate(!update);
+      if(postContainer) postContainer.style.display = "none";
+      //setUpdate(!update);
+      
     }
     setUserMainFeed(prevVal => 
       prevVal.filter(value => value !== post?.postID));
@@ -196,6 +204,7 @@ console.log(postsArray,"postss#!@@@ ")
     if(setPosts) {
       setPosts(prevVal => 
         prevVal.filter(value => value.postID !== post?.postID));
+        if(postContainer) postContainer.style.display = "none";
       }
 
     var removePostFromDB = async () =>  {
@@ -208,7 +217,9 @@ console.log(postsArray,"postss#!@@@ ")
     }
     removePostFromDB();
     //update === true ? setUpdate(false) : setUpdate(true)
-    setUpdate(!update);
+    //setUpdate(!update);
+    if(postContainer) postContainer.style.display = "none";
+
   }
 
   //Add setUSerMainFeed in the useEffect to reset the userMainFeed
@@ -316,7 +327,7 @@ console.log(postsArray,"postss#!@@@ ")
 
   //neuPost sets the new post directly into the feed, without any server commmunication
     let neuPost = newPost.map(post =>  post.parentID === null ?  
-      <div className="post-container" key={post.postID}>
+      <div className="post-container" key={post?.postID}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
@@ -397,7 +408,7 @@ console.log(postsArray,"postss#!@@@ ")
     let loadPosts = postsArray?.map(post => { 
       if(post.parentID === null) {
         
-        return <div className="post-container" key={post.postID}>
+        return <div className="post-container" key={post?.postID}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
@@ -479,7 +490,7 @@ console.log(postsArray,"postss#!@@@ ")
   
   let loadSearch = postsArray?.map(post => { 
     if(post.textContent.includes(search)) {
-      return <div className="post-container" key={post.postID}>
+      return <div className="post-container" key={post?.postID}>
       <div className="option-btn-container">
         <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
         <div style={{display: "none"}} className="btnSubcontainer">
@@ -559,14 +570,14 @@ console.log(postsArray,"postss#!@@@ ")
 
     // Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
     let comment = postsArray?.map(post =>  post.parentID === parentPost?.postID ?  
-      <div className="post-page-container" key={post.postID}>
+      <div className="post-page-container" id={`${post?.postID}`} key={post?.postID}>
         <div className="option-btn-container">
          <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
          <div style={{display: "none"}} className="btnSubcontainer">
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete?</button> :
+              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
             </div>
@@ -635,7 +646,7 @@ console.log(postsArray,"postss#!@@@ ")
     )
 
     let newComment = postsArray?.map(post =>  post.parentID === parentPost?.postID ?  
-      <div className="post-page-container" key={post.postID}>
+      <div className="post-page-container" key={post?.postID}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
@@ -790,7 +801,7 @@ console.log(postsArray,"postss#!@@@ ")
 //clickedPostParentPost renders the parent post of the clicked post (if it has a parentID)
 let clickedPostParentPost =   postsArray?.map(post =>  
   post.postID === newPostValue?.parentID ?  
-  <div className="post-page-container" key={post.postID} style={style}>
+  <div className="post-page-container" key={post?.postID} style={style}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
@@ -872,7 +883,7 @@ let rootPost =  postsArray?.map(post =>
   post.postID === newPostValue?.rootPostID &&
   newPostValue?.parentID !== post.postID && 
   newPostValue?.parentID !== null ?  
-  <div className="post-page-container" key={post.postID} style={style}>
+  <div className="post-page-container" key={post?.postID} style={style}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
@@ -957,7 +968,7 @@ console.log(postsArray,"OPOP")
 //and the posts.map was nested inside it so that it obeys the sequence of the userMainFeed array.
 let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post => 
   val === post.postID ?
-  <div className="post-container" key={post.postID} style={style}>
+  <div className="post-container" key={post?.postID} style={style}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
@@ -1036,7 +1047,7 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
 let profileNewPostsFeed =  newPost.map(post =>  
   post.userID === newPostValue?.userID &&
   post.parentID === null ?  
-  <div className="post-container" key={post.postID} style={style}>
+  <div className="post-container" key={post?.postID} style={style}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
@@ -1115,7 +1126,7 @@ let profileNewPostsFeed =  newPost.map(post =>
 let profileResponsesFeed =  userMainFeed?.map(val => postsArray?.map(post =>  
   post.postID === val &&
   post.parentID !== null ?  
-  <div className="post-container" key={post.postID} style={style}>
+  <div className="post-container" key={post?.postID} style={style}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
@@ -1193,7 +1204,7 @@ let profileResponsesFeed =  userMainFeed?.map(val => postsArray?.map(post =>
 let profileNewResponsesFeed = postsRenew?.map(post =>  
   post.userID === newPostValue?.userID &&
   post.parentID !== null ?  
-  <div className="post-container" key={post.postID} style={style}>
+  <div className="post-container" id={post?.postID} key={post?.postID} style={{display: `${displayVar1}`, "fontSize": "large"}}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
@@ -1296,7 +1307,7 @@ let repostsFromUser = postsArray?.map(post =>
   
     //user.reposts?.find(repost => repost === post.postID) 
     post.repostByUsers.includes(newPostValue?.userID) ?
-    <div className="post-container" key={post.postID} style={style}>
+    <div className="post-container" key={post?.postID} style={style}>
       {userCtx?.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
@@ -1361,7 +1372,7 @@ let repostsFromUser = postsArray?.map(post =>
   let newRepostsFromUser = postsArray?.map(post => 
     //repost?.find(repost => repost.postID === post.postID) ?
     repost?.includes(post) ?
-    <div className="post-container" key={post.postID} style={style}>
+    <div className="post-container" key={post?.postID} style={style}>
       {userCtx?.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
@@ -1422,7 +1433,7 @@ let repostsFromUser = postsArray?.map(post =>
   )
 
   // let bookmarkedPosts = bookmarkPosts?.map(post => post !== undefined ?
-  //   <div className="post-container" key={post.postID} style={style}>
+  //   <div className="post-container" key={post?.postID} style={style}>
   //   {userCtx?.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
   //   <div className="user-container">
   //     <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
