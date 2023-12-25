@@ -539,6 +539,60 @@ button:hover {
   z-index: 2;
 }
 
+.img-upload-wrapper-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.upload-profile-pic-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  margin: 2px 0px 5px 2px;
+  border: 1px solid gray;
+  width: 98%;
+  padding: 2px;
+} 
+
+.upload-background-img-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  margin: 2px 0px 5px 2px;
+  border: 1px solid gray;
+  width: 98%;
+  padding: 2px;
+}
+
+.upload-img-title {
+  font-size: small;
+  font-weight: lighter;
+  margin: 0px 0px 3px 0px;
+}
+
+
+.upload-profile-pic-file-input {
+  padding: 1px;
+  width: inherit;
+}
+
+.upload-background-img-file-input {
+  padding: 1px;
+  width: inherit;
+}
+
+.upload-profile-pic-file-input:hover, .upload-background-img-file-input:hover {
+  cursor: pointer;
+  background-color: rgb(98, 98, 98);
+}
+
+input[type="file"] {
+  display: none;
+}
 /* .edit-profile-main-container>input {
   width: 250px;
 } */

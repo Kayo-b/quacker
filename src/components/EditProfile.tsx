@@ -106,47 +106,76 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
         
     }
 
+    const handleSave = () => { 
+        handleClick();
+        handleClick2();
+        handleClick3();
+        handleClick4();
+    }
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if(e.target.files !== null) {
+            const inputElement = e.target;
+            const previousSiblingElement = inputElement.previousElementSibling;
+            if (previousSiblingElement !== null) {
+                previousSiblingElement.innerHTML = e.target.files[0].name;
+            }
+        }
+    }
 
     return(
-        <div className="edit-profile-main-container">
-            <h3>Edit Profile</h3>
-            
-            <input 
-            type="file"
-            onChange={(e) => 
-                e.target.files !== null ?
-                setImageUpload((e.target.files[0])) :
-                null
-            }
-            >
-            </input>
-            <button onClick={handleClick}>Upload Profile Picture</button>
+            <div className="edit-profile-main-container">
+                <h3>Edit Profile</h3> <button onClick={handleSave}>Save</button>
 
-            <input 
-            type="file"
-            onChange={(e) => 
-                e.target.files !== null ?
-                setImageUpload((e.target.files[0])) :
-                null
-            }
-            >
-            </input>
-            <button onClick={handleClick2}>Upload Background Image</button>
-
-            <input 
-            type="text" 
-            onChange={(e) => setNameTempText(e.target.value)}
-            ></input>
-            <button type="submit" onClick={handleClick3}>Update Name</button>
-            
-
-            <input 
-            type="text" 
-            onChange={(e) => setTempBioText(e.target.value)}
-            ></input>
-            <button type="submit" onClick={handleClick4}>Update Bio</button>
-            
-        </div>
+                <div className="img-upload-wrapper-container">
+                    <div className="upload-profile-pic-container">
+                    <span className="upload-img-title">Profile Image</span>
+                        <label htmlFor="label-id-prof-pic-upload" className="upload-profile-pic-file-input">
+                            Add Image
+                        </label>
+                        <input 
+                            id="label-id-prof-pic-upload"
+                            type="file"
+                            onChange={(e) => 
+                                e.target.files !== null ?
+                                (setImageUpload(e.target.files[0]), handleOnChange(e)) :
+                                null
+                            }
+                        ></input>
+                        {/* <button onClick={handleClick}>Upload Profile Picture</button> */}
+                    </div>
+                    <div className="upload-background-img-container">   
+                        <span className="upload-img-title">Background Image</span>
+                            <label htmlFor="label-id-background-img-upload" className="upload-background-img-file-input">
+                                Add Image
+                            </label>
+                            <input 
+                                id="label-id-background-img-upload"
+                                type="file"
+                                onChange={(e) => 
+                                    e.target.files !== null ?
+                                    (setImageUpload(e.target.files[0]), handleOnChange(e)) :
+                                    null
+                                }
+                            ></input>
+                            {/* <button onClick={handleClick2}>Upload Background Image</button> */}
+                    </div>
+                </div>
+                <div className="update-name-container">
+                    <input 
+                        type="text" 
+                        onChange={(e) => setNameTempText(e.target.value)}
+                    ></input>
+                    {/* <button type="submit" onClick={handleClick3}>Update Name</button> */}
+                </div>
+                <div className="update-bio-container">
+                    <input 
+                        type="text" 
+                        onChange={(e) => setTempBioText(e.target.value)}
+                    ></input>
+                    {/* <button type="submit" onClick={handleClick4}>Update Bio</button> */}
+                </div>
+            </div>
     )}
 
 export default EditProfile;
