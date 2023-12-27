@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import { useParams, useLocation } from 'react-router-dom';
+import { MdClose } from "react-icons/md";
 import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs, orderBy} from "firebase/firestore"
 import { db } from "../firebase";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
@@ -142,7 +143,7 @@ const ProfilePage: React.FC<PostProps> = ({
         <div className="modal">
             <div className="modal-content">
             <button className="close-button" onClick={onClose}>
-                X
+                <MdClose style={{width:'25px', height:'25px'}}/>
             </button>
             {children}
             </div>

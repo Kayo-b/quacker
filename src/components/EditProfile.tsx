@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { useParams, useLocation } from 'react-router-dom';
-import { DocumentData, writeBatch, doc, setDoc , getDoc, collection, where, query, getDocs, QuerySnapshot} from "firebase/firestore"
+import { DocumentData, writeBatch, doc, setDoc , getDoc, collection, where, query, getDocs, QuerySnapshot} from "firebase/firestore";
+import { IoIosAddCircleOutline } from "react-icons/io";
 import { db, storage } from "../firebase";
 import Post from '../components/Post';
 import myImg from '../img/user-icon.png';
@@ -31,17 +32,18 @@ type EditProfileProps = {
 
 const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioText, setBioText, post, setDisplayedName, user}) => {
 
-    const [imageUpload, setImageUpload] = React.useState<File | null>(null)
+    const [profImageUpload, setProfImageUpload] = React.useState<File | null>(null)
+    const [backgroundImageUpload, setBackgroundImageUpload] = React.useState<File | null>(null)
     const [bioTempText, setTempBioText] = React.useState<String>('');
     const [nameTempText, setNameTempText] = React.useState<String>('');
 
     const handleClick = () => {
-        let id = document.getElementById("myimgprofile")
+        let id = document.getElementById("label-id-prof-pic-upload")
         let imgUrlFromEle = (id as HTMLImageElement).src
         console.log(imgUrlFromEle,"imgUrlFromEle")
-        if(imageUpload === null) return null;
+        if(profImageUpload === null) return null;
         const imageRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img.png`);
-        uploadBytes(imageRef, imageUpload)
+        uploadBytes(imageRef, profImageUpload)
         .then(() => {
 
             alert("img uploaded");
@@ -66,9 +68,10 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
     }
 
     const handleClick2 = () => {
-        if(imageUpload === null) return null;
+        console.log(backgroundImageUpload,"KOKOAKOKOAKOKA2222222")
+        if(backgroundImageUpload === null) return null;
         const imageRef =  ref(storage, `/images/${user.uid}/background_image/background_img`);
-        uploadBytes(imageRef, imageUpload).then(() => {
+        uploadBytes(imageRef, backgroundImageUpload).then(() => {
             alert("img uploaded");
             getDownloadURL(imageRef)
             .then((url) => {
@@ -125,12 +128,12 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
 
     return(
             <div className="edit-profile-main-container">
-                <h3>Edit Profile</h3> <button onClick={handleSave}>Save</button>
+                <h3>Edit Profile</h3>
 
                 <div className="img-upload-wrapper-container">
                     <div className="upload-profile-pic-container">
                     <span className="upload-img-title">Profile Image</span>
-                        <label htmlFor="label-id-prof-pic-upload" className="upload-profile-pic-file-input">
+                        <label htmlFor="label-id-prof-pic-upload" className="upload-profile-pic-file-input" id="myimgprofile">
                             Add Image
                         </label>
                         <input 
@@ -138,43 +141,48 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
                             type="file"
                             onChange={(e) => 
                                 e.target.files !== null ?
-                                (setImageUpload(e.target.files[0]), handleOnChange(e)) :
+                                (setProfImageUpload(e.target.files[0]), handleOnChange(e)) :
                                 null
                             }
                         ></input>
-                        {/* <button onClick={handleClick}>Upload Profile Picture</button> */}
                     </div>
                     <div className="upload-background-img-container">   
                         <span className="upload-img-title">Background Image</span>
                             <label htmlFor="label-id-background-img-upload" className="upload-background-img-file-input">
-                                Add Image
+                                Add Image 
                             </label>
                             <input 
                                 id="label-id-background-img-upload"
                                 type="file"
                                 onChange={(e) => 
                                     e.target.files !== null ?
-                                    (setImageUpload(e.target.files[0]), handleOnChange(e)) :
+                                    (setBackgroundImageUpload(e.target.files[0]), handleOnChange(e)) :
                                     null
                                 }
                             ></input>
-                            {/* <button onClick={handleClick2}>Upload Background Image</button> */}
                     </div>
                 </div>
                 <div className="update-name-container">
+                    <label htmlFor="label-id-update-name" className="update-name-label">
+                        Name
+                    </label>
                     <input 
+                        id="label-id-update-name"
                         type="text" 
                         onChange={(e) => setNameTempText(e.target.value)}
                     ></input>
-                    {/* <button type="submit" onClick={handleClick3}>Update Name</button> */}
                 </div>
                 <div className="update-bio-container">
-                    <input 
-                        type="text" 
+                    <label htmlFor="label-id-update-bio" className="update-bio-label">
+                        Bio
+                    </label>
+                    <textarea
+                        id="label-id-update-bio"
+                        maxLength={100}
                         onChange={(e) => setTempBioText(e.target.value)}
-                    ></input>
-                    {/* <button type="submit" onClick={handleClick4}>Update Bio</button> */}
+                    ></textarea>
                 </div>
+                <button onClick={handleSave} className="save-btn">Save</button>
             </div>
     )}
 

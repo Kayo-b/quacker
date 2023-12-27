@@ -55,12 +55,18 @@ li {
 .close-button {
   position: absolute;
   top: 0;
-  right: 1;
+  left: 470px;
+  width: 20px;
+  height: 20px;
   margin: 0px;
   border: 0px;
-  z-index: 2;
+  z-index: 3;
   background: none;
-  color: whitesmoke;
+  color:  gray;
+}
+.close-button:hover {
+  cursor: pointer;
+  color: rgb(166, 166, 166);
 }
 
 .like-btn:hover, .star-icon-post:hover, .comment-btn:hover, .bm-main-container:hover {
@@ -502,15 +508,21 @@ button.options-btn * {
   position: absolute
 }
 
-button{
+.close-button:hover {
+  cursor: pointer;
+  color: whitesmoke;
+}
+
+button:not(.close-button):hover {
+  background: fixed;
+  background-color: rgb(142, 142, 142);
+  cursor: pointer;
+}
+
+button {
   border: 0px;
   background: none;
   color: whitesmoke;
-}
-button:hover {
-  background:fixed;
-  background-color: gray;
-  cursor:pointer;
 }
 .search-container {
   display: flex;
@@ -533,10 +545,11 @@ button:hover {
   width: 500px;
   height: 350px;
   position: absolute;
-  border: 2px solid rgb(255, 255, 255);
-  border-radius: 15px;
+  border: 1px solid rgb(179, 179, 179);
+  border-radius: 5px;
   background-color: rgb(38, 36, 36);
   z-index: 2;
+  padding: 0px 1px 0px 1px
 }
 
 .img-upload-wrapper-container {
@@ -576,13 +589,21 @@ button:hover {
 
 
 .upload-profile-pic-file-input {
-  padding: 1px;
-  width: inherit;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: smaller;
+  font-weight:200;
 }
 
 .upload-background-img-file-input {
-  padding: 1px;
-  width: inherit;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: smaller;
+  font-weight:200;
 }
 
 .upload-profile-pic-file-input:hover, .upload-background-img-file-input:hover {
@@ -593,6 +614,83 @@ button:hover {
 input[type="file"] {
   display: none;
 }
+
+input[type="text"] {
+  border: 0px;
+  background-color: #44434300;
+  width: 100%;
+  color: rgb(211, 211, 211);
+  outline: none;
+}
+
+.update-name-label {
+  margin: 0px 0px 3px 0px;
+  font-size: small;
+  font-weight: lighter;
+}
+
+.update-name-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin: 2px 0px 5px 2px;
+  border: 1px solid gray;
+  width: 98%;
+  height: 60%;
+  padding: 2px;
+}
+
+.update-name-title {
+  font-size: small;
+  font-weight: lighter;
+  margin: 0px 0px 3px 0px;
+}
+
+.update-bio-label {
+  margin: 0px 0px 3px 0px;
+  font-size: small;
+  font-weight: lighter;
+}
+
+.update-bio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin: 2px 0px 5px 2px;
+  border: 1px solid gray;
+  width: 98%;
+  padding: 2px;
+}
+
+.update-bio-container>textarea {
+  display: flex;
+  border: 1px solid rgba(255, 0, 0, 0);
+  height: 30px;
+  width: 100%;
+  min-width: 50%;
+  max-height: 75%;
+  min-height: 75%;
+  resize: none;
+  overflow: auto;
+  background-color:rgba(38, 36, 36, 0);
+  appearance: none;
+  outline-style: none;
+  box-sizing: border-box;
+  outline-style: none;
+  padding: 2px;
+  color: rgb(211, 211, 211);
+}
+
+#label-id-update-bio {
+  max-width: inherit;
+  max-height: 110%;
+}
+.save-btn {
+  height: 80%;
+  width: 100%;
+  padding: 5px;
+}
+
 /* .edit-profile-main-container>input {
   width: 250px;
 } */
