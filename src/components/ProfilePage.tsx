@@ -142,7 +142,7 @@ const ProfilePage: React.FC<PostProps> = ({
         return (
         <div className="modal">
             <div className="modal-content">
-            <button className="close-button" onClick={onClose}>
+            <button className="close-button-edit-profile" onClick={onClose}>
                 <MdClose style={{width:'25px', height:'25px'}}/>
             </button>
             {children}
@@ -354,6 +354,7 @@ console.log(posts,"posts here?!!!s!?")
                     <div className="user-name">
                         @{userData?.name}{userData?.uid !== userCtx?.uid ? <button onClick={() => followUser()}>{userData?.followers.includes(userCtx?.uid) ? "Unfollow" : "Follow"}</button> : null}
                         {userData?.uid === userCtx?.uid ? <button onClick={openModal}>Edit Profile</button> : null}
+                        <div className="modal-container">
                         <Modal isOpen={isModalOpen} onClose={closeModal}>   
                             {<EditProfile
                             user={userCtx as UserProps}
@@ -369,6 +370,7 @@ console.log(posts,"posts here?!!!s!?")
                             setDisplayedName={setDisplayedName}
                             />}
                         </Modal>
+                        </div>
                     </div>
                 <div className="follow-stats">
                 {userData?.following.length} Following / {userData?.followers.length < followersCount ? followersCount : userData?.followers.length}  Followers

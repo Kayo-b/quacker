@@ -30,9 +30,10 @@ type PostProps = {
     user: UserProps;
     userImg?: string;
     userData?: DocumentData;
+    closeModal?: () => void;
   };
 
-const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost, post, userImg, userData}) => {
+const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost, post, userImg, userData, closeModal}) => {
 const[text, setText] = useState("");
 //onst[userImg, setUserImg] = useState("");
 const [imgUrl, setImgUrl] = useState("");
@@ -51,10 +52,10 @@ const [imgUrl, setImgUrl] = useState("");
 
 
 const handleClick = async (text: String) => {
+    if(text.length=== 0) return;
+
     //setUpdate(true);
     // handle form submission here.
-    console.log(user)
-
     const userDocRef = doc(db, "users", user.uid);
     const userDocSnap = await getDoc(userDocRef);
     const userDocSnapData = userDocSnap.data();
@@ -115,7 +116,9 @@ const handleClick = async (text: String) => {
     } catch(e) {
         console.error(e);
     }
-    
+    setText("");
+    if(closeModal) closeModal();
+
   };
   console.log(userImg,"USERDATA22")
 //   if(userData !== undefined) {

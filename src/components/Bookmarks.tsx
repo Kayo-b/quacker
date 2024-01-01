@@ -213,7 +213,7 @@ const handleClick = (event: MouseEvent) => {
     let bookmarkPost = 
     bookmarkPosts?.map(post =>   
       
-      <div className="post-container" key={post.postID}>
+      <div className="post-container" key={post.postID} onClick={() => RedirectToPostPage(post)}>
         <div className="option-btn-container">
         <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
         <div style={{display: "none"}} className="btnSubcontainer">

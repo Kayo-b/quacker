@@ -82,7 +82,8 @@ const addBookmarkPost = (newPost: DocumentData) => {
             
     }
 //See if there is a faster way to get the user's bookmarked posts, the query makes it take some time
-const addBookmark = async (postId: string) => {
+const addBookmark = async (postId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
     // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
     // const docs = await getDocs(q);
     // const userRef = docs.docs[0].ref;
@@ -117,7 +118,7 @@ const addBookmark = async (postId: string) => {
         <div className="bm-main-container">
             <BsStar 
             className="star-icon-post" 
-            onClick={() => addBookmark(post?.postID)} 
+            onClick={(e) => addBookmark(post?.postIDm, e)} 
             style={{color: favorited ? "yellow" : undefined}}
             />
             {/* // <button onClick={() => addBookmark(post?.postID)}>

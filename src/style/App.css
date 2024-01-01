@@ -55,20 +55,53 @@ li {
 .close-button {
   position: absolute;
   top: 0;
-  left: 470px;
-  width: 20px;
-  height: 20px;
-  margin: 0px;
+  left: 330px;
+  width: 0px;
+  height: 0px;
   border: 0px;
   z-index: 3;
   background: none;
   color:  gray;
 }
+
 .close-button:hover {
   cursor: pointer;
   color: rgb(166, 166, 166);
 }
 
+.close-button-edit-profile {
+  position: absolute;
+  top: 0;
+  left: 700px;
+  width: 5px;
+  height: 5px;
+  border: 0px;
+  z-index: 3;
+  background: none;
+  color:  gray;
+  background-color: rgb(0,0,0,0);
+}
+
+.save-btn {
+  height: 80%;
+  width: 99%;
+  padding: 2px;
+  margin-left: 3px;
+  margin-right: 6px;
+}
+
+.close-button-edit-profile > svg {
+  position: absolute;
+  right: -7px;
+  top: -2px;  
+  padding: -2px;
+  width: 20px;
+  height: 20px;
+}
+.close-button-edit-profile > svg:hover {
+  cursor: pointer;
+  color: rgb(166, 166, 166);
+}
 .like-btn:hover, .star-icon-post:hover, .comment-btn:hover, .bm-main-container:hover {
   cursor: pointer;
 }
@@ -204,12 +237,13 @@ li {
 }
 
 .modal-content {
-  position: relative;
+  position: absolute;
   margin-top: 10px;
   background-color: #292c2e;
+  width: 350px;
   top: 50%;
   left: -175px;
-  border: 1px solid rgba(245, 245, 245, 0.531);
+  border: 0px solid rgba(245, 245, 245, 0.531);
   z-index: 5;
 }
 .modal-faded-background {
@@ -232,6 +266,7 @@ li {
 }
 
 .post-wrapper-container {
+  border-top: 1px solid rgba(245, 245, 245, 0.531);
   border-left: 1px solid rgba(245, 245, 245, 0.531);
   border-right: 1px solid rgba(245, 245, 245, 0.531);
   border-bottom: 1px solid rgba(245, 245, 245, 0.307);
@@ -297,6 +332,10 @@ input[type="button"] {
 
 }
 
+.user-container:hover,.user-container2:hover {
+  cursor: pointer;
+}
+
 .profile-picture, .profile-picture-profile-feed {
   height: 40px;
   margin-right: 10px;
@@ -344,7 +383,10 @@ input[type="button"] {
   border-right: 1px solid rgba(245, 245, 245, 0.531);
   border-bottom: 1px solid rgba(245, 245, 245, 0.307);
 }
-
+.post-container:hover, .post-page-container:hover {
+  background-color: #292c2e;
+  cursor: pointer;
+}
 .user-name {
   font-weight:bold;
 }
@@ -381,12 +423,10 @@ span {
   margin-top: -1px;
   border: 0px;
   background: none;
-  z-index: 1;
-  width: 0px;
-  height: 0px;
+  z-index: 4;
+  width: 20px;
+  height: 20px;
   right: 15px;
-
-  
 }
 
 #options {
@@ -513,7 +553,7 @@ button.options-btn * {
   color: whitesmoke;
 }
 
-button:not(.close-button):hover {
+button:not(.close-button, .close-button-edit-profile, .options-btn):hover {
   background: fixed;
   background-color: rgb(142, 142, 142);
   cursor: pointer;
@@ -542,6 +582,7 @@ button {
 
 .edit-profile-main-container {
   display: grid;
+  left: 215px;
   width: 500px;
   height: 350px;
   position: absolute;
@@ -549,7 +590,7 @@ button {
   border-radius: 5px;
   background-color: rgb(38, 36, 36);
   z-index: 2;
-  padding: 0px 1px 0px 1px
+  padding: 0px 1px 0px 1px;
 }
 
 .img-upload-wrapper-container {

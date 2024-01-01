@@ -158,7 +158,8 @@ const Repost: React.FC<PostProps> = ({
   
 // }
 
-async function addRepostData(postId: string) {
+async function addRepostData(postId: string, e: React.MouseEvent) {
+  e.stopPropagation();
   console.log(reposted,"REPOSTED><><")
       // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
       // const docs = await getDocs(q);
@@ -284,7 +285,7 @@ async function addRepostData(postId: string) {
 
       return(
           <div className="bm-main-container">
-              <BiRepost onClick={() => addRepostData(post?.postID)} style={{color: reposted ? "blue": undefined }}/>
+              <BiRepost onClick={(e) => addRepostData(post?.postID, e)} style={{color: reposted ? "blue": undefined }}/>
                   {/* {reposted ? "Reposted" : "Repost"}</button> */}
           </div>
       )

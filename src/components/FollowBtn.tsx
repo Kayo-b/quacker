@@ -28,7 +28,8 @@ const FollowBtn: React.FC<PostProps> = ({
 }) => {
 
     const [followBtn, setFollowBtn] = React.useState<boolean>(false);
-    const FollowUser = async(post: DocumentData | undefined) => {
+    const FollowUser = async(post: DocumentData | undefined, e: React.MouseEvent) => {
+        e.stopPropagation();
         const userRef1 = doc(db, 'users', user.uid);
         const userRef2 = doc(db, 'users', post?.userID);
         const res = await getDoc(userRef1);
@@ -70,7 +71,7 @@ const FollowBtn: React.FC<PostProps> = ({
       }, [updateFollow])
 
     return(
-        <button className="followBtn" onClick={() => FollowUser(post)}>{followBtn === false ?
+        <button className="followBtn" onClick={(e) => FollowUser(post, e)}>{followBtn === false ?
         "Follow" : "Unfollow"
         }</button>
       )

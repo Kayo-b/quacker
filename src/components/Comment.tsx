@@ -2,6 +2,7 @@ import React from 'react'
 import { DocumentData } from 'firebase/firestore';
 import { VscComment } from 'react-icons/vsc';
 import CreatePost from './CreatePost';
+import { MdClose } from "react-icons/md";
 import { setUncaughtExceptionCaptureCallback } from 'process';
 
 type ModalProps = {
@@ -30,15 +31,19 @@ type UserProps = {
     userImg?: string;
 }
 console.log("comment")
+let handleModalClick = (e: React.MouseEvent) => {
+  e.stopPropagation();
+} 
+
 //Modal for the comment popup
 function Modal({ isOpen, onClose, children }: ModalProps) {
     if (!isOpen) return null;
   
     return (
-      <div className="modal">
+      <div className="modal" onClick={e => handleModalClick(e)}>
         <div className="modal-content">
           <button className="close-button" onClick={onClose}>
-            X
+            <MdClose style={{height:'15px', width:'15px'}}/>
           </button>
           {children}
         </div>
@@ -50,12 +55,12 @@ const Comment: React.FC<PostProps> = ({user, post, name, setUpdate, update, newP
     
     const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-    const openModal = () => setIsModalOpen(true);
+    const openModal = (e: React.MouseEvent) => {e.stopPropagation();setIsModalOpen(true)};
     const closeModal = () => setIsModalOpen(false);
-  console.log(userData,"USER DATA COMMENT")
+  console.log(isModalOpen,"MODAL ")
   return (
     <div className="comment-btn">
-        <VscComment onClick={openModal}/>
+        <VscComment onClick={e => openModal(e)}/>
        
           <Modal isOpen={isModalOpen} onClose={closeModal}>   
             
@@ -70,6 +75,7 @@ const Comment: React.FC<PostProps> = ({user, post, name, setUpdate, update, newP
                   name={name}
                   userData={userData}
                   userImg={userImg}
+                  closeModal={closeModal}
                   />}
               </div>
               <div className="modal-faded-background"></div>

@@ -172,7 +172,8 @@ console.log(postsArray,"postss#!@@@ ")
     if(setLoading) setTimeout(() => setLoading(true),400)
   }
 
-  const RedirectToProfilePage = (post: DocumentData | undefined) => {
+  const RedirectToProfilePage = (post: DocumentData | undefined, e: React.MouseEvent) => {
+    e.stopPropagation();
     // if(profPost) {
     //   const profileContainer = 
     //             document.querySelector(".user-container-profile-page-container") as HTMLElement;
@@ -181,9 +182,9 @@ console.log(postsArray,"postss#!@@@ ")
     setUpdate(!update)
   }
 
-  const RemovePost = (post: DocumentData | undefined) => {
+  const RemovePost = (post: DocumentData | undefined, e: React.MouseEvent) => {
     // document query selector based on key as in: div className="post-container" key={post?.postID}
-
+    e.stopPropagation();
 
     const postContainer = document.getElementById(`${post?.postID}`);
    // const specificPost = Array.from(postContainers).filter(postContainer => postContainer.getAttribute("key") === post?.postID) as unknown as HTMLElement;
@@ -250,12 +251,17 @@ console.log(postsArray,"postss#!@@@ ")
   console.log(userMainFeed, 'user Data feed')
 
   const handleClick = (event: MouseEvent) => {
+    event.stopPropagation();
     let targetElement = event.target as HTMLElement;
+    let allOptions = document.querySelectorAll(".btnSubcontainer");
     targetElement = targetElement.parentElement as HTMLElement;
-    
+
     const nextElement = targetElement.nextElementSibling as HTMLElement;
     const nextNextEle = nextElement.children[0] as HTMLElement;
+    //allOptions.forEach(option => { (option as HTMLElement).style.display = "none" });
+
     if(event.target && nextElement.style.display === "none") {
+      allOptions.forEach(option => { (option as HTMLElement).style.display = "none" });
       nextElement.style.display = "flex";
       nextNextEle.style.display = "flex";
     } else {
@@ -264,7 +270,7 @@ console.log(postsArray,"postss#!@@@ ")
     }
   };
 
-  //Event to set display=none for all option elements(follow/unfollow and delete post) when these are not the current element being interacted with.
+  //Event to set display===none for all option elements(follow/unfollow and delete post) when these are not the current element being interacted with.
   document.addEventListener("click", function(event) {
     let targetElement = event.target as HTMLElement;
     let allOptions = document.querySelectorAll("#options");
@@ -327,14 +333,14 @@ console.log(postsArray,"postss#!@@@ ")
 
   //neuPost sets the new post directly into the feed, without any server commmunication
     let neuPost = newPost.map(post =>  post.parentID === null ?  
-      <div className="post-container" key={post?.postID}>
+      <div className="post-container" key={post?.postID} onClick={() => RedirectToPostPage(post)}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
-            <div id="options" style={{display: "flex"}}>
+            <div id="options" style={{display:"flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
             </div>
@@ -343,10 +349,10 @@ console.log(postsArray,"postss#!@@@ ")
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           <span>
-            <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
               {post.username}
             </div>
-          <div className="content" onClick={() => RedirectToPostPage(post)}>
+          <div className="content">
             <li key={post.id} className="text-content-field">
               {post.textContent}
             </li>
@@ -408,14 +414,14 @@ console.log(postsArray,"postss#!@@@ ")
     let loadPosts = postsArray?.map(post => { 
       if(post.parentID === null) {
         
-        return <div className="post-container" key={post?.postID}>
+        return <div className="post-container" key={post?.postID} onClick={() => RedirectToPostPage(post)}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
             </div>
@@ -425,10 +431,10 @@ console.log(postsArray,"postss#!@@@ ")
           <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           
           <span>
-            <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
               {post.username}
             </div>
-          <div className="content" onClick={() => RedirectToPostPage(post)}>
+          <div className="content">
             <li key={post.id} className="text-content-field">
               {post.textContent}
             </li>
@@ -490,14 +496,14 @@ console.log(postsArray,"postss#!@@@ ")
   
   let loadSearch = postsArray?.map(post => { 
     if(post.textContent.includes(search)) {
-      return <div className="post-container" key={post?.postID}>
+      return <div className="post-container" key={post?.postID} onClick={() => RedirectToPostPage(post)}>
       <div className="option-btn-container">
         <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
         <div style={{display: "none"}} className="btnSubcontainer">
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
             </div>
@@ -506,10 +512,10 @@ console.log(postsArray,"postss#!@@@ ")
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
         <span>
-          <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+          <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
             {post.username}
           </div>
-        <div className="content" onClick={() => RedirectToPostPage(post)}>
+        <div className="content">
           <li key={post.id} className="text-content-field">
             {post.textContent}
           </li>
@@ -570,14 +576,14 @@ console.log(postsArray,"postss#!@@@ ")
 
     // Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
     let comment = postsArray?.map(post =>  post.parentID === parentPost?.postID ?  
-      <div className="post-page-container" id={`${post?.postID}`} key={post?.postID}>
+      <div className="post-page-container" id={`${post?.postID}`} key={post?.postID} onClick={() => RedirectToPostPage(post)}>
         <div className="option-btn-container">
          <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
          <div style={{display: "none"}} className="btnSubcontainer">
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
             </div>
@@ -586,10 +592,10 @@ console.log(postsArray,"postss#!@@@ ")
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           <span>
-            <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
               {post.username}
             </div>
-          <div className="content" onClick={() => RedirectToPostPage(post)}>
+          <div className="content">
             <li key={post.id} className="text-content-field">
               {post.textContent}
             </li>
@@ -646,14 +652,14 @@ console.log(postsArray,"postss#!@@@ ")
     )
 
     let newComment = postsArray?.map(post =>  post.parentID === parentPost?.postID ?  
-      <div className="post-page-container" key={post?.postID}>
+      <div className="post-page-container" key={post?.postID} onClick={() => RedirectToPostPage(post)}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
           </div>
@@ -662,10 +668,10 @@ console.log(postsArray,"postss#!@@@ ")
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           <span>
-            <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
               {post.username}
             </div>
-          <div className="content" onClick={() => RedirectToPostPage(post)}>
+          <div className="content">
             <li key={post.id} className="text-content-field">
               {post.textContent}
             </li>
@@ -730,7 +736,7 @@ console.log(postsArray,"postss#!@@@ ")
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
           </div>
@@ -740,7 +746,7 @@ console.log(postsArray,"postss#!@@@ ")
         <div className="user-container">
           <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
           <span>
-            <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
               {post?.username}
             </div>
           <div className="content" >
@@ -801,14 +807,14 @@ console.log(postsArray,"postss#!@@@ ")
 //clickedPostParentPost renders the parent post of the clicked post (if it has a parentID)
 let clickedPostParentPost =   postsArray?.map(post =>  
   post.postID === newPostValue?.parentID ?  
-  <div className="post-page-container" key={post?.postID} style={style}>
+  <div className="post-page-container" key={post?.postID} style={style} onClick={() => RedirectToPostPage(post)}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
           </div>
@@ -820,10 +826,10 @@ let clickedPostParentPost =   postsArray?.map(post =>
       <span className="connecting-comments-line2"></span>
       </div>
       <span>
-        <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+        <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
           {post.username}
         </div>
-      <div className="content" onClick={() => RedirectToPostPage(post)}>
+      <div className="content">
         <li key={post.id} className="text-content-field">
           {post.textContent}
         </li>
@@ -883,14 +889,14 @@ let rootPost =  postsArray?.map(post =>
   post.postID === newPostValue?.rootPostID &&
   newPostValue?.parentID !== post.postID && 
   newPostValue?.parentID !== null ?  
-  <div className="post-page-container" key={post?.postID} style={style}>
+  <div className="post-page-container" key={post?.postID} style={style} onClick={() => RedirectToPostPage(post)}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete!</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete!</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
           </div>
@@ -902,10 +908,10 @@ let rootPost =  postsArray?.map(post =>
       <span className="connecting-comments-line"></span>
       </div>
       <span>
-        <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+        <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
           {post.username}
         </div>
-      <div className="content" onClick={() => RedirectToPostPage(post)}>
+      <div className="content">
         <li key={post.id} className="text-content-field">
           {post.textContent}
         </li>
@@ -968,14 +974,14 @@ console.log(postsArray,"OPOP")
 //and the posts.map was nested inside it so that it obeys the sequence of the userMainFeed array.
 let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post => 
   val === post.postID ?
-  <div className="post-container" key={post?.postID} style={style}>
+  <div className="post-container" key={post?.postID} style={style} onClick={() => RedirectToPostPage(post)}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
           </div>
@@ -984,10 +990,10 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
     <div className="user-container">
       <img className="profile-picture-profile-feed" alt="user icon" src={post?.imgUrl}></img>
       <span>
-        <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+        <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
           {post.username}
         </div>
-      <div className="content" onClick={() => RedirectToPostPage(post)}>
+      <div className="content">
         <li key={post.id} className="text-content-field">
           {post.textContent}
         </li>
@@ -1047,14 +1053,14 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
 let profileNewPostsFeed =  newPost.map(post =>  
   post.userID === newPostValue?.userID &&
   post.parentID === null ?  
-  <div className="post-container" key={post?.postID} style={style}>
+  <div className="post-container" key={post?.postID} style={style} onClick={() => RedirectToPostPage(post)}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
           </div>
@@ -1063,10 +1069,10 @@ let profileNewPostsFeed =  newPost.map(post =>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
       <span>
-        <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+        <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
           {post.username}
         </div>
-      <div className="content" onClick={() => RedirectToPostPage(post)}>
+      <div className="content">
         <li key={post.id} className="text-content-field">
           {post.textContent}
         </li>
@@ -1126,14 +1132,14 @@ let profileNewPostsFeed =  newPost.map(post =>
 let profileResponsesFeed =  userMainFeed?.map(val => postsArray?.map(post =>  
   post.postID === val &&
   post.parentID !== null ?  
-  <div className="post-container" key={post?.postID} style={style}>
+  <div className="post-container" key={post?.postID} style={style} onClick={() => RedirectToPostPage(post)}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
           </div>
@@ -1142,10 +1148,10 @@ let profileResponsesFeed =  userMainFeed?.map(val => postsArray?.map(post =>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
       <span>
-        <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+        <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
           {post.username}
         </div>
-      <div className="content" onClick={() => RedirectToPostPage(post)}>
+      <div className="content">
         <li key={post.id} className="text-content-field">
           {post.textContent}
         </li>
@@ -1204,14 +1210,14 @@ let profileResponsesFeed =  userMainFeed?.map(val => postsArray?.map(post =>
 let profileNewResponsesFeed = postsRenew?.map(post =>  
   post.userID === newPostValue?.userID &&
   post.parentID !== null ?  
-  <div className="post-container" id={post?.postID} key={post?.postID} style={{display: `${displayVar1}`, "fontSize": "large"}}>
+  <div className="post-container" id={post?.postID} key={post?.postID} style={{display: `${displayVar1}`, "fontSize": "large"}} onClick={() => RedirectToPostPage(post)}>
         <div className="option-btn-container">
           <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
             <div id="options" style={{display: "flex"}}>
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
               <div>
                 <FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow}/>
               </div>
@@ -1222,10 +1228,10 @@ let profileNewResponsesFeed = postsRenew?.map(post =>
     <div className="user-container">
       <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
       <span>
-        <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+        <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
           {post.username}
         </div>
-      <div className="content" onClick={() => RedirectToPostPage(post)}>
+      <div className="content">
         <li key={post.id} className="text-content-field">
           {post.textContent}
         </li>
@@ -1307,15 +1313,15 @@ let repostsFromUser = postsArray?.map(post =>
   
     //user.reposts?.find(repost => repost === post.postID) 
     post.repostByUsers.includes(newPostValue?.userID) ?
-    <div className="post-container" key={post?.postID} style={style}>
-      {userCtx?.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+    <div className="post-container" key={post?.postID} style={style} onClick={() => RedirectToPostPage(post)}>
+      {userCtx?.uid === post?.userID ? <button onClick={(e) => RemovePost(post, e)}>x</button> : <></>}
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
         <span>
-          <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+          <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
             {post.username}
           </div>
-        <div className="content" onClick={() => RedirectToPostPage(post)}>
+        <div className="content">
           <li key={post.id} className="text-content-field">
             {post.textContent}
           </li>
@@ -1372,15 +1378,15 @@ let repostsFromUser = postsArray?.map(post =>
   let newRepostsFromUser = postsArray?.map(post => 
     //repost?.find(repost => repost.postID === post.postID) ?
     repost?.includes(post) ?
-    <div className="post-container" key={post?.postID} style={style}>
-      {userCtx?.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+    <div className="post-container" key={post?.postID} style={style} onClick={() => RedirectToPostPage(post)}>
+      {userCtx?.uid === post?.userID ? <button onClick={(e) => RemovePost(post, e)}>x</button> : <></>}
       <div className="user-container">
         <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
         <span>
-          <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+          <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
             {post.username}
           </div>
-        <div className="content" onClick={() => RedirectToPostPage(post)}>
+        <div className="content">
           <li key={post.id} className="text-content-field">
             {post.textContent}
           </li>
@@ -1434,14 +1440,14 @@ let repostsFromUser = postsArray?.map(post =>
 
   // let bookmarkedPosts = bookmarkPosts?.map(post => post !== undefined ?
   //   <div className="post-container" key={post?.postID} style={style}>
-  //   {userCtx?.uid === post?.userID ? <button onClick={() => RemovePost(post)}>x</button> : <></>}
+  //   {userCtx?.uid === post?.userID ? <button onClick={(e) => RemovePost(post, e)}>x</button> : <></>}
   //   <div className="user-container">
   //     <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
   //     <span>
-  //       <div className="user-name-post" onClick={() => RedirectToProfilePage(post)}>
+  //       <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
   //         {post.username}
   //       </div>
-  //     <div className="content" onClick={() => RedirectToPostPage(post)}>
+  //     <div className="content">
   //       <li key={post.id} className="text-content-field">
   //         {post.textContent}
   //       </li>

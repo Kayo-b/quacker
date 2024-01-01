@@ -59,7 +59,8 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
       //if(setLoading) setLoading(false);
     }
 
-  const addLike = (postId: string) => {
+  const addLike = (postId: string, e: React.MouseEvent) => {
+    e.stopPropagation();  
     const postRef = doc(db, 'posts', postId)
     if(!liked) {
       setLiked(true);
@@ -81,7 +82,7 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
   return (
       <GiPlasticDuck 
       className="like-btn" 
-      onClick={e => addLike(post?.postID)}
+      onClick={e => addLike(post?.postID, e)}
       style={{ color: post?.likedByUsers.includes(user.uid) ? "yellow" : "white" }}
       ></GiPlasticDuck> 
   )
