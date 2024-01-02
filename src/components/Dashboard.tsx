@@ -33,6 +33,7 @@ const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setNam
     const currentURL = location.pathname;
     console.log(user,"USER DASH")
     const fetchUserName = async () => {
+        if(user?.uid === undefined) return;
         try {
             const q = query(collection(db, "users"), where("uid", "==", user?.uid));
             const doc = await getDocs(q);
@@ -41,11 +42,11 @@ const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setNam
             setUserID(data.uid);
         } catch(err: unknown) {
             if(err instanceof Error) {
-                console.error(err);
-                alert(err.message);
+                //console.error(err);
+                //alert(err.message);
             } else {
                 console.error(err);
-                alert("an error has occursred");
+                //alert("an error has occursred");
             }
     }
 }

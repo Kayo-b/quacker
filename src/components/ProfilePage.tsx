@@ -178,10 +178,11 @@ const ProfilePage: React.FC<PostProps> = ({
             }, 300)
         };
          setProfileStatesCount(0);
-        if(userMainFeed?.length === 0) {
+        if(userMainFeed?.length === 0) setTimeout(() =>{
             profileContainer.style.visibility = "visible";
                 setLoading(false);
-        }
+                setLoading2(false);
+        },400)
     };
 
     const waitForStates2 = async () => {
@@ -297,7 +298,7 @@ const ProfilePage: React.FC<PostProps> = ({
         checkFollow();
         waitForStates();
         fetchProfileImg();
-    },[profileStatesCount, displayedName, bioText, post, update, profPostCheck])
+    },[profileStatesCount, displayedName, bioText, post, update, profPostCheck, profPost])
 
     useEffect(() => {
 
@@ -387,7 +388,7 @@ console.log(posts,"posts here?!!!s!?")
                 </div>
                 <div className="feed-display">                                
                 <div className="loading-element-container" style={{border: loading ? "1px solid rgba(245, 245, 245, 0.307)" : "none"}}>
-                    <div>{loading2 ? loadingSvg : posts.length === 0 ? "No posts" : null}</div>
+                    <div>{loading2 ? loadingSvg : userMainFeed?.length === 0 && profPost === true ? "No posts" : null}</div>
                 </div>
                 <div id="post-subcontainer" style={{visibility:"hidden"}}>{renderPosts}</div>
                 </div>
