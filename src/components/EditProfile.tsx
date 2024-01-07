@@ -125,7 +125,7 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
             }
         }
     }
-
+    console.log("REREBDERRRRRRRRRRRRRRRRRRRRr")
     return(
             <div className="edit-profile-main-container">
                 <h3>Edit Profile</h3>

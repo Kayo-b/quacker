@@ -355,6 +355,7 @@ console.log(postsArray,"postss#!@@@ ")
           <div className="content">
             <li key={post.id} className="text-content-field">
               {post.textContent}
+              {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
             </li>
           </div>
           </span>   
@@ -437,6 +438,7 @@ console.log(postsArray,"postss#!@@@ ")
           <div className="content">
             <li key={post.id} className="text-content-field">
               {post.textContent}
+              {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
             </li>
           </div>
           </span>
@@ -518,6 +520,7 @@ console.log(postsArray,"postss#!@@@ ")
         <div className="content">
           <li key={post.id} className="text-content-field">
             {post.textContent}
+            {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
           </li>
         </div>
         </span>
@@ -598,6 +601,7 @@ console.log(postsArray,"postss#!@@@ ")
           <div className="content">
             <li key={post.id} className="text-content-field">
               {post.textContent}
+              {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
             </li>
           </div>
           </span>   
@@ -674,6 +678,7 @@ console.log(postsArray,"postss#!@@@ ")
           <div className="content">
             <li key={post.id} className="text-content-field">
               {post.textContent}
+              {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
             </li>
           </div>
           </span>   
@@ -752,6 +757,7 @@ console.log(postsArray,"postss#!@@@ ")
           <div className="content" >
             <li key={post?.id} className="text-content-field">
               {post?.textContent}
+              {post?.gifUrl ? <img className="gif-image" src={`${post?.gifUrl}`} alt="gif-img"></img> : <></>}
             </li>
           </div>
           </span>   
@@ -832,6 +838,7 @@ let clickedPostParentPost =   postsArray?.map(post =>
       <div className="content">
         <li key={post.id} className="text-content-field">
           {post.textContent}
+          {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
         </li>
       </div>
       </span>   
@@ -914,6 +921,7 @@ let rootPost =  postsArray?.map(post =>
       <div className="content">
         <li key={post.id} className="text-content-field">
           {post.textContent}
+          {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
         </li>
       </div>
       </span>   
@@ -996,6 +1004,7 @@ let profilePostsFeed =  userMainFeed?.map(val => postsArray?.map(post =>
       <div className="content">
         <li key={post.id} className="text-content-field">
           {post.textContent}
+          {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
         </li>
       </div>
       </span>   
@@ -1075,6 +1084,7 @@ let profileNewPostsFeed =  newPost.map(post =>
       <div className="content">
         <li key={post.id} className="text-content-field">
           {post.textContent}
+          {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
         </li>
       </div>
       </span>   
@@ -1154,6 +1164,7 @@ let profileResponsesFeed =  userMainFeed?.map(val => postsArray?.map(post =>
       <div className="content">
         <li key={post.id} className="text-content-field">
           {post.textContent}
+          {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
         </li>
       </div>
       </span>   
@@ -1234,6 +1245,7 @@ let profileNewResponsesFeed = postsRenew?.map(post =>
       <div className="content">
         <li key={post.id} className="text-content-field">
           {post.textContent}
+          {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
         </li>
       </div>
       </span>   
@@ -1324,6 +1336,7 @@ let repostsFromUser = postsArray?.map(post =>
         <div className="content">
           <li key={post.id} className="text-content-field">
             {post.textContent}
+            {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
           </li>
         </div>
         </span>   
@@ -1389,6 +1402,7 @@ let repostsFromUser = postsArray?.map(post =>
         <div className="content">
           <li key={post.id} className="text-content-field">
             {post.textContent}
+            {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
           </li>
         </div>
         </span>   

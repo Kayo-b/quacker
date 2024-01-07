@@ -186,6 +186,8 @@ li {
 .home-main-container {
   height: auto;
   background-color: #1e1d1d;
+  display:flex;
+  flex-direction: column
   /* border-left: 1px solid rgba(245, 245, 245, 0.531);
   border-right: 1px solid rgba(245, 245, 245, 0.531);
   border-bottom: 1px solid rgba(245, 245, 245, 0.307); */
@@ -265,11 +267,16 @@ li {
 
 }
 
+.create-post-main-container {
+  max-height: auto;
+}
+
 .post-wrapper-container {
   border-top: 1px solid rgba(245, 245, 245, 0.531);
   border-left: 1px solid rgba(245, 245, 245, 0.531);
   border-right: 1px solid rgba(245, 245, 245, 0.531);
   border-bottom: 1px solid rgba(245, 245, 245, 0.307);
+  max-height: auto;
 }
 
 .post-main-container {
@@ -277,18 +284,18 @@ li {
   justify-content: space-around;
   align-items: center;
   text-align:  start;
-  height: 70px;
+  height: auto;
   max-width: 100%;
   padding-right: 10px;
 
 }
 
-.post-main-container>textarea {
+.text-area-container>textarea {
   display: flex;
   border: 1px solid rgba(255, 0, 0, 0);
-  height: 30px;
+  height: 40px;
   width: 100%;
-  min-width: 50%;
+  min-width: 60%;
   max-height: 90%;
   min-height: 90%;
   resize: none;
@@ -300,6 +307,11 @@ li {
   outline-style: none;
   padding: 5px;
   color: rgb(211, 211, 211);
+}
+
+.gif-image {
+  width: 100px; /* Set your desired width */
+  height: auto; /* Maintain aspect ratio */
 }
 
 /* .post-main-container>input[type="text"]:focus {
@@ -731,6 +743,18 @@ input[type="text"] {
   width: 100%;
   padding: 5px;
 }
+
+.gif-search-container {
+  max-width: 300px;
+  max-height: 300px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+ 
+}
+
 
 /* .edit-profile-main-container>input {
   width: 250px;

@@ -67,6 +67,7 @@ const Homepage: React.FC<HomepageProps> = ({
         console.log(userImg,"USER IMG HO11ME")
     return(
         <div className="home-main-container">
+            <div className="create-post-main-container">
             < CreatePost 
             setUpdate={setUpdate} 
             update={update} 
@@ -77,6 +78,8 @@ const Homepage: React.FC<HomepageProps> = ({
             userImg={userImg}
             userData={userData}
             />
+            </div>
+            <div className="feed-main-container-2">
             < Feed 
             setUpdate={setUpdate} 
             update={update} 
@@ -98,6 +101,9 @@ const Homepage: React.FC<HomepageProps> = ({
             userData={userData}
             userImg={userImg}
             />
+
+            </div>
+
         </div>
     )
 }

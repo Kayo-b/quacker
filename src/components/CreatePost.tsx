@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import GifSearch from "./GifSearch";
+import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 import {  
     addDoc, 
@@ -20,6 +22,12 @@ type UserProps = {
     imgUrl?: string;
 }  
 
+type ModalProps = {
+    isOpen: boolean;
+    onClose: () => void;
+    children: React.ReactNode;
+  }
+
 type PostProps = {
     setUpdate: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     setNewPost: React.Dispatch<React.SetStateAction<DocumentData[]>>;
@@ -37,6 +45,11 @@ const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost
 const[text, setText] = useState("");
 //onst[userImg, setUserImg] = useState("");
 const [imgUrl, setImgUrl] = useState("");
+const [isModalOpen, setIsModalOpen] = React.useState(false);
+const [selectedImg, setSelectedImg] = React.useState<String>('');    
+
+const openGifModal = () => setIsModalOpen(true);
+const closeGifModal = () => setIsModalOpen(false);
 
 // const getImg = async() => {
 //     const userDocRef = doc(db, "users", user.uid);
@@ -49,6 +62,19 @@ const [imgUrl, setImgUrl] = useState("");
 //     }
 
 // }
+function Modal({ isOpen, onClose, children }: ModalProps) {
+    if (!isOpen) return null;
+    return (
+    <div className="modal">
+        <div className="modal-content">
+        <button className="close-button-edit-profile" onClick={onClose}>
+            <MdClose style={{width:'25px', height:'25px'}}/>
+        </button>
+        {children}
+        </div>
+    </div>
+    );
+}
 
 
 const handleClick = async (text: String) => {
@@ -79,7 +105,8 @@ const handleClick = async (text: String) => {
             repostByUsers: [],
             childComments: [],
             timestamp: serverTimestamp(),
-            imgUrl: userDocSnapData?.imgUrl
+            imgUrl: userDocSnapData?.imgUrl,
+            gifUrl: selectedImg,
         })
 
         const userDocRef = doc(db, "users", user.uid);
@@ -103,7 +130,8 @@ const handleClick = async (text: String) => {
             repostByUsers: [],
             childComments: [],
             timestamp: serverTimestamp(),
-            imgUrl: userDocSnapData?.imgUrl
+            imgUrl: userDocSnapData?.imgUrl,
+            gifUrl: selectedImg,
         }, ...prev]);
         //setDoc will add values into doRef after the docRef has been created.
         setDoc(docRef, {
@@ -120,6 +148,7 @@ const handleClick = async (text: String) => {
     if(closeModal) closeModal();
 
   };
+  
   console.log(userImg,"USERDATA22")
 //   if(userData !== undefined) {
 //     setUserImg(userData?.imgUrl)
@@ -138,12 +167,29 @@ const handleClick = async (text: String) => {
         <div className="post-wrapper-container">
         <div className="post-main-container"> 
         <img className="profile-picture" alt="user icon" src={userImg}></img> 
-            <textarea 
-                maxLength={150}
-                placeholder="Say something..."
-                value={text} 
-                onChange={e => setText(e.target.value)}>
-            </textarea>
+
+            <div className="posting-content-container">
+                 
+                <div className="text-area-container">
+                <textarea 
+                    maxLength={150}
+                    placeholder="Say something..."
+                    value={text} 
+                    onChange={e => setText(e.target.value)}>
+                    </textarea>
+                </div>
+                <div >
+                <img  className="gif-image" src={`${selectedImg}`} alt="gif-img" style={{display: selectedImg ? 'flex' : 'none'}}></img>
+                </div>
+                
+            </div>
+            <button onClick={openGifModal}>GIF </button>
+                <Modal isOpen={isModalOpen} onClose={closeGifModal}>   
+                <GifSearch 
+                setSelectedImg={setSelectedImg}
+                />
+
+                </Modal>
             <input 
                 type="button" 
                 value="Post"
