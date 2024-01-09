@@ -78,7 +78,7 @@ function Modal({ isOpen, onClose, children }: ModalProps) {
 
 
 const handleClick = async (text: String) => {
-    if(text.length=== 0) return;
+    if(text.length=== 0 && !selectedImg) return;
 
     //setUpdate(true);
     // handle form submission here.

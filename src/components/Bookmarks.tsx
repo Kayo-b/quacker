@@ -235,6 +235,7 @@ const handleClick = (event: MouseEvent) => {
         <div className="content" onClick={() => RedirectToPostPage(post)}>
             <li key={post.id} className="text-content-field">
               {post.textContent}
+              {post?.gifUrl ? <img className="gif-image" src={`${post?.gifUrl}`} alt="gif-img"></img> : <></>}
             </li>
         </div>
         </span>

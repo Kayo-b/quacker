@@ -118,7 +118,7 @@ const addBookmark = async (postId: string, e: React.MouseEvent) => {
         <div className="bm-main-container">
             <BsStar 
             className="star-icon-post" 
-            onClick={(e) => addBookmark(post?.postIDm, e)} 
+            onClick={(e) => addBookmark(post?.postID, e)} 
             style={{color: favorited ? "yellow" : undefined}}
             />
             {/* // <button onClick={() => addBookmark(post?.postID)}>
