@@ -229,7 +229,7 @@ li {
 }
 .modal {
   position: absolute;
-    */top:10%;
+  top:10%;
   /* background-color: #292c2e;
   top: 10%;
   right: 620px;
@@ -294,7 +294,7 @@ li {
   align-items: center;
   text-align: start;
   height: auto;
-  max-width: auto; 
+  max-width: 100%;
   padding-right: 10px;
 }
 
