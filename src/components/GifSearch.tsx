@@ -85,7 +85,7 @@ const GifSearch: React.FC<GifSearchProps> = ({setSelectedImg}) => {
         <div className="gif-search-container">
         <label htmlFor="gif-search" >
             <input type="text" id="gif-search" onChange={(e) => handleInputChange(e)}></input>
-            <button onClick={() => searchGiphy(gifSearch)}>Search</button>
+            <button className={"gif-search-button"} onClick={() => searchGiphy(gifSearch)}>Search</button>
             <div className="gif-search-result"></div>
             <div className="trending-gifs"></div>
         </label>

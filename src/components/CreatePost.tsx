@@ -65,15 +65,16 @@ const closeGifModal = () => setIsModalOpen(false);
 function Modal({ isOpen, onClose, children }: ModalProps) {
     if (!isOpen) return null;
     return (
-    <div className="modal">
-        <div className="modal-content">
-        <button className="close-button-edit-profile" onClick={onClose}>
+    <div className="gif-modal"> 
+    <div className={"gif-modal-wrapper"}></div>
+        <div className="gif-modal-content">
+        <button className="close-button-gif-modal" onClick={onClose}>
             <MdClose style={{width:'25px', height:'25px'}}/>
         </button>
         {children}
         </div>
     </div>
-    );
+   );
 }
 
 
@@ -188,7 +189,6 @@ const handleClick = async (text: String) => {
                 <GifSearch 
                 setSelectedImg={setSelectedImg}
                 />
-
                 </Modal>
             <input 
                 type="button" 

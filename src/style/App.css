@@ -98,7 +98,7 @@ li {
   width: 20px;
   height: 20px;
 }
-.close-button-edit-profile > svg:hover {
+.close-button-edit-profile > svg:hover , .close-button-gif-modal > svg:hover {
   cursor: pointer;
   color: rgb(166, 166, 166);
 }
@@ -184,7 +184,7 @@ li {
 }
 
 .home-main-container {
-  height: auto;
+  height: 200px;
   background-color: #1e1d1d;
   display:flex;
   flex-direction: column
@@ -229,7 +229,7 @@ li {
 }
 .modal {
   position: absolute;
-  top:10%;
+    */top:10%;
   /* background-color: #292c2e;
   top: 10%;
   right: 620px;
@@ -257,6 +257,15 @@ li {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+.close-button-gif-modal {
+  position: absolute;
+  top: 0;
+  left: 500px;
+  z-index: 3;
+  background: none;
+  color:  gray;
+}
 .nav-main-container {
   display: flex;
   align-items: start;
@@ -283,11 +292,10 @@ li {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  text-align:  start;
+  text-align: start;
   height: auto;
-  max-width: 100%;
+  max-width: auto; 
   padding-right: 10px;
-
 }
 
 .text-area-container>textarea {
@@ -519,6 +527,7 @@ button.options-btn * {
   padding: 5px;
   height: 25px;
 }
+
 .searchButton {
   background: url(../img/search-svgrepo-com.svg) 0 0 no-repeat;
   width: 30px; 
@@ -565,7 +574,7 @@ button.options-btn * {
   color: whitesmoke;
 }
 
-button:not(.close-button, .close-button-edit-profile, .options-btn):hover {
+button:not(.gif-search-button, .close-button, .close-button-edit-profile, .options-btn, .close-button-gif-modal):hover {
   background: fixed;
   background-color: rgb(142, 142, 142);
   cursor: pointer;
@@ -738,24 +747,87 @@ input[type="text"] {
   max-width: inherit;
   max-height: 110%;
 }
+
 .save-btn {
   height: 80%;
   width: 100%;
   padding: 5px;
 }
 
-.gif-search-container {
-  max-width: 300px;
-  max-height: 300px;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
- 
+.gif-modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: -20%;
+  height: 110%;
+  width: 250%;
+  z-index: 5; 
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
+.gif-modal {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+} 
 
-/* .edit-profile-main-container>input {
-  width: 250px;
-} */
+ .gif-modal-content {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  margin-top: 10px;
+  background-color: #292c2e;
+  max-width: auto;
+  border: 1px solid rgba(245, 245, 245, 0.531);
+  z-index: 5;
+  border-bottom: 1px solid rgba(245, 245, 245, 0.531);
+  border-right: 1px solid rgba(245, 245, 245, 0.531);
+}
+
+.gif-search-container {
+  display: flex; 
+  max-height: 300px;
+  max-width: 530px;
+}
+
+.trending-gifs, .gif-search-result {
+  display: flex; 
+  max-height: 300px;
+  max-width: 530px;
+  overflow-x: auto;
+  flex-direction: row;
+  justify-content: flex-start; 
+}
+
+.gif-search-container>img {
+  display: flex;
+ }
+
+#gif-search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2px 0px 5px 2px;
+  border-bottom: 1px solid gray;
+  border-right: 2px solid gray;
+  width: 90%;
+  padding: 2px;
+}
+
+.gif-search-button {
+  color: lightgray;
+  width: 30px; 
+  height: 30px;
+  display: block;
+  transform: scale(90%);
+  position: absolute;
+  left: 420px;
+  top:-1.7%;
+  font-size: large;
+  /* border: 2px solid rgb(40, 40, 62, 0); */
+}
+ 
+.gif-search-button:hover {
+  cursor: pointer;
+  color: whitesmoke;
+}
