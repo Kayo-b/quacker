@@ -78,7 +78,7 @@ const Comment: React.FC<PostProps> = ({user, post, name, setUpdate, update, newP
                   closeModal={closeModal}
                   />}
               </div>
-              <div className="modal-faded-background"></div>
+              <div className="modal-faded-background" onClick={closeModal}></div>
             
           </Modal>
 

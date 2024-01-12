@@ -141,6 +141,7 @@ const ProfilePage: React.FC<PostProps> = ({
         if (!isOpen) return null;
         return (
         <div className="modal">
+            <div className={"gif-modal-wrapper"} onClick={onClose}></div>
             <div className="modal-content">
             <button className="close-button-edit-profile" onClick={onClose}>
                 <MdClose style={{width:'25px', height:'25px'}}/>
@@ -374,7 +375,7 @@ console.log(posts,"posts here?!!!s!?")
                         </div>
                     </div>
                 <div className="follow-stats">
-                {userData?.following.length} Following / {userData?.followers.length < followersCount ? followersCount : userData?.followers.length}  Followers
+                {userData?.following.length} Following | {userData?.followers.length < followersCount ? followersCount : userData?.followers.length}  Followers
                 </div>
                 <div className="bio-container">
                     <p>{userData?.bioText}</p>

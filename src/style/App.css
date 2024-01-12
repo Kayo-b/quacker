@@ -6,7 +6,7 @@
 .App {
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   justify-content:center;
   align-items: flex-start;
   position: relative;
@@ -22,13 +22,24 @@ li {
   height: 0px;
 }
 
+.post-btn {
+  width: 50px;
+  border-radius: 20px;
+  color: whitesmoke;
+  background-color:#adadad;
+  border: 0px;
+  font-size: small;
+  font-weight: bold;
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
 .post-btn:hover {
   cursor: pointer;
-  filter: invert(90%);
-  background-color: #adadad;
-
-
+  color: white;
+  background-color: darkgray;
 }
+
 .profile-dashboard {
   padding: 2px;
 }
@@ -162,11 +173,10 @@ li {
   align-items: center;
   justify-content:space-between;
   text-align:  start;
-  height: 99%;
+  height: 100vh; 
 }
 
 .sidebar-dashboard {
-  display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
@@ -185,7 +195,6 @@ li {
 
 .home-main-container {
   height: 200px;
-  background-color: #1e1d1d;
   display:flex;
   flex-direction: column
   /* border-left: 1px solid rgba(245, 245, 245, 0.531);
@@ -238,6 +247,25 @@ li {
   max-width: 800px; */
 }
 
+.comment-btns-container {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 52px;
+  height: 35px;
+  margin-top: 0px;
+  padding: 0px;
+}
+
+.text-content-field {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0px
+}
+.text-content-field>* {
+  padding-top: 2px;
+  padding-bottom: 5px;
+}
 .modal-content {
   position: absolute;
   margin-top: 10px;
@@ -290,18 +318,30 @@ li {
 
 .post-main-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   text-align: start;
   height: auto;
   max-width: 100%;
   padding-right: 10px;
 }
-
+.text-area-container {
+  width: 100%;
+}
+.posting-content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  margin: 2px 0px 5px 2px;
+  border: 1px solid gray;
+  width: 98%;
+  padding: 2px;
+}
 .text-area-container>textarea {
   display: flex;
   border: 1px solid rgba(255, 0, 0, 0);
-  height: 40px;
+  height: 60px;
   width: 100%;
   min-width: 60%;
   max-height: 90%;
@@ -574,7 +614,7 @@ button.options-btn * {
   color: whitesmoke;
 }
 
-button:not(.gif-search-button, .close-button, .close-button-edit-profile, .options-btn, .close-button-gif-modal):hover {
+button:not(.gif-search-button, .close-button, .close-button-edit-profile, .options-btn, .close-button-gif-modal, .gif-btn):hover {
   background: fixed;
   background-color: rgb(142, 142, 142);
   cursor: pointer;
@@ -754,6 +794,18 @@ input[type="text"] {
   padding: 5px;
 }
 
+.gif-btn {
+  height: 20%;
+  width: 10%;
+  margin-top: -10px;
+  margin-left: -10px;
+  color: lightgray;  
+}
+.gif-btn:hover {
+  cursor: pointer;
+  color: whitesmoke;
+}
+
 .gif-modal-wrapper {
   position: fixed;
   top: 0;
@@ -768,6 +820,9 @@ input[type="text"] {
   display: flex;
   justify-content: center;
   position: absolute;
+  right: 45.5%;
+  top: 5%;
+
 } 
 
  .gif-modal-content {
@@ -800,7 +855,7 @@ input[type="text"] {
 
 .gif-search-container>img {
   display: flex;
- }
+}
 
 #gif-search {
   display: flex;

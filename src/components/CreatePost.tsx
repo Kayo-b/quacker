@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import GifSearch from "./GifSearch";
+import { MdGif } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 import {  
@@ -65,8 +66,8 @@ const closeGifModal = () => setIsModalOpen(false);
 function Modal({ isOpen, onClose, children }: ModalProps) {
     if (!isOpen) return null;
     return (
-    <div className="gif-modal"> 
-    <div className={"gif-modal-wrapper"}></div>
+    <div className={"gif-modal"}> 
+    <div className={"gif-modal-wrapper"} onClick={onClose}></div>
         <div className="gif-modal-content">
         <button className="close-button-gif-modal" onClick={onClose}>
             <MdClose style={{width:'25px', height:'25px'}}/>
@@ -184,19 +185,22 @@ const handleClick = async (text: String) => {
                 </div>
                 
             </div>
-            <button onClick={openGifModal}>GIF </button>
+            
                 <Modal isOpen={isModalOpen} onClose={closeGifModal}>   
                 <GifSearch 
                 setSelectedImg={setSelectedImg}
                 />
                 </Modal>
-            <input 
-                type="button" 
-                value="Post"
-                className="post-btn" 
-                onClick={() => handleClick(text)}>
-            </input>
-        </div>
+            </div>
+            <div className="comment-btns-container">
+                <button className="gif-btn" onClick={openGifModal}><MdGif size={35}/></button>
+                <input 
+                    type="button" 
+                    value="Post"
+                    className="post-btn" 
+                    onClick={() => handleClick(text)}>
+                </input> 
+            </div>
         </div>
     )
 }
