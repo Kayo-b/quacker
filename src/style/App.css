@@ -1,4 +1,4 @@
-#root {
+/* #root {
   min-height: 100vh;
   background-color: rgb(23, 23, 23);
   overflow: auto;
@@ -12,6 +12,46 @@
   position: relative;
   color: whitesmoke;
   margin-right: 190px;
+} */
+
+#root {
+  min-height: 100vh;
+  background-color: rgb(23, 23, 23);
+}
+
+.App {
+  display: flex;
+  min-height: 100vh;
+  overflow-y: auto;
+  min-width: 100%;
+    color: whitesmoke;
+  margin-right: 190px;
+}::-webkit-scrollbar {
+  width: 5px;  /* Remove scrollbar space */
+  background: black;  /* Optional: just make scrollbar invisible */
+}::-webkit-scrollbar-thumb {
+  background: gray;
+  border-radius: 10px;
+}
+
+.sidebar-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: inherit; /* Fixed height for the sidebar */
+  overflow-y: auto; /* Enables scrolling within the sidebar */
+  position: sticky;
+  top: 0;
+  min-width:250px;
+}
+
+.sb-main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:space-between;
+  text-align:  start;
+  height: 100vh; 
 }
 
 li {
@@ -128,23 +168,23 @@ li {
   justify-content: space-evenly;
   
 }
-.sidebar-wrapper {
+/* .sidebar-wrapper {
   height: 100%;
   max-width: 300px;
   position: relative;
   
-}
+} */
 /* .sidebar-fixed-wrapper {
   height: auto;
   max-width: 250px;
   position: fixed;
   left: 1;
 } */
-.sidebar {
+/* .sidebar {
   height: 100%;
   position: relative;
   left: 2;
-}
+} */
 /* .like-btn {
   background: url(../img/search-svgrepo-com.svg) 0 0 no-repeat;
   height: 20px;
@@ -167,23 +207,23 @@ li {
 .home-icon:hover, .star-icon:hover {
   color: whitesmoke;
 }
-.sb-main-container {
+/* .sb-main-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content:space-between;
   text-align:  start;
   height: 100vh; 
-}
+} */
 
-.sidebar-dashboard {
+/* .sidebar-dashboard {
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .sidebar-dashboard-container {
   align-items: center;
-}
+} */
 
 .center-container {
   align-items: center;
@@ -208,16 +248,18 @@ li {
   flex-wrap: wrap;
   display: flex;
   margin-left: 15px;
-
+  overflow: hidden;
+  position: sticky;
+  top: 0;
 }
 
 .right-container {
   display: flex;
   height: 100%;
   max-width: 250px;
-  position: fixed;
   flex-wrap: wrap;
   right: 1;
+  overflow: hidden;
 
 }
 /* .home-main-container {
@@ -886,3 +928,4 @@ input[type="text"] {
   cursor: pointer;
   color: whitesmoke;
 }
+
