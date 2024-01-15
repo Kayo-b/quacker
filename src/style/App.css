@@ -17,6 +17,7 @@
 #root {
   min-height: 100vh;
   background-color: rgb(23, 23, 23);
+  display: flex;
 }
 
 .App {
@@ -24,8 +25,9 @@
   min-height: 100vh;
   overflow-y: auto;
   min-width: 100%;
-    color: whitesmoke;
+  color: whitesmoke;
   margin-right: 190px;
+  justify-content: center;
 }::-webkit-scrollbar {
   width: 5px;  /* Remove scrollbar space */
   background: black;  /* Optional: just make scrollbar invisible */
@@ -42,16 +44,17 @@
   overflow-y: auto; /* Enables scrolling within the sidebar */
   position: sticky;
   top: 0;
-  min-width:250px;
+  min-width:100px;
 }
 
 .sb-main-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content:space-between;
+  justify-content: space-between;
   text-align:  start;
   height: 100vh; 
+
 }
 
 li {
@@ -87,6 +90,15 @@ li {
 .profile-dashboard:hover {
   background-color: rgb(98, 98, 98);
   cursor: pointer;
+} 
+.user-container-profile-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.user-container-profile-page {
+  display: flex;
+  flex-direction: column;
 }
 
 .loading-element-container {
@@ -575,9 +587,8 @@ button.options-btn:hover {
   background-color: #292c2e00;
 }
 
-button.options-btn:hover svg g path{
-  fill: rgb(166, 166, 166)
-  
+button.options-btn:hover svg g path {
+  fill: rgb(166, 166, 166);
 }
 
 button.options-btn * {
