@@ -3,9 +3,10 @@ import { useEffect } from 'react';
 
 type GifSearchProps = {
     setSelectedImg: React.Dispatch<React.SetStateAction<String>>;
+    closeGifModal: () => void;
 }
 
-const GifSearch: React.FC<GifSearchProps> = ({setSelectedImg}) => {
+const GifSearch: React.FC<GifSearchProps> = ({setSelectedImg, closeGifModal}) => {
     // Add any props you need here
     const [gifSearch, setGifSearch] = React.useState<String>('');
     
@@ -32,6 +33,7 @@ const GifSearch: React.FC<GifSearchProps> = ({setSelectedImg}) => {
               const img = document.createElement('img');
               img.addEventListener('click', () => {
                 setSelectedImg(gif.images.fixed_height.url);
+                closeGifModal();
               })
               img.src = gif.images.fixed_height.url;
 
@@ -62,6 +64,7 @@ const GifSearch: React.FC<GifSearchProps> = ({setSelectedImg}) => {
               const img = document.createElement('img');
               img.addEventListener('click', () => {
                 setSelectedImg(gif.images.fixed_height.url);
+                closeGifModal();
               })
               img.src = gif.images.fixed_height.url;
 

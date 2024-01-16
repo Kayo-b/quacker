@@ -410,7 +410,27 @@ li {
   padding: 5px;
   color: rgb(211, 211, 211);
 }
+.create-post-img-container {
 
+}
+.remove-gif-btn {
+  position: absolute;
+  top: 7%;
+  left: 44.1%;
+  z-index: 3;
+  background: none;
+  color:  lightgray;
+  background-color: #1e1d1d;
+  border-radius: 25px;
+  width: 25px;
+  height: 25px;
+}
+
+.remove-gif-btn:hover {
+  cursor: pointer;
+  background-color: #323435;
+
+}
 .gif-image {
   width: 200px; /* Set your desired width */
   height: auto; /* Maintain aspect ratio */
@@ -667,7 +687,7 @@ button.options-btn * {
   color: whitesmoke;
 }
 
-button:not(.gif-search-button, .close-button, .close-button-edit-profile, .options-btn, .close-button-gif-modal, .gif-btn):hover {
+button:not(.remove-gif-btn, .gif-search-button, .close-button, .close-button-edit-profile, .options-btn, .close-button-gif-modal, .gif-btn):hover {
   background: fixed;
   background-color: rgb(142, 142, 142);
   cursor: pointer;

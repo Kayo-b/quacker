@@ -180,15 +180,17 @@ const handleClick = async (text: String) => {
                     onChange={e => setText(e.target.value)}>
                     </textarea>
                 </div>
-                <div >
-                <img  className="gif-image" src={`${selectedImg}`} alt="gif-img" style={{display: selectedImg ? 'flex' : 'none'}}></img>
-                </div>
+                    <div className="create-post-img-container">
+                        <button className="remove-gif-btn" onClick={() => setSelectedImg('')} style={{display: selectedImg ? 'flex' : 'none'}}><MdClose size={25}/></button>
+                        <img className="gif-image" src={`${selectedImg}`} alt="gif-img" style={{display: selectedImg ? 'flex' : 'none'}}></img>
+                    </div>
                 
             </div>
             
                 <Modal isOpen={isModalOpen} onClose={closeGifModal}>   
                 <GifSearch 
                 setSelectedImg={setSelectedImg}
+                closeGifModal={closeGifModal}
                 />
                 </Modal>
             </div>
