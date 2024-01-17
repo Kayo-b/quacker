@@ -181,8 +181,16 @@ const handleClick = async (text: String) => {
                     </textarea>
                 </div>
                     <div className="create-post-img-container">
-                        <button className="remove-gif-btn" onClick={() => setSelectedImg('')} style={{display: selectedImg ? 'flex' : 'none'}}><MdClose size={25}/></button>
-                        <img className="gif-image" src={`${selectedImg}`} alt="gif-img" style={{display: selectedImg ? 'flex' : 'none'}}></img>
+                        <div className="gif-img-rmv-btn-wrapper">
+                            <button 
+                                className="remove-gif-btn" 
+                                onClick={() => setSelectedImg('')} 
+                                style={{display: selectedImg ? 'flex' : 'none'}}>
+                                    <MdClose size={25}/>
+                            </button>
+                                              
+                         <img className="gif-image" src={`${selectedImg}`} alt="gif-img" style={{display: selectedImg ? 'flex' : 'none'}}></img>
+                        </div> 
                     </div>
                 
             </div>

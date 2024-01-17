@@ -410,13 +410,17 @@ li {
   padding: 5px;
   color: rgb(211, 211, 211);
 }
+.gif-img-rmv-btn-wrapper {
+  display: flex;
+  position: relative;
+}
 .create-post-img-container {
-
+  display: flex;
 }
 .remove-gif-btn {
   position: absolute;
-  top: 7%;
-  left: 44.1%;
+  top: 1%;
+  left: 85.1%;
   z-index: 3;
   background: none;
   color:  lightgray;
@@ -643,13 +647,14 @@ button.options-btn * {
 
 .searchButton {
   background: url(../img/search-svgrepo-com.svg) 0 0 no-repeat;
+  filter: invert(80%);
+  background-color: lightgray;
   width: 30px; 
   height: 30px;
   text-indent: 999px;
   display: block;
   transform: scale(90%);
   position: relative;
-  left: -30px;
   border: 2px solid rgb(40, 40, 62, 0);
 }
 
@@ -863,7 +868,7 @@ input[type="text"] {
 
 .save-btn {
   height: 80%;
-  width: 100%;
+  width: 98.8%;
   padding: 5px;
 }
 
