@@ -249,9 +249,6 @@ li {
   height: 200px;
   display:flex;
   flex-direction: column
-  /* border-left: 1px solid rgba(245, 245, 245, 0.531);
-  border-right: 1px solid rgba(245, 245, 245, 0.531);
-  border-bottom: 1px solid rgba(245, 245, 245, 0.307); */
 }
 
 .right-container-wrapper {
@@ -363,10 +360,10 @@ li {
 }
 
 .post-wrapper-container {
-  border-top: 1px solid rgba(245, 245, 245, 0.531);
-  border-left: 1px solid rgba(245, 245, 245, 0.531);
-  border-right: 1px solid rgba(245, 245, 245, 0.531);
-  border-bottom: 1px solid rgba(245, 245, 245, 0.307);
+  border-top: 1px solid rgba(170, 170, 170, 0.331);
+  border-left: 1px solid rgba(170, 170, 170, 0.331);
+  border-right: 1px solid rgba(170, 170, 170, 0.331);
+  border-bottom: 1px solid rgba(170, 170, 170, 0.331);
   max-height: auto;
 }
 
@@ -517,9 +514,9 @@ input[type="button"] {
 .post-container, .post-page-container {
   background-color: #1e1d1d;
   margin-top: 0px;
-  border-left: 1px solid rgba(245, 245, 245, 0.531);
-  border-right: 1px solid rgba(245, 245, 245, 0.531);
-  border-bottom: 1px solid rgba(245, 245, 245, 0.307);
+  border-left: 1px solid rgba(170, 170, 170, 0.331);
+  border-right: 1px solid rgba(170, 170, 170, 0.331);
+  border-bottom: 1px solid rgba(170, 170, 170, 0.331);
 }
 .post-container:hover, .post-page-container:hover {
   background-color: #292c2e;
@@ -645,22 +642,14 @@ button.options-btn * {
   height: 25px;
 }
 
-.searchButton {
-  background: url(../img/search-svgrepo-com.svg) 0 0 no-repeat;
-  filter: invert(80%);
-  background-color: lightgray;
-  width: 30px; 
-  height: 30px;
-  text-indent: 999px;
-  display: block;
-  transform: scale(90%);
-  position: relative;
-  border: 2px solid rgb(40, 40, 62, 0);
-}
+ .searchButton { 
+  filter: invert(70%);
+  transform: scale(95%);
+}  
 
 .searchButton:hover {
-  /* filter: invert(60%); */
-  transform: scale(96%);
+  filter: invert(0%);
+  transform: scale(115%);
   cursor: pointer;
 }
 
@@ -692,7 +681,7 @@ button.options-btn * {
   color: whitesmoke;
 }
 
-button:not(.remove-gif-btn, .gif-search-button, .close-button, .close-button-edit-profile, .options-btn, .close-button-gif-modal, .gif-btn):hover {
+button:not( .searchButton, .remove-gif-btn, .gif-search-button, .close-button, .close-button-edit-profile, .options-btn, .close-button-gif-modal, .gif-btn):hover {
   background: fixed;
   background-color: rgb(142, 142, 142);
   cursor: pointer;

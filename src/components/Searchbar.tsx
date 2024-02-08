@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { IoIosSearch } from "react-icons/io";
 import {  addDoc, collection, serverTimestamp, DocumentData, setDoc, doc, arrayUnion} from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -41,10 +42,11 @@ const handleClick = async (text: String) => {
                     e.key === "Enter" ? handleClick(text) : () => null
                     }
                 ></input>
-                 <input className="searchButton"
-                        type="button" value="Search" 
+                <button className="searchButton"
+                        value="Search" 
                         onClick={() => handleClick(text)}>
-                </input> 
+                    <IoIosSearch style={{height:'20px', width:'20px'}}/>
+                </button> 
         </div>
             </div>
                 </div>
