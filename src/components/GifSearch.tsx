@@ -58,7 +58,11 @@ const GifSearch: React.FC<GifSearchProps> = ({setSelectedImg, closeGifModal}) =>
         fetch(url)
           .then(response => response.json())
           .then(content => {
-            // Process and display GIFs
+            if(content.data.length === 0) {
+              const noResults = document.createElement('p');
+              noResults.textContent = 'No results found';
+              gifSearchContainer.appendChild(noResults);
+            }
             console.log(content.data);
             content.data.forEach((gif: any) => {
               const img = document.createElement('img');
@@ -67,10 +71,7 @@ const GifSearch: React.FC<GifSearchProps> = ({setSelectedImg, closeGifModal}) =>
                 closeGifModal();
               })
               img.src = gif.images.fixed_height.url;
-
               gifSearchContainer.appendChild(img);
-              
-              
               (document.querySelectorAll('.trending-gifs')[0] as HTMLElement).style.display = 'none';
             });
           })
@@ -87,7 +88,9 @@ const GifSearch: React.FC<GifSearchProps> = ({setSelectedImg, closeGifModal}) =>
         // Add your JSX code here
         <div className="gif-search-container">
         <label htmlFor="gif-search" >
-            <input type="text" id="gif-search" onChange={(e) => handleInputChange(e)}></input>
+            <input type="text" id="gif-search" onChange={(e) => handleInputChange(e)}                     onKeyDown={(e) =>
+                    e.key === "Enter" ? searchGiphy(gifSearch) : () => null
+                    }></input>
             <button className={"gif-search-button"} onClick={() => searchGiphy(gifSearch)}>Search</button>
             <div className="gif-search-result"></div>
             <div className="trending-gifs"></div>

@@ -118,7 +118,7 @@ li {
 .close-button {
   position: absolute;
   top: 0;
-  left: 330px;
+  left: 328px;
   width: 0px;
   height: 0px;
   border: 0px;
@@ -135,7 +135,7 @@ li {
 .close-button-edit-profile {
   position: absolute;
   top: 0;
-  left: 700px;
+  left: 660px;
   width: 5px;
   height: 5px;
   border: 0px;
@@ -180,31 +180,17 @@ li {
   justify-content: space-evenly;
   
 }
-/* .sidebar-wrapper {
-  height: 100%;
-  max-width: 300px;
-  position: relative;
-  
-} */
-/* .sidebar-fixed-wrapper {
-  height: auto;
-  max-width: 250px;
-  position: fixed;
-  left: 1;
-} */
-/* .sidebar {
-  height: 100%;
-  position: relative;
-  left: 2;
-} */
-/* .like-btn {
-  background: url(../img/search-svgrepo-com.svg) 0 0 no-repeat;
+
+.like-btn {
+  background: url(../img/psyduck.png) 0 0 no-repeat; /*png source: https://www.flaticon.com/free-icon/psyduck_189000 */
   height: 20px;
   width: 20px;
   display: block;
   transform: scale(100%);
-  border: 1px solid red;
-} */
+  scale: 100%;
+  filter: grayscale(100%)
+}
+
 .side-bar-menu {
   display: flex;
   align-items: center;
@@ -260,6 +246,7 @@ li {
   overflow: hidden;
   position: sticky;
   top: 0;
+  padding-top: 5px;
 }
 
 .right-container {
@@ -365,16 +352,41 @@ li {
   border-right: 1px solid rgba(170, 170, 170, 0.331);
   border-bottom: 1px solid rgba(170, 170, 170, 0.331);
   max-height: auto;
+  /* padding-top: 5px;
+  padding-right: 5px; */
 }
 
 .post-main-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   text-align: start;
   height: auto;
   max-width: 100%;
   padding-right: 10px;
+  padding-top: 3px;
+
+}
+
+.modal-frame > .post-wrapper-container {
+  border-top: 1px solid rgba(170, 170, 170, 0.331);
+  border-left: 1px solid rgba(170, 170, 170, 0.331);
+  border-right: 1px solid rgba(170, 170, 170, 0.331);
+  border-bottom: 1px solid rgba(170, 170, 170, 0.331);
+  max-height: auto;
+  padding-top: 5px;
+  padding-right: 5px; 
+
+}
+.modal-frame > .post-wrapper-container > .post-main-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  text-align: start;
+  height: auto;
+  max-width: 100%;
+  padding-right: 10px;
+  padding-top: 10px;
 }
 .text-area-container {
   width: 100%;
@@ -478,8 +490,7 @@ input[type="button"] {
   z-index: 1;
   padding-left: 4px;
   padding-top: 4px;
-  display: flex;
-
+  display: flex
 }
 
 .profile-picture-profile-page {
@@ -681,7 +692,7 @@ button.options-btn * {
   color: whitesmoke;
 }
 
-button:not( .searchButton, .remove-gif-btn, .gif-search-button, .close-button, .close-button-edit-profile, .options-btn, .close-button-gif-modal, .gif-btn):hover {
+button:not( .like-btn, .searchButton, .remove-gif-btn, .gif-search-button, .close-button, .close-button-edit-profile, .options-btn, .close-button-gif-modal, .gif-btn):hover {
   background: fixed;
   background-color: rgb(142, 142, 142);
   cursor: pointer;
@@ -710,7 +721,8 @@ button {
 
 .edit-profile-main-container {
   display: grid;
-  left: 215px;
+  left: 50%;
+  top: 50%;
   width: 500px;
   height: 350px;
   position: absolute;
@@ -784,12 +796,29 @@ input[type="file"] {
   display: none;
 }
 
-input[type="text"] {
+input:not(.search, #label-id-update-name, #gif-search)[type="text"], input[type="password"] {
   border: 0px;
-  background-color: #44434300;
+  background-color: #6e6e6e00;
   width: 100%;
-  color: rgb(211, 211, 211);
+  color: rgb(197, 197, 197);
+  border: 1px solid rgb(105, 105, 105);
+}
+
+#label-id-update-name {
+  border: 0px;
+  background-color: #6e6e6e00;
+  width: 100%;
+  color: rgb(197, 197, 197);
   outline: none;
+  
+}
+
+#gif-search {
+  border-top: 0px;
+  background-color: #6e6e6e00;
+  width: 100%;
+  color: rgb(197, 197, 197);
+  border: 1px solid rgb(105, 105, 105);
 }
 
 .update-name-label {
@@ -875,6 +904,7 @@ input[type="text"] {
 
 .gif-modal-wrapper {
   position: fixed;
+  display: flex;
   top: 0;
   left: -20%;
   height: 110%;
@@ -915,6 +945,7 @@ input[type="text"] {
   display: flex; 
   max-height: 300px;
   max-width: 530px;
+  min-width:530px;
   overflow-x: auto;
   flex-direction: row;
   justify-content: flex-start; 
@@ -944,7 +975,7 @@ input[type="text"] {
   transform: scale(90%);
   position: absolute;
   left: 420px;
-  top:-1.7%;
+  top:-1.0%;
   font-size: large;
   /* border: 2px solid rgb(40, 40, 62, 0); */
 }

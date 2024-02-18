@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    background-color: #7c7c7c;
+    background-color: #222222;
     padding: 30px;
     border-radius: 2px;
   }
@@ -29,8 +29,8 @@
   }
 
   .login-txt-input:focus {
-      outline-color:rgb(26, 98, 94);
-      outline-style:solid
+      outline-color:rgb(102, 104, 129);
+      outline-style: solid;
   } 
 
   .login-btn-email {
@@ -45,7 +45,7 @@
   }
 
   .login-btn-email:hover {
-    background-color: rgba(11, 57, 53, 0.885);
+    background-color: rgb(102, 104, 129);
   }
 
   .login-btn-google {
@@ -66,5 +66,15 @@
   
   .login-btn-google:hover, .guest-login-btn:hover {
     background:fixed;
-    background-color: rgba(11, 57, 53, 0.885);
+    background-color: rgba(73, 73, 73, 0.885);
+  }
+
+  a[href="/reset"] {
+    color: rgb(98, 103, 182);
+    text-decoration: none;
+  }
+
+  a[href="/register"] {
+    color: rgb(98, 103, 182);
+    text-decoration: none;
   }

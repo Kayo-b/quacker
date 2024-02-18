@@ -75,17 +75,17 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
     console.log(post?.likedByUsers, "liked by users +_+_+_+_+")
   }
 
-  useEffect(() => {
-    likedPostCheck()
-  },[])
+    useEffect(() => {
+      likedPostCheck()
+    },[])
 
-  return (
-      <GiPlasticDuck 
-      className="like-btn" 
-      onClick={e => addLike(post?.postID, e)}
-      style={{ color: post?.likedByUsers.includes(user.uid) ? "yellow" : "white" }}
-      ></GiPlasticDuck> 
-  )
-}
+    return (
+        <button 
+        className="like-btn" 
+        onClick={e => addLike(post?.postID, e)}
+        style={{ filter: post?.likedByUsers.includes(user.uid) ? 'grayscale(100%)' : 'grayscale(0%)' }}
+        ></button> 
+    )
+  }
 
-export default Like;
+  export default Like;
