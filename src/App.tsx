@@ -49,20 +49,10 @@ interface User {
   bookmarks?: Array<string>;
 }
 
-// type AppProps = { 
-//   user: UserPropsOrigin ;
-//   loading: boolean;
-//   error: string;
-//   name: string;
-//   setName: React.Dispatch<React.SetStateAction<string>>;
-// }
-
-   
 export const UserContext = createContext<User | null | undefined>(undefined);
 
 const App = () => {
   const [user, loading, error] = useAuthState(auth);
-  //const [userCtx, loadingCtx, errorCtx] = useAuthState(auth);
   const [userMainFeed, setUserMainFeed] = useState<DocumentData[]>([]);
   const [posts, setPosts] = useState<DocumentData[]>([]);
   const [bookmarkPosts, setBookmarkPosts] = useState<DocumentData[]>([])
@@ -78,28 +68,6 @@ const App = () => {
   const [userData, setUserData] = React.useState<DocumentData>();
   const [userImg, setUserImg] = React.useState<string>("")
   
-
-  // const [favorited, setFavorited] = useState<boolean>(false);
-
-//  useEffect(() => {
-//   getUserMainFeed();
-//   console.log(userMainFeed)
-//  }, [update])
-
-
-//   let getUserMainFeed = async () => {
-//     if(user && user.uid) {
-//       const userDocRef = doc(db, "users", user?.uid);
-//       const userDocSnap = await getDoc(userDocRef);
-//       if(userDocSnap.exists()){
-//         const userDocSnapData = userDocSnap.data();
-//         setUserMainFeed(userDocSnapData.mainFeed);
-//       } 
-//     } else {
-//       console.log("no user")
-//     }
-//  }
-
 const fetchBookmarks = async () => {
  
   const q = query(collection(db, "users"), where("uid", "==", user?.uid));
@@ -109,11 +77,9 @@ const fetchBookmarks = async () => {
   docs.forEach(doc => {
     setUserData(doc.data())
     setUserImg(doc.data().imgUrl);
-    console.log(doc.data(), "DOC!S")
       const bookmarks = doc.data().bookmarks;
       tempBookmarks.push(...bookmarks)
   })
-  console.log(docs,"docs")
   let tempPosts: DocumentData[] = [];
   for (const bm of tempBookmarks) {
       const q = query(collection(db, "posts"), where("postID", "==", bm));
@@ -124,18 +90,12 @@ const fetchBookmarks = async () => {
   }
   setBookmarkPosts(tempPosts);
   
-  console.log("app component 22")
-  console.log(tempPosts,"tempPosstsSSS")
-  //setBookmarkUpdate(true);
-  
 }
 
 useEffect(() => {
   fetchBookmarks();
-  console.log(userImg,"USER APP33")
   
 },[user])
-console.log(userData,"USER APP")
   return (
     <UserContext.Provider value={user as UserPropsOrigin}> {
     <BrowserRouter>
@@ -297,13 +257,6 @@ console.log(userData,"USER APP")
       <div className="right-container-wrapper">
       <div className="right-container">
       <Navbar/>
-        {/* <Routes>
-      <Route
-        path="/homepage/"
-        element={
-        <Navbar/>
-      }/>
-      </Routes> */}
       </div>
       </div>
 

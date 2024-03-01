@@ -1,13 +1,8 @@
 import React, {useEffect} from 'react'
-import { useParams, useLocation } from 'react-router-dom';
-import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs} from "firebase/firestore"
+import { useLocation } from 'react-router-dom';
+import { DocumentData, doc, getDoc } from "firebase/firestore"
 import { db } from "../firebase";
-import Post from "./Post";
 import Feed from './Feed';
-import Like from './Like'
-import BookmarkBtn from './BookmarkBtn';
-import myImg from '../img/user-icon.png';
-
 
 type UserProps = {
     authProvider?: string;
@@ -62,7 +57,6 @@ const PostPage: React.FC<PostProps> = ({
   }) => {
 
     
-//   const postID = useParams<{postID: string}>()
   const location = useLocation() as { state: { post: DocumentData } };
   const [loading, setLoading] = React.useState(true);
   const [postPageStatesCount, setPostFeedStatesCount] = React.useState<number>(0)
@@ -95,7 +89,6 @@ const PostPage: React.FC<PostProps> = ({
           postPageContainers.forEach((container: Element) => {
               (container as HTMLElement).style.visibility = "visible";
               postPageContainer.style.visibility = "visible";
-              console.log(container.parentElement as HTMLElement)
           });
             setLoading(false);
         }, 200)
@@ -120,27 +113,6 @@ const PostPage: React.FC<PostProps> = ({
                 <div>{loading ? loadingSvg : null}</div>
             </div>
       <div className="post-page-main-container" style={{visibility:"hidden"}}>
-      {/* <Post 
-          name={name}
-          update={update}
-          setUpdate={setUpdate}
-          posts={posts}
-          user={user}
-          bookmarkPosts={bookmarkPosts} 
-          setBookmarkPosts={setBookmarkPosts}
-          setNewPost={setNewPost}
-          newPost={newPost}
-          post={post}
-          isComment={isComment}
-          parentPost={post}
-          repost={repost}
-          setRepost={setRepost}
-          userMainFeed={userMainFeed}
-          setUserMainFeed={setUserMainFeed}
-          setLoading={setLoading}
-          addToStatesCount={setPostFeedStatesCount}
-          
-          /> */}
       <Feed 
           name={name}
           update={update}

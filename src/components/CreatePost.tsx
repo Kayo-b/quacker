@@ -44,7 +44,6 @@ type PostProps = {
 
 const CreatePost: React.FC<PostProps> = ({setUpdate, update, name, user, newPost, setNewPost, post, userImg, userData, closeModal}) => {
 const[text, setText] = useState("");
-//onst[userImg, setUserImg] = useState("");
 const [imgUrl, setImgUrl] = useState("");
 const [isModalOpen, setIsModalOpen] = React.useState(false);
 const [selectedImg, setSelectedImg] = React.useState<String>('');    
@@ -52,17 +51,6 @@ const [selectedImg, setSelectedImg] = React.useState<String>('');
 const openGifModal = () => setIsModalOpen(true);
 const closeGifModal = () => setIsModalOpen(false);
 
-// const getImg = async() => {
-//     const userDocRef = doc(db, "users", user.uid);
-//     const userDocSnap = await getDoc(userDocRef);
-//     const userDocSnapData = userDocSnap.data();
-//     if(userDocSnapData){
-//         console.log("Snap")
-//         console.log(imgUrl)
-//         setImgUrl(userDocSnapData.imgUrl);
-//     }
-
-// }
 function Modal({ isOpen, onClose, children }: ModalProps) {
     if (!isOpen) return null;
     return (
@@ -82,18 +70,12 @@ function Modal({ isOpen, onClose, children }: ModalProps) {
 const handleClick = async (text: String) => {
     if(text.length=== 0 && !selectedImg) return;
 
-    //setUpdate(true);
-    // handle form submission here.
     const userDocRef = doc(db, "users", user.uid);
     const userDocSnap = await getDoc(userDocRef);
     const userDocSnapData = userDocSnap.data();
     if(userDocSnapData){
-        console.log("Snap")
-        console.log(userDocSnapData.imgUrl)
         setImgUrl(userDocSnapData.imgUrl);
     }
-    console.log("Snap3")
-    console.log(userDocSnapData?.imgUrl)
     
 
     try {
@@ -118,9 +100,6 @@ const handleClick = async (text: String) => {
             }, {merge: true})
         }
         setUpdate(!update)
-        //update === true ? setUpdate(false) : setUpdate(true)
-        //setNewPost will add the new post into the newPost array so it 
-        //can render the posts into the screen without needing to fetch them.
         setNewPost(prev => [{
             username: name,
             userID: user.uid,
@@ -151,20 +130,6 @@ const handleClick = async (text: String) => {
 
   };
   
-  console.log(userImg,"USERDATA22")
-//   if(userData !== undefined) {
-//     setUserImg(userData?.imgUrl)
-//     console.log(userImg,"NEW USERDATA22")
-//   }
-//   useEffect(() => {
-//     //getImg();
-//     setUserImg(userData?.imgUrl)
-//     // if(userData !== undefined) {
-//     //     setUserImg(userData?.imgUrl)
-//     //   }
-//     console.log(userImg,"NEW USERDATA22")
-//   },[])
- //!== userData?.imgUrl ? userImg : userData?.imgUrl
     return(
         <div className="post-wrapper-container">
         <div className="post-main-container"> 

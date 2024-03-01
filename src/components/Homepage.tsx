@@ -39,8 +39,6 @@ type HomepageProps = {
     
 }
 
-
-
 const Homepage: React.FC<HomepageProps> = ({
     name, 
     user, 
@@ -63,8 +61,6 @@ const Homepage: React.FC<HomepageProps> = ({
     userData
     }) => {
 
-    //const [update, setUpdate] = useState<boolean | undefined>(false)
-        console.log(userImg,"USER IMG HO11ME")
     return(
         <div className="home-main-container">
             <div className="create-post-main-container">
@@ -101,9 +97,7 @@ const Homepage: React.FC<HomepageProps> = ({
             userData={userData}
             userImg={userImg}
             />
-
             </div>
-
         </div>
     )
 }

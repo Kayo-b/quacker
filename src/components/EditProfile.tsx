@@ -40,7 +40,6 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
     const handleClick = () => {
         let id = document.getElementById("label-id-prof-pic-upload")
         let imgUrlFromEle = (id as HTMLImageElement).src
-        console.log(imgUrlFromEle,"imgUrlFromEle")
         if(profImageUpload === null) return null;
         const imageRef =  ref(storage, `/images/${user.uid}/profile_image/profile_img.png`);
         uploadBytes(imageRef, profImageUpload)
@@ -54,21 +53,18 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
                 const q = query(collection(db, "posts"), where("userID", "==", user.uid));
                 const batch = writeBatch(db);
                 getDocs(q).then((querySnapshot) => {
-
                     querySnapshot.forEach((doc) => {
 
                         batch.update(doc.ref, {imgUrl: url});
                     });
                     setUpdate(!update)
                     return batch.commit();
-
                 });
             })
         })
     }
 
     const handleClick2 = () => {
-        console.log(backgroundImageUpload,"KOKOAKOKOAKOKA2222222")
         if(backgroundImageUpload === null) return null;
         const imageRef =  ref(storage, `/images/${user.uid}/background_image/background_img`);
         uploadBytes(imageRef, backgroundImageUpload).then(() => {
@@ -80,14 +76,12 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
                 const q = query(collection(db, "posts"), where("userID", "==", user.uid));
                 const batch = writeBatch(db);
                 getDocs(q).then((querySnapshot) => {
-
                     querySnapshot.forEach((doc) => {
 
                         batch.update(doc.ref, {bkgImgUrl: url});
                     });
                     setUpdate(!update)
                     return batch.commit();
-
                 });
             })
         })
@@ -97,16 +91,12 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
         const userRef2 = doc(db, 'users', post?.userID);
         await setDoc(userRef2, {displayedName: nameTempText}, {merge: true});
         setDisplayedName(nameTempText as string);
-        
     }
-
-
 
     const handleClick4 = async() => {
         const userRef2 = doc(db, 'users', post?.userID);
         await setDoc(userRef2, {bioText: bioTempText}, {merge: true});
         setBioText(bioTempText as string);
-        
     }
 
     const handleSave = () => { 
@@ -125,7 +115,6 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
             }
         }
     }
-    console.log("REREBDERRRRRRRRRRRRRRRRRRRRr")
     return(
             <div className="edit-profile-main-container">
                 <h3>Edit Profile</h3>

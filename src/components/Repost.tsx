@@ -35,8 +35,6 @@ type UserProps = {
     
 }
 
-
-
 const Repost: React.FC<PostProps> = ({
     post, 
     user, 
@@ -64,11 +62,9 @@ const Repost: React.FC<PostProps> = ({
       // const userData = docs.docs[0].data();
       if(userDoc.exists()) {
           if(userDoc.data().reposts.includes(postId) || post?.repostByUsers.includes(user.uid)) {
-            console.log("TRUE!@!")
             setReposted(true);
           } else {
             setReposted(false);
-            console.log("FALSE!@!")
           }
           if(setPostFeedStatesCount)
               setPostFeedStatesCount(1)
@@ -77,35 +73,13 @@ const Repost: React.FC<PostProps> = ({
           }
           if(addToStatesCount) {
             addToStatesCount(1);
-            console.log("reposted!!!!")};
+          };
             if(!profPost) {
-              console.log("profPost!")
               if(setProfPostCheck) setProfPostCheck(1)
             } 
-            console.log("post", post)
       }
   }
 
-  // const hasUserReposted2 = () => {
-  //   console.log("has user reposted ??")
-  //   console.log(post)
-  //   console.log(post?.repostByUsers.includes(user.uid))
-  //   if(post?.repostByUsers.includes(user.uid)) {
-  //           setReposted(true);
-  //         } else { 
-  //           setReposted(false);
-  //         }
-  //         if(addToStatesCount) {
-          
-  //           console.log("add to states count 2????", user.uid)
-  //             setTimeout(() => addToStatesCount(1), 400);
-  //           }
-  //         if(!profPost) {
-  //           if(setProfPostCheck) setProfPostCheck(1);
-  //         } 
-    
-  // }
-  
   const removeRepost = (postId: string) => {
       if(setRepost) { 
         setRepost(
@@ -117,8 +91,6 @@ const Repost: React.FC<PostProps> = ({
                     } 
       };
   
-  console.log(repost)
-
   const removeFromMainFeed = () => {
     if(setUserMainFeed) {
         setUserMainFeed(prevVal => prevVal.filter(value => value !== post?.postID))
@@ -144,41 +116,13 @@ const Repost: React.FC<PostProps> = ({
         }
       }
 
-      
-//See if there is a faster way to get the user's bookmarked posts, the query makes it take some time
-// const addRepost = (postId: string) => {
-//   addRepostData(postId);
-//   if(!reposted) {
-//     setReposted(true);
-//     if(post) addRepostPost(post);
-//   } else {
-//     setReposted(false);
-//     removeRepost(post?.postID);
-//   }
-  
-// }
-
 async function addRepostData(postId: string, e: React.MouseEvent) {
   e.stopPropagation();
-  console.log(reposted,"REPOSTED><><")
-      // const q = query(collection(db, 'users'), where("uid", "==",  user.uid));
-      // const docs = await getDocs(q);
-      // const userRef = docs.docs[0].ref;
-      // const userData = docs.docs[0].data();
       const userRef = doc(db, 'users', user.uid);
       const postRef = doc(db, 'posts', post?.postID);
-      
-    //   await setDoc(userRef, {
-    //       mainFeed: arrayUnion(post?.postID)
-    //   }, {merge: true})
-      
       const userDoc = await getDoc(userRef);
-      //const userData = userDoc.data();
       if(!reposted) {
             setReposted(true);
-            // if(post?.userID !== user.uid){
-            //   setDoc(userRef, {reposts: arrayUnion(postId)}, {merge: true});
-            // }
             setDoc(userRef, {reposts: arrayUnion(postId)}, {merge: true});
             //Handling when the user reposts its own post
             if(post?.userID === user.uid) {
@@ -190,19 +134,10 @@ async function addRepostData(postId: string, e: React.MouseEvent) {
               }
 
             } else {
-              // if(userDoc.exists()) {
-              //   const userData = userDoc.data();
-              //   const mainFeed = userData.mainFeed;
-              //   mainFeed.unshift(postId);
-              //   setDoc(userRef, {mainFeed: mainFeed}, {merge: true});
-              // }
               setDoc(userRef, {mainFeed: arrayUnion(postId)}, {merge: true});
-              
             }
             setDoc(postRef, {repostByUsers: arrayUnion(user.uid)}, {merge: true})
-            //!update ? setUpdate(true) : setUpdate(false);
             if(post) addRepostPost(post);
-            
 
       } else {
             setReposted(false);
@@ -227,66 +162,22 @@ async function addRepostData(postId: string, e: React.MouseEvent) {
               } else {
                 removeFromMainFeed();
                 let newFeed = mainFeed.filter((post: string) => post !== postId);
-                //substituteMainFeed(newFeed)
                 setDoc(userRef, {mainFeed: newFeed}, {merge: true});
               }
             }
             setDoc(userRef, {reposts: arrayRemove(postId)}, {merge: true});
             setDoc(postRef, {repostByUsers: arrayRemove(user.uid)}, {merge: true});
-            //!update ? setUpdate(true) : setUpdate(false);
             removeRepost(post?.postID);
           }
       }
            
-      
-      // const addBookmarkBtn = (postId: string) => {
-      //     addBookmark(postId)
-      // }
-      // function checkReposted() {
-      //   setReposted(true)
-      //   console.log(post, "111111111111111111111111111111111")
-      //   post?.repostByUsers.forEach((item: string) => {
-      //     console.log("??????TRUE?????")
-      //     if(item === user.uid) {
-      //       console.log("TRUEEEE")
-      //       setReposted(true)
-            
-      //     } 
-      //   })
-      //   hasUserReposted(post?.postID);
-      // } 
-    
       useEffect(() => {
-        
-        //Logic to only show reposts that have been reposted by the current logged user when accessing the user profile
-        // if(profPost) {
-        //   // console.log(")!!)!))!)!)!)!>>> TRUE")
-        //   // checkReposted()
-
-        //   repost?.forEach(item => {
-        //     if(item.postID === post?.postID) {
-        //       setReposted(true)
-              
-        //     } 
-        //   })
-        //   hasUserReposted(post?.postID);
-        // } else {
-        //   hasUserReposted(post?.postID);
-        // }3
-        //hasUserReposted2();
-        
         hasUserReposted(post?.postID);
-
-        
       },[])
-
-
-
 
       return(
           <div className="bm-main-container">
               <BiRepost onClick={(e) => addRepostData(post?.postID, e)} style={{color: reposted ? "blue": undefined }}/>
-                  {/* {reposted ? "Reposted" : "Repost"}</button> */}
           </div>
       )
 }

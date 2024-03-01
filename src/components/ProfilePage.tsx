@@ -1,15 +1,12 @@
 import React, { useEffect, useContext } from 'react'
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { MdClose } from "react-icons/md";
 import { DocumentData, arrayUnion, arrayRemove, doc, setDoc , getDoc, collection, where, query, getDocs, orderBy} from "firebase/firestore"
 import { db } from "../firebase";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import Post from '../components/Post';
-import Feed from './Feed';
 import EditProfile from './EditProfile';
 import '../style/ProfilePage.css';
-import { setgroups } from 'process';
-import { profile } from 'console';
 import { UserContext } from '../App';
 
 
@@ -95,7 +92,6 @@ const ProfilePage: React.FC<PostProps> = ({
     //Getting post data via location
     const location = useLocation() as {state: { post: DocumentData}};
     const post = location.state?.post;
-    console.log(userCtx?.uid,"USER PROFILE PAGE CONSOLE LOG")
     const img = document.getElementById('myimgprofile');
     const bkgImg = document.getElementById('profile-background');
     const imgposts = document.querySelectorAll('.profile-picture-profile-feed');
@@ -103,17 +99,13 @@ const ProfilePage: React.FC<PostProps> = ({
     const holepath = endpointLocation.pathname;
     const endpoint = holepath.split('/')[2];
 
-    console.log(userData?.mainFeed,"USER DATa")
 
     const fetchProfileImg = async() => {    
         const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")));
-        console.log("zzzzz!!",postsRenew)
             setPostsRenew([])
-            console.log("zzzzz!!",postsRenew)
             querySnapshot.forEach((doc) => {
                 setPostsRenew(prevValue => [...prevValue, doc.data()]);
             })
-            console.log("fetcssssssssh!!",postsRenew)
             const userDocRef2 = query(collection(db, "users"));
             const userQuery = query (userDocRef2, where("name", "==", `${endpoint}`));
             //const userDocSnap = await getDoc(userDocRef);
@@ -134,8 +126,6 @@ const ProfilePage: React.FC<PostProps> = ({
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
-    console.log(isModalOpen,"modal")
-    
     //Modal for the comment popup
     function Modal({ isOpen, onClose, children }: ModalProps) {
         if (!isOpen) return null;
@@ -151,7 +141,6 @@ const ProfilePage: React.FC<PostProps> = ({
         </div>
         );
     }
-    console.log(profileStatesCount,"OPOP")
 
     const waitForStates = () => {
         const profileContainer = 
@@ -187,7 +176,6 @@ const ProfilePage: React.FC<PostProps> = ({
     };
 
     const waitForStates2 = async () => {
-        console.log(posts, "po@@@@1111!sts")
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
         if(profPostCheck === 1 || posts.length === 0) {
             setTimeout(() => {
@@ -221,55 +209,35 @@ const ProfilePage: React.FC<PostProps> = ({
     }
 
     const checkFollow = async() => {
-        console.log(userData,'userData')
-        console.log("CHECK FOLLOW!")
         const postSubContainer = document.getElementById("post-subcontainer") as HTMLElement;
         if(userData && userCtx) {
             const userRef1 = doc(db, 'users', userCtx?.uid);
             const userRef2 = doc(db, 'users', userData?.uid);
             const userDoc1 = await getDoc(userRef1);
             const userDoc2 = await getDoc(userRef2);
-            console.log(userDoc2.exists(),"CHECK FOLLOW userDoc1exist")
             if(userDoc1.exists()) {
                
                 const userData1 = userDoc1.data();
                 const following = userData1.following;
-                console.log("check follow2", following.includes(userData?.uid));
                 if(following.includes(userData?.uid)) {
                     setFollowBtn(true);
                 } else {
                     setFollowBtn(false);
                 }
-
             }
-            console.log(userDoc2.exists(),"CHECK FOLLOW userDoc2exist")
             if(userDoc2.exists()) {
                 const userData2 = userDoc2.data();
                 const following = userData2.following;
                 const followers = userData2.followers;
                 const bioTxt = userData2.bioText;
-                // const displayName = userData2.displayedName;
-                // setDisplayedName(displayName)
                 setBioText(bioTxt);
-                console.log(userCtx,"userDsATA")
                 setFollowingCount(following.length);
                 setFollowersCount(followers.length);
             }
-            
-            // setLoading2(false);
-            // postSubContainer.style.visibility = "visible";
-            // setTimeout(() => {
-            //     setLoading2(false);
-            //     postSubContainer.style.visibility = "visible";
-            // }, 200)
-            console.log(loading2,"LOADING!")
         }
-
-        //setProfilePageStateCount(!profilePageStateCount)
     }
 
     const followUser = async() => {
-        console.log(followBtn,"_")
         if(userData && userCtx) {
             const userRef1 = doc(db, 'users', userCtx?.uid);
             const userRef2 = doc(db, 'users', userData?.uid);    
@@ -286,7 +254,6 @@ const ProfilePage: React.FC<PostProps> = ({
             }
     }
     setBioText(bioText + ".")
-    //setProfilePageStateCount(!profilePageStateCount)
     }
 
     useEffect(() => {
@@ -294,7 +261,6 @@ const ProfilePage: React.FC<PostProps> = ({
         waitForStates2();
     },[profPostCheck, update, userData])
     
-
     useEffect(() => {
         checkFollow();
         waitForStates();
@@ -331,9 +297,6 @@ const ProfilePage: React.FC<PostProps> = ({
     />
     } </UserContext.Provider>
     
-console.log(postsRenew,"posts heres?1?s?")
-console.log(posts,"posts here?!!!s!?")
-
   const loadingSvg = 
   <svg xmlns="http://www.w3.org/2000/svg" width="94px" height="94px" viewBox="0 0 100 150" preserveAspectRatio="xMidYMid">
       <circle cx="50" cy="50" fill="none" stroke="#6a6a6a" stroke-width="2" r="25" stroke-dasharray="141.37166941154067 49.12388980384689">

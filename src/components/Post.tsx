@@ -22,8 +22,6 @@ import PostPage from './PostPage';
 import FollowBtn from './FollowBtn';
 import Comment from './Comment';
 import Repost from './Repost';
-import myImg from '../img/user-icon.png';
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 
 type UserProps = {
@@ -110,59 +108,17 @@ const Post: React.FC<PostProps> = ({
   userData,
   userImg
   }) => {
-    console.log(post,"pos111t12")
     
-  // const [followBtn, setFollowBtn] = React.useState<boolean>(false);
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
   const storage = getStorage();
   const [profileImg, setProfileImg] = useState("")
   const [displayVar1, setDisplayVar1] = useState("")
   const style = {"fontSize": "large"}
-  //const [postsArray, setPostArray] = useState(posts.length === 0 ? postsRenew : posts)
-  const postsArray = posts.length === 0 ? postsRenew : posts
-  console.log(postsArray, "posts assssssssrrsay")
-  //const newPostsArray = newPost.length === 0 ? postsRenew : postsRenew;
-  
-//   const fetchPosts = async() => {    
-//     console.log("KAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWWWWWWWWWWWWWww")
-//     const postDocRef = doc(db, "posts");
-//     const postDocSnap = await getDoc(postDocRef);
-//     const postDocSnapData = postDocSnap.data();
-//     console.log(postDocSnapData, "SNAP")
-//     if(setPosts) {
-//       setPosts((postDocSnapData as DocumentData[]).map(val => {
-//         console.log("VALAAAAA", val)
-//         return val;
-//       }));
-//     }
-// };
-
-// const fetchPosts = async() => {    
-//   const postDocSnapData = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")));
-//   console.log(postDocSnapData, "SNAP")
-//   if(setPosts) {
-//     postDocSnapData.forEach(doc => {
-//       setPosts(prevValue => [...prevValue, doc.data()])
-//     })
-//   }
-// };
-console.log(postsRenew,"posts#!@ #heres1")
-console.log(profPost,"posts#!@ PrSoPost")
-console.log(postsArray,"postss#!@@@ ")
-   //Getting profile image from storage
-  //  let storageRef = ref(storage, `images/${userCtx?.uid}/profile_image/profile_img.png`)
-  //  getDownloadURL(storageRef)
-  //  .then((url) => {
-  //     const img = document.getElementById('myimg');
-  //     img?.setAttribute('src', url)
-  //  })
-
-  console.log(userCtx, "USER POST !1")
+  const postsArray = posts.length === 0 ? postsRenew : posts;
 
   //Getting single post object values and passing them to the postPage URL
   const RedirectToPostPage = (post: DocumentData) => {
-    //if(addToStatesCount) addToStatesCount(0);
     if(setPostFeedStatesCount) setPostFeedStatesCount(0);
     navigate(`/post/${post.postID}`, {state: {post}})
     const postPageContainers = document.querySelectorAll(".post-page-container");
@@ -174,10 +130,6 @@ console.log(postsArray,"postss#!@@@ ")
 
   const RedirectToProfilePage = (post: DocumentData | undefined, e: React.MouseEvent) => {
     e.stopPropagation();
-    // if(profPost) {
-    //   const profileContainer = 
-    //             document.querySelector(".user-container-profile-page-container") as HTMLElement;
-    //             profileContainer.style.visibility = "hidden" }     
     navigate(`/profile/${post?.username}`, {state: {post}});
     setUpdate(!update)
   }
@@ -188,12 +140,9 @@ console.log(postsArray,"postss#!@@@ ")
 
     const postContainer = document.getElementById(`${post?.postID}`);
    // const specificPost = Array.from(postContainers).filter(postContainer => postContainer.getAttribute("key") === post?.postID) as unknown as HTMLElement;
-    console.log(post?.postID,"SPECIFIC")
     if(!profPost) { 
-      //setPostArray(postsArray?.filter(val => val !== post?.postID))
       postsArray?.filter(val => val !== post?.postID)
       if(postContainer) postContainer.style.display = "none";
-      //setUpdate(!update);
       
     }
     setUserMainFeed(prevVal => 
@@ -217,40 +166,15 @@ console.log(postsArray,"postss#!@@@ ")
  
     }
     removePostFromDB();
-    //update === true ? setUpdate(false) : setUpdate(true)
-    //setUpdate(!update);
     if(postContainer) postContainer.style.display = "none";
 
   }
 
   //Add setUSerMainFeed in the useEffect to reset the userMainFeed
   useEffect(() => {
-    //if(userCtx === null) navigate("/");
-    //getUserMainFeed();
-    //fetchPosts();
-   }, [repost, update])//all posts rerender when these change
+     }, [repost, update])//all posts rerender when these change
 
-   //If I remove reposted from the dependecies [] the main feed will keep the reposted in place but then
-  //  let getUserMainFeed = async () => {
-    
-  //   if(userData) {
-  //     const userDocRef = doc(db, "users", userData.uid);
-  //     const userDocSnap = await getDoc(userDocRef);
-  //     if(userDocSnap.exists()){
-  //       const userDocSnapData = userDocSnap.data();
-  //       setUserMainFeed(userDocSnapData.mainFeed.reverse());
-        
-  //     } else {
-  //       console.log("userDocSnap doesnt exist")
-  //     }
-  //   } else {
-  //     console.log("no user")
-  //   }
-  // }
-  console.log(userData, "user Data")
-  console.log(userMainFeed, 'user Data feed')
-
-  const handleClick = (event: MouseEvent) => {
+   const handleClick = (event: MouseEvent) => {
     event.stopPropagation();
     let targetElement = event.target as HTMLElement;
     let allOptions = document.querySelectorAll(".btnSubcontainer");
@@ -324,10 +248,6 @@ console.log(postsArray,"postss#!@@@ ")
 
   const dotsSvg = <svg viewBox="0 0 24 24" className="threeDotsSvg" aria-hidden="true"><g><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path></g></svg>
   
-//   document.querySelectorAll(".profile-picture").forEach(val => {
-
-//     val.setAttribute('src', (val as HTMLImageElement).src+"&");
-// })
   //renaming post prop to be used inside posts.map
   let newPostValue = post
 
@@ -974,9 +894,6 @@ let rootPost =  postsArray?.map(post =>
   </div>
   : <></>
 )
-console.log(userMainFeed,"OPOP")
-console.log(postsArray,"OPOP")
-// let filteredPosts = posts.filter()
 
 //Loads the profile main feed(posts and reposts), the order of the userMainFeed array was inverted
 //and the posts.map was nested inside it so that it obeys the sequence of the userMainFeed array.
@@ -1321,223 +1238,27 @@ let profileNewResponsesFeed = postsRenew?.map(post =>
   </>
 )
 
-let repostsFromUser = postsArray?.map(post =>  
-  
-    //user.reposts?.find(repost => repost === post.postID) 
-    post.repostByUsers.includes(newPostValue?.userID) ?
-    <div className="post-container" key={post?.postID} style={style} onClick={() => RedirectToPostPage(post)}>
-      {userCtx?.uid === post?.userID ? <button onClick={(e) => RemovePost(post, e)}>x</button> : <></>}
-      <div className="user-container">
-        <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
-        <span>
-          <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
-            {post.username}
-          </div>
-        <div className="content">
-          <li key={post.id} className="text-content-field">
-            {post.textContent}
-            {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
-          </li>
-        </div>
-        </span>   
-      </div>
-      <Like 
-      user={userCtx as UserProps} 
-      post={post}
-      /> 
-      <BookmarkBtn 
-        user={userCtx as UserProps} 
-        post={post} 
-        update={update} 
-        setUpdate={setUpdate}
-        bookmarkPosts={bookmarkPosts} 
-        setBookmarkPosts={setBookmarkPosts}
-        userData={userData}
-        />
-      <Comment 
-       user={userCtx as UserProps}
-       post={post}
-       setUpdate={setUpdate}
-       setNewPost={setNewPost}
-       newPost={newPost}
-       update={update}
-       name={name}
-       userData={userData}
-       userImg={userImg}
-      />
-      <Repost 
-        user={userCtx as UserProps}
-        post={post}
-        setUpdate={setUpdate}
-        setNewPost={setNewPost}
-        newPost={newPost}
-        update={update}
-        name={name}
-        repost={repost}
-        setRepost={setRepost}
-        userMainFeed={userMainFeed}
-        setUserMainFeed={setUserMainFeed}
-        profPost={profPost}
-        setProfPost={setProfPost}
-        addToStatesCount={addToStatesCount}
-        setPostFeedStatesCount={setPostFeedStatesCount}
-        
-      
-      />
-    </div>
-    : <></>
-  )
-
-  let newRepostsFromUser = postsArray?.map(post => 
-    //repost?.find(repost => repost.postID === post.postID) ?
-    repost?.includes(post) ?
-    <div className="post-container" key={post?.postID} style={style} onClick={() => RedirectToPostPage(post)}>
-      {userCtx?.uid === post?.userID ? <button onClick={(e) => RemovePost(post, e)}>x</button> : <></>}
-      <div className="user-container">
-        <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
-        <span>
-          <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
-            {post.username}
-          </div>
-        <div className="content">
-          <li key={post.id} className="text-content-field">
-            {post.textContent}
-            {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
-          </li>
-        </div>
-        </span>   
-      </div>
-      <Like 
-      user={userCtx as UserProps} 
-      post={post}
-      /> 
-      <BookmarkBtn 
-        user={userCtx as UserProps} 
-        post={post} 
-        update={update} 
-        setUpdate={setUpdate}
-        bookmarkPosts={bookmarkPosts} 
-        setBookmarkPosts={setBookmarkPosts}
-        userData={userData}
-        />
-      <Comment 
-       user={userCtx as UserProps}
-       post={post}
-       setUpdate={setUpdate}
-       setNewPost={setNewPost}
-       newPost={newPost}
-       update={update}
-       name={name}
-       userData={userData}
-       userImg={userImg}
-      />
-      <Repost 
-        user={userCtx as UserProps}
-        post={post}
-        setUpdate={setUpdate}
-        setNewPost={setNewPost}
-        newPost={newPost}
-        update={update}
-        name={name}
-        repost={repost}
-        setRepost={setRepost}
-        userMainFeed={userMainFeed}
-        setUserMainFeed={setUserMainFeed}
-        profPost={profPost}
-        setProfPost={setProfPost}
-        addToStatesCount={addToStatesCount}
-        setPostFeedStatesCount={setPostFeedStatesCount}
-      />
-    </div>
-    : <></>
-  )
-
-  // let bookmarkedPosts = bookmarkPosts?.map(post => post !== undefined ?
-  //   <div className="post-container" key={post?.postID} style={style}>
-  //   {userCtx?.uid === post?.userID ? <button onClick={(e) => RemovePost(post, e)}>x</button> : <></>}
-  //   <div className="user-container">
-  //     <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
-  //     <span>
-  //       <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
-  //         {post.username}
-  //       </div>
-  //     <div className="content">
-  //       <li key={post.id} className="text-content-field">
-  //         {post.textContent}
-  //       </li>
-  //     </div>
-  //     </span>   
-  //   </div>
-  //   <Like 
-  //   user={userCtx as UserProps} 
-  //   post={post}
-  //   /> 
-  //   <BookmarkBtn 
-  //   user={userCtx as UserProps} 
-  //   post={post} 
-  //   update={update} 
-  //   setUpdate={setUpdate}
-  //   />
-  //   <Comment 
-  //    user={userCtx as UserProps}
-  //    post={post}
-  //    setUpdate={setUpdate}
-  //    setNewPost={setNewPost}
-  //    newPost={newPost}
-  //    update={update}
-  //    name={name}
-  //   />
-  //   <Repost 
-  //     user={userCtx as UserProps}
-  //     post={post}
-  //     setUpdate={setUpdate}
-  //     setNewPost={setNewPost}
-  //     newPost={newPost}
-  //     update={update}
-  //     name={name}
-  //     repost={repost}
-  //     setRepost={setRepost}
-  //     userMainFeed={userMainFeed}
-  //     setUserMainFeed={setUserMainFeed}
-  //     profPost={profPost}
-  //     setProfPost={setProfPost}
-  //     addToStatesCount={addToStatesCount}
-  //   />
-  // </div>
-  // : <></>)\
-
   if(user !== null) {
 
     return (
       <div>
         {isComment ? (
-          
           <div>
           <div>{rootPost}</div>
           <div>{clickedPostParentPost}</div>
           <div>{clickedPost}</div>
-          {/* <div>{newComment}</div> */}
           <div>{comment}</div>
           </div>
-  
         ) : profPost === true ? (
           <div>
-            {/* <div>{newRepostsFromUser}</div> */}
             <div>{profileNewPostsFeed}</div>
-            {/* <div>{repostsFromUser}</div> */}
-            <div>{profilePostsFeed}</div>
+            <div>{profilePostsFeed}</div>          
           </div>
         ) : profPost === false ? (
           <div>
             <div>{profileNewResponsesFeed}</div>
-            {/* <div>{profileResponsesFeed}</div> */}
           </div>  
-        // ) : bookmarkUpdate === true ? (    
-        //   <div>
-        //     <div>{bookmarkedPosts}</div>
-        //   </div>
         ) : search ? (
-          
           <div>
             <button onClick={() => navigate(-1)}>
               <FiArrowLeft className="back-arrow-icon"/>
@@ -1551,7 +1272,6 @@ let repostsFromUser = postsArray?.map(post =>
         )}
     </div>
     )
-
   } else {
     return (
       <div>

@@ -31,7 +31,6 @@ const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setNam
     }
     const location = useLocation();
     const currentURL = location.pathname;
-    console.log(user,"USER DASH")
     const fetchUserName = async () => {
         if(user?.uid === undefined) return;
         try {
@@ -41,13 +40,7 @@ const Dashboard: React.FC<DashboardProps> = ({user, loading, error, name, setNam
             setName(data.name);
             setUserID(data.uid);
         } catch(err: unknown) {
-            if(err instanceof Error) {
-                //console.error(err);
-                //alert(err.message);
-            } else {
-                console.error(err);
-                //alert("an error has occursred");
-            }
+            console.error(err);
     }
 }
 

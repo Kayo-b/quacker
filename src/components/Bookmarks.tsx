@@ -89,7 +89,6 @@ const Bookmarks: React.FC<BookmarksProps> = ({
   setPostFeedStatesCount,
   userData
 }) => {
-  const [bookmarkUpdate, setBookmarkUpdate] = useState<boolean | undefined>(true) 
   const [loading, setLoading] = React.useState(true);
   const [empty, setEmpty] = React.useState(false);
   const [bookmarksStatesCount, setBookmarksProfileStatesCount] = React.useState<number>(0);
@@ -155,23 +154,11 @@ const RemovePost = (post: DocumentData | undefined) => {
     const userRef = doc(db, 'users', user.uid);
     await deleteDoc(doc(db, "posts", post?.postID));
     await setDoc(userRef, {mainFeed: arrayRemove(post?.postID)}, {merge: true});
-    console.log(posts)
   }
-  //update === true ? setUpdate(false) : setUpdate(true);
   removePostFromDB();
   removeBookmarkPost(post?.postID);
-  //update === true ? setUpdate(false) : setUpdate(true)
 }
 
-// const handleClick = (event: MouseEvent) => {
-//   const targetElement = event.target as HTMLElement;
-//   const nextElement = targetElement.nextElementSibling as HTMLElement;
-//   if(event.target && nextElement.style.display === "none") {
-//     nextElement.style.display = "block";
-//   } else {
-//     nextElement.style.display = "none";
-//   }
-// };
 const handleClick = (event: MouseEvent) => {
   let targetElement = event.target as HTMLElement;
   targetElement = targetElement.parentElement as HTMLElement;
@@ -186,30 +173,7 @@ const handleClick = (event: MouseEvent) => {
     nextElement.style.display = "none";
   }
 };
-
-    // const fetchBookmarks = async () => {
-    //     console.log(bookmarkPosts,"KKKKKKKKKKKKKKKKKKKKkkkkk")
-    //     const q = query(collection(db, "users"), where("uid", "==", user.uid));
-    //     const docs = await getDocs(q);
-    //     let tempBookmarks: DocumentData[] = [];
-    //     docs.forEach(doc => {
-    //         const bookmarks = doc.data().bookmarks;
-    //         tempBookmarks.push(...bookmarks)
-    //     })
-
-    //     let tempPosts: DocumentData[] = [];
-    //     for (const bm of tempBookmarks) {
-    //         const q = query(collection(db, "posts"), where("postID", "==", bm));
-    //         const docs = await getDocs(q);
-    //         docs.forEach(doc => {
-    //             tempPosts.push(doc.data());
-    //         });
-    //     }
-    //     setBookmarkPosts(tempPosts);
-    //     console.log(tempPosts,"tempPostsSSS")
-    //     //setBookmarkUpdate(true);
-    // }
-    
+   
     let bookmarkPost = 
     bookmarkPosts?.map(post =>   
       
@@ -283,44 +247,13 @@ const handleClick = (event: MouseEvent) => {
     </div>
    
     </div>
-        // <div key={post.postID} className="post-container">
-        //   <div className="user-container">
-        //     <img className="profile-picture" alt="user icon" src={myImg}></img>
-        //     <span>
-        //       <div className="user-name">
-        //         {post.username}
-        //       </div>
-        //     <div className="content">
-        //       <li key={post.id}>
-        //         {post.textContent}
-        //       </li>
-        //     </div>
-        //     </span>   
-        //   </div>
-        //   <Like user={user} post={post} /> 
-        //   <BookmarkBtn 
-        //   // key={post.postID}
-        //   user={user} 
-        //   post={post} 
-        //   update={update} 
-        //   setUpdate={setUpdate} 
-        //   bookmarkPosts={bookmarkPosts} 
-        //   setBookmarkPosts={setBookmarkPosts}
-        //   addToStatesCount={setBookmarksProfileStatesCount}
-        //   />
-        // </div>
-      )
+    )
 
     useEffect(() => {
       waitForStates();
     },[bookmarksStatesCount])
 
     
-    // useEffect(() => {
-    //   fetchBookmarks();
-    //   console.log("FETCHG")
-    // },[])
-
     const loadingSvg = 
     <svg xmlns="http://www.w3.org/2000/svg" width="94px" height="94px" viewBox="0 0 100 150" preserveAspectRatio="xMidYMid">
         <circle cx="50" cy="50" fill="none" stroke="#6a6a6a" stroke-width="2" r="25" stroke-dasharray="141.37166941154067 49.12388980384689">
@@ -329,10 +262,6 @@ const handleClick = (event: MouseEvent) => {
     </svg>
       
     return(
-        // <div className="bm-main-container">
-        //    <div> {bookmarkPost} </div>
-        // </div>
-    
         <div>
            <div className="loading-element-container" style={{border: loading ? "1px solid rgba(245, 245, 245, 0.307)" : "none"}}>
                 <div>{loading ? loadingSvg : null} {empty ? "No bookmarked posts" : null}</div>

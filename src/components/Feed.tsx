@@ -84,34 +84,14 @@ const Feed: React.FC<PostProps> = ({
     userImg
     }) => {
 
-    //const [posts, setPosts] = useState<DocumentData[]>([]);
     const [loading, setLoading] = React.useState(true);
     const [feedUpdate, setFeedUpdate] = React.useState(false);
     const [mainFeedStatesCount, setMainFeedStatesCount] = React.useState<number>(0);
-    //const [updateFollow, setUpdateFollow] = React.useState<boolean>(false);
     const { search } = useParams();
-    const navigate = useNavigate();
     const userCtx = useContext(UserContext);
 
-    // //Function that will change updateFollow State and be passed as prop to FollowBtn
-    // const handleFollow = () => {
-    //     setUpdateFollow(!updateFollow);
-    //     console.log(updateFollow,"updateFollow")
-    // }
-    // const loadingScreen = () => {
-    //     if(loading) {
-    //         const postPageContainers = document.querySelectorAll(".post-page-container");
-    //         postPageContainers.forEach((container: Element) => {
-    //         (container.parentElement?.parentElement as HTMLElement).style.visibility = "hidden";
-    //         });
-    //     }
-    // }    
-
     const fetchPosts = async () => {
-        
-        //const q = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")))
         const querySnapshot = await getDocs(query(collection(db, "posts"), orderBy("timestamp", "desc")));
-        console.log("fetch!!!!.x")
         if(setPosts){
             setPosts([])
             setNewPost([])//making new posts array empty to avoid duplicate posts
@@ -119,7 +99,6 @@ const Feed: React.FC<PostProps> = ({
                 setPosts(prevValue => [...prevValue, doc.data()]);
             })
         }
-        
     };
 
     const waitForStates = () => {
@@ -133,8 +112,6 @@ const Feed: React.FC<PostProps> = ({
         }
     };
 
-
-
     useEffect(() => {
         setFeedUpdate(!update)
         fetchPosts();
@@ -147,7 +124,6 @@ const Feed: React.FC<PostProps> = ({
         <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="0.7633587786259541s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
         </circle>
     </svg>
-    console.log(userImg,"USER IMG$#$#$")
     if(user !== null) {return(
         
         <div>

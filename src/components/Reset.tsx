@@ -14,7 +14,6 @@ function Reset() {
     if(user) navigate("/dashboard");
   }, [user, loading])
   
-  
   return (
     <div className="reset">
       <div className="reset-container">

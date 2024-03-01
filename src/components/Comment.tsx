@@ -30,7 +30,6 @@ type UserProps = {
     userData?: DocumentData;
     userImg?: string;
 }
-console.log("comment")
 let handleModalClick = (e: React.MouseEvent) => {
   e.stopPropagation();
 } 
@@ -57,7 +56,6 @@ const Comment: React.FC<PostProps> = ({user, post, name, setUpdate, update, newP
 
     const openModal = (e: React.MouseEvent) => {e.stopPropagation();setIsModalOpen(true)};
     const closeModal = () => setIsModalOpen(false);
-  console.log(isModalOpen,"MODAL ")
   return (
     <div className="comment-btn">
         <VscComment onClick={e => openModal(e)}/>

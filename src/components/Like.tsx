@@ -1,9 +1,6 @@
 import React, { DOMElement, useEffect, useState } from 'react'
-import {GiPlasticDuck} from 'react-icons/gi';
-import { DocumentData, setDoc, collection, doc, arrayUnion, arrayRemove, query, where, getDoc } from 'firebase/firestore';
+import { DocumentData, setDoc, doc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db } from "../firebase";
-import { ClassElement } from 'typescript';
-
 
 type UserProps = {
   authProvider?: string;
@@ -20,43 +17,16 @@ type PostProps = {
     setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-
 const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
 
   const [liked, setLiked] = useState<boolean>(false)
-  console.log(post,"post from liked>?>?>?>?>?>")
 
-  // async function hasUserLikedPost(postId: string) {
-  //   const postRef = doc(db, 'posts', postId);
-  //   const postDoc = await getDoc(postRef);
-  //   if(postDoc.exists()) {
-  //     const postData = postDoc.data();
-  //     if(postData.likedByUsers && postData.likedByUsers.includes(user.uid)) {
-  //       setLiked(true)
-  //     } 
-  //   } else {
-  //     setLiked(false)
-  //   }
-    
-  // }
-//  const hasUserLikedPost2 = () => {
-//   console.log(post,"post!")
-//   if(post?.likedByUsers.includes(user.uid)) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-//  }
   function likedPostCheck() {
-    
     if(post?.likedByUsers.includes(user.uid)) {
             setLiked(true);
-            console.log(true, post ,"liked????!!!")
           } else {
             setLiked(false);
-            console.log(false,post,"liked???22?!!!")
           }
-      //if(setLoading) setLoading(false);
     }
 
   const addLike = (postId: string, e: React.MouseEvent) => {
@@ -72,7 +42,6 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
       post?.likedByUsers.splice(indexValue, 1)
       setDoc(postRef, {likedByUsers: arrayRemove(user.uid)}, {merge: true})
     }
-    console.log(post?.likedByUsers, "liked by users +_+_+_+_+")
   }
 
     useEffect(() => {
