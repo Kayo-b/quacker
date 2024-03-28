@@ -39,13 +39,17 @@ function Modal({ isOpen, onClose, children }: ModalProps) {
     if (!isOpen) return null;
   
     return (
-      <div className="modal" onClick={e => handleModalClick(e)}>
-        <div className="modal-content">
-          <button className="close-button" onClick={onClose}>
-            <MdClose style={{height:'15px', width:'15px'}}/>
-          </button>
-          {children}
+      <div className="modal-container-comment-wrapper">
+      <div className="modal-container-comment">
+        <div className="modal" onClick={e => handleModalClick(e)}>
+          <div className="modal-content">
+            <button className="close-button" onClick={onClose}>
+              <MdClose style={{height:'15px', width:'15px'}}/>
+            </button>
+            {children}
+          </div>
         </div>
+      </div>
       </div>
     );
   }

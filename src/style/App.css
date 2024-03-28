@@ -72,9 +72,15 @@ li {
 }
 
 .profile-dashboard:hover {
-  background-color: rgb(98, 98, 98);
+  background-color: rgba(98, 98, 98, 0.263);
+  border-radius: 5px; 
   cursor: pointer;
 } 
+.dashboard-btn:hover {
+  background-color: rgba(98, 98, 98, 0.263);
+  border-radius: 5px; 
+  cursor: pointer;
+}
 .user-container-profile-page-container {
   display: flex;
   flex-direction: column;
@@ -100,6 +106,7 @@ li {
 }
 
 .close-button {
+  display: none;
   position: absolute;
   top: 0;
   left: 328px;
@@ -109,7 +116,7 @@ li {
   z-index: 3;
   background: none;
   color:  gray;
-}
+} 
 
 .close-button:hover {
   cursor: pointer;
@@ -118,8 +125,8 @@ li {
 
 .close-button-edit-profile {
   position: absolute;
-  top: 0;
-  left: 660px;
+  top: 3px;
+  left: 652px;
   width: 5px;
   height: 5px;
   border: 0px;
@@ -127,6 +134,7 @@ li {
   background: none;
   color:  gray;
   background-color: rgb(0,0,0,0);
+  display: none;
 }
 
 .save-btn {
@@ -234,10 +242,21 @@ li {
   z-index: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.802);
+}
+.modal-container-comment{
+  display: flex;
+  position: absolute;
+  top: 5%;
+}
+.modal-container-comment-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
 }
 .modal {
-  position: absolute;
+  position: relative;
   top:10%;
 }
 
@@ -260,13 +279,26 @@ li {
   padding-top: 2px;
   padding-bottom: 5px;
 }
+.edit-profile-title {
+  display: flex;
+  height: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0px 0px 3px 0px;
+  padding: 0px;
+  justify-content: center;
+  align-items: center;
+
+}
 .modal-content {
-  position: absolute;
+  display: flex;
+  position: relative;
+  justify-content:space-around;
   margin-top: 10px;
-  background-color: #292c2e;
-  width: 350px;
+  background-color: #292c2e00;
+  width: auto;
   top: 50%;
-  left: -175px;
+  /* left: -210px; */
   border: 0px solid rgba(245, 245, 245, 0.531);
   z-index: 5;
 }
@@ -445,6 +477,10 @@ input[type="button"] {
   display: flex
 }
 
+.profile-picture:hover {
+  cursor: pointer;
+}
+
 .profile-picture-profile-page {
   height: 85px;
   margin-right: 10px;
@@ -474,14 +510,14 @@ input[type="button"] {
 }
 
 .post-container, .post-page-container {
-  background-color: #1e1d1d;
+  background-color: #1e1d1d3a;
   margin-top: 0px;
   border-left: 1px solid rgba(170, 170, 170, 0.331);
   border-right: 1px solid rgba(170, 170, 170, 0.331);
   border-bottom: 1px solid rgba(170, 170, 170, 0.331);
 }
 .post-container:hover, .post-page-container:hover {
-  background-color: #292c2e;
+  background-color: #292c2e38;
   cursor: pointer;
 }
 .user-name {
@@ -643,7 +679,7 @@ button.options-btn * {
   color: whitesmoke;
 }
 
-button:not( .like-btn, .searchButton, .remove-gif-btn, .gif-search-button, .close-button, .close-button-edit-profile, .options-btn, .close-button-gif-modal, .gif-btn):hover {
+button:not( .like-btn, .searchButton, .remove-gif-btn, .gif-search-button, .close-button, .close-button-edit-profile, .options-btn, .close-button-gif-modal, .gif-btn, .dashboard-btn):hover {
   background: fixed;
   background-color: rgb(142, 142, 142);
   cursor: pointer;
@@ -672,11 +708,11 @@ button {
 
 .edit-profile-main-container {
   display: grid;
-  left: 50%;
+  /* left: 48%; */
   top: 50%;
   width: 500px;
   height: 350px;
-  position: absolute;
+  position: relative;
   border: 1px solid rgb(179, 179, 179);
   border-radius: 5px;
   background-color: rgb(38, 36, 36);
@@ -868,7 +904,7 @@ input:not(.search, #label-id-update-name, #gif-search)[type="text"], input[type=
   display: flex;
   justify-content: center;
   position: absolute;
-  right: 45.5%;
+  right: 52.2%;
   top: 5%;
 
 } 

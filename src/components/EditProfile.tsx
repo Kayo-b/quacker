@@ -117,7 +117,7 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
     }
     return(
             <div className="edit-profile-main-container">
-                <h3>Edit Profile</h3>
+                <div className="edit-profile-title"><span><h3>Edit Profile</h3></span></div>
 
                 <div className="img-upload-wrapper-container">
                     <div className="upload-profile-pic-container">

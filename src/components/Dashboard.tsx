@@ -72,7 +72,9 @@ const RedirectToProfilePage = (post: DocumentData | undefined) => {
   return (
     <div className="dashboard">
         <div className="dashboard-container">
-             <img className="profile-picture" alt="user icon" src={userImg}></img>
+             <img className="profile-picture" alt="user icon" src={userImg}
+             onClick={() => RedirectToProfilePage(post)}
+             ></img>
             {!user ? "Logged Out" : ""} 
             <div className="profile-dashboard">
                 <div onClick={() => RedirectToProfilePage(post)}>{name}</div>
