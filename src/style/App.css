@@ -302,9 +302,10 @@ li {
   background-color: #292c2e00;
   width: auto;
   top: 50%;
-  /* left: -210px; */
+  right: 8%;
   border: 0px solid rgba(245, 245, 245, 0.531);
   z-index: 5;
+  overflow: hidden;
 }
 .modal-faded-background {
   top: 0;
@@ -927,9 +928,8 @@ input:not(.search, #label-id-update-name, #gif-search)[type="text"], input[type=
 
 .gif-modal {
   display: flex;
-  justify-content: center;
-  position: absolute;
-  right: 52.2%;
+  position: fixed;
+  width: auto;
   top: 5%;
 
 } 
@@ -950,7 +950,7 @@ input:not(.search, #label-id-update-name, #gif-search)[type="text"], input[type=
 .gif-search-container {
   display: flex; 
   max-height: 300px;
-  max-width: 530px;
+  max-width: auto;
 }
 
 .trending-gifs, .gif-search-result {
