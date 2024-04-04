@@ -1244,19 +1244,19 @@ let profileNewResponsesFeed = postsRenew?.map(post =>
       <div>
         {isComment ? (
           <div>
-          <div>{rootPost}</div>
-          <div>{clickedPostParentPost}</div>
-          <div>{clickedPost}</div>
+          <div className={"center-column-feed"}>{rootPost}</div>
+          <div className={"center-column-feed"}>{clickedPostParentPost}</div>
+          <div className={"center-column-feed"}>{clickedPost}</div>
           <div>{comment}</div>
           </div>
         ) : profPost === true ? (
           <div>
-            <div>{profileNewPostsFeed}</div>
-            <div>{profilePostsFeed}</div>          
+            <div className={"center-column-feed"}>{profileNewPostsFeed}</div>
+            <div className={"center-column-feed"}>{profilePostsFeed}</div>          
           </div>
         ) : profPost === false ? (
           <div>
-            <div>{profileNewResponsesFeed}</div>
+            <div className={"center-column-feed"}>{profileNewResponsesFeed}</div>
           </div>  
         ) : search ? (
           <div>
@@ -1266,8 +1266,8 @@ let profileNewResponsesFeed = postsRenew?.map(post =>
             {loadSearch}</div>
         ) : (
           <div>
-            <div>{neuPost}</div>
-            <div>{loadPosts}</div>
+            <div className={"center-column-feed"}>{neuPost}</div>
+            <div className={"center-column-feed"}>{loadPosts}</div>
           </div>
         )}
     </div>
