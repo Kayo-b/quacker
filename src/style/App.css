@@ -1,3 +1,5 @@
+
+
 #root {
   min-height: 100vh;
   background-color: rgb(23, 23, 23);
@@ -961,9 +963,11 @@ input:not(.search, #label-id-update-name, #gif-search)[type="text"], input[type=
 
 .trending-gifs, .gif-search-result {
   display: flex; 
+  flex-wrap: wrap;
   max-height: 300px;
-  max-width: 530px;
-  min-width:530px;
+  max-width: 410px;
+  min-width:410px;
+  width: auto;
   overflow-x: auto;
   flex-direction: row;
   justify-content: flex-start; 
@@ -994,3 +998,17 @@ input:not(.search, #label-id-update-name, #gif-search)[type="text"], input[type=
   background-color: #1e1d1da4;
 }
 
+@media (max-width: 690px) {
+  .trending-gifs, .gif-search-result {
+    display: flex; 
+    flex-wrap: wrap;
+    max-height: 300px;
+    max-width: 200px;
+    min-width: 200px;
+    width: auto;
+    overflow: hidden auto;
+    /* overflow-x: hidden; */
+    flex-direction: row;
+    justify-content: flex-start; 
+  }
+}

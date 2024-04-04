@@ -19,15 +19,14 @@ const GifSearch: React.FC<GifSearchProps> = ({setSelectedImg, closeGifModal}) =>
         fetch(url)
           .then(response => response.json())
           .then(content => {
-            // Process and display GIFs
             if(!document.querySelectorAll('.trending-gifs')[0].hasChildNodes())
             content.data.forEach((gif: any) => {
               const img = document.createElement('img');
               img.addEventListener('click', () => {
-                setSelectedImg(gif.images.fixed_height.url);
+                setSelectedImg(gif.images.fixed_width.url);
                 closeGifModal();
               })
-              img.src = gif.images.fixed_height.url;
+              img.src = gif.images.fixed_width.url;
               document.querySelectorAll('.trending-gifs')[0].appendChild(img);
             });
           })
