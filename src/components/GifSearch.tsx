@@ -53,10 +53,10 @@ const GifSearch: React.FC<GifSearchProps> = ({setSelectedImg, closeGifModal}) =>
             content.data.forEach((gif: any) => {
               const img = document.createElement('img');
               img.addEventListener('click', () => {
-                setSelectedImg(gif.images.fixed_height.url);
+                setSelectedImg(gif.images.fixed_width.url);
                 closeGifModal();
               })
-              img.src = gif.images.fixed_height.url;
+              img.src = gif.images.fixed_width.url;
               gifSearchContainer.appendChild(img);
               (document.querySelectorAll('.trending-gifs')[0] as HTMLElement).style.display = 'none';
             });
