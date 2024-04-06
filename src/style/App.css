@@ -1,4 +1,6 @@
-
+html {
+  scrollbar-width: none;
+}
 
 #root {
   min-height: 100vh;
@@ -10,6 +12,7 @@
   display: flex;
   min-height: 100vh;
   overflow-y: auto;
+  scrollbar-width: none;
   min-width: 100%;
   color: whitesmoke;
   margin-right: 190px;
@@ -27,7 +30,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: inherit;
-  overflow-y: auto; 
+  overflow: hidden auto; 
   position: sticky;
   top: 0;
   min-width:100px;
@@ -872,6 +875,10 @@ input:not(.search, #label-id-update-name, #gif-search)[type="text"], input[type=
   font-weight: lighter;
 }
 
+.bio-container {
+  height: auto;
+  overflow: hidden;
+}
 .update-bio-container {
   display: flex;
   flex-direction: column;
@@ -1001,8 +1008,40 @@ input:not(.search, #label-id-update-name, #gif-search)[type="text"], input[type=
   color: whitesmoke;
   background-color: #00000090;
 }
+.mobile-search-btn {
+    display: none;
+  }
+@media (max-width:600px){
+    body {
+    margin-top:-16px;
+  }
+}
 
 @media (max-width: 690px) {
+  .modal-content {
+    width: 350px;
+    right: 15px;
+  }
+  .searchButton {
+    position: absolute;
+    right: 5px;
+    top: 1px;
+  }
+  .mobile-search-btn {
+    display: flex;
+  }
+  .search-container {
+    border: 0px;
+  }
+  .searchContainer {
+    display: none;
+    position: fixed;
+    background-color: black;
+    right: 88px;
+    top: -1px;
+    border: 1px solid gray;
+  }
+
   .trending-gifs, .gif-search-result {
     display: flex; 
     flex-wrap: wrap;
@@ -1028,11 +1067,22 @@ input:not(.search, #label-id-update-name, #gif-search)[type="text"], input[type=
     top: -2px;
     font-size: large;
 
-}
-#gif-search {
-  width: 96%;
-}
-.gif-image {
-  width: 100%;
-} 
+  }
+  #gif-search {
+    width: 96%;
+  }
+  .gif-image {
+    width: 100%;
+  }
+  .profile-dashboard {
+    display: none;
+    padding: 2px;
+  } 
+  .sidebar-wrapper {
+    min-width: 60px;
+
+  }
+  .side-bar-menu {
+    padding-right: 35px;
+  }
 }
