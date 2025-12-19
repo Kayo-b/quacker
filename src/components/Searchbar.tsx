@@ -31,8 +31,8 @@ const handleClick = async (text: String) => {
         }   
     }
     return(
-        <div className="search-main-container">
-            <button className="mobile-search-btn" onClick={activateSearch}>
+        <div className="search-main-container" data-testid="searchbar-container">
+            <button className="mobile-search-btn" onClick={activateSearch} data-testid="searchbar-mobile-button">
                  <IoIosSearch style={{height:'20px', width:'20px'}}/>
             </button>
             <div className="searchContainer">
@@ -46,10 +46,12 @@ const handleClick = async (text: String) => {
                     e.key === "Enter" ? handleClick(text) : () => null
                     }
                     onBlur={(e) => setTimeout(() => {blurEffect(e)},1)}
+                    data-testid="searchbar-input"
                 ></input>
                 <button className="searchButton"
                         value="Search" 
-                        onClick={() => handleClick(text)}>
+                        onClick={() => handleClick(text)}
+                        data-testid="searchbar-submit-button">
                     <IoIosSearch className="searchButton" style={{height:'20px', width:'20px'}}/>
                 </button> 
         </div>

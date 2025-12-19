@@ -131,18 +131,19 @@ const handleClick = async (text: String) => {
   };
   
     return(
-        <div className="post-wrapper-container">
-        <div className="post-main-container"> 
-        <img className="profile-picture" alt="user icon" src={userImg}></img> 
+        <div className="post-wrapper-container" data-testid="create-post-wrapper">
+        <div className="post-main-container" data-testid="create-post-container"> 
+        <img className="profile-picture" alt="user icon" src={userImg} data-testid="create-post-profile-picture"></img> 
 
-            <div className="posting-content-container">
+            <div className="posting-content-container" data-testid="create-post-content-container">
                  
                 <div className="text-area-container">
                 <textarea 
                     maxLength={150}
                     placeholder="Say something..."
                     value={text} 
-                    onChange={e => setText(e.target.value)}>
+                    onChange={e => setText(e.target.value)}
+                    data-testid="create-post-textarea">
                     </textarea>
                 </div>
                     <div className="create-post-img-container">
@@ -150,11 +151,12 @@ const handleClick = async (text: String) => {
                             <button 
                                 className="remove-gif-btn" 
                                 onClick={() => setSelectedImg('')} 
-                                style={{display: selectedImg ? 'flex' : 'none'}}>
+                                style={{display: selectedImg ? 'flex' : 'none'}}
+                                data-testid="create-post-remove-gif-button">
                                     <MdClose size={25}/>
                             </button>
                                               
-                         <img className="gif-image" src={`${selectedImg}`} alt="gif-img" style={{display: selectedImg ? 'flex' : 'none'}}></img>
+                         <img className="gif-image" src={`${selectedImg}`} alt="gif-img" style={{display: selectedImg ? 'flex' : 'none'}} data-testid="create-post-gif-preview"></img>
                         </div> 
                     </div>
                 
@@ -167,13 +169,14 @@ const handleClick = async (text: String) => {
                 />
                 </Modal>
             </div>
-            <div className="comment-btns-container">
-                <button className="gif-btn" onClick={openGifModal}><MdGif size={35}/></button>
+            <div className="comment-btns-container" data-testid="create-post-actions">
+                <button className="gif-btn" onClick={openGifModal} data-testid="create-post-gif-button"><MdGif size={35}/></button>
                 <input 
                     type="button" 
                     value="Post"
                     className="post-btn" 
-                    onClick={() => handleClick(text)}>
+                    onClick={() => handleClick(text)}
+                    data-testid="create-post-submit-button">
                 </input> 
             </div>
         </div>

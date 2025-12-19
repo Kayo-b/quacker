@@ -176,8 +176,8 @@ async function addRepostData(postId: string, e: React.MouseEvent) {
       },[])
 
       return(
-          <div className="bm-main-container">
-              <BiRepost onClick={(e) => addRepostData(post?.postID, e)} style={{color: reposted ? "blue": undefined }}/>
+          <div className="bm-main-container" data-testid="repost-button-container">
+              <BiRepost onClick={(e) => addRepostData(post?.postID, e)} style={{color: reposted ? "blue": undefined }} data-testid="repost-button"/>
           </div>
       )
 }

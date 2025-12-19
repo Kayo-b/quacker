@@ -7,8 +7,8 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     return(
-        <div className="nav-main-container">
-            <div className="search-container">
+        <div className="nav-main-container" data-testid="navbar-container">
+            <div className="search-container" data-testid="navbar-search-container">
                 <Searchbar/>
                 </div>
         </div>

@@ -71,7 +71,7 @@ const FollowBtn: React.FC<PostProps> = ({
       }, [updateFollow])
 
     return(
-        <button className="followBtn" onClick={(e) => FollowUser(post, e)}>{followBtn === false ?
+        <button className="followBtn" onClick={(e) => FollowUser(post, e)} data-testid="follow-button">{followBtn === false ?
         "Follow" : "Unfollow"
         }</button>
       )

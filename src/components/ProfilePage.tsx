@@ -309,16 +309,16 @@ const ProfilePage: React.FC<PostProps> = ({
         <div className="loading-element-container" style={{border: loading ? "1px solid rgba(245, 245, 245, 0.307)" : "none"}}>
             <div>{loading ? loadingSvg : null}</div>
         </div>
-    <div className="user-container-profile-page-container" style={{visibility:"hidden"}}>
+    <div className="user-container-profile-page-container" style={{visibility:"hidden"}} data-testid="profile-page-container">
         {userData?.displayedName}
-        <div className="user-container-profile-page">
-            <div id="profile-background" style={{backgroundImage:`url(${userData?.bkgImgUrl})`}}>
-                <img className="profile-picture-profile-page" id="myimgprofile" alt="user icon" src={userData?.imgUrl}></img>
+        <div className="user-container-profile-page" data-testid="profile-page-user-container">
+            <div id="profile-background" style={{backgroundImage:`url(${userData?.bkgImgUrl})`}} data-testid="profile-background">
+                <img className="profile-picture-profile-page" id="myimgprofile" alt="user icon" src={userData?.imgUrl} data-testid="profile-page-avatar"></img>
             </div>
-            <div id="profile-info">
-                    <div className="user-name">
-                        @{userData?.name}{userData?.uid !== userCtx?.uid ? <button onClick={() => followUser()}>{userData?.followers.includes(userCtx?.uid) ? "Unfollow" : "Follow"}</button> : null}
-                        {userData?.uid === userCtx?.uid ? <button onClick={openModal}>Edit Profile</button> : null}
+            <div id="profile-info" data-testid="profile-info-section">
+                    <div className="user-name" data-testid="profile-username-section">
+                        @{userData?.name}{userData?.uid !== userCtx?.uid ? <button onClick={() => followUser()} data-testid="profile-follow-button">{userData?.followers.includes(userCtx?.uid) ? "Unfollow" : "Follow"}</button> : null}
+                        {userData?.uid === userCtx?.uid ? <button onClick={openModal} data-testid="profile-edit-button">Edit Profile</button> : null}
                         <div className="modal-container">
                         <Modal isOpen={isModalOpen} onClose={closeModal}>   
                             {<EditProfile
@@ -337,24 +337,24 @@ const ProfilePage: React.FC<PostProps> = ({
                         </Modal>
                         </div>
                     </div>
-                <div className="follow-stats">
+                <div className="follow-stats" data-testid="profile-follow-stats">
                 {userData?.following.length} Following | {userData?.followers.length < followersCount ? followersCount : userData?.followers.length}  Followers
                 </div>
-                <div className="bio-container">
+                <div className="bio-container" data-testid="profile-bio-container">
                     <p>{userData?.bioText}</p>
                 </div>
                 </div>
             </div>
-            <div className="feed-container">
-                <div className="feed-types-select">
-                    <div className="quacks-select" onClick={(e) => loadPostsList("posts")}>Posts</div>
-                    <div className="responses-select" onClick={(e) => loadPostsList("responses")}>Replies</div>
+            <div className="feed-container" data-testid="profile-feed-container">
+                <div className="feed-types-select" data-testid="profile-feed-tabs">
+                    <div className="quacks-select" onClick={(e) => loadPostsList("posts")} data-testid="profile-posts-tab">Posts</div>
+                    <div className="responses-select" onClick={(e) => loadPostsList("responses")} data-testid="profile-replies-tab">Replies</div>
                 </div>
-                <div className="feed-display">                                
+                <div className="feed-display" data-testid="profile-feed-display">                                
                 <div className="loading-element-container" style={{border: loading ? "1px solid rgba(245, 245, 245, 0.307)" : "none"}}>
                     <div>{loading2 ? loadingSvg : userMainFeed?.length === 0 && profPost === true ? "No posts" : null}</div>
                 </div>
-                <div id="post-subcontainer" style={{visibility:"hidden"}}>{renderPosts}</div>
+                <div id="post-subcontainer" style={{visibility:"hidden"}} data-testid="profile-posts-container">{renderPosts}</div>
                 </div>
             </div>
     </div>

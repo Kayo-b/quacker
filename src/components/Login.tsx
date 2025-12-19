@@ -17,7 +17,7 @@ function Login() {
     }, [user, loading])
 
 return (
-    <div className="login">
+    <div className="login" data-testid="login-container">
         <div className="login-container">
             <input 
             type="text"
@@ -25,6 +25,7 @@ return (
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="Email"
+            data-testid="login-email-input"
             />
             <input
             type="password"
@@ -32,26 +33,29 @@ return (
             value={password}
             onChange={e => setPassword(e.target.value)}
             placeholder="Password"
+            data-testid="login-password-input"
             />
             <button
             className="login-btn-email"
             onClick={() => signUpWithEmail(email, password)}
+            data-testid="login-submit-button"
             >
                 Login
             </button>
-            <button className="login-btn-google" onClick={signInWithGoogle}>
+            <button className="login-btn-google" onClick={signInWithGoogle} data-testid="login-google-button">
                 Login with Google
             </button>
             <button 
             className="guest-login-btn"
-            onClick={() => signUpWithEmail("guest-user@quack.com", "123321")}>
+            onClick={() => signUpWithEmail("guest-user@quack.com", "123321")}
+            data-testid="login-guest-button">
                 Login as Guest
             </button>
             <div>
-                <Link to="/reset">Forgot Password</Link>
+                <Link to="/reset" data-testid="login-forgot-password-link">Forgot Password</Link>
             </div>
             <div>
-                Don't have and account? <Link to="/register">Register</Link> now.
+                Don't have and account? <Link to="/register" data-testid="login-register-link">Register</Link> now.
             </div>
         </div>
     </div>

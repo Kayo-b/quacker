@@ -15,7 +15,7 @@ function Reset() {
   }, [user, loading])
   
   return (
-    <div className="reset">
+    <div className="reset" data-testid="reset-container">
       <div className="reset-container">
         <input
         className="reset-txt-input"
@@ -23,10 +23,12 @@ function Reset() {
         placeholder='Email'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        data-testid="reset-email-input"
         />
         <button
         className="reset-btn"
         onClick={() => sendPasswordReset(email!)}
+        data-testid="reset-submit-button"
         >
         </button>
       </div>

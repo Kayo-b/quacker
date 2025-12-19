@@ -62,8 +62,8 @@ const Homepage: React.FC<HomepageProps> = ({
     }) => {
 
     return(
-        <div className="home-main-container">
-            <div className="create-post-main-container">
+        <div className="home-main-container" data-testid="homepage-container">
+            <div className="create-post-main-container" data-testid="homepage-create-post">
             < CreatePost 
             setUpdate={setUpdate} 
             update={update} 
@@ -75,7 +75,7 @@ const Homepage: React.FC<HomepageProps> = ({
             userData={userData}
             />
             </div>
-            <div className="feed-main-container-2">
+            <div className="feed-main-container-2" data-testid="homepage-feed">
             < Feed 
             setUpdate={setUpdate} 
             update={update} 

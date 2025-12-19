@@ -61,12 +61,12 @@ const Comment: React.FC<PostProps> = ({user, post, name, setUpdate, update, newP
     const openModal = (e: React.MouseEvent) => {e.stopPropagation();setIsModalOpen(true)};
     const closeModal = () => setIsModalOpen(false);
   return (
-    <div className="comment-btn">
-        <VscComment onClick={e => openModal(e)}/>
+    <div className="comment-btn" data-testid="comment-button-container">
+        <VscComment onClick={e => openModal(e)} data-testid="comment-button"/>
        
           <Modal isOpen={isModalOpen} onClose={closeModal}>   
             
-              <div className={"modal-frame"}>
+              <div className={"modal-frame"} data-testid="comment-modal">
                   {<CreatePost 
                   user={user} 
                   post={post}

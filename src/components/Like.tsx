@@ -53,6 +53,7 @@ const Like: React.FC<PostProps> = ({user, post, setLoading}) => {
         className="like-btn" 
         onClick={e => addLike(post?.postID, e)}
         style={{ filter: post?.likedByUsers.includes(user.uid) ? 'grayscale(100%)' : 'grayscale(0%)' }}
+        data-testid="like-button"
         ></button> 
     )
   }

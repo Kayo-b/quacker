@@ -109,10 +109,10 @@ const PostPage: React.FC<PostProps> = ({
 
   return (
       <div>
-         <div className="loading-element-container" style={{border: loading ? "1px solid rgba(245, 245, 245, 0.307)" : "none"}}>
+         <div className="loading-element-container" style={{border: loading ? "1px solid rgba(245, 245, 245, 0.307)" : "none"}} data-testid="postpage-loading">
                 <div>{loading ? loadingSvg : null}</div>
             </div>
-      <div className="post-page-main-container" style={{visibility:"hidden"}}>
+      <div className="post-page-main-container" style={{visibility:"hidden"}} data-testid="postpage-container">
       <Feed 
           name={name}
           update={update}

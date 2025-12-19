@@ -68,14 +68,14 @@ const GifSearch: React.FC<GifSearchProps> = ({setSelectedImg, closeGifModal}) =>
 
       trendingGifs();
     return (
-        <div className="gif-search-container">
+        <div className="gif-search-container" data-testid="gif-search-container">
         <label htmlFor="gif-search" >
             <input type="text" id="gif-search" onChange={(e) => handleInputChange(e)}                     onKeyDown={(e) =>
                     e.key === "Enter" ? searchGiphy(gifSearch) : () => null
-                    }></input>
-            <button className={"gif-search-button"} onClick={() => searchGiphy(gifSearch)}>Search</button>
-            <div className="gif-search-result"></div>
-            <div className="trending-gifs"></div>
+                    } data-testid="gif-search-input"></input>
+            <button className={"gif-search-button"} onClick={() => searchGiphy(gifSearch)} data-testid="gif-search-submit-button">Search</button>
+            <div className="gif-search-result" data-testid="gif-search-results"></div>
+            <div className="trending-gifs" data-testid="gif-trending-container"></div>
         </label>
     </div>
     );

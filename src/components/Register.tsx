@@ -22,7 +22,7 @@ function Register() {
     },[user, loading])    
 
   return (
-    <div className="register">
+    <div className="register" data-testid="register-container">
         <div className="register-container">
             <input 
             type="text" 
@@ -30,6 +30,7 @@ function Register() {
             className="register-txt-input"
             value={name}
             onChange={e => setName(e.target.value)}
+            data-testid="register-name-input"
             />
             <input
             type="email"
@@ -37,6 +38,7 @@ function Register() {
             className="register-txt-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            data-testid="register-email-input"
             />
             <input
             type="password"
@@ -44,20 +46,23 @@ function Register() {
             className="register-txt-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            data-testid="register-password-input"
             />
             <button 
             className="register-btn" 
-            onClick={register}>
+            onClick={register}
+            data-testid="register-submit-button">
             Register
             </button>
             <button
             className="register-google-btn"
             onClick={signInWithGoogle}
+            data-testid="register-google-button"
             >
             Register with Google
             </button>
             <div>
-                Alredy have an account? <Link to="/">Login</Link>
+                Alredy have an account? <Link to="/" data-testid="register-login-link">Login</Link>
             </div>
 
         </div>

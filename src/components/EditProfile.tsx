@@ -116,13 +116,13 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
         }
     }
     return(
-            <div className="edit-profile-main-container">
-                <div className="edit-profile-title"><span><h3>Edit Profile</h3></span></div>
+            <div className="edit-profile-main-container" data-testid="edit-profile-container">
+                <div className="edit-profile-title" data-testid="edit-profile-title"><span><h3>Edit Profile</h3></span></div>
 
-                <div className="img-upload-wrapper-container">
-                    <div className="upload-profile-pic-container">
+                <div className="img-upload-wrapper-container" data-testid="edit-profile-image-uploads">
+                    <div className="upload-profile-pic-container" data-testid="edit-profile-picture-upload">
                     <span className="upload-img-title">Profile Image</span>
-                        <label htmlFor="label-id-prof-pic-upload" className="upload-profile-pic-file-input" id="myimgprofile">
+                        <label htmlFor="label-id-prof-pic-upload" className="upload-profile-pic-file-input" id="myimgprofile" data-testid="edit-profile-picture-label">
                             Add Image
                         </label>
                         <input 
@@ -133,11 +133,12 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
                                 (setProfImageUpload(e.target.files[0]), handleOnChange(e)) :
                                 null
                             }
+                            data-testid="edit-profile-picture-input"
                         ></input>
                     </div>
-                    <div className="upload-background-img-container">   
+                    <div className="upload-background-img-container" data-testid="edit-profile-background-upload">   
                         <span className="upload-img-title">Background Image</span>
-                            <label htmlFor="label-id-background-img-upload" className="upload-background-img-file-input">
+                            <label htmlFor="label-id-background-img-upload" className="upload-background-img-file-input" data-testid="edit-profile-background-label">
                                 Add Image 
                             </label>
                             <input 
@@ -148,30 +149,33 @@ const EditProfile: React.FC<EditProfileProps> = ({update, posts, setUpdate,bioTe
                                     (setBackgroundImageUpload(e.target.files[0]), handleOnChange(e)) :
                                     null
                                 }
+                                data-testid="edit-profile-background-input"
                             ></input>
                     </div>
                 </div>
-                <div className="update-name-container">
-                    <label htmlFor="label-id-update-name" className="update-name-label">
+                <div className="update-name-container" data-testid="edit-profile-name-section">
+                    <label htmlFor="label-id-update-name" className="update-name-label" data-testid="edit-profile-name-label">
                         Name
                     </label>
                     <input 
                         id="label-id-update-name"
                         type="text" 
                         onChange={(e) => setNameTempText(e.target.value)}
+                        data-testid="edit-profile-name-input"
                     ></input>
                 </div>
-                <div className="update-bio-container">
-                    <label htmlFor="label-id-update-bio" className="update-bio-label">
+                <div className="update-bio-container" data-testid="edit-profile-bio-section">
+                    <label htmlFor="label-id-update-bio" className="update-bio-label" data-testid="edit-profile-bio-label">
                         Bio
                     </label>
                     <textarea
                         id="label-id-update-bio"
                         maxLength={100}
                         onChange={(e) => setTempBioText(e.target.value)}
+                        data-testid="edit-profile-bio-input"
                     ></textarea>
                 </div>
-                <button onClick={handleSave} className="save-btn">Save</button>
+                <button onClick={handleSave} className="save-btn" data-testid="edit-profile-save-button">Save</button>
             </div>
     )}
 

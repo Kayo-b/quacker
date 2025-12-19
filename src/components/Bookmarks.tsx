@@ -98,6 +98,7 @@ const Bookmarks: React.FC<BookmarksProps> = ({
 
   const waitForStates = () => {
     const bookmarksContainer = 
+    document.querySelector(".bookmarks-main-container") as HTMLElement; 
             document.querySelector(".bm-main-container") as HTMLElement;
     if(bookmarksStatesCount === 1) {
         if(bookmarksContainer) setTimeout(() => {
@@ -177,26 +178,26 @@ const handleClick = (event: MouseEvent) => {
     let bookmarkPost = 
     bookmarkPosts?.map(post =>   
       
-      <div className="post-container" key={post.postID} onClick={() => RedirectToPostPage(post)}>
+      <div className="post-container" key={post.postID} onClick={() => RedirectToPostPage(post)} data-testid="bookmark-post-container">
         <div className="option-btn-container">
-        <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
+        <button className="options-btn"  onClick={(e) => handleClick(e) } data-testid="bookmark-post-options-button">{dotsSvg}</button>
         <div style={{display: "none"}} className="btnSubcontainer">
-            <div id="options" style={{display: "flex"}}>
+            <div id="options" style={{display: "flex"}} data-testid="bookmark-post-options-menu">
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={() => RemovePost(post)}>Delete</button> :
+              <button className="deleteBtn" onClick={() => RemovePost(post)} data-testid="bookmark-post-delete-button">Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
             </div>
           </div>
         </div>
-      <div className="user-container">
-        <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
+      <div className="user-container" data-testid="bookmark-post-user-container">
+        <img className="profile-picture" alt="user icon" src={post?.imgUrl} data-testid="bookmark-post-user-avatar"></img>
         <span>
-          <div className="user-name" onClick={() => RedirectToProfilePage(post)}>
+          <div className="user-name" onClick={() => RedirectToProfilePage(post)} data-testid="bookmark-post-username">
             {post.username}
           </div>
-        <div className="content" onClick={() => RedirectToPostPage(post)}>
+        <div className="content" onClick={() => RedirectToPostPage(post)} data-testid="bookmark-post-content">
             <li key={post.id} className="text-content-field">
               {post.textContent}
               {post?.gifUrl ? <img className="gif-image" src={`${post?.gifUrl}`} alt="gif-img"></img> : <></>}
@@ -266,8 +267,8 @@ const handleClick = (event: MouseEvent) => {
            <div className="loading-element-container" style={{border: loading ? "1px solid rgba(245, 245, 245, 0.307)" : "none"}}>
                 <div>{loading ? loadingSvg : null} {empty ? "No bookmarked posts" : null}</div>
             </div>
-        <div className="bm-main-container" style={{visibility:"hidden"}}>
-           <div> {bookmarkPost} </div>
+        <div className="bm-main-container" style={{visibility:"hidden"}} data-testid="bookmarks-container">
+           <div data-testid="bookmarks-posts-list"> {bookmarkPost} </div>
         </div>
         </div>
     )

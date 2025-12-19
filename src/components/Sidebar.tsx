@@ -30,16 +30,16 @@ type SidebarProps = {
 const Sidebar: React.FC<SidebarProps> = ({name, user, loading, error, setName, userID, setUserID, userImg}) => {
 
     return(
-        <div className="sb-main-container">
-            <ul className="side-bar-menu"> 
-                <Link to="/homepage"> 
+        <div className="sb-main-container" data-testid="sidebar-container">
+            <ul className="side-bar-menu" data-testid="sidebar-menu"> 
+                <Link to="/homepage" data-testid="sidebar-home-link"> 
                     <li><RxHome className="home-icon"/></li>
                 </Link>  
-                <Link to="/bookmarks"> 
+                <Link to="/bookmarks" data-testid="sidebar-bookmarks-link"> 
                     <li><BsStar className="star-icon"/></li>
                 </Link>  
             </ul>
-            <div className="sidebar-dashboard">
+            <div className="sidebar-dashboard" data-testid="sidebar-dashboard">
                 <div className="sidebar-dashboard-container">
                 <Dashboard 
                 name={name} 

@@ -130,7 +130,7 @@ const Feed: React.FC<PostProps> = ({
             <div className="loading-element-container" style={{border: loading ? "1px solid rgba(245, 245, 245, 0.307)" : "none"}}>
                 <div>{loading ? loadingSvg : null}</div>
             </div>
-        <div className="feed-main-container" style={{visibility:"hidden"}}> 
+        <div className="feed-main-container" style={{visibility:"hidden"}} data-testid="feed-container"> 
         <UserContext.Provider value={userCtx as UserProps}> {
             <Post 
             name={name}

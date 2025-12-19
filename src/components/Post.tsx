@@ -253,35 +253,35 @@ const Post: React.FC<PostProps> = ({
 
   //neuPost sets the new post directly into the feed, without any server commmunication
     let neuPost = newPost.map(post =>  post.parentID === null ?  
-      <div className="post-container" key={post?.postID} onClick={() => RedirectToPostPage(post)}>
+      <div className="post-container" key={post?.postID} onClick={() => RedirectToPostPage(post)} data-testid="post-container">
         <div className="option-btn-container">
-          <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn"  onClick={(e) => handleClick(e)} data-testid="post-options-button">{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
-            <div id="options" style={{display:"flex"}}>
+            <div id="options" style={{display:"flex"}} data-testid="post-options-menu">
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)} data-testid="post-delete-button">Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
             </div>
           </div>
         </div>
-        <div className="user-container">
-          <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
+        <div className="user-container" data-testid="post-user-container">
+          <img className="profile-picture" alt="user icon" src={post?.imgUrl} data-testid="post-user-avatar"></img>
           <span>
-            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
+            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)} data-testid="post-username">
               {post.username}
             </div>
-          <div className="content">
-            <li key={post.id} className="text-content-field">
+          <div className="content" data-testid="post-content">
+            <li key={post.id} className="text-content-field" data-testid="post-text-content">
               {post.textContent}
-              {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
+              {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img" data-testid="post-gif-image"></img> : <></>}
             </li>
           </div>
           </span>   
         </div>
-      <div className="main-btn-container">
-        <div className="btn-container"> 
+      <div className="main-btn-container" data-testid="post-actions-container">
+        <div className="btn-container" data-testid="post-actions"> 
         <Like 
         user={userCtx as UserProps} 
         post={post}
@@ -335,36 +335,36 @@ const Post: React.FC<PostProps> = ({
     let loadPosts = postsArray?.map(post => { 
       if(post.parentID === null) {
         
-        return <div className="post-container" key={post?.postID} onClick={() => RedirectToPostPage(post)}>
+        return <div className="post-container" key={post?.postID} onClick={() => RedirectToPostPage(post)} data-testid="post-container">
         <div className="option-btn-container">
-          <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
+          <button className="options-btn"  onClick={(e) => handleClick(e) } data-testid="post-options-button">{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
-            <div id="options" style={{display: "flex"}}>
+            <div id="options" style={{display: "flex"}} data-testid="post-options-menu">
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)} data-testid="post-delete-button">Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
             </div>
           </div>
         </div>
-        <div className="user-container">
-          <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
+        <div className="user-container" data-testid="post-user-container">
+          <img className="profile-picture" alt="user icon" src={post?.imgUrl} data-testid="post-user-avatar"></img>
           
           <span>
-            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
+            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)} data-testid="post-username">
               {post.username}
             </div>
-          <div className="content">
-            <li key={post.id} className="text-content-field">
+          <div className="content" data-testid="post-content">
+            <li key={post.id} className="text-content-field" data-testid="post-text-content">
               {post.textContent}
-              {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
+              {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img" data-testid="post-gif-image"></img> : <></>}
             </li>
           </div>
           </span>
         </div>
-            <div className="main-btn-container">
-      <div className="btn-container"> 
+            <div className="main-btn-container" data-testid="post-actions-container">
+      <div className="btn-container" data-testid="post-actions"> 
         <Like 
         user={userCtx as UserProps} 
         post={post}
@@ -418,35 +418,35 @@ const Post: React.FC<PostProps> = ({
   
   let loadSearch = postsArray?.map(post => { 
     if(post.textContent.includes(search)) {
-      return <div className="post-container" key={post?.postID} onClick={() => RedirectToPostPage(post)}>
+      return <div className="post-container" key={post?.postID} onClick={() => RedirectToPostPage(post)} data-testid="post-container">
       <div className="option-btn-container">
-        <button className="options-btn"  onClick={(e) => handleClick(e) }>{dotsSvg}</button>
+        <button className="options-btn"  onClick={(e) => handleClick(e) } data-testid="post-options-button">{dotsSvg}</button>
         <div style={{display: "none"}} className="btnSubcontainer">
-            <div id="options" style={{display: "flex"}}>
+            <div id="options" style={{display: "flex"}} data-testid="post-options-menu">
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)} data-testid="post-delete-button">Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
             </div>
         </div>
       </div>
-      <div className="user-container">
-        <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
+      <div className="user-container" data-testid="post-user-container">
+        <img className="profile-picture" alt="user icon" src={post?.imgUrl} data-testid="post-user-avatar"></img>
         <span>
-          <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
+          <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)} data-testid="post-username">
             {post.username}
           </div>
-        <div className="content">
-          <li key={post.id} className="text-content-field">
+        <div className="content" data-testid="post-content">
+          <li key={post.id} className="text-content-field" data-testid="post-text-content">
             {post.textContent}
-            {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
+            {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img" data-testid="post-gif-image"></img> : <></>}
           </li>
         </div>
         </span>
       </div>
-      <div className="main-btn-container">
-      <div className="btn-container"> 
+      <div className="main-btn-container" data-testid="post-actions-container">
+      <div className="btn-container" data-testid="post-actions"> 
       <Like 
       user={userCtx as UserProps} 
       post={post}
@@ -499,35 +499,35 @@ const Post: React.FC<PostProps> = ({
 
     // Comment sets a "sub-post" inside the commented post, its only visible when the parent post is clicked.
     let comment = postsArray?.map(post =>  post.parentID === parentPost?.postID ?  
-      <div className="post-page-container" id={`${post?.postID}`} key={post?.postID} onClick={() => RedirectToPostPage(post)}>
+      <div className="post-page-container" id={`${post?.postID}`} key={post?.postID} onClick={() => RedirectToPostPage(post)} data-testid="comment-container">
         <div className="option-btn-container">
-         <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+         <button className="options-btn"  onClick={(e) => handleClick(e)} data-testid="comment-options-button">{dotsSvg}</button>
          <div style={{display: "none"}} className="btnSubcontainer">
-            <div id="options" style={{display: "flex"}}>
+            <div id="options" style={{display: "flex"}} data-testid="comment-options-menu">
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)} data-testid="comment-delete-button">Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
             </div>
         </div>
         </div>
-        <div className="user-container">
-          <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
+        <div className="user-container" data-testid="comment-user-container">
+          <img className="profile-picture" alt="user icon" src={post?.imgUrl} data-testid="comment-user-avatar"></img>
           <span>
-            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
+            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)} data-testid="comment-username">
               {post.username}
             </div>
-          <div className="content">
-            <li key={post.id} className="text-content-field">
+          <div className="content" data-testid="comment-content">
+            <li key={post.id} className="text-content-field" data-testid="comment-text-content">
               {post.textContent}
-              {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
+              {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img" data-testid="comment-gif-image"></img> : <></>}
             </li>
           </div>
           </span>   
         </div>
-      <div className="main-btn-container">
-      <div className="btn-container"> 
+      <div className="main-btn-container" data-testid="comment-actions-container">
+      <div className="btn-container" data-testid="comment-actions"> 
         <Like 
         user={userCtx as UserProps} 
         post={post}
@@ -576,35 +576,35 @@ const Post: React.FC<PostProps> = ({
     )
 
     let newComment = postsArray?.map(post =>  post.parentID === parentPost?.postID ?  
-      <div className="post-page-container" key={post?.postID} onClick={() => RedirectToPostPage(post)}>
+      <div className="post-page-container" key={post?.postID} onClick={() => RedirectToPostPage(post)} data-testid="comment-container">
         <div className="option-btn-container">
-          <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn"  onClick={(e) => handleClick(e)} data-testid="comment-options-button">{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
-            <div id="options" style={{display: "flex"}}>
+            <div id="options" style={{display: "flex"}} data-testid="comment-options-menu">
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)} data-testid="comment-delete-button">Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
           </div>
         </div>
         </div>
-        <div className="user-container">
-          <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
+        <div className="user-container" data-testid="comment-user-container">
+          <img className="profile-picture" alt="user icon" src={post?.imgUrl} data-testid="comment-user-avatar"></img>
           <span>
-            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
+            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)} data-testid="comment-username">
               {post.username}
             </div>
-          <div className="content">
-            <li key={post.id} className="text-content-field">
+          <div className="content" data-testid="comment-content">
+            <li key={post.id} className="text-content-field" data-testid="comment-text-content">
               {post.textContent}
-              {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img"></img> : <></>}
+              {post.gifUrl ? <img className="gif-image" src={`${post.gifUrl}`} alt="gif-img" data-testid="comment-gif-image"></img> : <></>}
             </li>
           </div>
           </span>   
         </div>
-      <div className="main-btn-container">
-      <div className="btn-container"> 
+      <div className="main-btn-container" data-testid="comment-actions-container">
+      <div className="btn-container" data-testid="comment-actions"> 
         <Like 
         user={userCtx as UserProps} 
         post={post}
@@ -653,37 +653,37 @@ const Post: React.FC<PostProps> = ({
     )
     
     let clickedPost =  
-    <div className="post-page-container" key={post?.postID} style={style}>
+    <div className="post-page-container" key={post?.postID} style={style} data-testid="clicked-post-container">
         <div className="option-btn-container">
-          <button className="options-btn"  onClick={(e) => handleClick(e)}>{dotsSvg}</button>
+          <button className="options-btn"  onClick={(e) => handleClick(e)} data-testid="clicked-post-options-button">{dotsSvg}</button>
           <div style={{display: "none"}} className="btnSubcontainer">
           <div style={{display: "none"}} className="btnSubcontainer">
-            <div id="options" style={{display: "flex"}}>
+            <div id="options" style={{display: "flex"}} data-testid="clicked-post-options-menu">
             {
               userCtx?.uid === post?.userID ?
-              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)}>Delete</button> :
+              <button className="deleteBtn" onClick={(e) => RemovePost(post, e)} data-testid="clicked-post-delete-button">Delete</button> :
               <div><FollowBtn post={post} user={userCtx as UserProps} setUpdateFollow={setUpdateFollow} updateFollow={updateFollow} /></div>
             }
           </div>
         </div>
         </div>
         </div>
-        <div className="user-container">
-          <img className="profile-picture" alt="user icon" src={post?.imgUrl}></img>
+        <div className="user-container" data-testid="clicked-post-user-container">
+          <img className="profile-picture" alt="user icon" src={post?.imgUrl} data-testid="clicked-post-user-avatar"></img>
           <span>
-            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)}>
+            <div className="user-name-post" onClick={(e) => RedirectToProfilePage(post, e)} data-testid="clicked-post-username">
               {post?.username}
             </div>
-          <div className="content" >
-            <li key={post?.id} className="text-content-field">
+          <div className="content" data-testid="clicked-post-content">
+            <li key={post?.id} className="text-content-field" data-testid="clicked-post-text-content">
               {post?.textContent}
-              {post?.gifUrl ? <img className="gif-image" src={`${post?.gifUrl}`} alt="gif-img"></img> : <></>}
+              {post?.gifUrl ? <img className="gif-image" src={`${post?.gifUrl}`} alt="gif-img" data-testid="clicked-post-gif-image"></img> : <></>}
             </li>
           </div>
           </span>   
         </div>
-      <div className="main-btn-container">
-      <div className="btn-container"> 
+      <div className="main-btn-container" data-testid="clicked-post-actions-container">
+      <div className="btn-container" data-testid="clicked-post-actions"> 
         <Like 
         user={userCtx as UserProps} 
         post={post}
