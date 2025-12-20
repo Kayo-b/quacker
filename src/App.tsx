@@ -69,7 +69,7 @@ const App = () => {
   const [userImg, setUserImg] = React.useState<string>("")
   
 const fetchBookmarks = async () => {
- 
+  console.log('user id: ', user?.uid)
   const q = query(collection(db, "users"), where("uid", "==", user?.uid));
   const docs = await getDocs(q);
   
@@ -79,6 +79,7 @@ const fetchBookmarks = async () => {
     setUserImg(doc.data().imgUrl);
       const bookmarks = doc.data().bookmarks;
       tempBookmarks.push(...bookmarks)
+      console.log('book marks: ', bookmarks)
   })
   let tempPosts: DocumentData[] = [];
   for (const bm of tempBookmarks) {

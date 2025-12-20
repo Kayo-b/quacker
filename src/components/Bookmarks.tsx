@@ -95,11 +95,11 @@ const Bookmarks: React.FC<BookmarksProps> = ({
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);
   const dotsSvg = <svg viewBox="0 0 24 24" className="threeDotsSvg" aria-hidden="true"><g><path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path></g></svg>
+  let updateLoading = false;
 
   const waitForStates = () => {
-    const bookmarksContainer = 
-    document.querySelector(".bookmarks-main-container") as HTMLElement; 
-            document.querySelector(".bm-main-container") as HTMLElement;
+    document.querySelector(".bookmarks-main-container") as HTMLElement;
+    const bookmarksContainer = document.querySelector(".bm-main-container") as HTMLElement;
     if(bookmarksStatesCount === 1) {
         if(bookmarksContainer) setTimeout(() => {
             bookmarksContainer.style.visibility = "visible";
@@ -107,7 +107,6 @@ const Bookmarks: React.FC<BookmarksProps> = ({
         }, 300)
     };
       if(bookmarkPosts?.length === 0) {
-        
         setLoading(false);
         setEmpty(true);
       }
@@ -252,12 +251,13 @@ const handleClick = (event: MouseEvent) => {
 
     useEffect(() => {
       waitForStates();
+      if(bookmarksStatesCount === 1) updateLoading = true;
     },[bookmarksStatesCount])
 
     
     const loadingSvg = 
     <svg xmlns="http://www.w3.org/2000/svg" width="94px" height="94px" viewBox="0 0 100 150" preserveAspectRatio="xMidYMid">
-        <circle cx="50" cy="50" fill="none" stroke="#6a6a6a" stroke-width="2" r="25" stroke-dasharray="141.37166941154067 49.12388980384689">
+        <circle cx="50" cy="50" fill="none" stroke="#6a6a6a" strokeWidth="2" r="25" strokeDasharray="141.37166941154067 49.12388980384689">
         <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="0.7633587786259541s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
         </circle>
     </svg>

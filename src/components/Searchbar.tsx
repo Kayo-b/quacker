@@ -13,7 +13,6 @@ const handleClick = async (text: String) => {
         (searchContainer as HTMLElement).style.display = 'none';
     };
     const activateSearch = (e:any) => {
-        console.log('clicke', e.target.className)
         if(searchContainer) console.log((searchContainer as HTMLElement).style.display)
         if(searchContainer && (searchContainer as HTMLElement).style.display === 'none'){
             (searchContainer as HTMLElement).style.display = 'flex';
@@ -25,7 +24,6 @@ const handleClick = async (text: String) => {
     }
     const blurEffect = (e:any) => {
         const activeEle = document.activeElement
-        console.log('clicke', activeEle)
         if(activeEle && activeEle.className !== 'searchButton') {
                 if(searchContainer)(searchContainer as HTMLElement).style.display = 'none';
         }   
